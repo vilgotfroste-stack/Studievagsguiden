@@ -943,22 +943,22 @@ function buildTeaser(){
 // Wizard
 const QS=[
     // Del 1 – Studiepreferenser
-    {id:'current_location',t:'Var bor du idag?',w:'Hjälper oss beräkna boendekostnader och pendling.',tp:'text',ph:'T.ex. Stockholm, Göteborg...'},
+    {id:'current_location',t:'Var bor du idag?',w:'Hjälper oss beräkna boendekostnader och matchade skolor.',tp:'opts',opts:[{v:'stockholm',l:'Stockholm'},{v:'goteborg',l:'Göteborg'},{v:'malmo',l:'Malmö'},{v:'uppsala',l:'Uppsala'},{v:'linkoping',l:'Linköping'},{v:'lund',l:'Lund'},{v:'umea',l:'Umeå'},{v:'orebro',l:'Örebro'},{v:'other',l:'Annan ort'}]},
     {id:'education_type',t:'Vilken utbildningsform söker du?',w:'Välj en eller flera alternativ.',tp:'multi',opts:[{v:'yh',l:'Yrkeshögskola (YH)'},{v:'uni',l:'Högskola / Universitet'},{v:'komvux',l:'Komvux'},{v:'folk',l:'Folkhögskola'},{v:'private',l:'Privat utbildning'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'study_pace',t:'Vilken studietakt passar dig?',w:'Avgör om du kan arbeta samtidigt.',tp:'opts',opts:[{v:'fulltime',l:'Heltid'},{v:'parttime',l:'Deltid'},{v:'flexible',l:'Flexibel'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'study_mode',t:'Hur vill du studera?',w:'Påverkar dina studiealternativ.',tp:'opts',opts:[{v:'campus',l:'På plats'},{v:'distance',l:'Distans'},{v:'hybrid',l:'Hybrid'},{v:'any',l:'Spelar ingen roll'}]},
-    {id:'willing_to_move',t:'Är du villig att flytta för studier?',w:'Påverkar vilka skolor som passar dig.',tp:'opts',cond:()=>ans.study_mode!=='distance',opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'},{v:'commute',l:'Pendlingsavstånd'}]},
-    {id:'when_start',t:'När vill du börja studera?',w:'Styr tidslinjen i din plan.',tp:'opts',opts:[{v:'asap',l:'Så snart som möjligt'},{v:'next',l:'Nästa termin'},{v:'6mo',l:'Inom 6 månader'},{v:'12mo',l:'Inom 12 månader'},{v:'any',l:'Spelar ingen roll'}]},
+    {id:'willing_to_move',t:'Är du villig att flytta för studier?',w:'Påverkar vilka skolor som passar dig.',tp:'opts',cond:()=>ans.study_mode!=='distance',opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'}]},
+    {id:'when_start',t:'Om ungefär hur många månader vill du börja studera?',w:'Styr tidslinjen i din plan. Ange 0 om du vill börja så snart som möjligt.',tp:'input',ph:'T.ex. 6',inputType:'number',min:0,max:60,su:'månader'},
     {id:'duration',t:'Hur lång utbildning är du beredd att gå?',w:'Filtrerar bort för långa program.',tp:'opts',opts:[{v:'short',l:'Kortare än 6 månader'},{v:'6to12',l:'6–12 månader'},{v:'1to2',l:'1–2 år'},{v:'3plus',l:'3 år eller längre'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'fee_ok',t:'Är du öppen för avgiftsbelagda utbildningar?',w:'Privata YH och utbildningar kan kosta.',tp:'opts',opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}]},
 
     // Del 2 – Behörighet
     {id:'gym',t:'Vilket gymnasieprogram gick du?',w:'Avgör om du har rätt behörighet eller behöver komplettera.',tp:'opts',opts:GYM.map(g=>({v:g.id,l:g.l}))},
     {id:'has_grades',t:'Har du fullständiga gymnasiebetyg?',w:'Avgör om du kan söka direkt.',tp:'opts',opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}]},
-    {id:'hp_considered',t:'Har du skrivit Högskoleprov (HP)?',w:'Ange ditt verbala och kvantitativa delbetyg (t.ex. 1.4, 1.6). Om du inte har skrivit klickar du Nej.',tp:'hp'},
+    {id:'hp_considered',t:'Har du skrivit Högskoleprov (HP)?',w:'Ange ditt totala HP-poäng (0.0–2.0). Klicka "Inget HP" om du inte skrivit.',tp:'hp_single'},
 
     // Del 3 – Nuvarande situation
-    {id:'age',t:'Hur gammal är du?',w:'Påverkar skuldfri ålder och livstidsberäkning.',tp:'input',ph:'T.ex. 29',inputType:'number',min:18,max:70},
+    {id:'age',t:'Hur gammal är du?',w:'Påverkar skuldfri ålder och livstidsberäkning.',tp:'input',ph:'T.ex. 29',inputType:'number',min:18,max:70,su:'år'},
     {id:'work_status',t:'Arbetar du idag?',w:'Avgör om du tappar inkomst under studier.',tp:'opts',opts:[{v:'fulltime',l:'Heltid'},{v:'parttime',l:'Deltid'},{v:'hourly',l:'Timanställd'},{v:'unemployed',l:'Arbetssökande'},{v:'other',l:'Annat'}]},
     {id:'need_csn',t:'Kommer du behöva studiestöd från CSN under utbildningen?',w:'Avgör din studentbudget.',tp:'opts',opts:[{v:'both',l:'Ja, bidrag och lån'},{v:'grant',l:'Endast bidrag'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}]},
     {id:'work_during',t:'Planerar du att arbeta vid sidan av studierna?',w:'Påverkar din totala inkomst.',tp:'opts',opts:[{v:'parttime',l:'Ja, deltid'},{v:'extra',l:'Ja, extra vid behov'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}]},
@@ -974,7 +974,7 @@ const QS=[
     {id:'variable_expenses',t:'Hur mycket har du i rörliga utgifter per månad?',w:'Mat, nöje, kläder, transport.',tp:'input',ph:'T.ex. 4000',su:'kr/mån',cond:()=>ans.housing==='home'},
 
     // Del 6 – Sparande
-    {id:'savings_amount',t:'Hur mycket har du sparat som kan användas under studietiden?',w:'CSN tar ~6 veckor innan första utbetalning.',tp:'opts',opts:[{v:'none',l:'Inget'},{v:'under10',l:'Under 10 000 kr'},{v:'10-50',l:'10 000–49 999 kr'},{v:'50-100',l:'50 000–99 999 kr'},{v:'100plus',l:'100 000 kr eller mer'}]},
+    {id:'savings_amount',t:'Hur mycket har du sparat som kan användas under studietiden?',w:'CSN tar ~6 veckor innan första utbetalning.',tp:'slider',min:0,max:100000,step:1000,unit:'kr',default:0},
 
     // Del 7 – Oro & inställning (sist före kontakt)
     {id:'biggest_concern',t:'Vad oroar dig mest med att studera?',w:'Hjälper oss ge konkreta svar på just dina farhågor.',tp:'opts',opts:[{v:'economy',l:'Ekonomin — klarar jag mig på CSN?'},{v:'time',l:'Tiden — hinner jag med allt?'},{v:'grades',l:'Betygen — är jag tillräckligt smart?'},{v:'age',l:'Åldern — är det för sent?'},{v:'job',l:'Jobbet — hittar jag jobb efteråt?'},{v:'none',l:'Inget speciellt, jag är redo'}]},
@@ -1034,16 +1034,43 @@ function renderW(){
         h+='</div>';
     }
     else if(q.tp==='opts'){h+='<div class="wopts">';q.opts.forEach(o=>{h+='<div class="wo'+(ans[q.id]===o.v?' sel':'')+'" onclick="wSel(\''+q.id+"','"+o.v+"',this)\"><div class=\"wdot\"></div><span>"+o.l+'</span></div>'});h+='</div>'}
-    else if(q.tp==='hp'){h+=`<div class="winp" style="max-width:320px">
-      <div style="display:flex;align-items:flex-end;gap:8px;margin-bottom:10px">
-        <div style="flex:1"><div style="font-size:.75rem;color:var(--mu);margin-bottom:4px">Verbalt</div>
-        <input type="number" id="wInpHpV" step="0.1" min="0" max="2.0" placeholder="1.4" value="${ans[q.id]&&ans[q.id]!=='no'?ans[q.id].split(',')[0]||'':''}" style="width:100%;padding:12px;border:1.5px solid var(--bo);border-radius:10px;font-size:1rem;font-family:inherit;outline:none;box-sizing:border-box" oninput="this.style.borderColor=this.value?'var(--ac)':'var(--bo)'"></div>
-        <div style="padding-bottom:14px;color:var(--mu);font-size:1.1rem">,</div>
-        <div style="flex:1"><div style="font-size:.75rem;color:var(--mu);margin-bottom:4px">Kvantitativt</div>
-        <input type="number" id="wInpHpQ" step="0.1" min="0" max="2.0" placeholder="1.6" value="${ans[q.id]&&ans[q.id]!=='no'?ans[q.id].split(',')[1]||'':''}" style="width:100%;padding:12px;border:1.5px solid var(--bo);border-radius:10px;font-size:1rem;font-family:inherit;outline:none;box-sizing:border-box" oninput="this.style.borderColor=this.value?'var(--ac)':'var(--bo)'"></div>
-      </div>
-      <div onclick="const v=document.getElementById('wInpHpV').value,q2=document.getElementById('wInpHpQ').value;if(v&&q2){ans['${q.id}']=v+','+q2;ws++;renderW();}else{ans['${q.id}']='no';ws++;renderW();}" class="wo" style="justify-content:center;font-weight:700;background:var(--ac);color:#fff;border:none">Har inte skrivit HP</div>
-    </div>`;}
+    else if(q.tp==='hp'){/* legacy */}
+    else if(q.tp==='hp_single'){
+        const hpVal = ans[q.id] && ans[q.id]!=='no' ? ans[q.id] : '';
+        h+=`<div class="winp" style="max-width:220px">
+          <div style="display:flex;align-items:center;gap:0">
+            <input type="text" id="wInpHpInt" inputmode="numeric" maxlength="1" placeholder="1"
+              value="${hpVal ? hpVal.toString().split('.')[0] : ''}"
+              style="width:70px;padding:14px 12px;border:1.5px solid var(--bo);border-radius:10px 0 0 10px;font-size:1.6rem;font-family:inherit;outline:none;box-sizing:border-box;text-align:center;-webkit-appearance:none"
+              oninput="this.style.borderColor='var(--ac)';if(this.value.length>=1){document.getElementById('wInpHpDec').focus();document.getElementById('wInpHpDec').select();}updateHP('${q.id}')">
+            <div style="padding:0 8px;font-size:1.6rem;color:var(--mu);background:#f5f5f0;border-top:1.5px solid var(--bo);border-bottom:1.5px solid var(--bo);height:52px;display:flex;align-items:center">,</div>
+            <input type="text" id="wInpHpDec" inputmode="numeric" maxlength="1" placeholder="6"
+              value="${hpVal ? (hpVal.toString().split('.')[1]||'') : ''}"
+              style="width:70px;padding:14px 12px;border:1.5px solid var(--bo);border-radius:0 10px 10px 0;font-size:1.6rem;font-family:inherit;outline:none;box-sizing:border-box;text-align:center;-webkit-appearance:none"
+              oninput="this.style.borderColor='var(--ac)';updateHP('${q.id}')">
+          </div>
+          <div style="margin-top:6px;font-size:.75rem;color:var(--mu)">Mellan 0,0 och 2,0</div>
+        </div>
+        <button onclick="ans['${q.id}']='no';ws++;renderW()" style="margin-top:14px;width:100%;padding:14px;background:var(--ac);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:.95rem;font-weight:600;cursor:pointer">Jag har inget HP</button>`;
+    }
+    else if(q.tp==='slider'){
+        if(ans[q.id]===undefined) ans[q.id]=q.default||0;
+        const curVal=ans[q.id];
+        h+='<div style="margin:8px 0">';
+        h+='<div style="font-size:2rem;font-weight:700;color:var(--ac);text-align:center;margin-bottom:12px"><span id="sliderVal">'+Number(curVal).toLocaleString('sv')+'</span> <span style="font-size:1rem;font-weight:400;color:var(--mu)">'+q.unit+'</span></div>';
+        h+='<input type="range" min="'+q.min+'" max="'+q.max+'" step="'+q.step+'" value="'+curVal+'" oninput="ans[\''+q.id+'\']=+this.value;document.getElementById(\'sliderVal\').textContent=Number(this.value).toLocaleString(\'sv\')" style="width:100%;accent-color:var(--ac);cursor:pointer;display:block;margin-bottom:8px">';
+        h+='<div style="display:flex;justify-content:space-between;font-size:.75rem;color:var(--mu)"><span>'+q.min.toLocaleString('sv')+' '+q.unit+'</span><span>'+q.max.toLocaleString('sv')+' '+q.unit+'</span></div>';
+        h+='</div>';
+    }
+    else if(q.hp_followup && ans[q.id]==='yes'){
+        h+=`<div class="winp" style="max-width:220px;margin-top:12px">
+          <div style="font-size:.82rem;color:var(--mu);margin-bottom:6px">Ditt HP-poäng (0.0 – 2.0)</div>
+          <input type="number" id="wInpHp" step="0.1" min="0" max="2.0" placeholder="t.ex. 1.6"
+            value="${ans[q.id+'_score']||''}"
+            style="width:100%;padding:12px;border:1.5px solid var(--bo);border-radius:10px;font-size:1.1rem;font-family:inherit;outline:none;box-sizing:border-box"
+            oninput="ans['${q.id}_score']=+this.value;this.style.borderColor=this.value?'var(--ac)':'var(--bo)'">
+        </div>`;
+    }
     else if(q.tp==='text'){
         const inputType = (q.id==='user_password') ? 'password' : 'text';
         h+='<div class="winp"><input type="'+inputType+'" id="wInp" placeholder="'+q.ph+'" value="'+(ans[q.id]||'')+'" oninput="ans[\''+q.id+'\']=this.value"></div>';
@@ -1055,7 +1082,7 @@ function renderW(){
             h+='</label></div>';
         }
     }
-    else{h+='<div class="winp"><input type="number" id="wInp" placeholder="'+q.ph+'" value="'+(ans[q.id]||'')+'" oninput="ans[\''+q.id+'\']=this.value"><span>'+q.su+'</span></div>'}
+    else{h+='<div class="winp"><input type="number" id="wInp" placeholder="'+q.ph+'" value="'+(ans[q.id]||'')+'" oninput="ans[\''+q.id+'\']=this.value">'+(q.su?'<span>'+q.su+'</span>':'')+'</div>'}
     h+='<div class="wnav">';if(ws>0){h+='<button class="wbk" onclick="wBk()">← Tillbaka</button>';}else{h+='<a href="/" class="wbk" style="text-decoration:none;display:flex;align-items:center;justify-content:center">← Startsidan</a>';};
     h+='<button class="wnx" onclick="wNx()">Nästa →</button></div></div>';
     document.getElementById('wB').innerHTML=h;
@@ -1090,7 +1117,7 @@ async function wNx(){
     const vqs=getVisibleQS();const q=vqs[ws];
     if(q.tp==='multi'&&(!ans[q.id]||ans[q.id].length===0)){await svgAlert('Välj minst ett alternativ.','👆');return}
     if(q.tp==='opts'&&!ans[q.id]){await svgAlert('Välj ett alternativ.','👆');return}
-    if((q.tp==='input'||q.tp==='text'||q.tp==='hp')&&!ans[q.id]){if(q.tp==='hp'){ans[q.id]='no';}else{await svgAlert('Fyll i ett värde.','✏️');return}}
+    if((q.tp==='input'||q.tp==='text'||q.tp==='hp'||q.tp==='hp_single')&&!ans[q.id]){if(q.tp==='hp'||q.tp==='hp_single'){ans[q.id]='no';}else{await svgAlert('Fyll i ett värde.','✏️');return}}
     ws++;
     renderW();
     // Spara lead så fort mail finns
@@ -3022,6 +3049,14 @@ async function pay() {
 }
 
 
+
+function updateHP(qid) {
+    const i = document.getElementById('wInpHpInt');
+    const d = document.getElementById('wInpHpDec');
+    if(i && d && (i.value!=='' || d.value!=='')) {
+        ans[qid] = (i.value||'0') + '.' + (d.value||'0');
+    }
+}
 
 // Custom modal (ersätter alert/confirm)
 function svgAlert(msg, icon) {
