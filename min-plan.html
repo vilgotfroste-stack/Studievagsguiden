@@ -336,10 +336,7 @@ const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE
 </div>
 
 <!-- Loading state -->
-<div id="loadingState" style="min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:24px">
-  <div style="font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--ah)">Laddar din plan...</div>
-  <div style="font-size:.88rem;color:var(--mu)">Hämtar sparad data</div>
-</div>
+<div id="loadingState" style="display:none"></div>
 
 <!-- Error: plan ej betald -->
 <div id="unpaidState" style="display:none;min-height:100vh;display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:24px;text-align:center">
