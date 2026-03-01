@@ -1,7 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/skapa-min-plan", "destination": "/skapa-min-plan.html" },
-    { "source": "/din-plan",        "destination": "/din-plan.html" },
-    { "source": "/min-plan",        "destination": "/min-plan.html" }
-  ]
-}
