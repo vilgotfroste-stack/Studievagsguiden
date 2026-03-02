@@ -169,6 +169,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
   /* Snabbkalkyl cards */
   .gcards{grid-template-columns:1fr 1fr!important}
   .sgrid{grid-template-columns:1fr 1fr!important}
+  .mob-grid-2{grid-template-columns:1fr 1fr!important}
   .pncont{grid-template-columns:1fr!important}
   .amgrid{grid-template-columns:1fr!important}
 
@@ -1890,7 +1891,7 @@ function buildFP(name){
     <div style="padding:12px 10px;background:#fff3cd;border-radius:13px;text-align:center">
     <div style="font-size:.6rem;font-weight:700;color:#856404;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">CSN-skuld</div>
     <div style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:#856404;line-height:1" id="fD2s">${fmt(debt)} kr</div>
-    <div style="font-size:.65rem;color:#856404;opacity:.8;margin-top:4px">${fmt(loan)} kr/mån × ${mo} mån</div>
+    <div style="font-size:.65rem;color:#856404;opacity:.8;margin-top:4px" id="fD2sub">${fmt(loan)} kr/mån × ${mo} mån</div>
     </div>
 
     <div style="padding:12px 10px;background:${netGain10yr>0?'#D9F0E3':'#fff3cd'};border-radius:13px;text-align:center">
@@ -2778,6 +2779,7 @@ function upd(){
     const fPBel=document.getElementById('fPB');if(fPBel)fPBel.textContent=debt>0&&pb>0?fmt(pb)+' kr':'—';
     const fD2=document.getElementById('fD2');if(fD2)fD2.textContent=fmt(debt)+' kr';
     const fD2s=document.getElementById('fD2s');if(fD2s)fD2s.textContent=fmt(debt)+' kr';
+    const fD2sub=document.getElementById('fD2sub');if(fD2sub)fD2sub.textContent=fmt(loan)+' kr/mån × '+mo+' mån';
     const fBE=document.getElementById('fBE');if(fBE)fBE.textContent=be>0&&be<50?'~'+be+' år':'—';
     // Sync summary cards (alltid synlig sektion)
     const bv3=document.getElementById('fBV3');if(bv3){bv3.textContent=(bal>=0?'+':'')+fmt(bal)+' kr';bv3.style.color=bal>=0?'var(--ac)':'#c24b3b';}
