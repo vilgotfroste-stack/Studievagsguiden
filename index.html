@@ -539,11 +539,17 @@ function printPlan(){
 document.addEventListener('DOMContentLoaded',function(){
     const s=document.getElementById('inEdu');
     if(!s){console.error('inEdu element not found');return}
-    E.forEach(e=>{
+    E.forEach(e=>{\
         const o=document.createElement('option');
         o.value=e.id;
         o.textContent=e.t+' ('+e.y+' år)';
         s.appendChild(o);
+    });
+    // Spara svg_edu direkt när användaren väljer utbildning
+    s.addEventListener('change',function(){
+        const eid=parseInt(this.value)||0;
+        try{ localStorage.setItem('svg_edu', eid); }catch(e){}
+        edu=E.find(e=>e.id===eid)||null;
     });
     // Återställ snabbkalkyl från localStorage om plan redan gjorts
     try{
@@ -565,6 +571,7 @@ function calcG(){
     const eid=parseInt(document.getElementById('inEdu').value);
     if(!sal||!eid){alert('Fyll i din lön och välj utbildning.');return}
     edu=E.find(e=>e.id===eid);
+    try{ localStorage.setItem('svg_edu', eid); localStorage.setItem('svg_sal', sal); }catch(e){}
     const e=edu,bo=e.s0-sal,mo=Math.round(e.y*10),de=e.tc*mo,op=sal*12*e.y,yg=bo*12,be=yg>0?Math.ceil((op+de)/yg):0;
     document.getElementById('gvB').textContent=(bo>=0?'+':'')+fmt(bo)+' kr/mån';
     document.getElementById('gvD').textContent=Math.round(de/1000)+' tkr';
