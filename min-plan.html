@@ -2150,10 +2150,7 @@ function buildFP(name){
     } else if(need){
         h+=step('Inom 2 veckor',`Ansök till Komvux i ${cityName!=='hela Sverige'?cityName:'din kommun'}`,`Du saknar troligen <strong>${reqStatus.filter(r=>!r.found).map(r=>r.req).join(' och ')}</strong>. Välj ${a.work_status==='fulltime'?'<strong>deltid kväll/distans</strong> — du behåller jobbet':'<strong>heltid</strong> — snabbaste vägen'}. Sök på studera.nu, filtrera på distans + kväll. Klart till ${studyStart.startsWith('HT')?'HT'+(startYr+1):'VT'+(startYr+1)}.`,true);
     }
-    if(a.savings_amount==='none'||a.savings_amount==='under10'){
-        const buf=Math.round(to*2);
-        h+=step('Redan nu',`Bygg en startbuffert: ${fmt(buf)} kr`,`CSN tar 4–6 veckor på att betala ut. Utan buffert är du i kläm direkt. Öppna ett separat sparkonto nu — sätt in ${fmt(Math.round(buf/Math.max(2,Math.round(mo3/2))))} kr/mån tills studiestart.`);
-    }
+
     if(showHousing){
         const housingTitle=isMovingCity?`Ordna boende i ${studyCityName}`:`Hitta ${hn[hou]} i ${cityName}`;
         const housingUrgency=hou==='student'&&isMovingCity?'Så snart som möjligt — kötid kan vara lång':hou==='student'?'Så snart som möjligt':'Innan studiestart';
@@ -2415,14 +2412,6 @@ function buildFP(name){
         steps2.push({when:hpDeadline,icon:'📝',title:'Anmäl dig till Högskoleprov',desc:`HP ger dig en separat kvot in — du konkurrerar inte med betygssökande. Anmälan öppnar ca <strong>${hpDeadline}</strong>, provdatum <strong>${hpNextTerm}</strong>. Kostar 450 kr. Träna 2–4 veckor på gamla prov — poängen förbättras tydligt med övning. Anmäl på <strong>studera.nu/hogskoleprov</strong>.`});
     }
 
-    // Steg 3: Buffert om sparande = 0
-    if(a.savings_amount==='none'||a.savings_amount==='under10'){
-        const buffert=Math.round(to*2);
-        const mthsLeft=Math.max(1,Math.ceil((new Date(startYr+compTime,studyStart.startsWith('HT')?7:0,1)-now2)/(1000*60*60*24*30)));
-        const savePerMo=Math.round(buffert/Math.min(mthsLeft,6));
-        steps2.push({when:'Innan studiestart',icon:'💰',title:`Bygg buffert: ${fmt(buffert)} kr`,desc:`CSN tar 4–6 veckor innan första utbetalning. Du behöver täcka ${fmt(to)} kr/mån i ca 2 månader. Sätt undan ungefär <strong>${fmt(savePerMo)} kr/mån</strong> framåt. Öppna ett separat sparkonto — märk det "Studiestart".`});
-    }
-
     // Steg 4: Boende
     if(showHousing){
         const houTarget=isMovingCity?studyCityName:cityName;
@@ -2469,7 +2458,7 @@ function buildFP(name){
     <div style="width:36px;height:36px;border-radius:50%;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">✦</div>
     <div>
     <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ah);margin-bottom:6px">${firstName} — här är din konkreta plan</div>
-    <p style="font-size:.88rem;color:#495057;line-height:1.7;margin-bottom:10px">Du funderar på att bli <strong>${e.t.toLowerCase()}</strong>. Du är ${age} år, tjänar ${fmt(currentSal)} kr/mån idag och vill börja studera ${a.when_start==='asap'?'så snart som möjligt':a.when_start==='next'?'nästa termin':'inom '+a.when_start.replace('mo',' månader').replace('12mo','12 månader')}. Utbildningen tar <strong>${ry} år</strong> och du tar examen <strong>${gradYear}</strong> — ${gradAge} år gammal.</p>
+    <p style="font-size:.88rem;color:#495057;line-height:1.7;margin-bottom:10px">Du funderar på att bli <strong>${e.t.toLowerCase()}</strong>. Du är ${age} år, tjänar ${fmt(currentSal)} kr/mån idag och vill börja studera ${a.when_start==='asap'?'direkt':a.when_start==='6mo'?'inom 6 månader':a.when_start==='12mo'?'inom 12 månader':a.when_start==='next'?'nästa termin':'när det passar'}. Utbildningen tar <strong>${ry} år</strong> och du tar examen <strong>${gradYear}</strong> — ${gradAge} år gammal.</p>
     ${whyText?`<p style="font-size:.88rem;color:#495057;line-height:1.7;margin-bottom:10px">Du vill ha <strong>${whyText}</strong> — planen nedan är byggd för att ta dig dit.</p>`:''}
     ${concern!=='none'?`<div style="padding:10px 14px;background:#f0f4f1;border-radius:8px;border-left:3px solid var(--ac);font-size:.84rem;color:var(--ah);line-height:1.65">${concernText}</div>`:``}
     </div>
