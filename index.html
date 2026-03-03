@@ -539,7 +539,7 @@ function printPlan(){
 document.addEventListener('DOMContentLoaded',function(){
     const s=document.getElementById('inEdu');
     if(!s){console.error('inEdu element not found');return}
-    E.forEach(e=>{\
+    E.forEach(e=>{
         const o=document.createElement('option');
         o.value=e.id;
         o.textContent=e.t+' ('+e.y+' år)';
