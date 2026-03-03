@@ -508,7 +508,7 @@ function devFillAndShowPlan() {
     education_type: ['yh', 'uni'],
     study_pace: 'fulltime',
     study_mode: 'campus',
-    when_start: 'next',
+    when_start: 'asap',
     duration: 'any',
     fee_ok: 'no',
     gym: 'te',  // Teknikprogrammet - ger full behörighet till Systemutvecklare
@@ -948,7 +948,7 @@ const QS=[
     {id:'study_pace',t:'Vilken studietakt passar dig?',w:'Avgör om du kan arbeta samtidigt.',tp:'opts',opts:[{v:'fulltime',l:'Heltid'},{v:'parttime',l:'Deltid'},{v:'flexible',l:'Flexibel'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'study_mode',t:'Hur vill du studera?',w:'Påverkar dina studiealternativ.',tp:'opts',opts:[{v:'campus',l:'På plats'},{v:'distance',l:'Distans'},{v:'hybrid',l:'Hybrid'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'willing_to_move',t:'Är du villig att flytta för studier?',w:'Påverkar vilka skolor som passar dig.',tp:'opts',cond:()=>ans.study_mode!=='distance',opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'}]},
-    {id:'when_start',t:'Om ungefär hur många månader vill du börja studera?',w:'Styr tidslinjen i din plan. Ange 0 om du vill börja så snart som möjligt.',tp:'input',ph:'T.ex. 6',inputType:'number',min:0,max:60,su:'månader'},
+    {id:'when_start',t:'När vill du börja studera?',w:'Styr tidslinjen i din plan.',tp:'opts',opts:[{v:'asap',l:'Så snart som möjligt'},{v:'6mo',l:'Inom 6 månader'},{v:'12mo',l:'Inom 12 månader'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'duration',t:'Hur lång utbildning är du beredd att gå?',w:'Filtrerar bort för långa program.',tp:'opts',opts:[{v:'short',l:'Kortare än 6 månader'},{v:'6to12',l:'6–12 månader'},{v:'1to2',l:'1–2 år'},{v:'3plus',l:'3 år eller längre'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'fee_ok',t:'Är du öppen för avgiftsbelagda utbildningar?',w:'Privata YH och utbildningar kan kosta.',tp:'opts',opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}]},
 
@@ -2571,7 +2571,7 @@ function buildFP(name){
     <div style="width:36px;height:36px;border-radius:50%;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">✦</div>
     <div>
     <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ah);margin-bottom:6px">${firstName} — här är din konkreta plan</div>
-    <p style="font-size:.88rem;color:#495057;line-height:1.7;margin-bottom:10px">Du funderar på att bli <strong>${e.t.toLowerCase()}</strong>. Du är ${age} år, tjänar ${fmt(currentSal)} kr/mån idag och vill börja studera ${a.when_start==='asap'?'så snart som möjligt':a.when_start==='next'?'nästa termin':'inom '+a.when_start.replace('mo',' månader').replace('12mo','12 månader')}. Utbildningen tar <strong>${ry} år</strong> och du tar examen <strong>${gradYear}</strong> — ${gradAge} år gammal.</p>
+    <p style="font-size:.88rem;color:#495057;line-height:1.7;margin-bottom:10px">Du funderar på att bli <strong>${e.t.toLowerCase()}</strong>. Du är ${age} år, tjänar ${fmt(currentSal)} kr/mån idag och vill börja studera ${a.when_start==='asap'?'direkt':a.when_start==='6mo'?'inom 6 månader':a.when_start==='12mo'?'inom 12 månader':a.when_start==='next'?'nästa termin':'när det passar'}. Utbildningen tar <strong>${ry} år</strong> och du tar examen <strong>${gradYear}</strong> — ${gradAge} år gammal.</p>
     ${whyText?`<p style="font-size:.88rem;color:#495057;line-height:1.7;margin-bottom:10px">Du vill ha <strong>${whyText}</strong> — planen nedan är byggd för att ta dig dit.</p>`:''}
     ${concern!=='none'?`<div style="padding:10px 14px;background:#f0f4f1;border-radius:8px;border-left:3px solid var(--ac);font-size:.84rem;color:var(--ah);line-height:1.65">${concernText}</div>`:``}
     </div>
