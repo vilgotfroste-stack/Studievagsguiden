@@ -2421,7 +2421,7 @@ function buildFP(name){
         } else {
             houDesc=`Sök ${hn[hou]} i ${houTarget} via Blocket och lokala Facebook-grupper. Budget: ${fmt(rent)} kr/mån. Börja leta 2–3 månader före studiestart.`;
         }
-        steps2.push({when:hou==='student'?'Så snart som möjligt':'Innan studiestart',title:`${isMovingCity?'Flytt till '+houTarget+' — ordna boende':'Ordna '+hn[hou]+' i '+houTarget}`,desc:houDesc});
+        steps2.push({when:hou==='student'?'Så snart som möjligt':'Innan studiestart',icon:'🏠',title:`${isMovingCity?'Flytt till '+houTarget+' — ordna boende':'Ordna '+hn[hou]+' i '+houTarget}`,desc:houDesc});
     }
 
     // Steg 5: Ansökan till program
@@ -2894,6 +2894,11 @@ async function fetchPlanByEmail() {
         ans = row.data || {};
         sal = row.salary || ans.current_salary || 0;
         edu = E.find(e => e.id === row.education_id);
+        if (!edu) {
+            // Fallback: läs från localStorage (satt av snabbkalkylen)
+            const lsEduId = parseInt(localStorage.getItem('svg_edu')) || 0;
+            if (lsEduId > 0) edu = E.find(e => e.id === lsEduId);
+        }
         if (!edu) edu = E[0];
 
         const userName = ans.user_name || email.split('@')[0];
