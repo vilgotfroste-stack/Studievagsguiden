@@ -589,6 +589,13 @@ document.addEventListener('DOMContentLoaded',function(){
     // Standalone wizard – starta direkt
     ws=0;
     ans={};
+    // Läs edu från localStorage (satt av snabbkalkylen på index-sidan)
+    try {
+        const savedEduId = parseInt(localStorage.getItem('svg_edu')) || 0;
+        const savedSal = parseInt(localStorage.getItem('svg_sal')) || 0;
+        if (savedEduId > 0) edu = E.find(e => e.id === savedEduId) || null;
+        if (savedSal > 0) sal = savedSal;
+    } catch(e) {}
     renderW();
 });
 
