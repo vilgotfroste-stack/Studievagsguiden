@@ -907,30 +907,8 @@ function buildTeaser(){
     </div></div>`;
 }
 
-// Wizard
-</script>
 
-<script>
-addEventListener('DOMContentLoaded', function() {
-    const s = document.getElementById('inEdu');
-    E.forEach(e => {
-        const o = document.createElement('option');
-        o.value = e.id;
-        o.textContent = e.t + ' (' + e.y + ' år)';
-        s.appendChild(o);
-    });
-    // Återställ snabbkalkyl om användaren redan gjort det
-    try {
-        const savedSal = localStorage.getItem('svg_sal');
-        const savedEdu = localStorage.getItem('svg_edu');
-        if (savedSal && savedEdu && parseInt(savedSal) > 0 && parseInt(savedEdu) > 0) {
-            document.getElementById('inSal').value = savedSal;
-            document.getElementById('inEdu').value = savedEdu;
-            calcG();
-        }
-    } catch(e) {}
-});
-</script>
+
 
 </body>
 </html>
