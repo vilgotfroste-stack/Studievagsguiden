@@ -405,6 +405,9 @@ const E=[
 const CIT={stockholm:7000,goteborg:5500,malmo:5000,uppsala:5500,linkoping:4500,lund:5500,umea:4000,orebro:4500,other:4500};
 const HOU={student:.75,shared:.85,rental:1.2,home:0};
 const FIX=5450,BID=4120,WR=150;
+// CSN 2024 — heltid / deltid (50%)
+const CSN_BID_HT=7754, CSN_BID_DT=3877;
+const CSN_LAN_HT=6412, CSN_LAN_DT=3206;
 const GYM=[{id:'natur',l:'Naturvetenskap',k:'Naturvetenskap'},{id:'teknik',l:'Teknik',k:'Teknik'},{id:'samhall',l:'Samhäll',k:'Samhäll'},{id:'ekonomi',l:'Ekonomi',k:'Ekonomi'},{id:'estet',l:'Estet',k:'Estet'},{id:'vard',l:'Vård och omsorg',k:'Vård'},{id:'bygg',l:'Bygg och anläggning',k:'Bygg'},{id:'el',l:'El och energi',k:'El och energi'},{id:'industri',l:'Industri',k:'Industri'},{id:'other',l:'Annat / Komvux',k:'other'}];
 let edu=null,sal=0,ws=0,ans={};
 
@@ -948,20 +951,28 @@ function buildFP(name) {
   const hou = a.housing || 'student';
   const workNeeded = a.work_during === 'parttime' || a.work_status === 'parttime';
   const pm = workNeeded ? 2 : 1, ry = e.y * pm;
-  const defaultLoan = a.need_csn === 'grant' ? 0 : a.need_csn === 'no' ? 0 : 6000;
+  // CSN-tak baserat på studietakt
+  const deltid = a.study_pace === 'parttime';
+  const bidMax = deltid ? CSN_BID_DT : CSN_BID_HT;
+  const lanMax = deltid ? CSN_LAN_DT : CSN_LAN_HT;
+  // Förifyllning: bidrag alltid max, lån från wizard
+  const defaultBid = bidMax;
+  const defaultLoan = a.need_csn === 'no' ? 0 : a.need_csn === 'grant' ? 0 : lanMax;
   const loan = defaultLoan;
+  const fixedExp = parseInt(a.fixed_expenses) || 5000;
+  const variableExp = parseInt(a.variable_expenses) || 4000;
+  // Extrajobb: prefill från wizard
+  const defaultJobb = a.work_during === 'parttime' ? 5000 : a.work_during === 'yes' ? 3000 : 0;
   const wh = workNeeded ? 15 : (a.need_csn === 'both') ? 10 : 0;
   const wi = Math.round(wh * WR * 4.3);
   const mo = Math.round(ry * 10), debt = loan * mo;
   const currentSal = sal;
-  const fixedExp = parseInt(a.fixed_expenses) || 10000;
-  const variableExp = parseInt(a.variable_expenses) || 4000;
   const userExp = hou === 'home' ? (fixedExp + variableExp) : variableExp;
   const numKids = a.num_kids ? parseInt(a.num_kids)||1 : 0;
   const cc = a.has_kids === 'yes' ? 2000 * numKids : 0;
   const barnCSN = a.has_kids === 'yes' ? 2648 : 0;
   const rent = hou === 'home' ? 0 : Math.round((CIT[city]||4500) * (HOU[hou]||.75));
-  const ti = BID + barnCSN + loan + wi, to = rent + userExp + cc, bal = ti - to;
+  const ti = defaultBid + barnCSN + loan + defaultJobb, to = rent + fixedExp + variableExp + cc, bal = ti - to;
   const salDiff = e.s0 - currentSal;
   const op = currentSal * 12 * ry, yg = (e.s0 - currentSal) * 12, be = yg > 0 ? Math.ceil((op + debt) / yg) : 0;
   const gp = GYM.find(g => g.id === a.gym), gk = gp ? gp.k : 'other';
@@ -1152,10 +1163,12 @@ function buildFP(name) {
   // ═══════════════════════════════════════════
   // PANEL 2 — EKONOMI
   // ═══════════════════════════════════════════
-  const beDisp = be > 0 && be < 40 ? '~' + be + ' år' : '—';
-  const totalIn = BID + barnCSN + loan + wi;
-  const totalOut = rent + userExp + cc;
-  const balDisp = totalIn - totalOut;
+  const totalIn  = defaultBid + barnCSN + loan + defaultJobb;
+  const totalOut = rent + fixedExp + variableExp + cc;
+  const balDisp  = totalIn - totalOut;
+  const beDisp   = be > 0 && be < 40 ? '~' + be + ' år' : '—';
+  const mthRepay = debt > 0 ? Math.round(debt * 0.04 / 12) : 0;
+  const yrsRepay = mthRepay > 0 ? Math.ceil(debt / (mthRepay * 12)) : 0;
 
   let ek = `
     <div class="balance-hero">
@@ -1171,16 +1184,38 @@ function buildFP(name) {
       </div>
     </div>
 
-    <div class="section-label">Justera din budget</div>
+    <div class="section-label">Intäkter</div>
+
+    <div class="slider-block">
+      <div class="slider-top">
+        <div class="slider-name">🎓 CSN Bidrag <span class="slider-badge" style="background:#E8F5EE;color:#4A8C6A">${deltid ? 'Deltid' : 'Heltid'}</span></div>
+        <div class="slider-val" id="sv-bid">${fmtKr(defaultBid)}</div>
+      </div>
+      <input type="range" class="green" id="sl-bid" min="0" max="${bidMax}" step="100" value="${defaultBid}" oninput="updateBudget()">
+      <div class="slider-meta"><span>0 kr</span><span>Max ${fmtKr(bidMax)}</span></div>
+    </div>
 
     <div class="slider-block">
       <div class="slider-top">
         <div class="slider-name">💰 CSN Lån <span class="slider-badge" style="background:#FDF4E3;color:#8B6914">Frivilligt</span></div>
         <div class="slider-val" id="sv-lan">${fmtKr(loan)}</div>
       </div>
-      <input type="range" class="green" id="sl-lan" min="0" max="9484" step="100" value="${loan}" oninput="updateBudget()">
-      <div class="slider-meta"><span>0 kr</span><span>Max 9 484 kr</span></div>
+      <input type="range" class="green" id="sl-lan" min="0" max="${lanMax}" step="100" value="${loan}" oninput="updateBudget()">
+      <div class="slider-meta"><span>0 kr</span><span>Max ${fmtKr(lanMax)}</span></div>
     </div>
+
+    <div class="slider-block">
+      <div class="slider-top">
+        <div class="slider-name">💼 Extrajobb</div>
+        <div class="slider-val" id="sv-jobb">${fmtKr(defaultJobb)}</div>
+      </div>
+      <input type="range" class="green" id="sl-jobb" min="0" max="10000" step="500" value="${defaultJobb}" oninput="updateBudget()">
+      <div class="slider-meta"><span>0 kr</span><span>10 000 kr</span></div>
+    </div>
+
+    ${barnCSN > 0 ? `<div style="display:flex;align-items:center;justify-content:space-between;background:var(--al);border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:.83rem"><span style="color:var(--mu)">👶 Barntillägg CSN</span><span style="font-weight:700;color:var(--ah)">+${fmtKr(barnCSN)}</span></div>` : ''}
+
+    <div class="section-label" style="margin-top:12px">Utgifter</div>
 
     <div class="slider-block">
       <div class="slider-top">
@@ -1199,38 +1234,55 @@ function buildFP(name) {
 
     <div class="slider-block">
       <div class="slider-top">
-        <div class="slider-name">💼 Extrajobb</div>
-        <div class="slider-val" id="sv-jobb">0 kr</div>
+        <div class="slider-name">📋 Fasta utgifter <span class="slider-badge" style="background:var(--bll);color:var(--bl)">Försäkring, telefon m.m.</span></div>
+        <div class="slider-val" id="sv-fixed">${fmtKr(fixedExp)}</div>
       </div>
-      <input type="range" class="green" id="sl-jobb" min="0" max="8000" step="500" value="0" oninput="updateBudget()">
-      <div class="slider-meta"><span>0 kr</span><span>~8 000 kr</span></div>
+      <input type="range" class="red" id="sl-fixed" min="0" max="15000" step="250" value="${fixedExp}" oninput="updateBudget()">
+      <div class="slider-meta"><span>0 kr</span><span>15 000 kr</span></div>
     </div>
 
-    <div class="expand-block" id="exp-ekon-detail" style="margin-top:4px">
-      <div class="expand-head" onclick="toggle('exp-ekon-detail')">
-        <div class="expand-head-left">
-          <div style="font-size:.83rem;font-weight:600;color:var(--mu)">Visa fullständig budget</div>
+    <div class="slider-block">
+      <div class="slider-top">
+        <div class="slider-name">🛒 Rörliga utgifter <span class="slider-badge" style="background:var(--bll);color:var(--bl)">Mat, nöje, transport</span></div>
+        <div class="slider-val" id="sv-var">${fmtKr(variableExp)}</div>
+      </div>
+      <input type="range" class="red" id="sl-var" min="0" max="10000" step="250" value="${variableExp}" oninput="updateBudget()">
+      <div class="slider-meta"><span>0 kr</span><span>10 000 kr</span></div>
+    </div>
+
+    ${cc > 0 ? `<div style="display:flex;align-items:center;justify-content:space-between;background:#FFF3F3;border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:.83rem"><span style="color:var(--mu)">👶 Barn (${numKids} st)</span><span style="font-weight:700;color:var(--re)">−${fmtKr(cc)}</span></div>` : ''}
+
+    ${loan > 0 ? `
+    <div class="section-label" style="margin-top:12px">CSN-skuld</div>
+    <div class="expand-block" id="exp-skuld">
+      <div class="expand-head" onclick="toggle('exp-skuld')" style="cursor:pointer">
+        <div class="expand-head-left" style="display:flex;align-items:center;gap:12px">
+          <div>
+            <div style="font-size:.83rem;font-weight:600;color:var(--mu)">Total skuld efter examen</div>
+            <div style="font-size:1.15rem;font-weight:800;color:#8B6914" id="skuld-total">~${fmtKr(debt)}</div>
+          </div>
         </div>
         <span class="expand-arrow">▾</span>
       </div>
       <div class="expand-body"><div class="expand-inner" style="padding-top:12px">
-        <div style="display:grid;gap:6px">
-          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--mu)">CSN Bidrag</span><span style="font-weight:600;color:var(--ah)">+${fmtKr(BID)}${barnCSN?' (+'+fmtKr(barnCSN)+' barntillägg)':''}</span></div>
-          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--mu)">CSN Lån</span><span style="font-weight:600;color:var(--ah)" id="det-lan">+${fmtKr(loan)}</span></div>
-          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--mu)">Extrajobb</span><span style="font-weight:600;color:var(--ah)" id="det-jobb">+0 kr</span></div>
-          <div style="height:1px;background:var(--bo);margin:4px 0"></div>
-          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--mu)">Boende</span><span style="font-weight:600;color:var(--re)" id="det-boende">−${fmtKr(rent)}</span></div>
-          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--mu)">Levnadskostnader</span><span style="font-weight:600;color:var(--re)">−${fmtKr(userExp + cc)}</span></div>
-          <div style="height:1px;background:var(--bo);margin:4px 0"></div>
-          <div style="display:flex;justify-content:space-between;font-size:.9rem;font-weight:700"><span>Kvar</span><span id="det-bal" style="color:${balDisp>=0?'var(--ah)':'var(--re)'}">${balDisp>=0?'+':''}${fmtKr(balDisp)}</span></div>
-          <div style="height:1px;background:var(--bo);margin:4px 0"></div>
-          ${debt>0?`<div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--mu)">CSN-skuld totalt</span><span style="font-weight:600;color:#8B6914">~${fmtKr(debt)}</span></div>
-          <div style="display:flex;justify-content:space-between;font-size:.83rem"><span style="color:var(--mu)">Återbetalning/mån (efter examen)</span><span style="font-weight:600;color:#8B6914">~${fmtKr(Math.round(debt*0.04/12))}</span></div>`:'<div style="font-size:.83rem;color:var(--ah)">✓ Inga studielån — skuldfri student</div>'}
+        <div style="display:grid;gap:8px">
+          <div style="display:flex;justify-content:space-between;font-size:.83rem">
+            <span style="color:var(--mu)">Månadsåterbetalning (4% av skuld/år)</span>
+            <span style="font-weight:700;color:#8B6914" id="skuld-repay">~${fmtKr(mthRepay)}/mån</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:.83rem">
+            <span style="color:var(--mu)">Estimerad återbetalningstid</span>
+            <span style="font-weight:700;color:#8B6914" id="skuld-years">${yrsRepay > 0 && yrsRepay < 30 ? '~' + yrsRepay + ' år' : '—'}</span>
+          </div>
+          <div style="font-size:.75rem;color:var(--li);padding-top:4px">CSN-lån är räntesubventionerat. Aktuell ränta 2024: 1,69%. Återbetalning börjar 6 mån efter avslutad utbildning.</div>
         </div>
       </div></div>
-    </div>`;
+    </div>` : `
+    <div style="background:var(--al);border-radius:10px;padding:12px 14px;margin-top:12px;font-size:.83rem;color:var(--ah);font-weight:600">✓ Inga studielån — skuldfri student</div>`}
+  `;
 
   document.getElementById('panel-ekonomi').innerHTML = ek;
+
 
   // ═══════════════════════════════════════════
   // PANEL 3 — BEHÖRIGHET
@@ -1523,71 +1575,73 @@ function buildFP(name) {
 }
 
 // ── Budget slider logic ──
-function updateBudget(initLoan, initRent) {
-  const lanEl = document.getElementById('sl-lan');
-  const boendeEl = document.getElementById('sl-boende');
-  const jobbEl = document.getElementById('sl-jobb');
-  if (!lanEl) return;
-  const lanV = parseInt(lanEl.value);
-  const boendeV = parseInt(boendeEl.value);
-  const jobbV = parseInt(jobbEl.value);
-
-  // Derive fixed costs from current edu/ans
+function updateBudget() {
   const a = ans, e = edu;
   if (!a || !e) return;
-  const hou = a.housing || 'student';
-  const workNeeded = a.work_during === 'parttime' || a.work_status === 'parttime';
-  const pm = workNeeded ? 2 : 1, ry = e.y * pm;
-  const fixedExp = parseInt(a.fixed_expenses) || 10000;
-  const variableExp = parseInt(a.variable_expenses) || 4000;
-  const userExp = hou === 'home' ? (fixedExp + variableExp) : variableExp;
-  const barnCSN = a.has_kids === 'yes' ? 2648 : 0;
-  const cc2 = a.has_kids === 'yes' ? 2000 * (parseInt(a.num_kids)||1) : 0;
-  const wh = workNeeded ? 15 : (a.need_csn === 'both') ? 10 : 0;
-  const wi = Math.round(wh * WR * 4.3);
 
-  const inn = BID + barnCSN + lanV + jobbV + wi;
-  const ut = boendeV + userExp + cc2;
+  // Read all sliders
+  const bidEl    = document.getElementById('sl-bid');
+  const lanEl    = document.getElementById('sl-lan');
+  const jobbEl   = document.getElementById('sl-jobb');
+  const boendeEl = document.getElementById('sl-boende');
+  const fixedEl  = document.getElementById('sl-fixed');
+  const varEl    = document.getElementById('sl-var');
+  if (!lanEl || !boendeEl) return;
+
+  const bidV    = bidEl    ? parseInt(bidEl.value)    : 0;
+  const lanV    = parseInt(lanEl.value);
+  const jobbV   = jobbEl   ? parseInt(jobbEl.value)   : 0;
+  const boendeV = parseInt(boendeEl.value);
+  const fixedV  = fixedEl  ? parseInt(fixedEl.value)  : (parseInt(a.fixed_expenses)||5000);
+  const varV    = varEl    ? parseInt(varEl.value)    : (parseInt(a.variable_expenses)||4000);
+
+  const barnCSN = a.has_kids === 'yes' ? 2648 : 0;
+  const cc2     = a.has_kids === 'yes' ? 2000 * (parseInt(a.num_kids)||1) : 0;
+
+  const inn  = bidV + barnCSN + lanV + jobbV;
+  const ut   = boendeV + fixedV + varV + cc2;
   const balV = inn - ut;
 
-  setSliderPct('sl-lan', lanV, 0, 9484);
+  // Update slider fill percentages
+  const deltid2 = a.study_pace === 'parttime';
+  const bidMax2 = deltid2 ? CSN_BID_DT : CSN_BID_HT;
+  const lanMax2 = deltid2 ? CSN_LAN_DT : CSN_LAN_HT;
+  setSliderPct('sl-bid',    bidV,    0, bidMax2);
+  setSliderPct('sl-lan',    lanV,    0, lanMax2);
+  setSliderPct('sl-jobb',   jobbV,   0, 10000);
   setSliderPct('sl-boende', boendeV, 0, 12000);
-  setSliderPct('sl-jobb', jobbV, 0, 8000);
+  setSliderPct('sl-fixed',  fixedV,  0, 15000);
+  setSliderPct('sl-var',    varV,    0, 10000);
 
-  document.getElementById('sv-lan').textContent = fmtKr(lanV);
-  document.getElementById('sv-boende').textContent = fmtKr(boendeV);
-  document.getElementById('sv-jobb').textContent = fmtKr(jobbV);
+  // Update value labels
+  const sv = (id, v) => { const el = document.getElementById(id); if(el) el.textContent = fmtKr(v); };
+  sv('sv-bid', bidV); sv('sv-lan', lanV); sv('sv-jobb', jobbV);
+  sv('sv-boende', boendeV); sv('sv-fixed', fixedV); sv('sv-var', varV);
 
+  // Balance hero
   const balEl = document.getElementById('bal-display');
-  if (balEl) {
-    balEl.textContent = (balV >= 0 ? '+' : '') + fmtKr(balV);
-    balEl.className = 'balance-amount' + (balV < 0 ? ' neg' : '');
-  }
+  if (balEl) { balEl.textContent = (balV >= 0 ? '+' : '') + fmtKr(balV); balEl.className = 'balance-amount' + (balV < 0 ? ' neg' : ''); }
   const subEl = document.getElementById('bal-sub');
   if (subEl) subEl.textContent = balV >= 500 ? 'Bra marginal — du klarar dig komfortabelt.' : balV >= 0 ? 'Tight men det går ihop — justera nedan.' : 'Underskott — öka lån eller extrajobb.';
-  const inEl = document.getElementById('disp-in');
-  if (inEl) inEl.textContent = fmtKr(inn);
-  const utEl = document.getElementById('disp-ut');
-  if (utEl) utEl.textContent = fmtKr(ut);
+  const inEl = document.getElementById('disp-in');  if (inEl) inEl.textContent = fmtKr(inn);
+  const utEl = document.getElementById('disp-ut');  if (utEl) utEl.textContent = fmtKr(ut);
 
-  // Break-even
-  const loanDebt = lanV * Math.round(ry * 10);
-  const currentSal2 = sal;
-  const op2 = currentSal2 * 12 * ry;
-  const yg2 = (e.s0 - currentSal2) * 12;
-  const be2 = yg2 > 0 ? Math.ceil((op2 + loanDebt) / yg2) : 0;
+  // Break-even (live, based on current loan slider)
+  const workNeeded2 = a.work_during === 'parttime' || a.work_status === 'parttime';
+  const pm2 = workNeeded2 ? 2 : 1, ry2 = e.y * pm2;
+  const loanDebt2 = lanV * Math.round(ry2 * 10);
+  const yg2 = (e.s0 - sal) * 12;
+  const be2 = yg2 > 0 ? Math.ceil((sal * 12 * ry2 + loanDebt2) / yg2) : 0;
   const beEl = document.getElementById('disp-be');
   if (beEl) beEl.textContent = be2 > 0 && be2 < 40 ? '~' + be2 + ' år' : '—';
 
-  // Detail rows
-  const detLan = document.getElementById('det-lan');
-  if (detLan) detLan.textContent = '+' + fmtKr(lanV);
-  const detJobb = document.getElementById('det-jobb');
-  if (detJobb) detJobb.textContent = '+' + fmtKr(jobbV);
-  const detBoende = document.getElementById('det-boende');
-  if (detBoende) detBoende.textContent = '−' + fmtKr(boendeV);
-  const detBal = document.getElementById('det-bal');
-  if (detBal) { detBal.textContent = (balV >= 0 ? '+' : '') + fmtKr(balV); detBal.style.color = balV >= 0 ? 'var(--ah)' : 'var(--re)'; }
+  // CSN-skuld kort (live update)
+  const newDebt   = lanV * Math.round(ry2 * 10);
+  const newRepay  = newDebt > 0 ? Math.round(newDebt * 0.04 / 12) : 0;
+  const newYrs    = newRepay > 0 ? Math.ceil(newDebt / (newRepay * 12)) : 0;
+  const stEl = document.getElementById('skuld-total');  if (stEl) stEl.textContent = '~' + fmtKr(newDebt);
+  const srEl = document.getElementById('skuld-repay');  if (srEl) srEl.textContent = '~' + fmtKr(newRepay) + '/mån';
+  const syEl = document.getElementById('skuld-years');  if (syEl) syEl.textContent = newYrs > 0 && newYrs < 30 ? '~' + newYrs + ' år' : '—';
 }
 
 function setSliderPct(id, val, min, max) {
