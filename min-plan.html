@@ -1571,20 +1571,20 @@ function buildFP(name) {
  </div>`;
 
  // Studentum widget
- // Build filter tags for Studentum
+ // Build filter tags from wizard answers — skip "any" values
  const stuTags = [];
- // Utbildningstyp
+ // Utbildningstyp (multi-val)
  const eduTypes = Array.isArray(a.education_type) ? a.education_type : (a.education_type ? [a.education_type] : []);
- eduTypes.forEach(t => {
-   if (t === 'yh') stuTags.push('YH');
-   else if (t === 'uni') stuTags.push('Högskola / Universitet');
- });
- // Studieort / studieform
- if (a.study_mode === 'distance') stuTags.push('Distans');
- else if (a.willing_to_move === 'no' && cityNames[city]) stuTags.push(cityNames[city]);
- else if (a.willing_to_move === 'yes') stuTags.push('Hela Sverige');
+ const eduTypeMap = {yh:'YH', uni:'Högskola / Universitet', komvux:'Komvux', folk:'Folkhögskola', private:'Privat utbildning'};
+ eduTypes.forEach(t => { if (eduTypeMap[t]) stuTags.push(eduTypeMap[t]); });
  // Studietakt
- stuTags.push(a.study_pace === 'parttime' ? 'Deltid' : 'Heltid');
+ const studyPaceMap = {fulltime:'Heltid', parttime:'Deltid', flexible:'Flexibel'};
+ if (studyPaceMap[a.study_pace]) stuTags.push(studyPaceMap[a.study_pace]);
+ // Studieform
+ const studyModeMap = {campus:'På plats', distance:'Distans', hybrid:'Hybrid'};
+ if (studyModeMap[a.study_mode]) stuTags.push(studyModeMap[a.study_mode]);
+ // Studieort — bara om inte distans och inte villig att flytta
+ if (a.study_mode !== 'distance' && a.willing_to_move === 'no' && cityNames[city]) stuTags.push(cityNames[city]);
  // Terminsstart
  if (startTagText) stuTags.push('Start ' + startTagText);
  // Avgift
