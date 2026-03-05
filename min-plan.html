@@ -382,7 +382,7 @@ const E=[
 {id:12,t:'HR-specialist',y:3,s0:30000,s1:42000,dem:3,ai:12,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matte 1b/c'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
 {id:13,t:'Projektledare',y:3,s0:33000,s1:49000,dem:4,ai:10,stress:3,future:4,tc:9000,req:['Grundläggande behörighet'],rp:['Ekonomi','Teknik','Samhäll','Naturvetenskap'],pp:['Estet'],sc:{st:'Projektkoordinator',ho:'Byter bransch / konsult',sp:'Senior projektledare / PMP',le:'Programchef / affärsutvecklare'}},
 // Vård & Hälsa 
-{id:14,t:'Sjuksköterska',y:3,s0:32000,s1:43900,dem:5,ai:5,stress:4,future:5,tc:11000,req:['Naturkunskap 2','Matte 2a/b','Samhällskunskap 1b'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Leg. sjuksköterska',ho:'Byter specialitet / region',sp:'Specialistsjuksköterska',le:'Vårdenhetschef'}},
+{id:14,t:'Sjuksköterska',y:3,s0:36000,s1:43900,dem:5,ai:5,stress:4,future:5,tc:11000,req:['Naturkunskap 2','Matte 2a/b','Samhällskunskap 1b'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Leg. sjuksköterska',ho:'Byter specialitet / region',sp:'Specialistsjuksköterska',le:'Vårdenhetschef'}},
 {id:15,t:'Fysioterapeut',y:3,s0:30000,s1:39100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2a/b','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Legitimerad fysioterapeut',ho:'Byter vårdgivare / privat',sp:'Specialist / idrottsfysio',le:'Verksamhetschef'}},
 {id:16,t:'Arbetsterapeut',y:3,s0:29000,s1:38100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 1b/2','Matte 1b/c','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. arbetsterapeut',ho:'Byter region / verksamhet',sp:'Specialist / konsult',le:'Verksamhetschef'}},
 {id:17,t:'Biomedicinsk analytiker',y:3,s0:30000,s1:41200,dem:4,ai:8,stress:2,future:4,tc:10000,req:['Naturkunskap 2','Matte 2a/b','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Biomedicinsk analytiker',ho:'Byter laboratorium / region',sp:'Cytodiagnostiker / specialist',le:'Laboratoriekemist / chef'}},
@@ -1094,6 +1094,38 @@ function buildFP(name) {
  </div>`;
  }
 
+
+ // Alternativkostnad — hook tidigt i översikt
+ const studyYears = e.y;
+ const yr10diff = currentSal > 0 ? (e.s0 * 12 * (10 - studyYears)) - (currentSal * 12 * (10 - studyYears)) : null;
+
+ if (currentSal > 0 && yr10diff !== null) {
+   const diffSign = yr10diff >= 0 ? '+' : '';
+   const diffColor = yr10diff >= 0 ? 'var(--ah)' : 'var(--re)';
+   ov += `<div style="background:var(--card);border:1.5px solid var(--bo);border-radius:16px;padding:18px 20px;margin-bottom:8px">
+ <div style="font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--li);margin-bottom:12px">Om du stannar vs byter — 10-årsvy</div>
+ <div style="display:grid;grid-template-columns:1fr 1px 1fr;gap:0;margin-bottom:14px">
+   <div style="text-align:center;padding:0 12px">
+     <div style="font-size:.72rem;color:var(--mu);margin-bottom:4px">Stannar kvar</div>
+     <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--tx);line-height:1">${fmt(currentSal * 12 * 10)} kr</div>
+     <div style="font-size:.7rem;color:var(--li);margin-top:3px">på 10 år</div>
+   </div>
+   <div style="background:var(--bo)"></div>
+   <div style="text-align:center;padding:0 12px">
+     <div style="font-size:.72rem;color:var(--mu);margin-bottom:4px">Byter till ${e.t}</div>
+     <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ah);line-height:1">${fmt(e.s0 * 12 * (10 - studyYears) + e.s1 * 12 * 0)} kr</div>
+     <div style="font-size:.7rem;color:var(--li);margin-top:3px">efter ${studyYears} år utb.</div>
+   </div>
+ </div>
+ <div style="background:${yr10diff >= 0 ? 'var(--al)' : '#FFF3F3'};border-radius:10px;padding:10px 14px;font-size:.82rem;text-align:center">
+   <span style="color:var(--mu)">Skillnad de 10 åren: </span>
+   <strong style="color:${diffColor}">${diffSign}${fmt(Math.abs(yr10diff))} kr</strong>
+   <span style="color:var(--li);font-size:.72rem"> · inkl. ${studyYears} år utan ingångslön</span>
+ </div>
+ <div style="font-size:.72rem;color:var(--li);margin-top:8px;text-align:center">Toppinkomst ${e.t.toLowerCase()}: upp till ${fmt(e.s1)} kr/mån — ${fmt(e.s1 * 12)} kr/år</div>
+ </div>`;
+ }
+
  // Yrket section
  ov += `<div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x='2' y='7' width='20' height='14' rx='2'/><path d='M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2'/></svg> Yrket</div>
  <div class="expand-block" id="exp-job">
@@ -1145,6 +1177,42 @@ function buildFP(name) {
  <ul class="detail-list">${ec.career_steps.map(s=>'<li>'+s+'</li>').join('')}</ul>
  </div></div>
  </div>`;
+
+
+ // Varför du passar — baserat på why_change, work_status, gym
+ const fitMap = {
+   // [edu_id]: { why_change: text, gym: text, work_status: text }
+   1:  { meaning:'Din drivkraft att göra skillnad är kärnan i sjuksköterskyrket — patienter märker det.', salary:'Sjuksköterskans lön ökar stadigt med erfarenhet och specialisering.', burnout:'Byte från ett utmattande jobb till ett meningsfullt är en välkänd väg för sjuksköterskor.', career:'Karriärvägen är tydlig — spec.ssk, enhetschef, vårdutvecklare.', passion:'Omvårdnad kräver just den genuina viljan du beskriver.', gym_natur:'Naturvetenskapsbakgrund ger dig ett försprång i anatomi och farmakologi.', gym_vard:'Din vård-inriktning på gymnasiet är direkt relevant — du vet redan vad som väntar.', status_unemployed:'Studier ger dig en tydlig struktur och ett konkret mål framåt.' },
+   2:  { meaning:'Systemutvecklare bygger verktyg som faktiskt används av miljontals människor.', salary:'Tech är branschen med störst lönetillväxt — seniorutvecklare förhandlar fritt.', burnout:'Kodning är problemlösning — många hittar det mentalt friare än traditionella kontorsjobb.', career:'Från junior till senior till arkitekt — karriärvägen är väldefinierad och snabb.', passion:'Passion för teknik är det bästa meritkortet i branschen — arbetsgivare ser det direkt.', gym_teknik:'Teknisk bakgrund innebär att matematik och logik redan sitter — en stor fördel.', gym_natur:'Naturvetenskapligt tänk appliceras direkt på algoritmik och datastrukturer.', status_unemployed:'Systemutvecklare är en av branscherna med kortast tid från utbildning till jobb.' },
+   3:  { meaning:'Att forma unga människors framtid är ett av de mest meningsfulla jobben som finns.', salary:'Lärarlonetillägg och karriärtjänster ger reell löneutveckling de senaste åren.', burnout:'Lärare byter till yrket från stressiga branscher — strukturen i skolåret uppskattas.', career:'Förstelärare, lektor, rektor — tydliga steg för den som vill utvecklas.', passion:'Ditt engagemang syns i klassrummet — elever svarar på lärare som verkligen bryr sig.', gym_samhall:'Samhällsvetenskaplig bakgrund ger dig ämnesdjup inom SO — eftertraktat.', status_unemployed:'Lärarbristen är akut — du kommer ha jobb redan under praktiken.' },
+   4:  { meaning:'Civilekonom-rollen kopplar ekonomi till verklig påverkan i organisationer.', salary:'Ekonomiutbildning är en av de starkaste löneinvesteringarna i Sverige.', burnout:'Strukturerad analys och projektarbete — en annan typ av stress än repetitiva jobb.', career:'Bred examen öppnar bank, konsult, CFO-spår — välj den väg som passar dig.', passion:'Affärssinne är en egenskap som inte lärs ut — du har det redan.', gym_ekonomi:'Din ekonomibakgrund på gymnasiet ger dig ett försprång i de första terminerna.', status_unemployed:'Civilekonomer efterfrågas brett — konjunkturokänslig basefterfrågan.' },
+   5:  { meaning:'Civilingenjörer bygger infrastruktur, produkter och system som samhället vilar på.', salary:'Civilingenjör är en av de mest lönsamma utbildningarna i landet — särskilt inom tech.', burnout:'Ingenjörsarbete är varierande och problemfokuserat — ovanligt repetitivt.', career:'Specialist, projektledare, konsult, CTO — obegränsad karriärbredd.', passion:'Teknisk nyfikenhet är ingenjörens viktigaste verktyg — och du har det.', gym_teknik:'Teknisk gymnasiebakgrund är direkt relevant — du har redan grunderna i matte och fysik.', gym_natur:'Naturvetenskapsprogrammet är standardvägen in — du är redan förberedd.', status_unemployed:'Ingenjörsbrist råder i Sverige — arbetsgivare letar aktivt efter nya kandidater.' },
+   51: { meaning:'Industriell ekonomi kombinerar ingenjörstänk med affärsmannaskap — sällsynt kombination.', salary:'En av de högst betalda examenerna i Sverige, särskilt inom industri och konsult.', burnout:'Rollen spänner från fabriksgolv till styrelserum — aldrig monotont.', career:'Operations, supply chain, management consulting — bred och välbetald karriärbredd.', passion:'Kombinationen av teknik och affärer kräver just det mångfacetterade intresse du beskriver.', gym_teknik:'Teknisk bakgrund är exakt vad som krävs — du uppfyller den svåraste delen.', gym_ekonomi:'Ekonomikunskaper från gymnasiet ger dig försprång i företagsekonomiblock.' },
+   6:  { meaning:'Socionom är ett av de yrken som faktiskt förändrar människors liv — direkt.', salary:'Offentlig sektor ger stabil löneutveckling och kollektivavtal.', burnout:'Att byta från ett meningslöst jobb till socialt arbete är en av de vanligaste omvägarna.', career:'Familjerätt, missbruk, migration — specialisering ger både djup och löneutveckling.', passion:'Din vilja att hjälpa är yrkeskrav nummer ett — och ingen kan lära ut den.', gym_samhall:'Samhällsvetenskaplig bakgrund ger direkt förståelse för välfärdsystemet och juridiken.', status_unemployed:'Kommuner söker aktivt socionomer — bristen är stor och bara växer.' },
+   7:  { meaning:'Elektriker bygger och underhåller den infrastruktur samhället inte kan fungera utan.', salary:'YH-elektriker når snabbt 45 000+ kr — med övertid och jour ännu mer.', burnout:'Praktiskt, varierat arbete — aldrig två likadana dagar.', career:'Från montör till projektledare, starta eget — klassisk karriärväg med god löneutveckling.', passion:'Teknikintresse och praktiskt händlag är dina starkaste meritkortet.', gym_el:'Din el-bakgrund är direkt relevant — du har ett försprång som de flesta elever saknar.', gym_teknik:'Teknisk bakgrund innebär att elmomenterna kommer naturligare för dig.' },
+   8:  { meaning:'UX-designers formar hur miljontals människor upplever digitala produkter.', salary:'YH-utbildad UX:are når 40 000+ kr snabbt — remote-möjligheter finns överallt.', burnout:'Kreativt och analytiskt arbete — ovanligt kombination som håller motivationen uppe.', career:'Från junior designer till lead, produktchef, design director.', passion:'Designkänsla och empati för användare är det som skiljer bra från bra — och du har det.', gym_estet:'Estetisk bakgrund ger dig ett visuellt språk som teknikstuderande ofta saknar.', status_unemployed:'Portfolio-baserad antagning — din livserfarenhet kan ersätta höga betyg.' },
+   19: { meaning:'DevOps kopplar samman mjukvaruutveckling och driftstabilitet — en nyckelroll i tech.', salary:'Cloud- och DevOps-kompetens är bland det mest efterfrågade och välbetalda i branschen.', burnout:'Automatisering och problemlösning — intellektuellt stimulerande och varierat.', career:'DevOps engineer → Platform engineer → Cloud architect → CTO-spår.', passion:'Teknisk nyfikenhet och systemtänk är kärnan — och det är precis det du beskriver.', gym_teknik:'Teknisk bakgrund innebär att infrastruktur- och nätverkstänk faller naturligt.', gym_natur:'Analytiskt tänk från naturvetenskapen tillämpas direkt i DevOps-arbetet.' },
+ };
+
+ const fit = fitMap[e.id] || {};
+ const fitTexts = [];
+ // why_change
+ if (fit[a.why_change]) fitTexts.push(fit[a.why_change]);
+ // gymnasium
+ const gymFitKey = 'gym_' + a.gym;
+ if (fit[gymFitKey]) fitTexts.push(fit[gymFitKey]);
+ // work_status
+ if (a.work_status === 'unemployed' && fit.status_unemployed) fitTexts.push(fit.status_unemployed);
+
+ if (fitTexts.length > 0) {
+   ov += `<div class="section-label" style="margin-top:4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Varför du passar</div>
+ <div style="background:var(--card);border:1.5px solid var(--bo);border-radius:14px;padding:16px 18px;margin-bottom:8px;display:grid;gap:10px">
+   ${fitTexts.map(t => `<div style="display:flex;gap:10px;align-items:flex-start">
+     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg>
+     <span style="font-size:.83rem;color:var(--tx);line-height:1.55">${t}</span>
+   </div>`).join('')}
+ </div>`;
+ }
 
  // Du är inte ensam
  ov += `<div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg> Du är inte ensam</div>
