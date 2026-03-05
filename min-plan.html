@@ -444,7 +444,6 @@ function devFillAndShowPlan() {
  need_csn: 'both',
  work_during: 'no',
  has_kids: 'no',
- has_partner: 'no', // 'yes_same', 'no'
  housing: 'home', // Bo kvar där jag bor
  fixed_expenses: '8000',
  variable_expenses: '4000',
@@ -1652,7 +1651,7 @@ function buildFP(name) {
  <span class="expand-arrow"></span>
  </div>
  <div class="expand-body"><div class="expand-inner">
- <p>${e.id===1||e.id===3||e.id===6?'Examensarbete + sista praktikblocket. Många tackar ja till jobb på sin praktikplats direkt.':'Examensarbete och ofta en LIA-praktik — de flesta får jobberbjudande därifrån.'} Börja söka jobb <strong>3–4 månader före examen</strong>.</p>
+ <p>${[14,15,16,17,18,20,21].includes(e.id)?'Examensarbete + sista praktikblocket. Många tackar ja till jobb på sin praktikplats direkt.':[1,2,3,4,7,8,9,10,11].includes(e.id)?'Examensarbete och ofta en LIA-praktik — de flesta får jobberbjudande därifrån.':'Examensarbete. Nätverka aktivt nu — LinkedIn, branschevent, examensarbetets uppdragsgivare.'} Börja söka jobb <strong>3–4 månader före examen</strong>.</p>
  </div></div>
  </div>`;
 
