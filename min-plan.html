@@ -1172,45 +1172,50 @@ function buildFP(name) {
 
  let ek = `
  <div class="balance-hero">
- <div class="balance-label">Kvar per månad som student</div>
- <div class="balance-amount${balDisp < 0 ? ' neg' : ''}" id="bal-display">${balDisp >= 0 ? '+' : ''}${fmtKr(balDisp)}</div>
- <div class="balance-sub" id="bal-sub">${balDisp >= 500 ? 'Bra marginal — du klarar dig komfortabelt.' : balDisp >= 0 ? 'Tight men det går ihop — justera nedan.' : 'Underskott — öka lån eller extrajobb.'}</div>
+ <div style="display:grid;grid-template-columns:1fr 1px 1fr;gap:0;margin-bottom:14px">
+   <div style="text-align:center;padding:0 12px">
+     <div class="balance-label">Kvar per månad</div>
+     <div class="balance-amount${balDisp < 0 ? ' neg' : ''}" id="bal-display" style="font-size:2.2rem">${balDisp >= 0 ? '+' : ''}${fmtKr(balDisp)}</div>
+     <div class="balance-sub" id="bal-sub" style="font-size:.72rem">${balDisp >= 500 ? 'Bra marginal' : balDisp >= 0 ? 'Tight men det går ihop' : 'Underskott — justera nedan'}</div>
+   </div>
+   <div style="background:var(--bo);height:100%"></div>
+   ${loan > 0 ? `
+   <div style="text-align:center;padding:0 12px;cursor:pointer" onclick="toggle('exp-skuld')">
+     <div class="balance-label">Total CSN-skuld</div>
+     <div style="font-family:'DM Serif Display',serif;font-size:2.2rem;color:#8B6914;line-height:1" id="skuld-total">~${fmtKr(debt)}</div>
+     <div style="font-size:.72rem;color:var(--mu);margin-top:4px">efter examen <span class="expand-arrow" style="font-size:.7rem">▾</span></div>
+   </div>` : `
+   <div style="text-align:center;padding:0 12px">
+     <div class="balance-label">CSN-skuld</div>
+     <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--ah);line-height:1">0 kr</div>
+     <div style="font-size:.72rem;color:var(--ah);margin-top:4px">skuldfri student</div>
+   </div>`}
+ </div>
  <div class="balance-row">
- <div class="balance-row-item"><div class="val" id="disp-in">${fmtKr(totalIn)}</div><div class="lbl">Totalt in</div></div>
- <div style="width:1px;height:30px;background:var(--bo)"></div>
- <div class="balance-row-item"><div class="val" id="disp-ut">${fmtKr(totalOut)}</div><div class="lbl">Totalt ut</div></div>
- <div style="width:1px;height:30px;background:var(--bo)"></div>
- <div class="balance-row-item"><div class="val" id="disp-be">${beDisp}</div><div class="lbl">Break-even</div></div>
+   <div class="balance-row-item"><div class="val" id="disp-in">${fmtKr(totalIn)}</div><div class="lbl">Totalt in</div></div>
+   <div style="width:1px;height:30px;background:var(--bo)"></div>
+   <div class="balance-row-item"><div class="val" id="disp-ut">${fmtKr(totalOut)}</div><div class="lbl">Totalt ut</div></div>
+   <div style="width:1px;height:30px;background:var(--bo)"></div>
+   <div class="balance-row-item"><div class="val" id="disp-be">${beDisp}</div><div class="lbl">Break-even</div></div>
  </div>
  </div>
 
  ${loan > 0 ? `
- <div class="section-label" style="margin-top:12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1='12' y1='1' x2='12' y2='23'/><path d='M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'/></svg> CSN-skuld</div>
- <div class="expand-block" id="exp-skuld">
- <div class="expand-head" onclick="toggle('exp-skuld')" style="cursor:pointer">
- <div class="expand-head-left" style="display:flex;align-items:center;gap:12px">
- <div>
- <div style="font-size:.83rem;font-weight:600;color:var(--mu)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1='12' y1='1' x2='12' y2='23'/><path d='M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'/></svg> Total skuld efter examen</div>
- <div style="font-size:1.15rem;font-weight:800;color:#8B6914" id="skuld-total">~${fmtKr(debt)}</div>
- </div>
- </div>
- <span class="expand-arrow"></span>
- </div>
- <div class="expand-body"><div class="expand-inner" style="padding-top:12px">
- <div style="display:grid;gap:8px">
- <div style="display:flex;justify-content:space-between;font-size:.83rem">
- <span style="color:var(--mu)">Månadsåterbetalning (4% av skuld/år)</span>
- <span style="font-weight:700;color:#8B6914" id="skuld-repay">~${fmtKr(mthRepay)}/mån</span>
- </div>
- <div style="display:flex;justify-content:space-between;font-size:.83rem">
- <span style="color:var(--mu)">Estimerad återbetalningstid</span>
- <span style="font-weight:700;color:#8B6914" id="skuld-years">${yrsRepay > 0 && yrsRepay < 30 ? '~' + yrsRepay + ' år' : '—'}</span>
- </div>
- <div style="font-size:.75rem;color:var(--li);padding-top:4px">CSN-lån är räntesubventionerat. Aktuell ränta 2024: 1,69%. Återbetalning börjar 6 mån efter avslutad utbildning.</div>
- </div>
- </div></div>
- </div>` : `
- <div style="background:var(--al);border-radius:10px;padding:12px 14px;margin-top:12px;font-size:.83rem;color:var(--ah);font-weight:600"> Inga studielån — skuldfri student</div>`}
+ <div class="expand-block" id="exp-skuld" style="margin-bottom:8px">
+   <div class="expand-body"><div class="expand-inner" style="padding-top:12px">
+     <div style="display:grid;gap:8px">
+       <div style="display:flex;justify-content:space-between;font-size:.83rem">
+         <span style="color:var(--mu)">Månadsåterbetalning (4% av skuld/år)</span>
+         <span style="font-weight:700;color:#8B6914" id="skuld-repay">~${fmtKr(mthRepay)}/mån</span>
+       </div>
+       <div style="display:flex;justify-content:space-between;font-size:.83rem">
+         <span style="color:var(--mu)">Estimerad återbetalningstid</span>
+         <span style="font-weight:700;color:#8B6914" id="skuld-years">${yrsRepay > 0 && yrsRepay < 30 ? '~' + yrsRepay + ' år' : '—'}</span>
+       </div>
+       <div style="font-size:.75rem;color:var(--li);padding-top:4px">CSN-lån är räntesubventionerat. Aktuell ränta 2024: 1,69%. Återbetalning börjar 6 mån efter avslutad utbildning.</div>
+     </div>
+   </div></div>
+ </div>` : ``}
 
  <div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points='23 6 13.5 15.5 8.5 10.5 1 18'/><polyline points='17 6 23 6 23 12'/></svg> Intäkter</div>
 
