@@ -398,41 +398,86 @@ const SUPABASE_KEY = 'sb_publishable_Vfm1BArZN_RAWrwTOzVGXA_WWvIk77V';
 
 <script>
 const E=[
-// ── IT & Teknik ──
-{id:1,t:'Systemutvecklare',y:3,s0:35000,s1:54900,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matte 3c/4','Fysik 1a/2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Utvecklare på företag',ho:'Konsult / byter bolag',sp:'Arkitekt / specialist',le:'Tech lead / CTO'}},
-{id:2,t:'Dataanalytiker',y:3,s0:33000,s1:54500,dem:4,ai:12,stress:2,future:5,tc:8000,req:['Matte 3c/4','Statistik eller liknande'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Dataanalytiker junior',ho:'Senior analytiker / konsult',sp:'Data scientist / BI-specialist',le:'Analytics manager'}},
-{id:3,t:'IT-säkerhetsspecialist',y:3,s0:33000,s1:52600,dem:5,ai:5,stress:3,future:5,tc:8000,req:['Matte 2a/b','Grundläggande IT-kompetens'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Säkerhetsanalytiker',ho:'Konsult / byter organisation',sp:'Cybersecurity specialist',le:'CISO / säkerhetschef'}},
-{id:4,t:'UX/UI-designer',y:2,s0:32000,s1:48000,dem:3,ai:22,stress:2,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik','Estet'],pp:[],sc:{st:'Junior UX-designer',ho:'Byter bolag / konsult',sp:'Lead designer / UX-researcher',le:'Design manager'}},
-{id:5,t:'Civilingenjör',y:5,s0:41000,s1:56200,dem:4,ai:18,stress:2,future:5,tc:8000,req:['Matte 4','Fysik 2'],rp:['Naturvetenskap','Teknik'],pp:[],sc:{st:'Ingenjör på företag',ho:'Konsult / byter bransch',sp:'Teknisk specialist',le:'Engineering manager'}},
-{id:6,t:'Högskoleingenjör',y:3,s0:38800,s1:45600,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matte 3c/4','Fysik 1a/2'],rp:['Naturvetenskap','Teknik'],pp:[],sc:{st:'Ingenjör junior',ho:'Konsult / byter bransch',sp:'Senior ingenjör',le:'Projektledare / teamlead'}},
-{id:7,t:'DevOps / Cloud engineer',y:2,s0:35000,s1:52000,dem:5,ai:10,stress:2,future:5,tc:8000,req:['Grundläggande behörighet'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'DevOps-ingenjör junior',ho:'Konsult / byter bolag',sp:'Cloud architect / SRE',le:'Platform engineering lead'}},
-// ── Ekonomi & Business ──
-{id:8,t:'Civilekonom',y:4,s0:34000,s1:54000,dem:3,ai:25,stress:3,future:3,tc:9000,req:['Matte 3c/4','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Controller / ekonom',ho:'Konsult / byter bransch',sp:'Finansanalytiker',le:'CFO / VD'}},
-{id:9,t:'Redovisningsekonom',y:2,s0:30000,s1:44300,dem:4,ai:20,stress:2,future:3,tc:8000,req:['Matte 2a/b','Engelska 6'],rp:['Ekonomi','Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Redovisningsekonom',ho:'Konsult / byter byrå',sp:'Auktoriserad revisor',le:'Ekonomichef'}},
-{id:10,t:'Controller',y:3,s0:33000,s1:48200,dem:4,ai:20,stress:3,future:3,tc:9000,req:['Matte 3c/4','Engelska 6'],rp:['Ekonomi','Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Junior controller',ho:'Byter bransch / konsult',sp:'Senior controller',le:'CFO / ekonomichef'}},
-{id:11,t:'Digital marknadsförare',y:2,s0:30000,s1:43000,dem:3,ai:18,stress:3,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Ekonomi','Samhäll','Estet'],pp:['Naturvetenskap','Teknik'],sc:{st:'Digital marknadsförare',ho:'Konsult / byrå',sp:'Specialist SEO/SEM/social',le:'Marknadschef'}},
-{id:12,t:'HR-specialist',y:3,s0:30000,s1:42000,dem:3,ai:12,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matte 1b/c'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
-{id:13,t:'Projektledare',y:3,s0:33000,s1:49000,dem:4,ai:10,stress:3,future:4,tc:9000,req:['Grundläggande behörighet'],rp:['Ekonomi','Teknik','Samhäll','Naturvetenskap'],pp:['Estet'],sc:{st:'Projektkoordinator',ho:'Byter bransch / konsult',sp:'Senior projektledare / PMP',le:'Programchef / affärsutvecklare'}},
-// ── Vård & Hälsa ──
-{id:14,t:'Sjuksköterska',y:3,s0:32000,s1:43900,dem:5,ai:5,stress:4,future:5,tc:11000,req:['Naturkunskap 2','Matte 2a/b','Samhällskunskap 1b'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Leg. sjuksköterska',ho:'Byter specialitet / region',sp:'Specialistsjuksköterska',le:'Vårdenhetschef'}},
-{id:15,t:'Fysioterapeut',y:3,s0:30000,s1:39100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2a/b','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Legitimerad fysioterapeut',ho:'Byter vårdgivare / privat',sp:'Specialist / idrottsfysio',le:'Verksamhetschef'}},
-{id:16,t:'Arbetsterapeut',y:3,s0:29000,s1:38100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 1b/2','Matte 1b/c','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. arbetsterapeut',ho:'Byter region / verksamhet',sp:'Specialist / konsult',le:'Verksamhetschef'}},
-{id:17,t:'Biomedicinsk analytiker',y:3,s0:30000,s1:41200,dem:4,ai:8,stress:2,future:4,tc:10000,req:['Naturkunskap 2','Matte 2a/b','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Biomedicinsk analytiker',ho:'Byter laboratorium / region',sp:'Cytodiagnostiker / specialist',le:'Laboratoriekemist / chef'}},
-{id:18,t:'Tandhygienist',y:3,s0:30000,s1:40900,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 1b/c','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. tandhygienist',ho:'Byter klinik / region',sp:'Specialist / konsult',le:'Klinikchet / eget företag'}},
-// ── Samhälle & Människor ──
-{id:19,t:'Socionom',y:3.5,s0:29000,s1:40300,dem:4,ai:8,stress:5,future:4,tc:10000,req:['Samhällskunskap 1b','Matte 1b/c'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik','Vård'],pp:['Estet'],sc:{st:'Socialsekreterare',ho:'Byter kommun / verksamhet',sp:'Familjerätt / missbruk',le:'Enhetschef'}},
-{id:20,t:'Grundskollärare',y:3.5,s0:29000,s1:40200,dem:5,ai:5,stress:4,future:4,tc:10000,req:['Matte 2a/b','Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Klassrumslärare',ho:'Byter skola / kommun',sp:'Förstelärare',le:'Rektor / skolledare'}},
-{id:21,t:'Gymnasielärare',y:4.5,s0:31000,s1:42700,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Ämnesstudier 90 hp + ULV'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Ämneslärare',ho:'Byter skola / ämne',sp:'Förstelärare',le:'Rektor / skolledare'}},
-{id:22,t:'Studie- och yrkesvägledare',y:3,s0:29000,s1:40100,dem:4,ai:5,stress:2,future:4,tc:9000,req:['Samhällskunskap 1b','Grundläggande behörighet'],rp:['Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Studie- och yrkesvägledare',ho:'Byter skola / sektor',sp:'Senior vägledare / specialist',le:'Verksamhetschef'}},
-{id:23,t:'Personalvetare',y:3,s0:29000,s1:42000,dem:3,ai:10,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matte 1b/c'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator / personalvetare',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
-// ── Tekniska / Praktiska ──
-{id:24,t:'Byggingenjör',y:3,s0:34000,s1:46000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matte 3c/4','Fysik 1a/2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Byggingenjör',ho:'Konsult / byter projekt',sp:'Projektingenjör / specialist',le:'Projektchef / platschef'}},
-{id:25,t:'Fastighetsförvaltare',y:3,s0:34000,s1:50600,dem:4,ai:8,stress:2,future:4,tc:9000,req:['Matte 2a/b','Grundläggande behörighet'],rp:['Ekonomi','Teknik','Samhäll'],pp:['Naturvetenskap'],sc:{st:'Fastighetsförvaltare',ho:'Byter bolag / region',sp:'Teknisk förvaltare / specialist',le:'Förvaltningschef / fastighetschef'}},
-{id:26,t:'VVS-ingenjör',y:2,s0:33000,s1:45000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matte 2a/b','Fysik 1a/2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'VVS-konstruktör / tekniker',ho:'Konsult / byter projekt',sp:'Senior ingenjör / specialist',le:'Projektchef / avdelningschef'}},
-{id:27,t:'Automationsingenjör',y:3,s0:34000,s1:48000,dem:5,ai:8,stress:2,future:5,tc:9000,req:['Matte 3c/4','Fysik 1a/2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Automationsingenjör',ho:'Konsult / byter industri',sp:'Senior ingenjör / specialist',le:'Automationschef / projektledare'}},
-// ── Övriga ──
-{id:28,t:'Kriminolog',y:3,s0:28000,s1:39500,dem:3,ai:8,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Grundläggande behörighet'],rp:['Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Utredare / handläggare',ho:'Byter myndighet / sektor',sp:'Specialist brottsprevention',le:'Enhetschef / verksamhetschef'}},
-{id:29,t:'Beteendevetare',y:3,s0:28000,s1:58400,dem:3,ai:8,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Grundläggande behörighet'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'Utredare / konsulent',ho:'Byter organisation / sektor',sp:'Specialist beteende / HR',le:'Enhetschef / konsultchef'}}
+{id:1,t:'Sjuksköterska',y:3,s0:34000,s1:43900,dem:5,ai:8,stress:4,future:5,tc:11000,req:['Naturkunskap 2','Matte 2a/b','Samhällskunskap 1b'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],
+ sch:[
+   {n:'Sjuksköterskeprogrammet',school:'Karolinska Institutet',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026'],length:'3 år (180 hp)',csn:true,fee:0,lang:'swedish',cutoff:18.5,vfu:'46 veckor VFU',url:'https://ki.se/utbildning/sjukskoterska',p:1.45,t:['Hög ranking','Forskning','Top 3 Sverige']},
+   {n:'Sjuksköterskeprogrammet',school:'Göteborgs Universitet',c:'goteborg',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'3 år (180 hp)',csn:true,fee:0,lang:'swedish',cutoff:17.2,vfu:'46 veckor VFU',url:'https://www.gu.se/studera/sjukskoterska',p:1.25,t:['Stort universitetssjukhus','Bred VFU']},
+   {n:'Sjuksköterskeprogrammet',school:'Uppsala Universitet',c:'uppsala',f:'campus',pace:'fulltime',starts:['HT2026'],length:'3 år (180 hp)',csn:true,fee:0,lang:'swedish',cutoff:16.8,vfu:'46 veckor VFU',url:'https://www.uu.se/utbildning/sjukskoterska',p:1.15,t:['Tradition','Akademiska sjukhuset']},
+   {n:'Sjuksköterskeprogrammet',school:'Linnéuniversitetet',c:'other',f:'both',pace:'fulltime',starts:['HT2026','VT2027'],length:'3 år (180 hp)',csn:true,fee:0,lang:'swedish',cutoff:14.5,vfu:'46 veckor VFU',url:'https://lnu.se/sjukskoterska',p:.85,t:['Distansalternativ','Flexibelt','Lägre krav']},
+   {n:'Sjuksköterskeprogrammet',school:'Malmö Universitet',c:'malmo',f:'campus',pace:'fulltime',starts:['HT2026'],length:'3 år (180 hp)',csn:true,fee:0,lang:'swedish',cutoff:15.8,vfu:'46 veckor VFU',url:'https://mau.se/sjukskoterska',p:1.05,t:['Modernt','Praktikfokus']},
+   {n:'Sjuksköterskeprogrammet (distans)',school:'Mittuniversitetet',c:'other',f:'distance',pace:'fulltime',starts:['HT2026','VT2027'],length:'3 år (180 hp)',csn:true,fee:0,lang:'swedish',cutoff:13.2,vfu:'46 veckor VFU',url:'https://www.miun.se/sjukskoterska-distans',p:.7,t:['Distans','Flexibelt','Egen takt']}
+ ],
+ sc:{st:'Vårdcentral / avdelning',ho:'Byter specialitet / region',sp:'IVA / anestesi / barnmorska',le:'Vårdenhetschef'}},
+{id:2,t:'Systemutvecklare',y:3,s0:35000,s1:54900,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matte 3c/4','Fysik 1a/2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],
+ sch:[
+   {n:'Civilingenjör Datateknik',school:'KTH',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026'],length:'5 år (300 hp)',csn:true,fee:0,lang:'swedish',cutoff:22.5,vfu:'',url:'https://www.kth.se/datateknik',p:1.65,t:['Top 3 Sverige','Forskningsnära','Högst ranking']},
+   {n:'Systemvetenskapligt program',school:'Stockholms Universitet',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'3 år (180 hp)',csn:true,fee:0,lang:'swedish',cutoff:16.5,vfu:'',url:'https://www.su.se/systemvetenskap',p:1.35,t:['Bred IT-grund','Lägre inträdeskrav']},
+   {n:'Mjukvaruutveckling och mobila plattformar',school:'Linnéuniversitetet',c:'other',f:'both',pace:'fulltime',starts:['HT2026'],length:'3 år (180 hp)',csn:true,fee:0,lang:'swedish',cutoff:14.2,vfu:'',url:'https://lnu.se/mjukvaruutveckling',p:1.15,t:['Modern stack','Distansmöjlighet']},
+   {n:'.NET-utvecklare',school:'Nackademin (YH)',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'12 veckor LIA',url:'https://nackademin.se/net-utvecklare',p:0,t:['YH','Praktikfokus','Snabb väg in']},
+   {n:'Frontendutvecklare',school:'Medieinstitutet (YH)',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'16 veckor LIA',url:'https://medieinstitutet.se/frontend',p:0,t:['YH','Modern webbutveckling','Hög anställningsgrad']},
+   {n:'Webbutvecklare (distans)',school:'Jensen Yrkeshögskola',c:'other',f:'distance',pace:'fulltime',starts:['HT2026'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'12 veckor LIA',url:'https://jensen.se/webbutvecklare-distans',p:0,t:['YH','Distans','Flexibelt']}
+ ],
+ sc:{st:'Utvecklare på företag',ho:'Konsult / byter bolag',sp:'Arkitekt / specialist',le:'Tech lead / CTO'}},
+{id:3,t:'Grundlärare',y:3.5,s0:34000,s1:40200,dem:5,ai:5,stress:4,future:4,tc:10000,req:['Matte 2a/b','Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],
+ sch:[
+   {n:'Grundlärarprogrammet F-3',school:'Stockholms Universitet',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026'],length:'4 år (240 hp)',csn:true,fee:0,lang:'swedish',cutoff:15.2,vfu:'30 veckor VFU',url:'https://www.su.se/grundlarare',p:1.1,t:['Stor lärosäte','Bred metodikgrund']},
+   {n:'Grundlärarprogrammet 4-6',school:'Göteborgs Universitet',c:'goteborg',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'4 år (240 hp)',csn:true,fee:0,lang:'swedish',cutoff:14.8,vfu:'30 veckor VFU',url:'https://www.gu.se/grundlarare',p:1.0,t:['Pedagogisk profil','Flexibla starter']},
+   {n:'Grundlärarprogrammet',school:'Linköpings Universitet',c:'linkoping',f:'both',pace:'fulltime',starts:['HT2026'],length:'4 år (240 hp)',csn:true,fee:0,lang:'swedish',cutoff:13.5,vfu:'30 veckor VFU',url:'https://liu.se/grundlarare',p:.9,t:['Campus + Distans','Lägre krav']},
+   {n:'Grundlärarprogrammet (distans)',school:'Högskolan Dalarna',c:'other',f:'distance',pace:'fulltime',starts:['HT2026','VT2027'],length:'4 år (240 hp)',csn:true,fee:0,lang:'swedish',cutoff:12.0,vfu:'30 veckor VFU',url:'https://du.se/grundlarare-distans',p:.6,t:['Distans','Nätbaserat','Flexibelt']},
+   {n:'Grundlärarprogrammet',school:'Malmö Universitet',c:'malmo',f:'campus',pace:'fulltime',starts:['HT2026'],length:'4 år (240 hp)',csn:true,fee:0,lang:'swedish',cutoff:14.2,vfu:'30 veckor VFU',url:'https://mau.se/grundlarare',p:.95,t:['Mångfald','Praktik']}
+ ],
+ sc:{st:'Klassrumslärare',ho:'Byter skola / kommun',sp:'Förstelärare',le:'Rektor / skolledare'}},
+{id:4,t:'Civilekonom',y:4,s0:34000,s1:52000,dem:3,ai:25,stress:3,future:3,tc:9000,req:['Matte 3c/4','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],
+ sch:[
+   {n:'Civilekonomprogrammet',school:'Handelshögskolan Stockholm',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026'],length:'4 år (240 hp)',csn:true,fee:0,lang:'swedish',cutoff:22.5,vfu:'',url:'https://www.hhs.se/civilekonom',p:1.9,t:['#1 Sverige','Nätverk','Prestige']},
+   {n:'Civilekonomprogrammet',school:'Handelshögskolan Göteborg',c:'goteborg',f:'campus',pace:'fulltime',starts:['HT2026'],length:'4 år (240 hp)',csn:true,fee:0,lang:'swedish',cutoff:21.0,vfu:'',url:'https://www.handels.gu.se/civilekonom',p:1.5,t:['Top 3','Internationellt']},
+   {n:'Civilekonomprogrammet',school:'Uppsala Universitet',c:'uppsala',f:'campus',pace:'fulltime',starts:['HT2026'],length:'4 år (240 hp)',csn:true,fee:0,lang:'swedish',cutoff:19.8,vfu:'',url:'https://www.uu.se/civilekonom',p:1.3,t:['Tradition','Bred ekonomiutbildning']},
+   {n:'Civilekonomprogrammet',school:'Örebro Universitet',c:'orebro',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'4 år (240 hp)',csn:true,fee:0,lang:'swedish',cutoff:17.5,vfu:'',url:'https://oru.se/civilekonom',p:.9,t:['Mindre klasser','Lägre krav']},
+   {n:'Ekonomprogrammet',school:'Linnéuniversitetet',c:'other',f:'both',pace:'fulltime',starts:['HT2026','VT2027'],length:'3 år (180 hp)',csn:true,fee:0,lang:'swedish',cutoff:15.2,vfu:'',url:'https://lnu.se/ekonom',p:.75,t:['Distansmöjlighet','3-årigt alternativ']}
+ ],
+ sc:{st:'Controller / ekonom',ho:'Konsult / byter bransch',sp:'Finansanalytiker',le:'CFO / VD'}},
+{id:5,t:'Civilingenjör Teknik',y:5,s0:38000,s1:58000,dem:4,ai:18,stress:2,future:5,tc:8000,req:['Matte 4','Fysik 2'],rp:['Naturvetenskap','Teknik'],pp:[],
+ sch:[
+   {n:'Civilingenjör Maskinteknik',school:'KTH',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026'],length:'5 år (300 hp)',csn:true,fee:0,lang:'swedish',cutoff:22.0,vfu:'',url:'https://www.kth.se/civ-maskin',p:1.7,t:['Top 3 Sverige','Forskning','Bred profil']},
+   {n:'Civilingenjör Teknisk Fysik',school:'Chalmers',c:'goteborg',f:'campus',pace:'fulltime',starts:['HT2026'],length:'5 år (300 hp)',csn:true,fee:0,lang:'swedish',cutoff:21.5,vfu:'',url:'https://www.chalmers.se/teknisk-fysik',p:1.6,t:['Industrikontakter','Internationellt']},
+   {n:'Civilingenjör Datateknik',school:'Lunds Tekniska Högskola',c:'lund',f:'campus',pace:'fulltime',starts:['HT2026'],length:'5 år (300 hp)',csn:true,fee:0,lang:'swedish',cutoff:21.0,vfu:'',url:'https://www.lth.se/datateknik',p:1.45,t:['LTH','IT-fokus']},
+   {n:'Civilingenjör Elektroteknik',school:'Linköpings Universitet',c:'linkoping',f:'campus',pace:'fulltime',starts:['HT2026'],length:'5 år (300 hp)',csn:true,fee:0,lang:'swedish',cutoff:19.5,vfu:'',url:'https://liu.se/elektroteknik',p:1.35,t:['Innovation','Startup-kultur']}
+ ],
+ sc:{st:'Ingenjör på företag',ho:'Konsult / byter bransch',sp:'Teknisk specialist',le:'Engineering manager'}},
+{id:51,t:'Civilingenjör Industriell ekonomi',y:5,s0:38000,s1:60000,dem:4,ai:12,stress:2,future:5,tc:8000,req:['Matte 4'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll','Ekonomi'],
+ sch:[
+   {n:'Civilingenjör Industriell ekonomi',school:'Linköpings Universitet',c:'linkoping',f:'campus',pace:'fulltime',starts:['HT2026'],length:'5 år (300 hp)',csn:true,fee:0,lang:'swedish',cutoff:20.5,vfu:'',url:'https://liu.se/industriell-ekonomi',p:1.5,t:['Ledning & teknik','Bred profil','Ej Fysik 2']},
+   {n:'Civilingenjör Industriell ekonomi',school:'Chalmers',c:'goteborg',f:'campus',pace:'fulltime',starts:['HT2026'],length:'5 år (300 hp)',csn:true,fee:0,lang:'swedish',cutoff:20.0,vfu:'',url:'https://www.chalmers.se/industriell-ekonomi',p:1.45,t:['Industrikontakter','Göteborgsregionen']},
+   {n:'Civilingenjör Samhällsbyggnad',school:'Luleå Tekniska Universitet',c:'other',f:'campus',pace:'fulltime',starts:['HT2026'],length:'5 år (300 hp)',csn:true,fee:0,lang:'swedish',cutoff:17.0,vfu:'',url:'https://ltu.se/samhallsbyggnad',p:.85,t:['Gruvindustri','Norra Sverige','Lägre krav']}
+ ],
+ sc:{st:'Teknisk chef / konsult',ho:'Affärsutvecklare',sp:'Projektledare',le:'VP / VD'}},
+{id:6,t:'Socionom',y:3.5,s0:35000,s1:40300,dem:4,ai:10,stress:5,future:4,tc:10000,req:['Samhällskunskap 1b','Matte 1b/c'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik','Vård'],pp:['Estet'],
+ sch:[
+   {n:'Socionomprogrammet',school:'Stockholms Universitet',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026'],length:'3,5 år (210 hp)',csn:true,fee:0,lang:'swedish',cutoff:16.5,vfu:'26 veckor VFU',url:'https://www.su.se/socionom',p:1.3,t:['Stor utbildning','Mångfald']},
+   {n:'Socionomprogrammet',school:'Göteborgs Universitet',c:'goteborg',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'3,5 år (210 hp)',csn:true,fee:0,lang:'swedish',cutoff:15.8,vfu:'26 veckor VFU',url:'https://www.gu.se/socionom',p:1.2,t:['Socialt arbete','Bred praktik']},
+   {n:'Socionomprogrammet',school:'Lunds Universitet',c:'lund',f:'campus',pace:'fulltime',starts:['HT2026'],length:'3,5 år (210 hp)',csn:true,fee:0,lang:'swedish',cutoff:15.5,vfu:'26 veckor VFU',url:'https://www.lunduniversity.lu.se/socionom',p:1.15,t:['Tradition','Forskning']},
+   {n:'Socionomprogrammet (distans)',school:'Mittuniversitetet',c:'other',f:'distance',pace:'fulltime',starts:['HT2026','VT2027'],length:'3,5 år (210 hp)',csn:true,fee:0,lang:'swedish',cutoff:13.0,vfu:'26 veckor VFU',url:'https://www.miun.se/socionom-distans',p:.65,t:['Distans','Flexibelt','Lägre krav']},
+   {n:'Socionomprogrammet',school:'Ersta Sköndal Bräcke högskola',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026'],length:'3,5 år (210 hp)',csn:true,fee:0,lang:'swedish',cutoff:14.2,vfu:'26 veckor VFU',url:'https://esh.se/socionom',p:.9,t:['Mindre skola','Personlig']}
+ ],
+ sc:{st:'Socialsekreterare',ho:'Byter kommun / verksamhet',sp:'Familjerätt / missbruk',le:'Enhetschef'}},
+{id:7,t:'Elektriker (YH)',y:2,s0:30000,s1:37700,dem:5,ai:6,stress:3,future:5,tc:10000,req:['Matte 1a/b','Fysik 1a'],rp:['El och energi','Teknik','Naturvetenskap'],pp:['Bygg','Industri','Samhäll'],
+ sch:[
+   {n:'Elinstallation',school:'Yrgo',c:'goteborg',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'26 veckor LIA',url:'https://www.yrgo.se/elinstallation',p:0,t:['YH','50% praktik','Hög anställning']},
+   {n:'Elektriker',school:'TUC Yrkeshögskola',c:'other',f:'campus',pace:'fulltime',starts:['HT2026'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'26 veckor LIA',url:'https://www.tucsweden.se/elektriker',p:0,t:['YH','Rikstäckande','Bred bas']},
+   {n:'Elinstallatör',school:'Hermods',c:'other',f:'both',pace:'fulltime',starts:['HT2026','VT2027'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'26 veckor LIA',url:'https://www.hermods.se/elinstallator',p:0,t:['YH','Campus + Distans','Flexibelt']},
+   {n:'Elektriker med inriktning automation',school:'Nackademin',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'20 veckor LIA',url:'https://nackademin.se/elektriker-automation',p:0,t:['YH','Automationsfokus','Stockholm']},
+   {n:'Elektriker serviceteknik',school:'Jensen Yrkeshögskola',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'26 veckor LIA',url:'https://jensen.se/elektriker',p:0,t:['YH','Serviceinriktad','Praktik']}
+ ],
+ sc:{st:'Installationselektriker',ho:'Byter arbetsgivare / ort',sp:'Automationstekniker',le:'Arbetsledare / eget företag'}},
+{id:8,t:'UX-designer (YH)',y:2,s0:32000,s1:48000,dem:3,ai:22,stress:2,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik','Estet'],pp:[],
+ sch:[
+   {n:'UX-designer',school:'Nackademin',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'16 veckor LIA',url:'https://nackademin.se/ux-designer',p:0,t:['YH','Hög kvalitet','Industrikontakter']},
+   {n:'UX/UI-designer',school:'Yrgo',c:'goteborg',f:'campus',pace:'fulltime',starts:['HT2026'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'16 veckor LIA',url:'https://www.yrgo.se/ux-ui',p:0,t:['YH','Design-fokus','Portfolio']},
+   {n:'UX/UI-designer',school:'Changemaker Educations',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'16 veckor LIA',url:'https://www.changemaker.se/ux-ui',p:0,t:['YH','Startup-känsla','Modern']},
+   {n:'Frontendutvecklare med UX',school:'Medieinstitutet',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'16 veckor LIA',url:'https://medieinstitutet.se/ux-frontend',p:0,t:['YH','Kod + Design','Bred kompetens']},
+   {n:'UX-designer (distans)',school:'Jensen Yrkeshögskola',c:'other',f:'distance',pace:'fulltime',starts:['HT2026'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'16 veckor LIA',url:'https://jensen.se/ux-designer-distans',p:0,t:['YH','Distans','Flexibelt']}
+ ],
+ sc:{st:'In-house UX',ho:'Konsult / frilans',sp:'UX Research / Design systems',le:'Head of Design'}}
 ];
 const CIT={stockholm:7000,goteborg:5500,malmo:5000,uppsala:5500,linkoping:4500,lund:5500,umea:4000,orebro:4500,other:4500};
 const HOU={student:.75,shared:.85,rental:1.2,home:0};
@@ -473,7 +518,6 @@ function devFillAndShowPlan() {
     need_csn: 'both',
     work_during: 'no',
     has_kids: 'no',
-    has_partner: 'no',  // 'yes_same', 'no'
     housing: 'home',  // Bo kvar där jag bor
     fixed_expenses: '8000',
     variable_expenses: '4000',
@@ -928,7 +972,6 @@ const QS=[
     // Del 4 – Familj / ansvar
     {id:'has_kids',t:'Har du barn eller ekonomiskt ansvar för andra?',w:'Påverkar barntillägg och budget.',tp:'opts',opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'}]},
     {id:'num_kids',t:'Hur många barn har du?',w:'',tp:'opts',cond:()=>ans.has_kids==='yes',opts:[{v:'1',l:'1'},{v:'2',l:'2'},{v:'3',l:'3'},{v:'4plus',l:'4 eller fler'}]},
-    {id:'has_partner',t:'Har du sambo?',w:'Påverkar hushållsekonomi.',tp:'opts',opts:[{v:'yes_same',l:'Ja'},{v:'no',l:'Nej'}]},
 
     // Del 5 – Boende & utgifter
     {id:'housing',t:'Hur tänker du bo under studietiden?',w:'Bestämmer din boendekostnad i budgeten.',tp:'opts',opts:[{v:'student',l:'Studentboende / korridor'},{v:'shared',l:'Dela lägenhet'},{v:'rental',l:'Egen hyresrätt'},{v:'home',l:'Bo kvar där jag bor'}]},
@@ -1383,7 +1426,7 @@ function renderPay(){
     <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border:1.5px solid var(--bo)">
     <div style="width:8px;height:8px;border-radius:50%;background:var(--pu);flex-shrink:0"></div>
     <span style="font-size:.86rem;font-weight:600">Skolor</span>
-    <span style="margin-left:auto;font-size:.82rem;color:var(--mu)">Studentum →</span></div>
+    <span style="margin-left:auto;font-size:.82rem;color:var(--mu)">${e.sch.length} matchade</span></div>
     </div>
 
     <div style="text-align:center;margin-bottom:16px"><div style="font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:4px">Lås upp hela planen</div><div style="font-size:.82rem;color:var(--mu)">Personlig budget, tidslinje, skolmatchning — allt baserat på dina ${vqs.length} svar.</div></div>
@@ -1504,30 +1547,49 @@ function buildFP(name){
     // Opportunity cost: total lost income during studies
     const opCost=afterTax(sal)*12*ry;
 
-    // Studentum URL builder
-    const cityNames2={stockholm:'Stockholm',goteborg:'Göteborg',malmo:'Malmö',uppsala:'Uppsala',linkoping:'Linköping',lund:'Lund',umea:'Umeå',orebro:'Örebro'};
-    function buildStudentumUrl2(eduName){
-        const params=new URLSearchParams({q:eduName});
-        if(a.study_mode==='distance')params.set('studieform','distans');
-        else if(a.study_mode==='campus'&&a.willing_to_move==='no'){const cn=cityNames2[city];if(cn)params.set('stad',cn);}
-        if(a.study_pace==='parttime')params.set('studietakt','deltid');
-        return 'https://www.studentum.se/utbildningar?'+params.toString();
-    }
-    const studentumUrl2=buildStudentumUrl2(e.t);
-    const studentumTags2=[];
-    if(a.study_mode==='distance')studentumTags2.push('Distans');
-    else if(a.willing_to_move==='no'&&cityNames2[city])studentumTags2.push(cityNames2[city]);
-    if(a.study_pace==='parttime')studentumTags2.push('Deltid');else studentumTags2.push('Heltid');
-    const nowSt=new Date();
-    let startTag2='';
-    if(a.when_start==='asap')startTag2=nowSt.getMonth()<6?'HT'+nowSt.getFullYear():'VT'+(nowSt.getFullYear()+1);
-    else if(a.when_start==='6mo'){const d=new Date(nowSt.getFullYear(),nowSt.getMonth()+6,1);startTag2=d.getMonth()<6?'HT'+d.getFullYear():'VT'+(d.getFullYear()+1);}
-    else{const d=new Date(nowSt.getFullYear(),nowSt.getMonth()+12,1);startTag2=d.getMonth()<6?'HT'+d.getFullYear():'VT'+(d.getFullYear()+1);}
-    if(startTag2)studentumTags2.push('Start '+startTag2);
+    // Schools — filter by user preferences
+    const schs=e.sch.filter(s=>{
+        // Studieform filter
+        if(a.study_mode==='campus'&&s.f==='distance')return false;
+        if(a.study_mode==='distance'&&s.f==='campus')return false;
+        
+        // Utbildningstyp filter
+        const eduTypes=Array.isArray(a.education_type)?a.education_type:(a.education_type?[a.education_type]:[]);
+        if(eduTypes.length>0&&!eduTypes.includes('any')){
+            const wantsYH=eduTypes.includes('yh');
+            const wantsUni=eduTypes.includes('uni');
+            const isYH=s.p===0;
+            const isUni=s.p>0;
+            
+            if(!wantsYH&&isYH)return false;
+            if(!wantsUni&&isUni)return false;
+        }
+        
+        // Studietakt filter
+        if(a.study_pace==='parttime'&&s.pace==='fulltime')return false;
+        
+        // CSN filter
+        if(a.csn_needed==='yes'&&!s.csn)return false;
+        
+        // Avgift filter
+        if(a.fee_ok==='no'&&s.fee>0)return false;
+        
+        // Språk filter
+        if(a.language==='swedish'&&s.lang==='english')return false;
+        if(a.language==='english'&&s.lang==='swedish')return false;
+        
+        return true;
+    }).sort((x,y)=>{
+        // Prioritera stad
+        if(x.c===city&&y.c!==city)return -1;
+        if(y.c===city&&x.c!==city)return 1;
+        // Sedan antagningspoäng
+        return (y.p||0)-(x.p||0);
+    });
 
     // ═══════ Studiestaden & boendelogik ═══════
-    const studyCity=city;
-    const studyCityName=cityName;
+    const studyCity=(schs.length>0&&schs[0]&&schs[0].c)?schs[0].c:city;
+    const studyCityName=(schs.length>0&&schs[0].c!==city)?({stockholm:'Stockholm',goteborg:'Göteborg',malmo:'Malmö',uppsala:'Uppsala',linkoping:'Linköping',lund:'Lund',umea:'Umeå',orebro:'Örebro'}[schs[0].c]||cityName):cityName;
     const isMovingCity=studyCity!==city;
     const isDistanceStudy=a.study_mode==='distance'||(a.study_mode==='hybrid'&&!isMovingCity);
     // Visa boendesteg: inte bor kvar hemma OCH faktiskt relevant
@@ -1569,7 +1631,7 @@ function buildFP(name){
     <p class="pintro">${jobTxt} och är ${age} år. ${certaintyTxt} ${introLine}</p>
     <div style="margin-top:14px;padding:14px;background:rgba(255,255,255,.12);border-radius:10px;display:grid;gap:6px;font-size:.84rem">
     <div style="display:flex;justify-content:space-between"><span style="opacity:.75">Utbildning</span><span style="font-weight:700">${e.t}</span></div>
-    <div style="display:flex;justify-content:space-between"><span style="opacity:.75">Skolor</span><span style="font-weight:700">Studentum</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="opacity:.75">Skolor</span><span style="font-weight:700">${schs.length} alternativ</span></div>
     <div style="display:flex;justify-content:space-between"><span style="opacity:.75">Studieform</span><span style="font-weight:700">${formTxt}, ${ry} år</span></div>
     <div style="display:flex;justify-content:space-between"><span style="opacity:.75">Examen</span><span style="font-weight:700">${gradYear} (${gradAge} år)</span></div>
     ${a.has_kids==='yes'?'<div style="display:flex;justify-content:space-between"><span style="opacity:.75">Barntillägg CSN</span><span style="font-weight:700">+'+fmt(barnCSN)+' kr/mån</span></div>':''}
@@ -1782,18 +1844,34 @@ function buildFP(name){
     </a>
     </div>`;
 
-    // ─── Studentum widget ───
-    h+=`<div style="background:#fff;border:2px solid var(--ac);border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 4px 16px rgba(122,194,154,.12)">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-    <div style="width:28px;height:28px;border-radius:50%;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;flex-shrink:0">🎓</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ah)">Hitta ${e.t}-program</div>
+    // ─── Antagningspoäng från matchade skolor ───
+    const topSchs=schs.slice(0,3);
+    if(topSchs.length>0){
+    h+=`<div style="background:#fff;border:2px solid #e0e0d8;border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+    <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ah);margin-bottom:4px">Antagningspoäng — dina närmaste alternativ</div>
+    <div style="font-size:.78rem;color:#6c757d;margin-bottom:16px">Lägsta poäng från senaste antagningsomgången</div>
+    <div style="display:grid;gap:10px">`;
+    topSchs.forEach(s=>{
+        const cutoffColor=s.cutoff>=20?'#721c24':s.cutoff>=17?'#856404':'var(--ah)';
+        const cutoffBg=s.cutoff>=20?'#f8d7da':s.cutoff>=17?'#fff3cd':'#D9F0E3';
+        const cutoffLabel=s.cutoff>=20?'Hög konkurrens':s.cutoff>=17?'Medel':'Relativt tillgänglig';
+        h+=`<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#f8f9fa;border-radius:10px;border-left:3px solid ${cutoffColor}">
+        <div style="flex:1;min-width:0">
+        <div style="font-weight:700;font-size:.88rem;color:var(--ah)">${s.school}</div>
+        <div style="font-size:.78rem;color:#6c757d;margin-top:2px">${s.n}${s.f==='distance'?' · Distans':s.f==='campus'?' · Campus':''} · ${s.length}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+        <div style="padding:4px 10px;background:${cutoffBg};border-radius:6px;font-size:.82rem;font-weight:700;color:${cutoffColor}">${s.cutoff>0?s.cutoff+' meritpoäng':'—'}</div>
+        <div style="font-size:.7rem;color:#6c757d;margin-top:3px">${cutoffLabel}</div>
+        </div>
+        </div>`;
+    });
+    h+=`</div>
+    <div style="margin-top:12px;padding:10px 14px;background:#f0f4f1;border-radius:8px;font-size:.8rem;color:var(--ah);line-height:1.5">
+    Poängen varierar år för år. Reservantagning ger ofta 30–50% chans även om du är nära gränsen.
+    <a href="https://www.antagning.se" target="_blank" style="color:var(--ac);font-weight:600;display:inline-block;margin-top:2px">Kolla exakt poäng på antagning.se →</a>
     </div>
-    <div style="font-size:.82rem;color:#6c757d;margin-bottom:12px">Jämför antagningspoäng, studieort och studietakt för alla program i Sverige.</div>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">${studentumTags2.map(t=>'<span style="background:var(--al);color:var(--ac);padding:3px 10px;border-radius:6px;font-size:.75rem;font-weight:600">'+t+'</span>').join('')}</div>
-    <a href="${studentumUrl2}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;background:var(--ac);color:#fff;border-radius:10px;font-weight:700;font-size:.9rem;text-decoration:none">
-    Sök program på Studentum →
-    </a>
-    </div>`;
+    </div>`;}
 
     // ─── Högskoleprov (HP) ───
     h+=`<div style="background:#fff;border:2px solid #e0e0d8;border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
@@ -2202,7 +2280,7 @@ function buildFP(name){
     if(a.work_status==='fulltime'||a.work_status==='parttime'){
         h+=step('2–3 mån före start','Prata med din arbetsgivare',`Undersök om tjänstledighet är möjligt — du har rätt att söka det (Studieledighetslagen). ${a.study_pace==='parttime'?'Med deltidsstudier kan du kanske gå ner till halvtid istället för att säga upp dig helt.':'Om du måste säga upp dig: kolla din uppsägningstid och beräkna innestående semesterdagar som extra buffert.'}`);
     }
-    h+=step(`Senast ${studyStart.startsWith('HT')?'15 april':'15 oktober'} ${startYr+compTime}`,`Sök ${e.t} på antagning.se`,`Sök det här programmet plus 2–3 backupalternativ. Du kan prioritera upp till 20 program — använd det. Hitta program på <strong>Studentum.se</strong>.`,true);
+    h+=step(`Senast ${studyStart.startsWith('HT')?'15 april':'15 oktober'} ${startYr+compTime}`,`Sök ${e.t} på antagning.se`,`Sök det här programmet plus 2–3 backupalternativ. Du kan prioritera upp till 20 program — använd det. ${schs.length>0?'Dina närmaste alternativ: <strong>'+schs.slice(0,2).map(s=>s.school).join('</strong>, <strong>')+'</strong>.':''}`,true);
     if(a.need_csn!=='no'){
         h+=step('Direkt efter antagningsbesked','Ansök om CSN på csn.se',`Bidrag: <strong>${fmt(BID)} kr/mån</strong>${barnCSN?' + barntillägg '+fmt(barnCSN)+' kr':''}${loan>0?'. Lån: <strong>'+fmt(loan)+' kr/mån</strong>':''}. Ansök direkt — CSN betalar inte retroaktivt. Ha personnummer och programkod redo.`);
     }
@@ -2466,7 +2544,7 @@ function buildFP(name){
 
     // Steg 5: Ansökan till program
     const applyYearNote=compTime>0?` (${compTime} år senare pga. komplettering)`:'';
-    steps2.push({when:applyDL+applyYearNote,icon:'🎯',title:`Sök ${e.t} på antagning.se`,desc:`Gå till <strong>antagning.se</strong> → sök "${e.t}" → välj ditt program. Du kan prioritera upp till 20 program. <strong>Deadline: ${applyDL}</strong>. Sent inkommen ansökan = ingen plats.${compTime>0?' Obs: Kompletteringen tar '+compTime+(compTime===1?' år':' år') +' — därav det senare datumet.':''}`,urgent:true});
+    steps2.push({when:applyDL+applyYearNote,icon:'🎯',title:`Sök ${e.t} på antagning.se`,desc:`Gå till <strong>antagning.se</strong> → sök "${e.t}" → välj ${schs.length>0?'"'+schs[0].school+(schs.length>1?'" eller "'+schs[1].school:'')+'"':'din skola'}. Du kan prioritera upp till 20 program. <strong>Deadline: ${applyDL}</strong>. Sent inkommen ansökan = ingen plats.${compTime>0?' Obs: Kompletteringen tar '+compTime+(compTime===1?' år':' år') +' — därav det senare datumet.':''}`,urgent:true});
 
     // Steg 6: CSN
     if(a.need_csn!=='no'){
@@ -2552,16 +2630,38 @@ function buildFP(name){
     const studyModeText2={campus:'Campus',distance:'Distans',hybrid:'Hybrid'}[a.study_mode]||'';
     const filterParts2=[eduTypeText2,studyModeText2,e.t,cityName!=='hela Sverige'?cityName:''].filter(Boolean);
 
-    // ── Studentum widget ──
-    h+=`<div style="background:#fff;border:2px solid var(--ac);border-radius:16px;padding:22px;margin-bottom:16px;box-shadow:0 4px 16px rgba(122,194,154,.12)">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-    <div style="width:28px;height:28px;border-radius:50%;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0">🎓</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ah)">Hitta ${e.t}-program</div>
+    // ── Skolrekommendation ──
+    if(schs.length>0){
+        const topSch=schs[0];
+        const rec2=schs.length>1?schs[1]:null;
+        h+=`<div style="background:#fff;border:2px solid var(--ac);border-radius:16px;padding:22px;margin-bottom:16px;box-shadow:0 4px 16px rgba(122,194,154,.12)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;flex-shrink:0">★</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ah)">Vår rekommendation för dig</div>
+        </div>
+        <div style="padding:16px;background:#f0f4f1;border-radius:12px;margin-bottom:${rec2?'10px':'0'}">
+        <div style="font-weight:700;font-size:.95rem;color:var(--ah);margin-bottom:2px">${topSch.school}</div>
+        <div style="font-size:.82rem;color:#6c757d;margin-bottom:8px">${topSch.n} · ${topSch.length}${topSch.f==='distance'?' · Distans':topSch.f==='campus'?' · Campus':''}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">${topSch.t.map(tag=>'<span style="background:var(--al);color:var(--ac);padding:3px 9px;border-radius:5px;font-size:.72rem;font-weight:600">'+tag+'</span>').join('')}</div>
+        <a href="${topSch.url}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;color:var(--ac);font-size:.82rem;font-weight:700;text-decoration:none">Läs mer på skolans sida →</a>
+        </div>
+        ${rec2?`<div style="padding:12px 16px;background:#f8f9fa;border-radius:10px;border-left:3px solid #ccc">
+        <div style="font-size:.75rem;font-weight:600;color:#6c757d;margin-bottom:2px">Alternativ</div>
+        <div style="font-weight:600;font-size:.88rem;color:#495057">${rec2.school} — ${rec2.n}</div>
+        <a href="${rec2.url}" target="_blank" style="font-size:.78rem;color:var(--ac);font-weight:600;text-decoration:none">Mer info →</a>
+        </div>`:''}
+        </div>`;
+    }
+
+    h+=`<div style="background:linear-gradient(135deg,var(--ah),var(--ac));border-radius:14px;padding:20px 18px;margin-bottom:14px">
+    <div style="color:#fff;font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:4px">Sök din utbildning</div>
+    <div style="color:rgba(255,255,255,.8);font-size:.82rem">Filtrerat baserat på dina svar</div>
     </div>
-    <div style="font-size:.82rem;color:#6c757d;margin-bottom:12px">Jämför antagningspoäng, studieort och studietakt för alla program på Studentum.</div>
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">${studentumTags2.map(t=>'<span style="background:var(--al);color:var(--ac);padding:3px 10px;border-radius:6px;font-size:.75rem;font-weight:600">'+t+'</span>').join('')}</div>
-    <a href="${studentumUrl2}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;background:var(--ac);color:#fff;border-radius:10px;font-weight:700;font-size:.9rem;text-decoration:none">
-    Sök program på Studentum →
+    <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:14px">
+    ${filterParts2.length>0?`<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">${filterParts2.map(f=>'<span style="background:#f0f4f1;border:1.5px solid var(--ac);color:var(--ac);padding:5px 12px;border-radius:8px;font-size:.8rem;font-weight:600">'+f+'</span>').join('')}</div>`:``}
+    ${a.study_mode==='distance'||a.study_mode==='hybrid'?`<div style="padding:10px 14px;background:var(--al);border-radius:8px;margin-bottom:14px;font-size:.82rem;color:var(--ah)">Distans: Linnéuniversitetet, Mittuniversitetet och Örebro Uni satsar aktivt på flexibla program.</div>`:``}
+    <a href="https://www.studentum.se/utbildning" target="_blank" style="display:block;text-align:center;background:linear-gradient(135deg,var(--ac),var(--ah));color:#fff;padding:14px 32px;border-radius:10px;font-weight:700;font-size:1rem;text-decoration:none;box-shadow:0 4px 12px rgba(122,194,154,.3)">
+    Sök på Studentum →
     </a>
     </div>`;
 
