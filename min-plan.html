@@ -1571,16 +1571,44 @@ function buildFP(name) {
  </div>`;
 
  // Studentum widget
+ // Build personalised filter description for Studentum
+ const stuFilterParts = [];
+ // Utbildningstyp
+ const eduTypes = Array.isArray(a.education_type) ? a.education_type : (a.education_type ? [a.education_type] : []);
+ if (eduTypes.length > 0) {
+   const typeLabels = eduTypes.map(t => t === 'yh' ? 'YH' : t === 'uni' ? 'högskola/universitet' : t === 'dist' ? 'distans' : t);
+   stuFilterParts.push('utbildningstyp: <strong>' + typeLabels.join(' eller ') + '</strong>');
+ }
+ // Studieort / studieform
+ if (a.study_mode === 'distance') {
+   stuFilterParts.push('studieform: <strong>distans</strong>');
+ } else if (a.willing_to_move === 'no' && cityNames[city]) {
+   stuFilterParts.push('studieort: <strong>' + cityNames[city] + '</strong>');
+ } else if (a.willing_to_move === 'yes') {
+   stuFilterParts.push('studieort: <strong>hela Sverige</strong>');
+ }
+ // Studietakt
+ stuFilterParts.push('studietakt: <strong>' + (a.study_pace === 'parttime' ? 'deltid' : 'heltid') + '</strong>');
+ // Terminsstart
+ const stuStart = startTagText ? 'start: <strong>' + startTagText + '</strong>' : null;
+ if (stuStart) stuFilterParts.push(stuStart);
+ // Avgiftsbelagda
+ if (a.paid_education === 'no') stuFilterParts.push('pris: <strong>avgiftsfria program</strong>');
+
+ const stuFilterText = stuFilterParts.length > 0
+   ? 'Filtrera på ' + stuFilterParts.slice(0,-1).join(', ') + (stuFilterParts.length > 1 ? ' och ' : '') + stuFilterParts[stuFilterParts.length-1] + '.'
+   : 'Jämför alla program i Sverige.';
+
  pl += `<div class="section-label" style="margin-top:20px">Hitta din utbildning</div>
  <div class="school-rec">
  <div class="school-rec-head">
  <div class="school-rec-badge"></div>
- <div class="school-rec-title">Sök ${e.t}-program</div>
+ <div class="school-rec-title">Sök ${e.t}-program på Studentum</div>
  </div>
- <div style="font-size:.8rem;color:var(--li);margin-bottom:12px">Jämför antagningspoäng, studieort och studietakt för alla program i Sverige.</div>
+ <div style="font-size:.82rem;color:var(--tx);line-height:1.6;margin-bottom:12px">${stuFilterText}</div>
  <div class="school-tags" style="margin-bottom:14px">${studentumTags.map(t=>'<span class="school-tag">'+t+'</span>').join('')}</div>
  <a href="${studentumUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;background:var(--ac);color:#fff;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none">
- Sök program på Studentum →
+ Sök på Studentum →
  </a>
  </div>`;
 
