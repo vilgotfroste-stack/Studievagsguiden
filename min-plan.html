@@ -1292,7 +1292,7 @@ function buildFP(name) {
 
  // 
  // PANEL 3 — BEHÖRIGHET
- // 
+ //
  const GYM_COURSES = {
  natur:['Matte 1','Matte 2a','Matte 2b','Matte 3c','Matte 4','Fysik 1a','Fysik 2','Kemi 1','Kemi 2','Biologi 1','Biologi 2','Naturkunskap 2','Samhällskunskap 1b'],
  teknik:['Matte 1','Matte 2a','Matte 2b','Matte 3c','Matte 4','Fysik 1a','Fysik 2','Kemi 1','Naturkunskap 2','Samhällskunskap 1b'],
@@ -1306,29 +1306,53 @@ function buildFP(name) {
  other:[]
  };
  const myCourses = GYM_COURSES[a.gym] || [];
- const reqStatus = e.req.map(req => {
- const reqNorm = req.split('/')[0].trim().toLowerCase();
- const found = myCourses.some(mc => mc.split('/')[0].trim().toLowerCase() === reqNorm ||
- mc.toLowerCase().startsWith(reqNorm.split(' ').slice(0,2).join(' ')));
- return { req, found };
+ const hasExam = a.has_grades === 'yes';
+ const isOther = a.gym === 'other';
+
+ // Filtrera bort "Grundläggande behörighet" — täcks av gymnasieexamen
+ const specificReqs = e.req.filter(r => !r.toLowerCase().includes('grundläggande behörighet'));
+
+ const reqStatus = specificReqs.map(req => {
+   const reqNorm = req.split('/')[0].trim().toLowerCase();
+   const found = myCourses.some(mc =>
+     mc.split('/')[0].trim().toLowerCase() === reqNorm ||
+     mc.toLowerCase().startsWith(reqNorm.split(' ').slice(0,2).join(' '))
+   );
+   return { req, found };
  });
  const missingReqs = reqStatus.filter(r => !r.found).map(r => r.req);
 
+ // Komvux-tid baserat på antal saknade kurser
+ const komvuxHeltid = missingReqs.length <= 1 ? '1 termin' : missingReqs.length <= 3 ? '1–2 terminer' : '2–3 terminer';
+ const komvuxDeltid = missingReqs.length <= 1 ? '1–2 terminer' : missingReqs.length <= 3 ? '2–3 terminer' : '3–4 terminer';
+
+ // Status: grön om inga kurser saknas OCH har examen (eller other med inga saknade kurser)
+ const behOk = missingReqs.length === 0 && hasExam;
+
  let bh = '';
- if (full) {
- bh += `<div class="status-hero ok">
+ if (behOk) {
+   bh += `<div class="status-hero ok">
  <div class="status-circle"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
  <div>
  <div class="status-title">Troligen behörig — sök direkt</div>
- <div class="status-body">${gp?gp.l:'Ditt program'} inkluderar normalt alla kurser ${e.t} kräver. Verifiera dina betyg på antagning.se.</div>
+ <div class="status-body">${gp?gp.l:'Ditt gymnasieprogram'} inkluderar normalt alla kurser ${e.t} kräver. Verifiera dina betyg på antagning.se.</div>
  </div>
  </div>`;
  } else {
- bh += `<div class="status-hero warn">
+   const bodyText = !hasExam
+     ? (missingReqs.length > 0
+         ? `${missingReqs.join(' och ')} ingår troligen inte i ditt program. Du behöver också slutföra din gymnasieexamen.`
+         : 'Kurserna finns i ditt program — men du behöver slutföra din gymnasieexamen för grundläggande behörighet.')
+     : isOther
+       ? (missingReqs.length > 0
+           ? `${missingReqs.join(' och ')} saknas troligen — kontakta din gamla skola för att verifiera exakt vad du läst.`
+           : 'Kontakta din gamla skola för att verifiera att du har gymnasieexamen och rätt kurser.')
+       : `${missingReqs.join(' och ')} ingår inte i ${gp?gp.l:'ditt program'} — behöver läsas på Komvux (~${komvuxHeltid}).`;
+   bh += `<div class="status-hero warn">
  <div class="status-circle"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
  <div>
  <div class="status-title">Komplettering troligen behövs</div>
- <div class="status-body">${missingReqs.length > 0 ? missingReqs.join(' och ') + ' saknas troligen — ' + (part?'1':'1–2') + ' terminer Komvux.' : 'Kontrollera dina betyg på antagning.se.'}</div>
+ <div class="status-body">${bodyText}</div>
  </div>
  </div>`;
  }
@@ -1339,16 +1363,21 @@ function buildFP(name) {
  <div class="expand-head-left">
  <div>
  <div class="expand-title">Visa alla kurskrav</div>
- <span class="expand-tag" style="${missingReqs.length>0?'background:var(--wl);color:#8B6914':'background:var(--al);color:var(--ah)'}">${missingReqs.length>0?missingReqs.length+' kurs'+(missingReqs.length===1?'':'er')+' saknas troligen':'Troligen behörig'}</span>
+ <span class="expand-tag" style="${missingReqs.length>0?'background:var(--wl);color:#8B6914':'background:var(--al);color:var(--ah)'}">${missingReqs.length>0?missingReqs.length+' kurs'+(missingReqs.length===1?'':'er')+' saknas troligen':'Alla kurser täckta'}</span>
  </div>
  </div>
  <span class="expand-arrow"></span>
  </div>
  <div class="expand-body"><div class="expand-inner" style="padding-top:0">
- ${reqStatus.map(rs=>`<div class="req-row">
+ ${specificReqs.length === 0
+   ? `<div style="font-size:.83rem;color:var(--ah);padding:8px 0"> Inga specifika kurskrav — gymnasieexamen räcker.</div>`
+   : reqStatus.map(rs=>`<div class="req-row">
  <span class="req-name">${rs.req}</span>
  <span class="req-check ${rs.found?'ok':'miss'}">${rs.found?' Har du':'Komvux'}</span>
- </div>`).join('')}
+ </div>`).join('')
+ }
+ ${!hasExam ? `<div style="margin-top:8px;padding:8px 10px;background:var(--wl);border-radius:8px;font-size:.78rem;color:#8B6914"> Du behöver även slutföra din gymnasieexamen för grundläggande behörighet.</div>` : ''}
+ ${isOther && hasExam ? `<div style="margin-top:8px;padding:8px 10px;background:var(--bll);border-radius:8px;font-size:.78rem;color:var(--bl)"> Kontakta din gamla skola för att verifiera exakt vilka kurser du läst och godkänts i.</div>` : ''}
  <div style="padding-top:10px;font-size:.75rem;color:var(--li)">
  <a href="https://www.antagning.se/sv/sokandet/behorighet-och-meriter/" target="_blank" style="color:var(--ac);font-weight:600">Verifiera exakt på antagning.se →</a>
  </div>
@@ -1373,10 +1402,8 @@ function buildFP(name) {
  </div>
  </div>`;
 
-
-
- // Komvux
- if (!full) {
+ // Komvux — visa alltid om komplettering behövs
+ if (!behOk) {
  bh += `<div class="expand-block" id="exp-komvux">
  <div class="expand-head" onclick="toggle('exp-komvux')">
  <div class="expand-head-left">
@@ -1390,8 +1417,8 @@ function buildFP(name) {
  </div>
  <div class="expand-body"><div class="expand-inner">
  <ul class="detail-list">
- <li><strong>Heltid dagtid</strong> (~${part?'1 termin':'1–2 terminer'}) — snabbast, kräver tjänstledighet</li>
- <li><strong>Deltid kväll/distans</strong> (~${part?'1–2':'2–3'} terminer) — du behåller lönen</li>
+ <li><strong>Heltid dagtid</strong> (~${komvuxHeltid}) — snabbast, kräver tjänstledighet</li>
+ <li><strong>Deltid kväll/distans</strong> (~${komvuxDeltid}) — du behåller lönen</li>
  <li>CSN ger bidrag (${fmtKr(BID)}/mån) även under Komvux-tid</li>
  <li>Sök på <strong>studera.nu</strong> — filtrera på distans + kväll</li>
  </ul>
