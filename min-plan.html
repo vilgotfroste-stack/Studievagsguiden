@@ -342,16 +342,16 @@ const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE
  <!-- TABS -->
  <div class="tabs">
  <button class="tab-btn act" onclick="showPlanTab('overview',this)">
- <span class="tab-icon"></span>Översikt
+ <span class="tab-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><rect x='3' y='3' width='7' height='7'/><rect x='14' y='3' width='7' height='7'/><rect x='3' y='14' width='7' height='7'/><rect x='14' y='14' width='7' height='7'/></svg></span>Översikt
  </button>
  <button class="tab-btn" onclick="showPlanTab('ekonomi',this)">
- <span class="tab-icon">kr</span>Ekonomi
+ <span class="tab-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><line x1='18' y1='20' x2='18' y2='10'/><line x1='12' y1='20' x2='12' y2='4'/><line x1='6' y1='20' x2='6' y2='14'/></svg></span>Ekonomi
  </button>
  <button class="tab-btn" onclick="showPlanTab('beh',this)">
- <span class="tab-icon"></span>Behörighet
+ <span class="tab-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'/><polyline points='22 4 12 14.01 9 11.01'/></svg></span>Behörighet
  </button>
  <button class="tab-btn" onclick="showPlanTab('plan',this)">
- <span class="tab-icon">→</span>Din plan
+ <span class="tab-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px"><line x1='5' y1='12' x2='19' y2='12'/><polyline points='12 5 19 12 12 19'/></svg></span>Din plan
  </button>
  </div>
  <!-- PANELS -->
@@ -1095,7 +1095,7 @@ function buildFP(name) {
  }
 
  // Yrket section
- ov += `<div class="section-label">Yrket</div>
+ ov += `<div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x='2' y='7' width='20' height='14' rx='2'/><path d='M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2'/></svg> Yrket</div>
  <div class="expand-block" id="exp-job">
  <div class="expand-head" onclick="toggle('exp-job')">
  <div class="expand-head-left">
@@ -1147,7 +1147,7 @@ function buildFP(name) {
  </div>`;
 
  // Du är inte ensam
- ov += `<div class="section-label">Du är inte ensam</div>
+ ov += `<div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg> Du är inte ensam</div>
  <div style="background:var(--card);border:1.5px solid var(--bo);border-radius:14px;padding:16px;margin-bottom:8px">
  <div class="alone-grid">
  ${ec.alone_stats.map(s=>`<div class="alone-cell" style="background:${s.bg}">
@@ -1185,12 +1185,12 @@ function buildFP(name) {
  </div>
 
  ${loan > 0 ? `
- <div class="section-label" style="margin-top:12px">CSN-skuld</div>
+ <div class="section-label" style="margin-top:12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1='12' y1='1' x2='12' y2='23'/><path d='M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'/></svg> CSN-skuld</div>
  <div class="expand-block" id="exp-skuld">
  <div class="expand-head" onclick="toggle('exp-skuld')" style="cursor:pointer">
  <div class="expand-head-left" style="display:flex;align-items:center;gap:12px">
  <div>
- <div style="font-size:.83rem;font-weight:600;color:var(--mu)">Total skuld efter examen</div>
+ <div style="font-size:.83rem;font-weight:600;color:var(--mu)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1='12' y1='1' x2='12' y2='23'/><path d='M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'/></svg> Total skuld efter examen</div>
  <div style="font-size:1.15rem;font-weight:800;color:#8B6914" id="skuld-total">~${fmtKr(debt)}</div>
  </div>
  </div>
@@ -1212,11 +1212,11 @@ function buildFP(name) {
  </div>` : `
  <div style="background:var(--al);border-radius:10px;padding:12px 14px;margin-top:12px;font-size:.83rem;color:var(--ah);font-weight:600"> Inga studielån — skuldfri student</div>`}
 
- <div class="section-label">Intäkter</div>
+ <div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points='23 6 13.5 15.5 8.5 10.5 1 18'/><polyline points='17 6 23 6 23 12'/></svg> Intäkter</div>
 
  <div class="slider-block">
  <div class="slider-top">
- <div class="slider-name"> CSN Bidrag <span class="slider-badge" style="background:#E8F5EE;color:#4A8C6A">${deltid ? 'Deltid' : 'Heltid'}</span></div>
+ <div class="slider-name"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M22 10v6M2 10l10-5 10 5-10 5z'/><path d='M6 12v5c3 3 9 3 12 0v-5'/></svg> CSN Bidrag <span class="slider-badge" style="background:#E8F5EE;color:#4A8C6A">${deltid ? 'Deltid' : 'Heltid'}</span></div>
  <div class="slider-val" id="sv-bid">${fmtKr(defaultBid)}</div>
  </div>
  <input type="range" class="green" id="sl-bid" min="0" max="${bidMax}" step="100" value="${defaultBid}" oninput="updateBudget()">
@@ -1225,7 +1225,7 @@ function buildFP(name) {
 
  <div class="slider-block">
  <div class="slider-top">
- <div class="slider-name"> CSN Lån <span class="slider-badge" style="background:#FDF4E3;color:#8B6914">Frivilligt</span></div>
+ <div class="slider-name"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='16'/><line x1='8' y1='12' x2='16' y2='12'/></svg> CSN Lån <span class="slider-badge" style="background:#FDF4E3;color:#8B6914">Frivilligt</span></div>
  <div class="slider-val" id="sv-lan">${fmtKr(loan)}</div>
  </div>
  <input type="range" class="green" id="sl-lan" min="0" max="${lanMax}" step="100" value="${loan}" oninput="updateBudget()">
@@ -1234,20 +1234,20 @@ function buildFP(name) {
 
  <div class="slider-block">
  <div class="slider-top">
- <div class="slider-name"> Extrajobb</div>
+ <div class="slider-name"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x='2' y='7' width='20' height='14' rx='2'/><path d='M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2'/></svg> Extrajobb</div>
  <div class="slider-val" id="sv-jobb">${fmtKr(defaultJobb)}</div>
  </div>
  <input type="range" class="green" id="sl-jobb" min="0" max="10000" step="500" value="${defaultJobb}" oninput="updateBudget()">
  <div class="slider-meta"><span>0 kr</span><span>10 000 kr</span></div>
  </div>
 
- ${barnCSN > 0 ? `<div style="display:flex;align-items:center;justify-content:space-between;background:var(--al);border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:.83rem"><span style="color:var(--mu)"> Barntillägg CSN</span><span style="font-weight:700;color:var(--ah)">+${fmtKr(barnCSN)}</span></div>` : ''}
+ ${barnCSN > 0 ? `<div style="display:flex;align-items:center;justify-content:space-between;background:var(--al);border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:.83rem"><span style="color:var(--mu)"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg> Barntillägg CSN</span><span style="font-weight:700;color:var(--ah)">+${fmtKr(barnCSN)}</span></div>` : ''}
 
- <div class="section-label" style="margin-top:12px">Utgifter</div>
+ <div class="section-label" style="margin-top:12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1='18' y1='20' x2='18' y2='10'/><line x1='12' y1='20' x2='12' y2='4'/><line x1='6' y1='20' x2='6' y2='14'/></svg> Utgifter</div>
 
  <div class="slider-block">
  <div class="slider-top">
- <div class="slider-name"> Boende</div>
+ <div class="slider-name"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><polyline points='9 22 9 12 15 12 15 22'/></svg> Boende</div>
  <div class="slider-val" id="sv-boende">${fmtKr(rent)}</div>
  </div>
  <div style="display:flex;gap:4px;margin-bottom:8px">
@@ -1262,7 +1262,7 @@ function buildFP(name) {
 
  <div class="slider-block">
  <div class="slider-top">
- <div class="slider-name"> Fasta utgifter <span class="slider-badge" style="background:var(--bll);color:var(--bl)">Försäkring, telefon m.m.</span></div>
+ <div class="slider-name"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1='8' y1='6' x2='21' y2='6'/><line x1='8' y1='12' x2='21' y2='12'/><line x1='8' y1='18' x2='21' y2='18'/><line x1='3' y1='6' x2='3.01' y2='6'/><line x1='3' y1='12' x2='3.01' y2='12'/><line x1='3' y1='18' x2='3.01' y2='18'/></svg> Fasta utgifter <span class="slider-badge" style="background:var(--bll);color:var(--bl)">Försäkring, telefon m.m.</span></div>
  <div class="slider-val" id="sv-fixed">${fmtKr(fixedExp)}</div>
  </div>
  <input type="range" class="red" id="sl-fixed" min="0" max="15000" step="250" value="${fixedExp}" oninput="updateBudget()">
@@ -1271,14 +1271,14 @@ function buildFP(name) {
 
  <div class="slider-block">
  <div class="slider-top">
- <div class="slider-name"> Rörliga utgifter <span class="slider-badge" style="background:var(--bll);color:var(--bl)">Mat, nöje, transport</span></div>
+ <div class="slider-name"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z'/><line x1='3' y1='6' x2='21' y2='6'/><path d='M16 10a4 4 0 0 1-8 0'/></svg> Rörliga utgifter <span class="slider-badge" style="background:var(--bll);color:var(--bl)">Mat, nöje, transport</span></div>
  <div class="slider-val" id="sv-var">${fmtKr(variableExp)}</div>
  </div>
  <input type="range" class="red" id="sl-var" min="0" max="10000" step="250" value="${variableExp}" oninput="updateBudget()">
  <div class="slider-meta"><span>0 kr</span><span>10 000 kr</span></div>
  </div>
 
- ${cc > 0 ? `<div style="display:flex;align-items:center;justify-content:space-between;background:#FFF3F3;border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:.83rem"><span style="color:var(--mu)"> Barn (${numKids} st)</span><span style="font-weight:700;color:var(--re)">−${fmtKr(cc)}</span></div>` : ''}
+ ${cc > 0 ? `<div style="display:flex;align-items:center;justify-content:space-between;background:#FFF3F3;border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:.83rem"><span style="color:var(--mu)"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg> Barn (${numKids} st)</span><span style="font-weight:700;color:var(--re)">−${fmtKr(cc)}</span></div>` : ''}
 
  `;
 
@@ -1328,7 +1328,7 @@ function buildFP(name) {
  </div>`;
  }
 
- bh += `<div class="section-label">Kurskrav — kurs för kurs</div>
+ bh += `<div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx='12' cy='12' r='10'/><path d='M9 12l2 2 4-4'/></svg> Kurskrav — kurs för kurs</div>
  <div class="expand-block" id="exp-krav">
  <div class="expand-head" onclick="toggle('exp-krav')">
  <div class="expand-head-left">
@@ -1351,7 +1351,7 @@ function buildFP(name) {
  </div>`;
 
  // HP card
- bh += `<div class="section-label">Alternativ väg in</div>
+ bh += `<div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1='5' y1='12' x2='19' y2='12'/><polyline points='12 5 19 12 12 19'/></svg> Alternativ väg in</div>
  <div class="hp-card">
  <div class="hp-top">
  <div class="hp-badge">HP</div>
@@ -1369,7 +1369,7 @@ function buildFP(name) {
  </div>`;
 
  // Studentum — hitta program
- bh += `<div class="section-label">Hitta program</div>
+ bh += `<div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M22 10v6M2 10l10-5 10 5-10 5z'/><path d='M6 12v5c3 3 9 3 12 0v-5'/></svg> Hitta program</div>
  <div style="background:var(--card);border:1.5px solid var(--bo);border-radius:14px;padding:14px 16px">
  <div style="font-size:.8rem;color:var(--li);margin-bottom:12px">Jämför antagningspoäng, studieort och studietakt för alla ${e.t}-program i Sverige på Studentum.</div>
  <div class="school-tags" style="margin-bottom:12px">${studentumTags.map(t=>'<span class="school-tag">'+t+'</span>').join('')}</div>
@@ -1425,7 +1425,7 @@ function buildFP(name) {
  </div>
  </div>`;
 
- pl += `<div class="section-label">Steg för steg</div>`;
+ pl += `<div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1='8' y1='6' x2='21' y2='6'/><line x1='8' y1='12' x2='21' y2='12'/><line x1='8' y1='18' x2='21' y2='18'/><line x1='3' y1='6' x2='3.01' y2='6'/><line x1='3' y1='12' x2='3.01' y2='12'/><line x1='3' y1='18' x2='3.01' y2='18'/></svg> Steg för steg</div>`;
 
  // Timeline steps
  pl += `<div class="timeline">`;
