@@ -1317,7 +1317,7 @@ function buildFP(name) {
  let bh = '';
  if (full) {
  bh += `<div class="status-hero ok">
- <div class="status-circle"></div>
+ <div class="status-circle"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
  <div>
  <div class="status-title">Troligen behörig — sök direkt</div>
  <div class="status-body">${gp?gp.l:'Ditt program'} inkluderar normalt alla kurser ${e.t} kräver. Verifiera dina betyg på antagning.se.</div>
@@ -1325,7 +1325,7 @@ function buildFP(name) {
  </div>`;
  } else {
  bh += `<div class="status-hero warn">
- <div class="status-circle"></div>
+ <div class="status-circle"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
  <div>
  <div class="status-title">Komplettering troligen behövs</div>
  <div class="status-body">${missingReqs.length > 0 ? missingReqs.join(' och ') + ' saknas troligen — ' + (part?'1':'1–2') + ' terminer Komvux.' : 'Kontrollera dina betyg på antagning.se.'}</div>
@@ -1373,15 +1373,7 @@ function buildFP(name) {
  </div>
  </div>`;
 
- // Studentum — hitta program
- bh += `<div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M22 10v6M2 10l10-5 10 5-10 5z'/><path d='M6 12v5c3 3 9 3 12 0v-5'/></svg> Hitta program</div>
- <div style="background:var(--card);border:1.5px solid var(--bo);border-radius:14px;padding:14px 16px">
- <div style="font-size:.8rem;color:var(--li);margin-bottom:12px">Jämför antagningspoäng, studieort och studietakt för alla ${e.t}-program i Sverige på Studentum.</div>
- <div class="school-tags" style="margin-bottom:12px">${studentumTags.map(t=>'<span class="school-tag">'+t+'</span>').join('')}</div>
- <a href="${studentumUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;background:var(--ac);color:#fff;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none">
- Sök program på Studentum →
- </a>
- </div>`;
+
 
  // Komvux
  if (!full) {
