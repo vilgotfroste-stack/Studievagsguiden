@@ -1701,25 +1701,16 @@ function buildFP(name) {
  </div></div>
  </div>`;
 
- // Studentum widget
- // Build filter tags from wizard answers — skip "any" values
- const stuTags = [];
- // Utbildningstyp (multi-val)
+ // Studentum widget — gröna taggar som filterinstruktion
+ const stuFilters = [];
  const eduTypes = Array.isArray(a.education_type) ? a.education_type : (a.education_type ? [a.education_type] : []);
- const eduTypeMap = {yh:'YH', uni:'Högskola / Universitet', komvux:'Komvux', folk:'Folkhögskola', private:'Privat utbildning'};
- eduTypes.forEach(t => { if (eduTypeMap[t]) stuTags.push(eduTypeMap[t]); });
- // Studietakt
- const studyPaceMap = {fulltime:'Heltid', parttime:'Deltid', flexible:'Flexibel'};
- if (studyPaceMap[a.study_pace]) stuTags.push(studyPaceMap[a.study_pace]);
- // Studieform
- const studyModeMap = {campus:'På plats', distance:'Distans', hybrid:'Hybrid'};
- if (studyModeMap[a.study_mode]) stuTags.push(studyModeMap[a.study_mode]);
- // Studieort — bara om inte distans och inte villig att flytta
- if (a.study_mode !== 'distance' && a.willing_to_move === 'no' && cityNames[city]) stuTags.push(cityNames[city]);
- // Terminsstart
- if (startTagText) stuTags.push('Start ' + startTagText);
- // Avgift
- if (a.paid_education === 'no') stuTags.push('Avgiftsfritt');
+ if (eduTypes.includes('yh')) stuFilters.push('YH-utbildning');
+ else if (eduTypes.includes('uni')) stuFilters.push('Högskola / Universitet');
+ if (a.study_pace === 'parttime') stuFilters.push('Deltid');
+ else if (a.study_pace === 'fulltime') stuFilters.push('Heltid');
+ if (a.study_mode === 'distance') stuFilters.push('Distans');
+ else if (a.study_mode === 'campus') stuFilters.push('På plats');
+ if (startTagText) stuFilters.push('Start ' + startTagText);
 
  pl += `<div class="section-label" style="margin-top:20px">Hitta din utbildning</div>
  <div class="school-rec">
@@ -1727,8 +1718,8 @@ function buildFP(name) {
  <div class="school-rec-badge"></div>
  <div class="school-rec-title">Sök ${e.t}-program på Studentum</div>
  </div>
- <div style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--li);margin-bottom:8px">Filtrera på</div>
- <div class="school-tags" style="margin-bottom:14px">${stuTags.map(t=>'<span class="school-tag">'+t+'</span>').join('')}</div>
+ ${stuFilters.length > 0 ? `<div style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--li);margin-bottom:8px">Filtrera på Studentum</div>
+ <div class="school-tags" style="margin-bottom:14px">${stuFilters.map(t=>'<span class="school-tag">'+t+'</span>').join('')}</div>` : ''}
  <a href="${studentumUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;background:var(--ac);color:#fff;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none">
  Sök på Studentum →
  </a>
