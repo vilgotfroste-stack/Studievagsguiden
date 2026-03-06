@@ -991,20 +991,66 @@ function buildFP(name) {
  const cityName = cn[city] || 'din stad';
 
  // Studentum URL builder
- const cityNames = {stockholm:'Stockholm',goteborg:'Göteborg',malmo:'Malmö',uppsala:'Uppsala',linkoping:'Linköping',lund:'Lund',umea:'Umeå',orebro:'Örebro',other:''};
- function buildStudentumUrl(eduName) {
- const base = 'https://www.studentum.se/utbildningar';
- const q = encodeURIComponent(eduName);
- const params = new URLSearchParams({q: eduName});
- if (a.study_mode === 'distance') params.set('studieform', 'distans');
- else if (a.study_mode === 'campus' && a.willing_to_move === 'no') {
- const cn = cityNames[city];
- if (cn) params.set('stad', cn);
+ const UTM = 'utm_source=studievagsguiden&utm_medium=plan&utm_campaign=cta&utm_content=' + e.id;
+ const BASE = 'https://www.studentum.se/utbildning/';
+
+ // Slug-mappning per edu-id
+ const STU_SLUG = {
+   1:  {slug:'systemutvecklare-utbildning', c:'c3583', cp:'systemutvecklare', city:true},
+   2:  {q:'Dataanalytiker'},
+   3:  {q:'IT-s%C3%A4kerhetsspecialist'},
+   4:  {q:'UX%2FUI-designer'},
+   5:  {slug:'civilingenjor-utbildningar'},
+   6:  {slug:'hogskoleingenjorsutbildning'},
+   7:  {q:'devops'},
+   8:  {slug:'civilekonomprogrammet'},
+   9:  {slug:'utbildning-redovisningsekonom'},
+   10: {q:'Controller'},
+   11: {q:'Digital+marknadsf%C3%B6rare'},
+   12: {q:'HR-specialist'},
+   13: {q:'Projektledare'},
+   14: {slug:'sjukskoterskeutbildning', c:'c910', cp:'sjukskoterska', city:true},
+   15: {slug:'fysioterapeut'},
+   16: {slug:'arbetsterapeututbildning'},
+   17: {slug:'biomedicinsk-analytiker-utbildningar'},
+   18: {slug:'tandhygienistutbildning'},
+   19: {slug:'socionomutbildningar'},
+   20: {q:'Grundskoll%C3%A4rare'},
+   21: {q:'Gymnasiel%C3%A4rare'},
+   22: {q:'Studie-+och+yrkesv%C3%A4gledare'},
+   23: {slug:'personalvetare-utbildningar'},
+   24: {q:'Byggingenj%C3%B6r'},
+   25: {slug:'fastighetsforvaltarutbildning'},
+   26: {slug:'vvs-ingenjor'},
+   27: {slug:'automationsingenjor'},
+   28: {q:'Kriminolog'},
+   29: {slug:'beteendevetare/c6713'},
+ };
+
+ // Stad → slug-del + d-kod (bekräftade kombinationer)
+ const STU_CITY = {
+   stockholm: {s:'stockholm',   d:'d82783'},
+   goteborg:  {s:'goteborg',    d:'d82793'},
+   malmo:     {s:'malmo',       d:'d82779'},
+   uppsala:   {s:'uppsala-lan', d:'d87335'},
+   linkoping: {s:'linkoping',   d:'d82802'},
+   umea:      {s:'umea',        d:'d82786'},
+   orebro:    {s:'orebro',      d:'d82780'},
+ };
+
+ function buildStudentumUrl() {
+   const m = STU_SLUG[e.id];
+   if (!m) return BASE + '?' + UTM;
+   if (m.q) {
+     return BASE + 'educations?q=' + m.q + '&' + UTM;
+   }
+   const cd = m.city && STU_CITY[city];
+   if (cd) {
+     return BASE + m.cp + '-' + cd.s + '/' + m.c + '-' + cd.d + '?' + UTM;
+   }
+   return BASE + m.slug + '?' + UTM;
  }
- if (a.study_pace === 'parttime') params.set('studietakt', 'deltid');
- return base + '?' + params.toString();
- }
- const studentumUrl = buildStudentumUrl(e.t);
+ const studentumUrl = buildStudentumUrl();
  // Tags for Studentum widget
  const studentumTags = [];
  if (a.study_mode === 'distance') studentumTags.push('Distans');
