@@ -1059,11 +1059,6 @@ function buildFP(name) {
    return BASE + m.slug + '?' + UTM;
  }
  const studentumUrl = buildStudentumUrl();
- // Tags for Studentum widget
- const studentumTags = [];
- if (a.study_mode === 'distance') studentumTags.push('Distans');
- else if (a.willing_to_move === 'no' && cityNames[city]) studentumTags.push(cityNames[city]);
- if (a.study_pace === 'parttime') studentumTags.push('Deltid'); else studentumTags.push('Heltid');
  // Study start tag
  const nowSt = new Date();
  let startTagText = '';
@@ -1076,7 +1071,7 @@ function buildFP(name) {
  const d12 = new Date(nowSt.getFullYear(), nowSt.getMonth()+12, 1);
  startTagText = d12.getMonth() < 6 ? 'HT' + d12.getFullYear() : 'VT' + (d12.getFullYear()+1);
  }
- if (startTagText) studentumTags.push('Start ' + startTagText);
+
 
  // Dates
  const applyDate = new Date(startYr, 3, 15);
