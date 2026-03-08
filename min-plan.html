@@ -1529,7 +1529,6 @@ function buildFP(name) {
  <div class="status-title">${isVerified ? 'Verifierat — du är behörig' : 'Troligen behörig — sök direkt'}</div>
  <div class="status-body">${isVerified ? 'Du har manuellt verifierat att du uppfyller alla kurskrav för '+e.t+'.' : (gp?gp.l:'Ditt gymnasieprogram')+' inkluderar normalt alla kurser '+e.t+' kräver.'}</div>
  <button class="verify-btn" onclick="openVerifyModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${isVerified ? 'Ändra verifiering' : 'Verifiera kurser'}</button>
- <button class="verify-btn" onclick="openCSNModal()" style="margin-left:8px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Verifiera CSN</button>
  </div>
  </div>`;
  } else {
@@ -1548,7 +1547,6 @@ function buildFP(name) {
  <div class="status-title">Komplettering behövs</div>
  <div class="status-body">${bodyText}</div>
  <button class="verify-btn" onclick="openVerifyModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${isVerified ? 'Ändra verifiering' : 'Verifiera kurser'}</button>
- <button class="verify-btn" onclick="openCSNModal()" style="margin-left:8px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Verifiera CSN</button>
  </div>
  </div>`;
  }
@@ -1623,7 +1621,51 @@ function buildFP(name) {
  }
 
 
+ // CSN expandable card
+ const csnTillaggEligible = age >= 25 && (a.work_status === 'fulltime' || a.work_status === 'parttime');
+ bh += `<div class="expand-block" id="exp-csn" style="margin-top:20px">
+  <div class="expand-head" onclick="toggle('exp-csn');if(document.getElementById('exp-csn').classList.contains('open')){buildCSNVerify();}">
+   <div class="expand-head-left">
+    <div style="width:32px;height:32px;background:#003882;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+     <svg width="18" height="12" viewBox="0 0 60 40" fill="none"><rect width="60" height="40" rx="4" fill="#003882"/><path d="M0 14h60v12H0z" fill="#F9C300"/><path d="M14 0h12v40H14z" fill="#F9C300"/></svg>
+    </div>
+    <div>
+     <div style="font-weight:700;font-size:.9rem">Verifiera din rätt till CSN</div>
+     <div style="font-size:.75rem;color:var(--li);margin-top:1px">Baserat på dina svar i ekonomikalkylen</div>
+    </div>
+   </div>
+   <div style="display:flex;align-items:center;gap:8px">
+    <button style="background:var(--ac);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:.8rem;font-weight:700;cursor:pointer" onclick="event.stopPropagation();const b=document.getElementById('exp-csn');b.classList.add('open');buildCSNVerify();">Verifiera</button>
+    <svg class="expand-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+   </div>
+  </div>
+  <div class="expand-body" style="padding:0 16px">
+   <div id="csn-verify-body" style="padding-bottom:4px"></div>
+  </div>
+ </div>`;
+
  document.getElementById('panel-beh').innerHTML = bh;
+
+ // Extend loan slider max for tilläggslån-eligible users
+ setTimeout(() => {
+   const lanEl2 = document.getElementById('sl-lan');
+   if (lanEl2 && csnTillaggEligible) {
+     const baseMax = parseInt(lanEl2.max);
+     const tillaggMax = 1172 * 4; // ≈ 4688 kr/4v → ~1172/v * 4.3 ≈ 1200/mån extra
+     const newMax = baseMax + 1200;
+     lanEl2.setAttribute('max', newMax);
+     lanEl2.setAttribute('data-base-max', baseMax);
+     lanEl2.setAttribute('data-tillagg-max', newMax);
+     // Update slider meta label
+     const meta = lanEl2.closest('.slider-block');
+     if (meta) {
+       const maxLabel = meta.querySelector('.slider-meta span:last-child');
+       if (maxLabel) maxLabel.textContent = 'Max ' + fmtKr(baseMax) + ' + tilläggslån';
+     }
+     // Re-run updateBudget to repaint slider gradient
+     updateBudget();
+   }
+ }, 100);
 
  // 
  // PANEL 4 — DIN PLAN
@@ -1832,7 +1874,18 @@ function updateBudget() {
  const bidMax2 = deltid2 ? CSN_BID_DT : CSN_BID_HT;
  const lanMax2 = deltid2 ? CSN_LAN_DT : CSN_LAN_HT;
  setSliderPct('sl-bid', bidV, 0, bidMax2);
- setSliderPct('sl-lan', lanV, 0, lanMax2);
+ // Loan slider: two-tone if tilläggslån portion active
+ const lanEl3 = document.getElementById('sl-lan');
+ const lanBaseMax = lanEl3 && lanEl3.dataset.baseMax ? parseInt(lanEl3.dataset.baseMax) : lanMax2;
+ const lanSliderMax = lanEl3 ? parseInt(lanEl3.max) : lanMax2;
+ if (lanV > lanBaseMax && lanEl3) {
+   // Split gradient: green up to base max, orange beyond
+   const pctBase = lanBaseMax / lanSliderMax * 100;
+   const pctCurrent = lanV / lanSliderMax * 100;
+   lanEl3.style.background = `linear-gradient(to right, var(--ac) 0%, var(--ac) ${pctBase}%, #E8960C ${pctBase}%, #E8960C ${pctCurrent}%, var(--bo) ${pctCurrent}%)`;
+ } else {
+   setSliderPct('sl-lan', lanV, 0, lanSliderMax);
+ }
  setSliderPct('sl-jobb', jobbV, 0, 10000);
  setSliderPct('sl-boende', boendeV, 0, 12000);
  setSliderPct('sl-fixed', fixedV, 0, 15000);
@@ -2213,109 +2266,137 @@ const VERIFY_GYM_COURSES = {
 let verifyChecked = new Set();
 let verifyGym = '';
 
-function openCSNModal() {
+function buildCSNVerify() {
   const a = ans;
   const age = Math.min(70, Math.max(18, parseInt(a.age)||29));
   const deltid = a.study_pace === 'parttime';
-
-  // Read current slider values
   const bidEl = document.getElementById('sl-bid');
   const lanEl = document.getElementById('sl-lan');
   const jobbEl = document.getElementById('sl-jobb');
   const bidV = bidEl ? parseInt(bidEl.value) : 0;
   const lanV = lanEl ? parseInt(lanEl.value) : 0;
   const jobbV = jobbEl ? parseInt(jobbEl.value) : 0;
-
-  // CSN limits 2026
   const bidMax = deltid ? CSN_BID_DT : CSN_BID_HT;
   const lanMax = deltid ? CSN_LAN_DT : CSN_LAN_HT;
+  const tillaggMax = 4688; // kr/4 veckor ≈ 1172/v
   const fribeloppHalvyr = deltid ? 171892 : 114676;
   const nKids = a.has_kids === 'yes' ? (parseInt(a.num_kids)||1) : 0;
   const barnMax = nKids === 1 ? 780 : nKids === 2 ? 1276 : nKids === 3 ? 1536 : nKids >= 4 ? 1796 : 0;
+  // Tilläggslån eligibility: age >= 25 AND fulltime worker (likely income >= 245 680 kr/år)
+  const tillaggEligible = age >= 25 && (a.work_status === 'fulltime' || a.work_status === 'parttime');
 
   const rows = [];
 
   // 1. Bidrag
   if (bidV === 0) {
-    rows.push({ok:null, title:'CSN Bidrag', verdict:'Du har ställt in bidrag på 0 kr.', reason:'Bidraget är skattefritt och kräver ingen återbetalning. Max är '+fmtKr(bidMax)+'/mån vid '+(deltid?'deltid':'heltid')+'. Överväg att ta ut maximalt.'});
+    rows.push({ok:null, title:'CSN Bidrag', points:[
+      'Bidraget är skattefritt och kräver ingen återbetalning',
+      'Max '+fmtKr(bidMax)+'/mån vid '+(deltid?'deltid':'heltid'),
+      'Du har ställt in bidrag på 0 kr — du kan höja det'
+    ]});
   } else if (bidV <= bidMax) {
-    rows.push({ok:true, title:'CSN Bidrag', verdict:'Ja — du kan få '+fmtKr(bidV)+'/mån.', reason:'Du har rätt till upp till '+fmtKr(bidMax)+'/mån. Ditt valda belopp ryms.'+(bidV < bidMax ? ' Du tar ut '+(bidMax-bidV).toLocaleString('sv')+' kr/mån mindre än max.' : '')});
+    rows.push({ok:true, title:'CSN Bidrag — '+fmtKr(bidV)+'/mån', points:[
+      'Rätt till upp till '+fmtKr(bidMax)+'/mån',
+      'Ditt valda belopp '+fmtKr(bidV)+' ryms'+(bidV < bidMax ? ' — du tar ut '+fmtKr(bidMax-bidV)+'/mån mindre än max' : ''),
+      'Skattefritt, betalas ut ca den 25:e varje månad'
+    ]});
   } else {
-    rows.push({ok:false, title:'CSN Bidrag', verdict:'Nej — '+fmtKr(bidV)+'/mån överstiger maxbeloppet.', reason:'Max bidrag vid '+(deltid?'deltid':'heltid')+' är '+fmtKr(bidMax)+'/mån. Sänk slidern till max.'});
+    rows.push({ok:false, title:'CSN Bidrag — överstiger max', points:[
+      'Du har ställt in '+fmtKr(bidV)+'/mån men max är '+fmtKr(bidMax)+'/mån',
+      'Sänk bidragsslidern — du kan inte få mer än max'
+    ]});
   }
 
   // 2. Lån
-  if (lanV === 0) {
-    rows.push({ok:null, title:'CSN Lån', verdict:'Du har ställt in lån på 0 kr.', reason:'Du kan ta upp till '+fmtKr(lanMax)+'/mån. Ska betalas tillbaka med 2,135% ränta (2026).'+(age >= 60 ? ' OBS: Du är '+age+' år — lån ges inte efter 60.' : age >= 51 ? ' OBS: Du är '+age+' år, antalet lånveckor är begränsat.' : '')});
-  } else if (age >= 60) {
-    rows.push({ok:false, title:'CSN Lån', verdict:'Nej — du är '+age+' år.', reason:'CSN ger inte studielån efter 60 år. Sätt lån-slidern till 0.'});
+  if (age >= 60) {
+    rows.push({ok:false, title:'CSN Lån — inte berättigad', points:[
+      'CSN ger inte studielån efter 60 år',
+      'Du är '+age+' år',
+      'Bidragsdelen (ovan) påverkas inte'
+    ]});
+  } else if (lanV === 0) {
+    rows.push({ok:null, title:'CSN Lån — 0 kr (inget lån)', points:[
+      'Du har valt att inte ta lån',
+      'Max är '+fmtKr(lanMax)+'/mån om du vill'+(age >= 51 ? ' — men rätten till veckor är begränsad vid din ålder' : ''),
+      'Ska betalas tillbaka med 2,135% ränta (2026)'
+    ]});
   } else if (lanV <= lanMax) {
-    rows.push({ok:true, title:'CSN Lån', verdict:'Ja — du kan få '+fmtKr(lanV)+'/mån i lån.', reason:'Max är '+fmtKr(lanMax)+'/mån.'+(age >= 51 ? ' Du är '+age+' år — rätten till veckor är begränsad, kontrollera på csn.se.' : ' Betalas tillbaka med ränta — välj lägsta möjliga belopp.')});
+    rows.push({ok:true, title:'CSN Lån — '+fmtKr(lanV)+'/mån', points:[
+      'Max är '+fmtKr(lanMax)+'/mån — ditt belopp ryms'+(age >= 51 ? ' (men du är '+age+' år — begränsat antal veckor)' : ''),
+      'Betalas tillbaka med 2,135% ränta (2026)',
+      'Avbetalning börjar 6 månader efter sista utbetalning'
+    ]});
+  } else if (tillaggEligible && lanV <= lanMax + tillaggMax) {
+    rows.push({ok:true, title:'CSN Lån + Tilläggslån — '+fmtKr(lanV)+'/mån', points:[
+      fmtKr(lanMax)+' ordinarie lån + '+fmtKr(lanV - lanMax)+' tilläggslån',
+      'Tilläggslån kräver att du tjänat ≥ 245 680 kr under 2025 — ansök separat på csn.se',
+      'Båda delarna betalas tillbaka med 2,135% ränta'
+    ]});
   } else {
-    rows.push({ok:false, title:'CSN Lån', verdict:'Nej — '+fmtKr(lanV)+'/mån överstiger maxbeloppet.', reason:'Max lån vid '+(deltid?'deltid':'heltid')+' är '+fmtKr(lanMax)+'/mån. Sänk slidern.'});
+    rows.push({ok:false, title:'CSN Lån — överstiger max', points:[
+      'Du har ställt in '+fmtKr(lanV)+'/mån men max är '+fmtKr(lanMax)+(tillaggEligible ? ' ('+fmtKr(lanMax+tillaggMax)+' med tilläggslån)' : '')+'/mån',
+      'Sänk lånsslidern'
+    ]});
   }
 
-  // 3. Tilläggslån
-  if (lanV > 0 && age >= 25) {
-    rows.push({ok:'warn', title:'Tilläggslån (extra)', verdict:'Troligen ja — ca +4 688 kr per 4-veckorsperiod.', reason:'Du är '+age+' år ✓ och tar lån ✓. Krav: tjänat ≥ 245 680 kr under 2025. Ansök separat på csn.se.'});
-  } else if (lanV > 0 && age < 25) {
-    rows.push({ok:false, title:'Tilläggslån (extra)', verdict:'Nej — du fyller inte 25 under studieåret.', reason:'Tilläggslån kräver att du fyller 25 det år du börjar studera.'});
+  // 3. Tilläggslån — visa bara om berättigad
+  if (tillaggEligible) {
+    rows.push({ok:'info', title:'Tilläggslån — du kan vara berättigad', points:[
+      'Du är '+age+' år och arbetar — grundkraven uppfylls',
+      'Krav: tjänat ≥ 245 680 kr under 2025',
+      'Ger ca '+fmtKr(tillaggMax)+' extra per 4-veckorsperiod utöver ordinarie lån',
+      'Ansök separat på csn.se — dra lånsslidern bortom den orange linjen'
+    ]});
   }
 
   // 4. Barntillägg
   if (nKids > 0) {
-    rows.push({ok:true, title:'Barntillägg', verdict:'Ja — du kan få '+fmtKr(barnMax)+'/mån för '+nKids+' barn.', reason:'Skattefritt, kräver ingen återbetalning. Ansök samtidigt som studiemedlet på Mina sidor.'});
+    rows.push({ok:true, title:'Barntillägg — '+fmtKr(barnMax)+'/mån', points:[
+      nKids+' barn ger '+fmtKr(barnMax)+'/mån extra',
+      'Skattefritt, kräver ingen återbetalning',
+      'Ansök om barntillägg samtidigt som studiemedlet på Mina sidor'
+    ]});
   }
 
   // 5. Fribelopp
   const jobbHalvyr = jobbV * 6;
   if (jobbV === 0) {
-    rows.push({ok:true, title:'Fribelopp (sidoinkomst)', verdict:'Inga sidoinkomster — inga problem.', reason:'Du kan tjäna upp till '+fribeloppHalvyr.toLocaleString('sv')+' kr/halvår utan att CSN påverkas.'});
+    rows.push({ok:true, title:'Fribelopp — inga sidoinkomster', points:[
+      'Inga sidoinkomster registrerade',
+      'Du kan tjäna upp till '+fribeloppHalvyr.toLocaleString('sv')+' kr/halvår utan att CSN påverkas'
+    ]});
   } else if (jobbHalvyr <= fribeloppHalvyr) {
-    rows.push({ok:true, title:'Fribelopp (sidoinkomst)', verdict:'Ja — '+fmtKr(jobbV)+'/mån ryms inom fribeloppet.', reason:jobbHalvyr.toLocaleString('sv')+' kr/halvår ≤ '+fribeloppHalvyr.toLocaleString('sv')+' kr/halvår. OK — CSN påverkas inte.'});
+    rows.push({ok:true, title:'Fribelopp — sidoinkomst OK', points:[
+      fmtKr(jobbV)+'/mån = '+jobbHalvyr.toLocaleString('sv')+' kr/halvår',
+      'Gränsen är '+fribeloppHalvyr.toLocaleString('sv')+' kr/halvår — du är under',
+      'CSN påverkas inte av din sidoinkomst'
+    ]});
   } else {
-    rows.push({ok:false, title:'Fribelopp (sidoinkomst)', verdict:'OBS — '+fmtKr(jobbV)+'/mån överstiger fribeloppet.', reason:jobbHalvyr.toLocaleString('sv')+' kr/halvår > '+fribeloppHalvyr.toLocaleString('sv')+' kr/halvår. Anmäl alltid beräknad inkomst till CSN — annars risk för återkrav.'});
+    rows.push({ok:false, title:'Fribelopp — sidoinkomst överstiger gränsen', points:[
+      fmtKr(jobbV)+'/mån = '+jobbHalvyr.toLocaleString('sv')+' kr/halvår',
+      'Gränsen är '+fribeloppHalvyr.toLocaleString('sv')+' kr/halvår — du är ÖVER',
+      'Anmäl alltid beräknad inkomst till CSN — annars risk för återkrav'
+    ]});
   }
 
-  // Build HTML
-  const svgOk = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
-  const svgNo = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
-  const svgWarn = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r="1" fill="#fff"/></svg>`;
-  const svgNull = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+  const svgOk = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  const svgNo = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D94F4F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  const svgInfo = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--wa)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
+  const svgNull = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--li)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>';
 
   let html = '';
   rows.forEach(row => {
-    const isOk = row.ok === true, isNo = row.ok === false, isWarn = row.ok === 'warn';
-    const bg = isOk ? 'var(--ac)' : isNo ? '#D94F4F' : isWarn ? '#C4891A' : '#A0A8B0';
-    const icon = isOk ? svgOk : isNo ? svgNo : isWarn ? svgWarn : svgNull;
-    html += `<div style="display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--bo)">
-      <div style="width:28px;height:28px;border-radius:50%;background:${bg};display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">${icon}</div>
-      <div>
-        <div style="font-size:.73rem;font-weight:700;color:var(--li);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px">${row.title}</div>
-        <div style="font-weight:700;font-size:.92rem;margin-bottom:4px">${row.verdict}</div>
-        <div style="font-size:.8rem;color:var(--mu);line-height:1.45">${row.reason}</div>
-      </div>
+    const icon = row.ok === true ? svgOk : row.ok === false ? svgNo : row.ok === 'info' ? svgInfo : svgNull;
+    const titleColor = row.ok === true ? 'var(--ah)' : row.ok === false ? '#D94F4F' : row.ok === 'info' ? 'var(--wa)' : 'var(--li)';
+    html += `<div style="padding:12px 0;border-bottom:1px solid var(--bo)">
+      <div style="display:flex;align-items:center;gap:6px;font-weight:700;font-size:.88rem;margin-bottom:6px;color:${titleColor}">${icon}${row.title}</div>
+      <ul class="detail-list">${row.points.map(p=>'<li>'+p+'</li>').join('')}</ul>
     </div>`;
   });
+  html += '<div style="padding:10px 0 0"><a href="https://www.csn.se/bidrag-och-lan/studiemedel.html" target="_blank" style="font-size:.8rem;color:var(--ac);font-weight:600">Räkna exakt på csn.se →</a></div>';
 
-  document.getElementById('csnModalContent').innerHTML = html;
-  document.getElementById('csnModalOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  const overlay = document.getElementById('csnModalOverlay');
-  overlay._scrollHandler = (e) => {
-    const scroller = document.getElementById('csnModalScroll');
-    if (scroller) { scroller.scrollTop += e.deltaY; e.preventDefault(); }
-  };
-  overlay.addEventListener('wheel', overlay._scrollHandler, {passive:false});
-}
-
-
-function closeCSNModal(e) {
-  if (e && e.target !== document.getElementById('csnModalOverlay')) return;
-  const overlay = document.getElementById('csnModalOverlay');
-  overlay.classList.remove('open');
-  document.body.style.overflow = '';
-  if (overlay._scrollHandler) overlay.removeEventListener('wheel', overlay._scrollHandler);
+  const el = document.getElementById('csn-verify-body');
+  if (el) el.innerHTML = html;
 }
 
 function openVerifyModal() {
@@ -2645,23 +2726,6 @@ function svgModalClose(val) {
    <div id="editQList"></div>
  </div>
  </div>
-</div>
-
-<!-- CSN modal -->
-<div class="verify-modal-overlay" id="csnModalOverlay" onclick="closeCSNModal(event)">
-  <div class="verify-modal" id="csnModal">
-    <div class="verify-modal-header">
-      <div style="font-weight:700;font-size:1rem;margin-bottom:4px">Verifiera din rätt till CSN</div>
-      <div style="font-size:.8rem;color:var(--li)">Baserat på dina svar — vad du faktiskt kan få och varför.</div>
-    </div>
-    <div id="csnModalScroll" style="overflow-y:auto;flex:1;padding:0 16px 16px">
-      <div id="csnModalContent"></div>
-    </div>
-    <div style="padding:12px 16px;border-top:1px solid var(--bo);display:flex;flex-direction:column;gap:8px">
-      <a href="https://www.csn.se/bidrag-och-lan/studiemedel.html" target="_blank" style="display:block;text-align:center;font-size:.8rem;color:var(--ac);font-weight:600">Räkna exakt på csn.se →</a>
-      <button onclick="closeCSNModal()" style="background:none;border:none;color:var(--li);font-size:.85rem;cursor:pointer;padding:4px">Stäng</button>
-    </div>
-  </div>
 </div>
 
 <!-- Verify behörighet modal -->
