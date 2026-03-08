@@ -1922,10 +1922,16 @@ function showAuthMsg(msg, isError) {
 
 // ---- Edit answers modal ----
 const EDIT_QUESTIONS = [
+  { key:'user_name', label:'Vad heter du?', tp:'text', ph:'För- och efternamn' },
   { key:'current_location', label:'Var bor du idag?', opts:[
     {v:'stockholm',l:'Stockholm'},{v:'goteborg',l:'Göteborg'},{v:'malmo',l:'Malmö'},
     {v:'uppsala',l:'Uppsala'},{v:'linkoping',l:'Linköping'},{v:'lund',l:'Lund'},
     {v:'umea',l:'Umeå'},{v:'orebro',l:'Örebro'},{v:'other',l:'Annan ort'}
+  ]},
+  { key:'education_type', label:'Vilken utbildningsform söker du?', tp:'multi', opts:[
+    {v:'yh',l:'Yrkeshögskola (YH)'},{v:'uni',l:'Högskola / Universitet'},
+    {v:'komvux',l:'Komvux'},{v:'folk',l:'Folkhögskola'},
+    {v:'private',l:'Privat utbildning'},{v:'any',l:'Spelar ingen roll'}
   ]},
   { key:'work_status', label:'Arbetar du idag?', opts:[
     {v:'fulltime',l:'Heltid'},{v:'parttime',l:'Deltid'},{v:'hourly',l:'Timanställd'},
@@ -1957,12 +1963,19 @@ const EDIT_QUESTIONS = [
     {v:'none',l:'Inget sparat'},{v:'under10',l:'Under 10 000 kr'},{v:'10-50',l:'10 000 – 50 000 kr'},
     {v:'50-100',l:'50 000 – 100 000 kr'},{v:'100+',l:'Mer än 100 000 kr'}
   ]},
+  { key:'has_kids', label:'Har du barn eller ekonomiskt ansvar för andra?', opts:[
+    {v:'yes',l:'Ja'},{v:'no',l:'Nej'}
+  ]},
+  { key:'num_kids', label:'Hur många barn har du?', cond: () => editDraft.has_kids === 'yes', opts:[
+    {v:'1',l:'1'},{v:'2',l:'2'},{v:'3',l:'3'},{v:'4plus',l:'4 eller fler'}
+  ]},
   { key:'fee_ok', label:'Öppen för avgiftsbelagda utbildningar?', opts:[
     {v:'yes',l:'Ja'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}
   ]},
   { key:'has_grades', label:'Har du fullständiga gymnasiebetyg?', opts:[
     {v:'yes',l:'Ja'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}
   ]},
+  { key:'hp_considered', label:'HP-poäng (lämna tomt om ej skrivet)', tp:'text', ph:'t.ex. 1.25' },
   { key:'biggest_concern', label:'Vad oroar dig mest med att studera?', opts:[
     {v:'economy',l:'Ekonomin — klarar jag mig på CSN?'},{v:'time',l:'Tiden — hinner jag med allt?'},
     {v:'grades',l:'Betygen — är jag tillräckligt smart?'},{v:'age',l:'Åldern — är det för sent?'},
@@ -1983,8 +1996,30 @@ function openEditModal() {
   const list = document.getElementById('editQList');
   list.innerHTML = '';
   EDIT_QUESTIONS.forEach(q => {
-    const curOpt = q.opts.find(o => o.v === ans[q.key]);
-    const curLabel = curOpt ? curOpt.l : '—';
+    // Skip conditional questions where condition not met
+    if (q.cond && !q.cond()) return;
+
+    let curLabel = '—';
+    if (q.tp === 'text') {
+      curLabel = ans[q.key] || '—';
+    } else if (q.tp === 'multi') {
+      const cur = Array.isArray(ans[q.key]) ? ans[q.key] : (ans[q.key] ? [ans[q.key]] : []);
+      curLabel = cur.map(v => { const o = q.opts.find(o=>o.v===v); return o?o.l:v; }).join(', ') || '—';
+    } else {
+      const curOpt = q.opts.find(o => o.v === ans[q.key]);
+      curLabel = curOpt ? curOpt.l : '—';
+    }
+
+    let bodyHTML = '';
+    if (q.tp === 'text') {
+      bodyHTML = `<input type="text" value="${ans[q.key]||''}" placeholder="${q.ph||''}" oninput="editDraft['${q.key}']=this.value;document.getElementById('eq-val-${q.key}').textContent=this.value||'—'" style="width:100%;padding:10px;border:1.5px solid #e8ede8;border-radius:8px;font-size:.88rem;box-sizing:border-box">`;
+    } else if (q.tp === 'multi') {
+      const cur = Array.isArray(ans[q.key]) ? ans[q.key] : (ans[q.key] ? [ans[q.key]] : []);
+      bodyHTML = q.opts.map(o => `<div class="eq-opt${cur.includes(o.v)?' selected':''}" id="eq-opt-${q.key}-${o.v}" onclick="selectEQMulti('${q.key}','${o.v}','${o.l}')">${o.l}</div>`).join('');
+    } else {
+      bodyHTML = q.opts.map(o => `<div class="eq-opt${ans[q.key]===o.v?' selected':''}" id="eq-opt-${q.key}-${o.v}" onclick="selectEQ('${q.key}','${o.v}','${o.l}')">${o.l}</div>`).join('');
+    }
+
     const div = document.createElement('div');
     div.className = 'eq-item';
     div.id = 'eq-' + q.key;
@@ -1996,9 +2031,7 @@ function openEditModal() {
         </div>
         <span style="color:var(--li);font-size:.8rem">▾</span>
       </div>
-      <div class="eq-body" id="eq-body-${q.key}">
-        ${q.opts.map(o => `<div class="eq-opt${ans[q.key]===o.v?' selected':''}" id="eq-opt-${q.key}-${o.v}" onclick="selectEQ('${q.key}','${o.v}','${o.l}')">${o.l}</div>`).join('')}
-      </div>`;
+      <div class="eq-body" id="eq-body-${q.key}">${bodyHTML}</div>`;
     list.appendChild(div);
   });
   document.getElementById('editModalOverlay').classList.add('open');
@@ -2019,6 +2052,18 @@ function selectEQ(key, val, label) {
   });
   document.getElementById('eq-val-' + key).textContent = label;
   document.getElementById('eq-body-' + key).classList.remove('open');
+}
+
+function selectEQMulti(key, val, label) {
+  if (!Array.isArray(editDraft[key])) editDraft[key] = Array.isArray(ans[key]) ? [...ans[key]] : (ans[key] ? [ans[key]] : []);
+  const idx = editDraft[key].indexOf(val);
+  if (idx > -1) editDraft[key].splice(idx, 1);
+  else editDraft[key].push(val);
+  const el = document.getElementById('eq-opt-' + key + '-' + val);
+  if (el) el.classList.toggle('selected', editDraft[key].includes(val));
+  const q = EDIT_QUESTIONS.find(q => q.key === key);
+  const labels = editDraft[key].map(v => { const o = q.opts.find(o=>o.v===v); return o?o.l:v; }).join(', ');
+  document.getElementById('eq-val-' + key).textContent = labels || '—';
 }
 
 function closeEditModal(e) {
