@@ -1654,7 +1654,7 @@ function buildFP(name) {
  pl += `<div class="section-label" style="margin-top:20px">Under studietiden</div>`;
 
  // Savings buffer display
- const bufWeeksDisplay = savingsAmt > 0 && monthlyExp > 0 ? `Du har ${fmtKr(savingsAmt)} i buffert — räcker <strong>ca ${bufferWeeks} veckor</strong>.` : 'Bygg en buffert innan studiestart — CSN tar 4–6 veckor.';
+ const bufWeeksDisplay = savingsAmt > 0 && monthlyExp > 0 ? `Du har ${fmtKr(savingsAmt)} i buffert — räcker ca ${bufferWeeks} veckor` : 'Bygg en buffert innan studiestart — CSN tar 4–6 veckor';
 
  pl += `<div class="expand-block" id="exp-st1">
  <div class="expand-head" onclick="toggle('exp-st1')">
