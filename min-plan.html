@@ -1614,10 +1614,14 @@ function buildFP(name) {
  pl += tlStep('Inom 2 veckor','Ansök till Komvux — '+missingReqs.slice(0,2).join(' & '),`Du saknar troligen <strong>${missingReqs.join(' och ')}</strong>. Välj ${a.work_status==='fulltime'?'<strong>deltid kväll/distans</strong> — du behåller lönen':'<strong>heltid</strong> — snabbaste vägen'}. Sök på <strong>studera.nu</strong>, filtrera på distans + kväll.`,true);
  }
 
- if (needsSavingsStep) {
- const bufTarget = Math.round(monthlyExp * 5);
- const monthly = mo3 > 0 ? Math.round((bufTarget - savingsAmt) / mo3) : bufTarget;
- pl += tlStep('Redan nu',`Bygg buffert: ${fmtKr(bufTarget)}`,`CSN tar 4–6 veckor på att betala ut. ${savingsAmt>0?'Du har '+fmtKr(savingsAmt)+' sparat — räcker ca '+bufferWeeks+' veckor.':'Utan buffert är du i kläm direkt.'} Sätt in ca ${fmtKr(Math.max(1000,monthly))}/mån på ett separat konto tills studiestart.`);
+ if (a.work_status !== 'unemployed') {
+   if (savingsAmt >= monthlyExp) {
+     pl += tlStep('Redan nu','Säkra din buffert',`Du har ${fmtKr(savingsAmt)} sparat — det täcker dina utgifter under CSN-väntan. Se till att pengarna ligger lättillgängligt, inte låsta i fonder eller liknande.`);
+   } else {
+     const bufTarget = monthlyExp;
+     const monthly = mo3 > 0 ? Math.round((bufTarget - savingsAmt) / mo3) : bufTarget;
+     pl += tlStep('Redan nu',`Bygg buffert: ${fmtKr(bufTarget)}`,`CSN tar 4–6 veckor på att betala ut. ${savingsAmt>0?'Du har '+fmtKr(savingsAmt)+' sparat — räcker ca '+bufferWeeks+' veckor.':'Utan buffert är du i kläm direkt.'} Sätt in ca ${fmtKr(Math.max(1000,monthly))}/mån på ett separat konto tills studiestart.`);
+   }
  }
 
  const KOTID = {
