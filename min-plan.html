@@ -52,9 +52,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .popup-btn:hover { background: var(--bg); }
 .popup-btn .btn-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: .9rem; flex-shrink: 0; }
 .popup-btn .btn-sub { font-size: .7rem; color: var(--li); font-weight: 400; margin-top: 1px; }
-.edit-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:999; align-items:flex-end; justify-content:center; }
+.edit-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:999; align-items:flex-end; justify-content:center; touch-action:none; }
 .edit-modal-overlay.open { display:flex; }
-.edit-modal { background:#fff; border-radius:20px 20px 0 0; width:100%; max-width:520px; max-height:85vh; overflow-y:auto; padding:24px 20px 32px; }
+.edit-modal { background:#fff; border-radius:20px 20px 0 0; width:100%; max-width:520px; max-height:85vh; overflow-y:auto; padding:24px 20px 32px; overscroll-behavior:contain; }
 .edit-modal-title { font-weight:700; font-size:1rem; margin-bottom:4px; }
 .edit-modal-sub { font-size:.8rem; color:var(--li); margin-bottom:20px; }
 .eq-item { border:1.5px solid #e8ede8; border-radius:12px; margin-bottom:8px; overflow:hidden; }
@@ -349,7 +349,7 @@ const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE
  <div class="popup-edu" id="popupEdu">—</div>
  </div>
  <button class="popup-btn" onclick="openEditModal()">
- <div class="btn-icon" style="background:var(--al)">✏️</div>
+ <div class="btn-icon" style="background:var(--al)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
  <div>
  <div>Ändra svar</div>
  <div class="btn-sub">Uppdatera dina svar</div>
@@ -2013,7 +2013,7 @@ function openEditModal() {
     } else if (q.tp === 'number') {
       curLabel = ans[q.key] ? (+ans[q.key]).toLocaleString('sv') + ' ' + (q.unit||'') : '—';
     } else if (q.tp === 'slider') {
-      curLabel = ans[q.key] !== undefined ? (+ans[q.key]).toLocaleString('sv') + ' ' + (q.unit||'') : '—';
+      curLabel = !isNaN(+ans[q.key]) && ans[q.key] !== undefined ? (+ans[q.key]).toLocaleString('sv') + ' ' + (q.unit||'') : ((q.min||0).toLocaleString('sv') + ' ' + (q.unit||''));
     } else if (q.tp === 'multi') {
       const cur = Array.isArray(ans[q.key]) ? ans[q.key] : (ans[q.key] ? [ans[q.key]] : []);
       curLabel = cur.map(v => { const o = q.opts.find(o=>o.v===v); return o?o.l:v; }).join(', ') || '—';
@@ -2028,8 +2028,8 @@ function openEditModal() {
     } else if (q.tp === 'number') {
       bodyHTML = `<div style="display:flex;align-items:center;gap:8px"><input type="number" value="${ans[q.key]||''}" placeholder="${q.ph||''}" min="${q.min||0}" max="${q.max||99999}" oninput="editDraft['${q.key}']=+this.value;document.getElementById('eq-val-${q.key}').textContent=this.value?(+this.value).toLocaleString('sv')+' ${q.unit||''}':'—'" style="flex:1;padding:10px;border:1.5px solid #e8ede8;border-radius:8px;font-size:.88rem;box-sizing:border-box"><span style="color:var(--li);font-size:.85rem">${q.unit||''}</span></div>`;
     } else if (q.tp === 'slider') {
-      const sv = ans[q.key]||q.min||0;
-      bodyHTML = `<div style="padding:4px 0"><div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--li);margin-bottom:6px"><span>${(q.min||0).toLocaleString('sv')} ${q.unit||''}</span><span id="eq-slider-val-${q.key}" style="font-weight:700;color:var(--ah)">${(+sv).toLocaleString('sv')} ${q.unit||''}</span><span>${(q.max||100000).toLocaleString('sv')} ${q.unit||''}</span></div><input type="range" min="${q.min||0}" max="${q.max||100000}" step="${q.step||1000}" value="${sv}" oninput="editDraft['${q.key}']=+this.value;document.getElementById('eq-slider-val-${q.key}').textContent=(+this.value).toLocaleString('sv')+' ${q.unit||''}';document.getElementById('eq-val-${q.key}').textContent=(+this.value).toLocaleString('sv')+' ${q.unit||''}'" style="width:100%;accent-color:var(--ac)"></div>`;
+      const sv = isNaN(+ans[q.key]) ? (q.min||0) : (+ans[q.key]);
+      bodyHTML = `<div style="padding:4px 0"><div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--li);margin-bottom:6px"><span>${(q.min||0).toLocaleString('sv')} ${q.unit||''}</span><span id="eq-slider-val-${q.key}" style="font-weight:700;color:var(--ah)">${sv.toLocaleString('sv')} ${q.unit||''}</span><span>${(q.max||100000).toLocaleString('sv')} ${q.unit||''}</span></div><input type="range" min="${q.min||0}" max="${q.max||100000}" step="${q.step||1000}" value="${sv}" oninput="editDraft['${q.key}']=+this.value;document.getElementById('eq-slider-val-${q.key}').textContent=(+this.value).toLocaleString('sv')+' ${q.unit||''}';document.getElementById('eq-val-${q.key}').textContent=(+this.value).toLocaleString('sv')+' ${q.unit||''}'" style="width:100%;accent-color:var(--ac)"></div>`;
     } else if (q.tp === 'multi') {
       const cur = Array.isArray(ans[q.key]) ? ans[q.key] : (ans[q.key] ? [ans[q.key]] : []);
       bodyHTML = q.opts.map(o => `<div class="eq-opt${cur.includes(o.v)?' selected':''}" id="eq-opt-${q.key}-${o.v}" onclick="selectEQMulti('${q.key}','${o.v}','${o.l}')">${o.l}</div>`).join('');
@@ -2061,7 +2061,6 @@ function toggleEQ(key) {
 
 function selectEQ(key, val, label) {
   editDraft[key] = val;
-  // Update selected styling
   const q = EDIT_QUESTIONS.find(q => q.key === key);
   q.opts.forEach(o => {
     const el = document.getElementById('eq-opt-' + key + '-' + o.v);
@@ -2069,6 +2068,29 @@ function selectEQ(key, val, label) {
   });
   document.getElementById('eq-val-' + key).textContent = label;
   document.getElementById('eq-body-' + key).classList.remove('open');
+  // Show/hide conditional questions that depend on this key
+  EDIT_QUESTIONS.forEach(cq => {
+    if (!cq.cond) return;
+    const el = document.getElementById('eq-' + cq.key);
+    const shouldShow = cq.cond();
+    if (shouldShow && !el) {
+      // Insert after the question it depends on
+      const depKey = key;
+      const depEl = document.getElementById('eq-' + depKey);
+      if (depEl) {
+        const newDiv = document.createElement('div');
+        newDiv.className = 'eq-item';
+        newDiv.id = 'eq-' + cq.key;
+        const curOpt = cq.opts ? cq.opts.find(o => o.v === editDraft[cq.key]) : null;
+        const curLabel = curOpt ? curOpt.l : '—';
+        const bodyHTML = cq.opts.map(o => `<div class="eq-opt${editDraft[cq.key]===o.v?' selected':''}" id="eq-opt-${cq.key}-${o.v}" onclick="selectEQ('${cq.key}','${o.v}','${o.l}')">${o.l}</div>`).join('');
+        newDiv.innerHTML = `<div class="eq-head" onclick="toggleEQ('${cq.key}')"><div><div class="eq-label">${cq.label}</div><div class="eq-val" id="eq-val-${cq.key}">${curLabel}</div></div><span style="color:var(--li);font-size:.8rem">▾</span></div><div class="eq-body" id="eq-body-${cq.key}">${bodyHTML}</div>`;
+        depEl.insertAdjacentElement('afterend', newDiv);
+      }
+    } else if (!shouldShow && el) {
+      el.remove();
+    }
+  });
 }
 
 function selectEQMulti(key, val, label) {
@@ -2299,10 +2321,10 @@ function svgModalClose(val) {
 <div class="edit-modal-overlay" id="editModalOverlay" onclick="closeEditModal(event)">
  <div class="edit-modal" id="editModal">
  <div class="edit-modal-title">Ändra dina svar</div>
- <div class="edit-modal-sub">Klicka på en fråga för att ändra svaret. Bekräfta för att uppdatera din plan.</div>
+ <div class="edit-modal-sub">Klicka på en fråga för att ändra svaret.</div>
+ <button class="eq-confirm" onclick="confirmEdits()" style="margin-top:4px;margin-bottom:8px">Bekräfta och uppdatera plan</button>
+ <button class="eq-cancel" style="margin-bottom:16px" onclick="document.getElementById('editModalOverlay').classList.remove('open')">Avbryt</button>
  <div id="editQList"></div>
- <button class="eq-confirm" onclick="confirmEdits()">Bekräfta och uppdatera plan</button>
- <button class="eq-cancel" onclick="document.getElementById('editModalOverlay').classList.remove('open')">Avbryt</button>
  </div>
 </div>
 </body>
