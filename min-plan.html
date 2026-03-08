@@ -1621,26 +1621,36 @@ function buildFP(name) {
  }
 
 
- // CSN expandable card
+ // CSN STATUS HERO
  const csnTillaggEligible = age >= 25 && (a.work_status === 'fulltime' || a.work_status === 'parttime');
- bh += `<div class="expand-block" id="exp-csn" style="margin-top:20px">
-  <div class="expand-head" onclick="toggle('exp-csn');if(document.getElementById('exp-csn').classList.contains('open')){buildCSNVerify();}">
-   <div class="expand-head-left">
-    <div style="width:32px;height:32px;background:#003882;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-     <svg width="18" height="12" viewBox="0 0 60 40" fill="none"><rect width="60" height="40" rx="4" fill="#003882"/><path d="M0 14h60v12H0z" fill="#F9C300"/><path d="M14 0h12v40H14z" fill="#F9C300"/></svg>
-    </div>
-    <div>
-     <div style="font-weight:700;font-size:.9rem">Verifiera din rätt till CSN</div>
-     <div style="font-size:.75rem;color:var(--li);margin-top:1px">Baserat på dina svar i ekonomikalkylen</div>
-    </div>
+ const noCSN2 = a.need_csn === 'no';
+ const deltid2 = a.study_pace === 'parttime';
+ const csnBidMax = deltid2 ? CSN_BID_DT : CSN_BID_HT;
+ const csnLanMax = deltid2 ? CSN_LAN_DT : CSN_LAN_HT;
+ const csnBidOk = !noCSN2 && defaultBid <= csnBidMax;
+ const csnLanOk = (a.need_csn === 'no' || a.need_csn === 'grant') || (loan <= csnLanMax && age < 60);
+ const csnAllOk = csnBidOk && csnLanOk;
+
+ bh += `<div id="csn-hero-wrap" style="margin-top:10px">
+  <div class="status-hero" style="background:#FFF0F0;border-color:#E3000B;border-radius:14px 14px 0 0;margin-bottom:0" id="csn-hero">
+   <div class="status-circle" style="background:${csnAllOk?'#E3000B':'#C4891A'}">
+    ${csnAllOk
+     ? '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+     : '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
+    }
    </div>
-   <div style="display:flex;align-items:center;gap:8px">
-    <button style="background:var(--ac);color:#fff;border:none;border-radius:8px;padding:6px 14px;font-size:.8rem;font-weight:700;cursor:pointer" onclick="event.stopPropagation();const b=document.getElementById('exp-csn');b.classList.add('open');buildCSNVerify();">Verifiera</button>
-    <svg class="expand-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+   <div>
+    <div class="status-title" style="color:#B8000A">${csnAllOk ? 'Troligen berättigad till CSN' : 'Kontrollera ditt CSN'}</div>
+    <div class="status-body">${csnAllOk ? 'Dina belopp ryms inom CSN:s regler.' : 'Ett eller flera belopp kan behöva justeras.'}</div>
+    <button class="verify-btn" style="border-color:#E3000B;color:#E3000B" onclick="toggleCSNHero()">
+     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+     Verifiera CSN
+    </button>
    </div>
   </div>
-  <div class="expand-body" style="padding:0 16px">
-   <div id="csn-verify-body" style="padding-bottom:4px"></div>
+  <div id="csn-hero-body" style="display:none;background:#FFF8F8;border:1.5px solid #E3000B;border-top:none;border-radius:0 0 14px 14px;padding:0 16px 12px">
+   <div id="csn-verify-body"></div>
+   <div style="padding:8px 0 4px"><a href="https://www.csn.se/bidrag-och-lan/studiemedel.html" target="_blank" style="font-size:.8rem;color:#E3000B;font-weight:600">Räkna exakt på csn.se →</a></div>
   </div>
  </div>`;
 
@@ -1649,22 +1659,19 @@ function buildFP(name) {
  // Extend loan slider max for tilläggslån-eligible users
  setTimeout(() => {
    const lanEl2 = document.getElementById('sl-lan');
-   if (lanEl2 && csnTillaggEligible) {
+   if (lanEl2 && csnTillaggEligible && !lanEl2.dataset.baseMax) {
      const baseMax = parseInt(lanEl2.max);
-     const tillaggMax = 1172 * 4; // ≈ 4688 kr/4v → ~1172/v * 4.3 ≈ 1200/mån extra
      const newMax = baseMax + 1200;
      lanEl2.setAttribute('max', newMax);
      lanEl2.setAttribute('data-base-max', baseMax);
-     lanEl2.setAttribute('data-tillagg-max', newMax);
-     // Update slider meta label
      const meta = lanEl2.closest('.slider-block');
      if (meta) {
        const maxLabel = meta.querySelector('.slider-meta span:last-child');
        if (maxLabel) maxLabel.textContent = 'Max ' + fmtKr(baseMax) + ' + tilläggslån';
      }
-     // Re-run updateBudget to repaint slider gradient
      updateBudget();
    }
+   buildCSNVerify();
  }, 100);
 
  // 
@@ -1920,6 +1927,8 @@ function updateBudget() {
  const stEl = document.getElementById('skuld-total'); if (stEl) stEl.textContent = '~' + fmtKr(newDebt);
  const srEl = document.getElementById('skuld-repay'); if (srEl) srEl.textContent = '~' + fmtKr(newRepay) + '/mån';
  const syEl = document.getElementById('skuld-years'); if (syEl) syEl.textContent = newYrs > 0 && newYrs < 30 ? '~' + newYrs + ' år' : '—';
+ // Refresh CSN verification if open
+ if (document.getElementById('csn-hero-body') && document.getElementById('csn-hero-body').style.display !== 'none') buildCSNVerify();
 }
 
 function setSliderPct(id, val, min, max) {
@@ -2266,6 +2275,17 @@ const VERIFY_GYM_COURSES = {
 let verifyChecked = new Set();
 let verifyGym = '';
 
+function toggleCSNHero() {
+  const body = document.getElementById('csn-hero-body');
+  if (!body) return;
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  if (!isOpen) buildCSNVerify();
+  // Round top card corners when open/closed
+  const hero = document.getElementById('csn-hero');
+  if (hero) hero.style.borderRadius = isOpen ? '14px 14px 0 0' : '14px';
+}
+
 function buildCSNVerify() {
   const a = ans;
   const age = Math.min(70, Math.max(18, parseInt(a.age)||29));
@@ -2397,6 +2417,18 @@ function buildCSNVerify() {
 
   const el = document.getElementById('csn-verify-body');
   if (el) el.innerHTML = html;
+
+  // Update hero status circle based on actual slider values
+  const anyProblem = rows.some(r => r.ok === false);
+  const heroCircle = document.querySelector('#csn-hero .status-circle');
+  const heroTitle = document.querySelector('#csn-hero .status-title');
+  const heroBody = document.querySelector('#csn-hero .status-body');
+  if (heroCircle) heroCircle.style.background = anyProblem ? '#C4891A' : '#E3000B';
+  if (heroTitle) heroTitle.textContent = anyProblem ? 'Kontrollera ditt CSN' : 'Troligen berättigad till CSN';
+  if (heroBody) heroBody.textContent = anyProblem ? 'Ett eller flera belopp kan behöva justeras.' : 'Dina belopp ryms inom CSN:s regler.';
+  if (heroCircle) heroCircle.innerHTML = anyProblem
+    ? '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
+    : '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 }
 
 function openVerifyModal() {
