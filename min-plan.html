@@ -89,6 +89,17 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .verify-result.ok { background:var(--al); border:1.5px solid var(--ac); color:var(--ah); }
 .verify-result.fail { background:#FDF4E3; border:1.5px solid #D4A017; color:#6B4F00; }
 .verify-result-title { font-weight:700; font-size:.95rem; margin-bottom:4px; }
+.csn-verify-block { background:var(--card); border:1.5px solid var(--bo); border-radius:14px; margin-top:20px; overflow:hidden; }
+.csn-verify-head { padding:14px 16px; display:flex; align-items:center; gap:10px; }
+.csn-verify-title { font-weight:700; font-size:.92rem; }
+.csn-verify-sub { font-size:.78rem; color:var(--li); margin-top:2px; }
+.csn-row { display:flex; align-items:flex-start; gap:10px; padding:10px 16px; border-top:1px solid var(--bo); font-size:.83rem; }
+.csn-row-icon { width:22px; height:22px; border-radius:6px; flex-shrink:0; display:flex; align-items:center; justify-content:center; margin-top:1px; }
+.csn-row-icon.ok { background:var(--al); }
+.csn-row-icon.warn { background:#FDF4E3; }
+.csn-row-icon.info { background:#EFF4FB; }
+.csn-row-label { font-weight:600; color:var(--mu); }
+.csn-row-val { color:var(--ah); font-weight:500; margin-top:2px; }
 .verify-confirm { width:100%; padding:13px; background:var(--ac); color:#fff; border:none; border-radius:10px; font-weight:700; font-size:.88rem; margin-top:12px; cursor:pointer; }
 .verify-confirm:hover { opacity:.9; }
 
@@ -1608,6 +1619,88 @@ function buildFP(name) {
  </div></div>
  </div>`;
  }
+
+
+ // CSN VERIFICATION BLOCK
+ const csnStudyPace = a.study_pace === 'parttime' ? 'deltid' : 'heltid';
+ const csnHasLoan = a.need_csn === 'both';
+ const csnOnlyGrant = a.need_csn === 'grant';
+ const csnNoCSN = a.need_csn === 'no';
+ const csnWorkDuring = a.work_during === 'parttime' || a.work_during === 'extra';
+ const csnMonthlyWork = a.work_during === 'parttime' ? 5000 : a.work_during === 'extra' ? 2000 : 0;
+ const csnAnnualWork = csnMonthlyWork * 12;
+ const csnFribeloppHalvyr = csnStudyPace === 'deltid' ? 171892 : 114676;
+ const csnFribeloppMon = Math.round(csnFribeloppHalvyr / 6);
+ const csnNumKids = a.has_kids === 'yes' ? (parseInt(a.num_kids)||1) : 0;
+ const csnBarnTillagg = csnNumKids === 1 ? 780 : csnNumKids === 2 ? 1276 : csnNumKids === 3 ? 1536 : csnNumKids >= 4 ? 1796 : 0;
+
+ const csnRows = [];
+
+ // 1. Ålder
+ if (age >= 60) {
+   csnRows.push({type:'warn', label:'Ålder', val:`Du är ${age} år — CSN ges som längst till 60 år. Kontrollera din rätt till veckor.`});
+ } else if (age >= 51) {
+   csnRows.push({type:'warn', label:'Ålder', val:`Du är ${age} år — från 51 år minskar rätten till studielån. Bidragsdelen påverkas inte.`});
+ } else {
+   csnRows.push({type:'ok', label:'Ålder', val:`${age} år — ingen åldersbegränsning påverkar dig.`});
+ }
+
+ // 2. Studietakt & belopp
+ const bidPerMon = csnStudyPace === 'deltid' ? Math.round(CSN_BID_DT*4.3/4) : Math.round(CSN_BID_HT*4.3/4);
+ const lanPerMon = csnStudyPace === 'deltid' ? Math.round(CSN_LAN_DT*4.3/4) : Math.round(CSN_LAN_HT*4.3/4);
+ csnRows.push({type:'info', label:'Studietakt & utbetalning', val:`${csnStudyPace === 'deltid' ? 'Deltid (50%)' : 'Heltid (100%)'} — bidrag ${bidPerMon.toLocaleString('sv')} kr/mån${csnHasLoan ? ', lån '+lanPerMon.toLocaleString('sv')+' kr/mån' : ''}. Utbetalning normalt den 25:e, var 4:e vecka.`});
+
+ // 3. Fribelopp
+ if (csnWorkDuring) {
+   const friOk = csnAnnualWork / 2 <= csnFribeloppHalvyr;
+   csnRows.push({type: friOk ? 'ok' : 'warn', label:'Fribelopp', val: friOk
+     ? `Extrajobb ~${csnMonthlyWork.toLocaleString('sv')} kr/mån (${(csnAnnualWork/2).toLocaleString('sv')} kr/halvår) — under fribeloppet ${csnFribeloppHalvyr.toLocaleString('sv')} kr/halvår. OK.`
+     : `OBS: Extrajobb ~${csnMonthlyWork.toLocaleString('sv')} kr/mån kan överstiga fribeloppet (${csnFribeloppHalvyr.toLocaleString('sv')} kr/halvår). Anmäl inkomst till CSN.`
+   });
+ } else {
+   csnRows.push({type:'info', label:'Fribelopp', val:`Max ${csnFribeloppHalvyr.toLocaleString('sv')} kr/halvår (~${csnFribeloppMon.toLocaleString('sv')} kr/mån) utan att CSN minskas. Du planerar inte jobba — inget problem.`});
+ }
+
+ // 4. Lån vs bidrag
+ if (csnNoCSN) {
+   csnRows.push({type:'info', label:'Bidrag / lån', val:'Du valde att inte ta CSN. Tänk på att bidraget (bidragsdelen) är skattefri — det kan ändå vara värt att ansöka om enbart bidrag.'});
+ } else if (csnOnlyGrant) {
+   csnRows.push({type:'ok', label:'Bidrag / lån', val:'Enbart bidrag — du kan alltid ansöka om lån i efterhand om du ändrar dig. Bidraget är skattefritt.'});
+ } else {
+   csnRows.push({type:'info', label:'Bidrag / lån', val:'Bidrag + lån. Du väljer inte exakta kronor — CSN räknar ut baserat på studietakt. Du kan ta bara bidrag, bara lån, eller båda.'});
+ }
+
+ // 5. Tilläggslån
+ if (csnHasLoan) {
+   if (age >= 25) {
+     csnRows.push({type:'ok', label:'Tilläggslån', val:`Du är ${age} år — du kan ansöka om tilläggslån (ca 4 688 kr/4 veckor extra) om du tjänade ≥ 245 680 kr under 2025.`});
+   } else {
+     csnRows.push({type:'warn', label:'Tilläggslån', val:`Tilläggslån kräver att du fyller 25 under ansökningsåret. Du är ${age} år — kontrollera när du börjar.`});
+   }
+ }
+
+ // 6. Barntillägg
+ if (numKids > 0) {
+   csnRows.push({type:'ok', label:'Barntillägg', val:`${numKids} barn — du har rätt till ${csnBarnTillagg.toLocaleString('sv')} kr/mån extra från CSN (skattefritt). Ansök samtidigt som studiemedlet.`});
+ } else {
+   csnRows.push({type:'info', label:'Barntillägg', val:'Inga barn registrerade. Har du barn under 18 år? Uppdatera i "Ändra svar" — du kan få upp till 780–1 796 kr/mån extra.'});
+ }
+
+ // 7. Antal veckor & hur man ansöker
+ csnRows.push({type:'info', label:'Veckor & ansökan', val:`En termin = 20 veckor. Du anger antal veckor när du ansöker på Mina sidor (csn.se). Ansök direkt när du fått antagningsbesked — CSN betalar inte retroaktivt längre än 4 veckor bakåt.`});
+
+ const svgOk = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+ const svgWarn = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8B6914" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
+ const svgInfo = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4A7FBF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
+
+ bh += '<div class="section-label" style="margin-top:24px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg> CSN — dina förutsättningar</div>';
+ bh += '<div class="csn-verify-block">';
+ csnRows.forEach(row => {
+   const icon = row.type === 'ok' ? svgOk : row.type === 'warn' ? svgWarn : svgInfo;
+   bh += `<div class="csn-row"><div class="csn-row-icon ${row.type}">${icon}</div><div><div class="csn-row-label">${row.label}</div><div class="csn-row-val">${row.val}</div></div></div>`;
+ });
+ bh += '<div style="padding:10px 16px;border-top:1px solid var(--bo)"><a href="https://www.csn.se/bidrag-och-lan/studiemedel.html" target="_blank" style="font-size:.78rem;color:var(--ac);font-weight:600">Räkna exakt på csn.se →</a></div>';
+ bh += '</div>';
 
  document.getElementById('panel-beh').innerHTML = bh;
 
