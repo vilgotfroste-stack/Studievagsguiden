@@ -1525,7 +1525,10 @@ function buildFP(name) {
  let bh = '';
  if (behOk) {
    bh += `<div class="status-hero ok">
- <div class="status-circle"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+ <div class="status-circle">${isVerified
+   ? '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+   : '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.5" fill="#fff"/><path d="M12 8.5a3 3 0 0 1 2 5.2V15"/></svg>'
+ }</div>
  <div>
  <div class="status-title">${isVerified ? 'Verifierat — du är behörig' : 'Troligen behörig — sök direkt'}</div>
  <div class="status-body">${isVerified ? 'Du har manuellt verifierat att du uppfyller alla kurskrav för '+e.t+'.' : (gp?gp.l:'Ditt gymnasieprogram')+' inkluderar normalt alla kurser '+e.t+' kräver.'}</div>
@@ -1569,10 +1572,7 @@ function buildFP(name) {
   <div class="status-circle" style="background:#E3000B">
    ${csnAlreadyVerified
     ? '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
-    : (csnAllOk
-       ? '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
-       : '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
-      )
+    : '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.5" fill="#fff"/><path d="M12 8.5a3 3 0 0 1 2 5.2V15"/></svg>'
    }
   </div>
   <div>
