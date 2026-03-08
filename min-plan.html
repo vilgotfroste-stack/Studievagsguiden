@@ -1533,7 +1533,7 @@ function buildFP(name) {
    bh += `<div class="status-hero warn">
  <div class="status-circle"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
  <div>
- <div class="status-title">Komplettering troligen behövs</div>
+ <div class="status-title">Komplettering behövs</div>
  <div class="status-body">${bodyText}</div>
  <button class="verify-btn" onclick="openVerifyModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${isVerified ? 'Ändra verifiering' : 'Verifiera kurser'}</button>
  </div>
@@ -2244,7 +2244,7 @@ function updateVerifyCourses() {
     return `<div class="verify-course${checked?' checked':''}" id="vc-${CSS.escape(course)}" onclick="toggleVerifyCourse('${course.replace(/'/g,"\'")}')">
       <div class="verify-course-check">${checked?'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':''}</div>
       <span>${course}</span>
-      ${isReq ? '<span style="margin-left:auto;font-size:.7rem;font-weight:700;color:var(--ac);background:var(--al);padding:2px 7px;border-radius:5px">KRAV</span>' : ''}
+      ${isReq ? '<span style="margin-left:auto;font-size:.7rem;font-weight:700;color:var(--ac);background:var(--al);padding:2px 7px;border-radius:5px">Krav för antagning</span>' : ''}
     </div>`;
   }).join('');
 
