@@ -1985,7 +1985,10 @@ const EDIT_QUESTIONS = [
   ]},
   { key:'fixed_expenses', label:'Fasta utgifter per månad (hyra, el, etc.)', tp:'number', ph:'T.ex. 8500', unit:'kr/mån', cond:()=>editDraft.housing==='home' },
   { key:'variable_expenses', label:'Rörliga utgifter per månad (mat, nöje, etc.)', tp:'number', ph:'T.ex. 4000', unit:'kr/mån', cond:()=>editDraft.housing==='home' },
-  { key:'savings_amount', label:'Hur mycket har du sparat?', tp:'slider', min:0, max:100000, step:1000, unit:'kr' },
+  { key:'savings_amount', label:'Hur mycket har du sparat?', opts:[
+    {v:'none',l:'Inget sparat'},{v:'under10',l:'Under 10 000 kr'},{v:'10-50',l:'10 000 – 50 000 kr'},
+    {v:'50-100',l:'50 000 – 100 000 kr'},{v:'100+',l:'Mer än 100 000 kr'}
+  ]},
   { key:'biggest_concern', label:'Vad oroar dig mest med att studera?', opts:[
     {v:'economy',l:'Ekonomin — klarar jag mig på CSN?'},{v:'time',l:'Tiden — hinner jag med allt?'},
     {v:'grades',l:'Betygen — är jag tillräckligt smart?'},{v:'age',l:'Åldern — är det för sent?'},
