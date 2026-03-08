@@ -475,6 +475,7 @@ const CSN_BID_HT=7754, CSN_BID_DT=3877;
 const CSN_LAN_HT=6412, CSN_LAN_DT=3206;
 const GYM=[{id:'natur',l:'Naturvetenskap',k:'Naturvetenskap'},{id:'teknik',l:'Teknik',k:'Teknik'},{id:'samhall',l:'Samhäll',k:'Samhäll'},{id:'ekonomi',l:'Ekonomi',k:'Ekonomi'},{id:'estet',l:'Estet',k:'Estet'},{id:'vard',l:'Vård och omsorg',k:'Vård'},{id:'bygg',l:'Bygg och anläggning',k:'Bygg'},{id:'el',l:'El och energi',k:'El och energi'},{id:'industri',l:'Industri',k:'Industri'},{id:'other',l:'Annat / Komvux',k:'other'}];
 let edu=null,sal=0,ws=0,ans={};
+let gCsnTillaggEligible = false;
 
 // 
 // DEV FUNCTION - SKIP TO PLAN
@@ -1553,6 +1554,7 @@ function buildFP(name) {
 
  // ── CSN STATUS HERO ────────────────────────────────────────────────────────
  const csnTillaggEligible = age >= 25 && (a.work_status === 'fulltime' || a.work_status === 'parttime');
+ gCsnTillaggEligible = csnTillaggEligible;
  const noCSN2 = a.need_csn === 'no';
  const deltid2 = a.study_pace === 'parttime';
  const csnBidMax = deltid2 ? CSN_BID_DT : CSN_BID_HT;
@@ -2240,9 +2242,12 @@ let verifyChecked = new Set();
 let verifyGym = '';
 
 function openCSNModal() {
-  buildCSNVerify();
   document.getElementById('csnModalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
+  try { buildCSNVerify(); } catch(err) {
+    const el = document.getElementById('csn-verify-body');
+    if (el) el.innerHTML = '<div style="padding:16px;color:#D94F4F;font-size:.85rem">Fel vid laddning: ' + err.message + '</div>';
+  }
   const overlay = document.getElementById('csnModalOverlay');
   if (!overlay._scrollHandler) {
     overlay._scrollHandler = (e) => {
@@ -2397,23 +2402,24 @@ function buildCSNVerify() {
   // Veckor — wizard doesn't ask
   checks.push({ id:'csn-veckor', label:'Jag har inte förbrukat mina 240 veckor', sub:'Max 240 veckor totalt (ca 6 år heltid) under hela livet' });
   // Tilläggslån-inkomst — only if eligible by age/work
-  if (csnTillaggEligible) {
+  if (gCsnTillaggEligible) {
     checks.push({ id:'csn-tillinkomst', label:'Min inkomst 2025 var ≥ 245 680 kr', sub:'Krav för tilläggslån — om ja, dra lånsslidern förbi den orange markeringen' });
   }
 
-  html += `<div style="padding:12px 0 4px;border-top:2px solid var(--bo);margin-top:4px">
-    <div style="font-size:.75rem;font-weight:700;color:var(--li);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Bekräfta att det gäller dig</div>
-    <div id="csn-checks">
-    ${checks.map(c => `<label id="wrap-${c.id}" onclick="toggleCSNCheck('${c.id}')" style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;margin-bottom:6px;cursor:pointer;background:var(--bg);border:1.5px solid var(--bo);transition:background .15s">
-      <div id="box-${c.id}" style="width:20px;height:20px;border-radius:6px;border:2px solid var(--bo);background:#fff;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s"></div>
-      <div>
-        <div style="font-size:.85rem;font-weight:600">${c.label}</div>
-        ${c.sub ? `<div style="font-size:.75rem;color:var(--li);margin-top:2px">${c.sub}</div>` : ''}
-      </div>
-    </label>`).join('')}
-    </div>
-    <div id="csn-check-result" style="margin-top:10px"></div>
-  </div>`;
+  html += '<div style="padding:12px 0 4px;border-top:2px solid var(--bo);margin-top:4px">'
+       + '<div style="font-size:.75rem;font-weight:700;color:var(--li);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Bekräfta att det gäller dig</div>'
+       + '<div id="csn-checks">'
+       + checks.map(c =>
+           '<label id="wrap-' + c.id + '" onclick="toggleCSNCheck(\'' + c.id + '\')" style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;margin-bottom:6px;cursor:pointer;background:var(--bg);border:1.5px solid var(--bo);transition:background .15s">'
+         + '<div id="box-' + c.id + '" style="width:20px;height:20px;border-radius:6px;border:2px solid var(--bo);background:#fff;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s"></div>'
+         + '<div>'
+         + '<div style="font-size:.85rem;font-weight:600">' + c.label + '</div>'
+         + (c.sub ? '<div style="font-size:.75rem;color:var(--li);margin-top:2px">' + c.sub + '</div>' : '')
+         + '</div></label>'
+       ).join('')
+       + '</div>'
+       + '<div id="csn-check-result" style="margin-top:10px"></div>'
+       + '</div>';
 
   html += '<div style="padding:6px 0 0"><a href="https://www.csn.se/bidrag-och-lan/studiemedel.html" target="_blank" style="font-size:.8rem;color:#E3000B;font-weight:600">Räkna exakt på csn.se →</a></div>';
 
