@@ -2203,9 +2203,8 @@ function openVerifyModal() {
   const sel = document.getElementById('verifyGymSelect');
   sel.value = verifyGym;
 
-  // Pre-check courses from current gym
-  const gymCourses = VERIFY_GYM_COURSES[verifyGym] || [];
-  verifyChecked = new Set(gymCourses);
+  // Start empty — user manually checks what they've read
+  verifyChecked = new Set();
 
   updateVerifyCourses();
   document.getElementById('verifyResult').innerHTML = '';
@@ -2230,10 +2229,10 @@ function updateVerifyCourses() {
   verifyGym = document.getElementById('verifyGymSelect').value;
   const gymCourses = VERIFY_GYM_COURSES[verifyGym] || [];
 
-  // Re-set checked to gym courses (only update if gym changed)
-  verifyChecked = new Set(gymCourses);
+  // Reset checked when gym changes, keep empty
+  verifyChecked = new Set();
 
-  // Build combined course list: all required courses + gym courses (deduped)
+  // Show: required courses first (marked KRAV), then remaining gym courses
   const reqCourses = (edu && edu.req) ? edu.req.filter(r => !r.toLowerCase().includes('grundläggande behörighet')) : [];
   const allCourses = [...new Set([...reqCourses, ...gymCourses])];
 
@@ -2280,10 +2279,18 @@ function showVerifyResult() {
   const komvuxHeltid = missing.length <= 1 ? '1 termin' : missing.length <= 3 ? '1–2 terminer' : '2–3 terminer';
   const resultEl = document.getElementById('verifyResult');
 
+  const confirmBtn = document.querySelector('.verify-confirm');
   if (missing.length === 0) {
-    resultEl.innerHTML = `<div class="verify-result ok"><div class="verify-result-title">✓ Verifierat — du är behörig</div><div style="font-size:.83rem;margin-top:2px">Alla kurskrav är uppfyllda. Sök ${edu?edu.t:''} direkt på antagning.se.</div></div>`;
+    resultEl.innerHTML = `<div class="verify-result ok"><div class="verify-result-title" style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Verifierat — du är behörig</div><div style="font-size:.83rem;margin-top:4px">Alla kurskrav är uppfyllda. Sök ${edu?edu.t:''} direkt på antagning.se.</div></div>`;
+    if (confirmBtn) { confirmBtn.textContent = 'Spara verifiering och uppdatera plan'; confirmBtn.style.background = 'var(--ac)'; }
   } else {
-    resultEl.innerHTML = `<div class="verify-result fail"><div class="verify-result-title">Inte behörig ännu</div><div style="font-size:.83rem;margin-top:4px">Du saknar: <strong>${missing.join(', ')}</strong></div><div style="font-size:.83rem;margin-top:4px">Läs på Komvux — tar ca <strong>${komvuxHeltid}</strong> på heltid.</div></div>`;
+    // Only show result if at least one course has been checked
+    if (verifyChecked.size > 0) {
+      resultEl.innerHTML = `<div class="verify-result fail"><div class="verify-result-title">Inte behörig ännu</div><div style="font-size:.83rem;margin-top:4px">Du saknar: <strong>${missing.join(', ')}</strong></div><div style="font-size:.83rem;margin-top:4px">Läs på Komvux — tar ca <strong>${komvuxHeltid}</strong> på heltid.</div></div>`;
+    } else {
+      resultEl.innerHTML = '';
+    }
+    if (confirmBtn) { confirmBtn.textContent = 'Spara och uppdatera plan'; confirmBtn.style.background = 'var(--ac)'; }
   }
 }
 
@@ -2300,6 +2307,7 @@ async function confirmVerify() {
   // Update gym in ans + editDraft
   ans.gym = verifyGym;
   editDraft.gym = verifyGym;
+  ans.verified_courses = [...verifyChecked];
   try { localStorage.setItem('svg_answers', JSON.stringify(ans)); } catch(e) {}
 
   // Compute verified status
