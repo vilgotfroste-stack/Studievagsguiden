@@ -2263,6 +2263,36 @@ function openCSNModal() {
   }
 }
 
+function confirmCSNVerify() {
+  // Check mandatory boxes
+  const mandatoryIds = ['csn-bosatt','csn-veckor'];
+  const allDone = mandatoryIds.every(id => {
+    const b = document.getElementById('box-'+id);
+    return b && b.innerHTML.includes('polyline');
+  });
+  // Save checks regardless
+  const allIds = ['csn-bosatt','csn-veckor','csn-tillinkomst'];
+  ans.csn_checks = allIds.filter(id => {
+    const b = document.getElementById('box-'+id);
+    return b && b.innerHTML.includes('polyline');
+  });
+  ans.csn_verified = allDone;
+  try { localStorage.setItem('svg_answers', JSON.stringify(ans)); } catch(e) {}
+
+  // Update hero card
+  const heroTitle  = document.querySelector('#csn-hero .status-title');
+  const heroBody   = document.querySelector('#csn-hero .status-body');
+  const heroCircle = document.querySelector('#csn-hero .status-circle');
+  const heroBtn    = document.querySelector('#csn-hero .verify-btn');
+  if (allDone) {
+    if (heroTitle)  heroTitle.textContent  = 'Verifierat — du är berättigad till CSN';
+    if (heroBody)   heroBody.textContent   = 'Du har bekräftat att du uppfyller grundkraven.';
+    if (heroCircle) { heroCircle.style.background = '#E3000B'; heroCircle.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'; }
+    if (heroBtn)    heroBtn.textContent = ' Ändra verifiering';
+  }
+  closeCSNModalFn();
+}
+
 function closeCSNModalFn(e) {
   if (e && e.target !== document.getElementById('csnModalOverlay')) return;
   document.getElementById('csnModalOverlay').classList.remove('open');
@@ -2852,17 +2882,16 @@ function svgModalClose(val) {
 </div>
 
 <!-- CSN modal -->
-<div class="verify-modal-overlay" id="csnModalOverlay" onclick="closeCSNModalFn(event)">
+<div class="verify-modal-overlay" id="csnModalOverlay" onclick="closeCSNModalFn(event)" style="justify-content:center;align-items:flex-end">
   <div class="verify-modal" id="csnModal">
     <div class="verify-modal-header">
       <div style="font-weight:700;font-size:1rem;margin-bottom:4px">Verifiera ditt CSN</div>
       <div style="font-size:.8rem;color:var(--li)">Baserat på dina svar i ekonomikalkylen.</div>
     </div>
-    <div id="csnModalScroll" style="overflow-y:auto;flex:1;padding:0 16px 16px">
+    <div class="verify-modal-scroll" id="csnModalScroll">
       <div id="csn-verify-body"></div>
-    </div>
-    <div style="padding:12px 16px;border-top:1px solid var(--bo)">
-      <button onclick="closeCSNModalFn()" style="background:none;border:none;color:var(--li);font-size:.85rem;cursor:pointer;width:100%">Stäng</button>
+      <button class="verify-confirm" style="background:#E3000B" onclick="confirmCSNVerify()">Spara och uppdatera plan</button>
+      <button style="width:100%;padding:10px;background:none;border:none;color:var(--li);font-size:.82rem;margin-top:4px;cursor:pointer" onclick="closeCSNModalFn()">Avbryt</button>
     </div>
   </div>
 </div>
