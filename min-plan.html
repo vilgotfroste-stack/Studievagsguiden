@@ -1485,7 +1485,8 @@ function buildFP(name) {
  industri:['Matte 1','Matte 2a','Fysik 1a','Samhällskunskap 1b'],
  other:[]
  };
- const myCourses = GYM_COURSES[a.gym] || [];
+ const isVerified = Array.isArray(a.verified_courses) && a.verified_courses.length > 0;
+ const myCourses = isVerified ? a.verified_courses : (GYM_COURSES[a.gym] || []);
  const hasExam = a.has_grades === 'yes';
  const isOther = a.gym === 'other';
 
@@ -1514,9 +1515,9 @@ function buildFP(name) {
    bh += `<div class="status-hero ok">
  <div class="status-circle"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
  <div>
- <div class="status-title">Troligen behörig — sök direkt</div>
- <div class="status-body">${gp?gp.l:'Ditt gymnasieprogram'} inkluderar normalt alla kurser ${e.t} kräver. Verifiera dina betyg på antagning.se.</div>
- <button class="verify-btn" onclick="openVerifyModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Verifiera kurser</button>
+ <div class="status-title">${isVerified ? 'Verifierat — du är behörig' : 'Troligen behörig — sök direkt'}</div>
+ <div class="status-body">${isVerified ? 'Du har manuellt verifierat att du uppfyller alla kurskrav för '+e.t+'.' : (gp?gp.l:'Ditt gymnasieprogram')+' inkluderar normalt alla kurser '+e.t+' kräver.'}</div>
+ <button class="verify-btn" onclick="openVerifyModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${isVerified ? 'Ändra verifiering' : 'Verifiera kurser'}</button>
  </div>
  </div>`;
  } else {
@@ -1534,7 +1535,7 @@ function buildFP(name) {
  <div>
  <div class="status-title">Komplettering troligen behövs</div>
  <div class="status-body">${bodyText}</div>
- <button class="verify-btn" onclick="openVerifyModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Verifiera kurser</button>
+ <button class="verify-btn" onclick="openVerifyModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${isVerified ? 'Ändra verifiering' : 'Verifiera kurser'}</button>
  </div>
  </div>`;
  }
@@ -2203,8 +2204,8 @@ function openVerifyModal() {
   const sel = document.getElementById('verifyGymSelect');
   sel.value = verifyGym;
 
-  // Start empty — user manually checks what they've read
-  verifyChecked = new Set();
+  // Pre-fill with previously verified courses if they exist
+  verifyChecked = (Array.isArray(ans.verified_courses) && ans.verified_courses.length > 0) ? new Set(ans.verified_courses) : new Set();
 
   updateVerifyCourses();
   document.getElementById('verifyResult').innerHTML = '';
