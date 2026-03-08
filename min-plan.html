@@ -2387,10 +2387,44 @@ function buildCSNVerify() {
       <ul class="detail-list">${row.points.map(p=>'<li>'+p+'</li>').join('')}</ul>
     </div>`;
   });
-  html += '<div style="padding:10px 0 0"><a href="https://www.csn.se/bidrag-och-lan/studiemedel.html" target="_blank" style="font-size:.8rem;color:var(--ac);font-weight:600">Räkna exakt på csn.se →</a></div>';
+
+  // ── Checklist: only criteria NOT already answered in wizard ──────────────
+  const checks = [];
+  // Bosatt — wizard doesn't ask this
+  checks.push({ id:'csn-bosatt', label:'Jag är bosatt i Sverige och har personnummer', sub:null });
+  // Studieresultat — wizard doesn't ask
+  checks.push({ id:'csn-resultat', label:'Jag klarar ≥75% av kurspoängen per termin', sub:'CSN kräver godkänt på minst 75% — annars stoppas utbetalningar' });
+  // Veckor — wizard doesn't ask
+  checks.push({ id:'csn-veckor', label:'Jag har inte förbrukat mina 240 veckor', sub:'Max 240 veckor totalt (ca 6 år heltid) under hela livet' });
+  // Tilläggslån-inkomst — only if eligible by age/work
+  if (csnTillaggEligible) {
+    checks.push({ id:'csn-tillinkomst', label:'Min inkomst 2025 var ≥ 245 680 kr', sub:'Krav för tilläggslån — om ja, dra lånsslidern förbi den orange markeringen' });
+  }
+
+  html += `<div style="padding:12px 0 4px;border-top:2px solid var(--bo);margin-top:4px">
+    <div style="font-size:.75rem;font-weight:700;color:var(--li);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Bekräfta att det gäller dig</div>
+    <div id="csn-checks">
+    ${checks.map(c => `<label id="wrap-${c.id}" onclick="toggleCSNCheck('${c.id}')" style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;margin-bottom:6px;cursor:pointer;background:var(--bg);border:1.5px solid var(--bo);transition:background .15s">
+      <div id="box-${c.id}" style="width:20px;height:20px;border-radius:6px;border:2px solid var(--bo);background:#fff;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s"></div>
+      <div>
+        <div style="font-size:.85rem;font-weight:600">${c.label}</div>
+        ${c.sub ? `<div style="font-size:.75rem;color:var(--li);margin-top:2px">${c.sub}</div>` : ''}
+      </div>
+    </label>`).join('')}
+    </div>
+    <div id="csn-check-result" style="margin-top:10px"></div>
+  </div>`;
+
+  html += '<div style="padding:6px 0 0"><a href="https://www.csn.se/bidrag-och-lan/studiemedel.html" target="_blank" style="font-size:.8rem;color:#E3000B;font-weight:600">Räkna exakt på csn.se →</a></div>';
 
   const el = document.getElementById('csn-verify-body');
-  if (el) el.innerHTML = html;
+  if (el) {
+    el.innerHTML = html;
+    // Restore previously saved checks
+    const saved = ans.csn_checks || [];
+    saved.forEach(id => _applyCsnCheck(id, true));
+    _updateCsnCheckResult();
+  }
 
   // Update hero status circle based on actual slider values
   const anyProblem = rows.some(r => r.ok === false);
@@ -2403,6 +2437,74 @@ function buildCSNVerify() {
   if (heroCircle) heroCircle.innerHTML = anyProblem
     ? '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
     : '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+}
+
+function _applyCsnCheck(id, checked) {
+  const box = document.getElementById('box-'+id);
+  const wrap = document.getElementById('wrap-'+id);
+  if (!box) return;
+  if (checked) {
+    box.style.background = 'var(--ac)';
+    box.style.borderColor = 'var(--ac)';
+    box.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    if (wrap) { wrap.style.background = 'var(--al)'; wrap.style.borderColor = 'var(--ac)'; }
+  } else {
+    box.style.background = '#fff';
+    box.style.borderColor = 'var(--bo)';
+    box.innerHTML = '';
+    if (wrap) { wrap.style.background = 'var(--bg)'; wrap.style.borderColor = 'var(--bo)'; }
+  }
+}
+
+function toggleCSNCheck(id) {
+  const box = document.getElementById('box-'+id);
+  if (!box) return;
+  const isChecked = box.style.background === 'var(--ac)' || box.innerHTML.includes('polyline');
+  _applyCsnCheck(id, !isChecked);
+  // Save to ans
+  const allIds = ['csn-bosatt','csn-resultat','csn-veckor','csn-tillinkomst'];
+  const saved = allIds.filter(i => {
+    const b = document.getElementById('box-'+i);
+    return b && (b.style.background === 'var(--ac)' || b.innerHTML.includes('polyline'));
+  });
+  ans.csn_checks = saved;
+  try { localStorage.setItem('svg_answers', JSON.stringify(ans)); } catch(e) {}
+  _updateCsnCheckResult();
+}
+
+function _updateCsnCheckResult() {
+  const result = document.getElementById('csn-check-result');
+  if (!result) return;
+  const checks = ['csn-bosatt','csn-resultat','csn-veckor'];
+  const eligible = document.getElementById('box-csn-tillinkomst');
+  const mandatory = checks.filter(id => document.getElementById('box-'+id));
+  const allMandatory = mandatory.every(id => {
+    const b = document.getElementById('box-'+id);
+    return b && (b.style.background === 'var(--ac)' || b.innerHTML.includes('polyline'));
+  });
+  const hasTillagg = eligible && (eligible.style.background === 'var(--ac)' || eligible.innerHTML.includes('polyline'));
+  const anyChecked = [...mandatory, 'csn-tillinkomst'].some(id => {
+    const b = document.getElementById('box-'+id);
+    return b && (b.style.background === 'var(--ac)' || b.innerHTML.includes('polyline'));
+  });
+  if (!anyChecked) { result.innerHTML = ''; return; }
+  if (allMandatory) {
+    result.innerHTML = `<div style="display:flex;align-items:flex-start;gap:10px;padding:12px;background:#E8F5EE;border-radius:10px;border:1.5px solid var(--ac)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><polyline points="20 6 9 17 4 12"/></svg>
+      <div style="font-size:.85rem">
+        <div style="font-weight:700;color:var(--ah);margin-bottom:3px">Verifierat — du uppfyller grundkraven</div>
+        <div style="color:var(--mu)">${hasTillagg ? 'Du kan även ansöka om <strong>tilläggslån</strong> — dra lånsslidern förbi den orange linjen och ansök separat på csn.se.' : 'Ansök om studiemedel direkt efter antagningsbesked på csn.se.'}</div>
+      </div>
+    </div>`;
+  } else {
+    const missing = mandatory.filter(id => {
+      const b = document.getElementById('box-'+id);
+      return !(b && (b.style.background === 'var(--ac)' || b.innerHTML.includes('polyline')));
+    }).length;
+    result.innerHTML = `<div style="padding:10px 12px;background:#FFF3F3;border-radius:10px;border:1.5px solid #E3000B;font-size:.83rem;color:#B8000A">
+      ${missing} krav ej bekräftade — kryssa i alla för att verifiera din rätt till CSN.
+    </div>`;
+  }
 }
 
 function openVerifyModal() {
