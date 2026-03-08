@@ -1922,29 +1922,56 @@ function showAuthMsg(msg, isError) {
 
 // ---- Edit answers modal ----
 const EDIT_QUESTIONS = [
-  { key:'work_status', label:'Sysselsättning', opts:[
-    {v:'fulltime',l:'Heltidsanställd'},{v:'parttime',l:'Deltidsanställd'},{v:'unemployed',l:'Arbetslös / Aktivt jobbsökande'}
+  { key:'current_location', label:'Var bor du idag?', opts:[
+    {v:'stockholm',l:'Stockholm'},{v:'goteborg',l:'Göteborg'},{v:'malmo',l:'Malmö'},
+    {v:'uppsala',l:'Uppsala'},{v:'linkoping',l:'Linköping'},{v:'lund',l:'Lund'},
+    {v:'umea',l:'Umeå'},{v:'orebro',l:'Örebro'},{v:'other',l:'Annan ort'}
   ]},
-  { key:'study_mode', label:'Studieform', opts:[
-    {v:'campus',l:'På plats'},{v:'distance',l:'Distans'},{v:'hybrid',l:'Hybrid'}
+  { key:'work_status', label:'Arbetar du idag?', opts:[
+    {v:'fulltime',l:'Heltid'},{v:'parttime',l:'Deltid'},{v:'hourly',l:'Timanställd'},
+    {v:'unemployed',l:'Arbetssökande'},{v:'other',l:'Annat'}
   ]},
-  { key:'study_pace', label:'Studietakt', opts:[
-    {v:'fulltime',l:'Heltid'},{v:'parttime',l:'Deltid'}
+  { key:'study_mode', label:'Hur vill du studera?', opts:[
+    {v:'campus',l:'På plats'},{v:'distance',l:'Distans'},{v:'hybrid',l:'Hybrid'},{v:'any',l:'Spelar ingen roll'}
   ]},
-  { key:'when_start', label:'När vill du börja?', opts:[
-    {v:'asap',l:'Så snart som möjligt'},{v:'6mo',l:'Om 6 månader'},{v:'12mo',l:'Om ett år eller mer'}
+  { key:'study_pace', label:'Vilken studietakt passar dig?', opts:[
+    {v:'fulltime',l:'Heltid'},{v:'parttime',l:'Deltid'},{v:'flexible',l:'Flexibel'},{v:'any',l:'Spelar ingen roll'}
   ]},
-  { key:'need_csn', label:'CSN-behov', opts:[
-    {v:'both',l:'Bidrag + lån'},{v:'grant',l:'Bara bidrag'},{v:'no',l:'Behöver inte CSN'}
+  { key:'willing_to_move', label:'Är du villig att flytta för studier?', opts:[
+    {v:'yes',l:'Ja'},{v:'no',l:'Nej'}
   ]},
-  { key:'savings_amount', label:'Sparkapital', opts:[
-    {v:'none',l:'Inget sparat'},{v:'under10',l:'Under 10 000 kr'},{v:'10-50',l:'10 000 – 50 000 kr'},{v:'50-100',l:'50 000 – 100 000 kr'},{v:'100+',l:'Mer än 100 000 kr'}
+  { key:'when_start', label:'När vill du börja studera?', opts:[
+    {v:'asap',l:'Så snart som möjligt'},{v:'6mo',l:'Inom 6 månader'},{v:'12mo',l:'Inom 12 månader'},{v:'any',l:'Spelar ingen roll'}
   ]},
-  { key:'housing', label:'Boende under studier', opts:[
-    {v:'home',l:'Bor kvar hemma'},{v:'student',l:'Söker studentboende'},{v:'rent',l:'Hyr i andra hand'},{v:'move',l:'Vet inte än'}
+  { key:'need_csn', label:'Kommer du behöva CSN?', opts:[
+    {v:'both',l:'Ja, bidrag och lån'},{v:'grant',l:'Endast bidrag'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}
   ]},
-  { key:'willing_to_move', label:'Villig att flytta?', opts:[
-    {v:'yes',l:'Ja'},{v:'no',l:'Nej — vill studera nära hemort'}
+  { key:'work_during', label:'Planerar du jobba vid sidan av?', opts:[
+    {v:'parttime',l:'Ja, deltid'},{v:'extra',l:'Ja, extra vid behov'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}
+  ]},
+  { key:'housing', label:'Hur tänker du bo under studietiden?', opts:[
+    {v:'student',l:'Studentboende / korridor'},{v:'shared',l:'Dela lägenhet'},
+    {v:'rental',l:'Egen hyresrätt'},{v:'home',l:'Bo kvar där jag bor'}
+  ]},
+  { key:'savings_amount', label:'Hur mycket har du sparat?', opts:[
+    {v:'none',l:'Inget sparat'},{v:'under10',l:'Under 10 000 kr'},{v:'10-50',l:'10 000 – 50 000 kr'},
+    {v:'50-100',l:'50 000 – 100 000 kr'},{v:'100+',l:'Mer än 100 000 kr'}
+  ]},
+  { key:'fee_ok', label:'Öppen för avgiftsbelagda utbildningar?', opts:[
+    {v:'yes',l:'Ja'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}
+  ]},
+  { key:'has_grades', label:'Har du fullständiga gymnasiebetyg?', opts:[
+    {v:'yes',l:'Ja'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}
+  ]},
+  { key:'biggest_concern', label:'Vad oroar dig mest med att studera?', opts:[
+    {v:'economy',l:'Ekonomin — klarar jag mig på CSN?'},{v:'time',l:'Tiden — hinner jag med allt?'},
+    {v:'grades',l:'Betygen — är jag tillräckligt smart?'},{v:'age',l:'Åldern — är det för sent?'},
+    {v:'job',l:'Jobbet — hittar jag jobb efteråt?'},{v:'none',l:'Inget speciellt, jag är redo'}
+  ]},
+  { key:'why_change', label:'Vad driver dig att vilja byta?', opts:[
+    {v:'meaning',l:'Vill ha ett meningsfullt jobb'},{v:'salary',l:'Vill tjäna mer'},
+    {v:'burnout',l:'Trött på nuvarande jobb'},{v:'career',l:'Vill ha bättre karriärmöjligheter'},
+    {v:'passion',l:'Har alltid velat göra något annat'},{v:'other',l:'Annat'}
   ]},
 ];
 
