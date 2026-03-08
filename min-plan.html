@@ -1640,7 +1640,7 @@ function buildFP(name) {
  pl += tlStep('2–3 mån före start','Prata med din arbetsgivare',`Tjänstledighet för studier är en laglig rättighet (Studieledighetslagen). Kolla din uppsägningstid. Räkna in innestående semesterdagar som extra buffert.`);
  }
 
- pl += tlStep(`Senast ${applyDate.getDate()} ${months[applyDate.getMonth()]} ${startYr} · Deadline`,`Sök ${e.t} på antagning.se`,`Sök det här programmet plus 2–3 backupalternativ. Du kan prioritera upp till 20 program — använd det. Hitta alla program på <strong>antagning.se</strong>.`,true);
+ pl += tlStep(`Senast ${applyDate.getDate()} ${months[applyDate.getMonth()]} ${startYr} · Deadline`,`Sök ${e.t} på antagning.se`,`Sök det här programmet plus 2–3 backupalternativ. Du kan prioritera upp till 20 program — använd det.`,true);
 
  if (a.need_csn !== 'no') {
  pl += tlStep('Direkt efter antagningsbesked','Ansök om CSN på csn.se',`Bidrag: <strong>${fmtKr(BID)}/mån</strong>${barnCSN?' + barntillägg '+fmtKr(barnCSN):''}${loan>0?'. Lån: <strong>'+fmtKr(loan)+'/mån</strong>':''}. CSN betalar inte retroaktivt — ansök direkt.`);
@@ -1723,7 +1723,7 @@ function buildFP(name) {
  <div class="school-rec">
  <div class="school-rec-head">
  <div class="school-rec-badge"></div>
- <div class="school-rec-title">Sök ${e.t}-program på Studentum</div>
+ <div class="school-rec-title">Utforska ${e.t}-program på Studentum</div>
  </div>
  ${stuFilters.length > 0 ? `<div style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--li);margin-bottom:8px">Filtrera på Studentum</div>
  <div class="school-tags" style="margin-bottom:14px">${stuFilters.map(t=>'<span class="school-tag">'+t+'</span>').join('')}</div>` : ''}
