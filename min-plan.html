@@ -2055,6 +2055,18 @@ function openEditModal() {
   });
   document.getElementById('editModalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
+  // Redirect scroll on overlay to modal scroll area
+  const overlay = document.getElementById('editModalOverlay');
+  const scroller = document.querySelector('.edit-modal-scroll');
+  if (!overlay._scrollHandler) {
+    overlay._scrollHandler = (e) => {
+      if (!e.target.closest('.edit-modal-scroll')) {
+        e.preventDefault();
+        scroller.scrollTop += e.deltaY;
+      }
+    };
+  }
+  overlay.addEventListener('wheel', overlay._scrollHandler, { passive: false });
 }
 
 function toggleEQ(key) {
@@ -2110,8 +2122,10 @@ function selectEQMulti(key, val, label) {
 
 function closeEditModal(e) {
   if (e.target === document.getElementById('editModalOverlay')) {
-    document.getElementById('editModalOverlay').classList.remove('open');
+    const overlay = document.getElementById('editModalOverlay');
+    overlay.classList.remove('open');
     document.body.style.overflow = '';
+    if (overlay._scrollHandler) overlay.removeEventListener('wheel', overlay._scrollHandler);
   }
 }
 
