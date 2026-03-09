@@ -1054,36 +1054,29 @@ function buildFP(name) {
  const hasMissing = verifiedMissing ? verifiedMissing.length > 0 : need;
  let komvuxWeeks = 0;
  let compTime = 0;
+ let vtStart = false;
  if (hasMissing) {
    const nMiss = verifiedMissing ? verifiedMissing.length : (part ? 1 : 3);
    const pace = a.komvux_pace || 'heltid';
    if (pace === 'heltid' || pace === 'okand') komvuxWeeks = nMiss * 5;
    else if (pace === 'deltid') komvuxWeeks = nMiss * 10;
    else if (pace === 'sommar') komvuxWeeks = Math.ceil(nMiss / 2) * 52;
-   // Deadline-aware: två antagningsrundor — HT (deadline 15 apr, start aug) och VT (deadline 15 okt, start jan)
    if (pace === 'sommar') {
      compTime = Math.ceil(nMiss / 2);
    } else {
      const komvuxEnd = new Date(now.getTime() + komvuxWeeks * 7 * 86400000);
-     const htDeadline = new Date(baseYr, 3, 15);    // 15 april
-     const vtDeadline = new Date(baseYr, 9, 15);    // 15 oktober
+     const htDeadline = new Date(baseYr, 3, 15);
+     const vtDeadline = new Date(baseYr, 9, 15);
      if (komvuxEnd <= htDeadline) {
-       // Klar i tid för HT → ingen push
        compTime = 0;
      } else if (komvuxEnd <= vtDeadline) {
-       // Klar i tid för VT → studiestart januari nästa år
-       compTime = 0; // startYr är fortfarande baseYr, men vi sätter VT-flagga
+       compTime = 0;
+       vtStart = true;
      } else {
-       // Klar för sent för VT → nästa HT
        compTime = 1;
      }
      if (komvuxWeeks > 40) compTime = 2;
    }
-   // Bestäm om VT-start är aktuellt
-   const _komvuxEnd2 = pace !== 'sommar' ? new Date(now.getTime() + komvuxWeeks * 7 * 86400000) : null;
-   const _htDeadline2 = new Date(baseYr, 3, 15);
-   const _vtDeadline2 = new Date(baseYr, 9, 15);
-   const vtStart = _komvuxEnd2 && _komvuxEnd2 > _htDeadline2 && _komvuxEnd2 <= _vtDeadline2 && komvuxWeeks <= 40;
  }
  const startYr = baseYr + compTime;
  const studyStart = vtStart ? 'VT' + startYr : 'HT' + startYr;
