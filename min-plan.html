@@ -1054,15 +1054,22 @@ function buildFP(name) {
  if (hasMissing) {
    const nMiss = verifiedMissing ? verifiedMissing.length : (part ? 1 : 3);
    const pace = a.komvux_pace || 'heltid';
-   const paceTerms = {
-     heltid: nMiss <= 1 ? 1 : nMiss <= 3 ? 2 : 3,
-     deltid: nMiss <= 1 ? 2 : nMiss <= 3 ? 3 : 4,
-     sommar: nMiss <= 1 ? 1 : 2,
-     okand:  nMiss <= 1 ? 1 : nMiss <= 3 ? 2 : 3
-   };
-   compTime = paceTerms[pace] !== undefined ? Math.ceil(paceTerms[pace] / 2) : 1;
-   // compTime is in years (0.5 per term)
-   compTime = paceTerms[pace] * 0.5;
+   // Veckor per kurs: heltid=5v, deltid=10v, sommar=5v men max 2 kurser/sommar
+   let totalWeeks;
+   if (pace === 'heltid') {
+     totalWeeks = nMiss * 5;
+   } else if (pace === 'deltid') {
+     totalWeeks = nMiss * 10;
+   } else if (pace === 'sommar') {
+     // Max 2 kurser per sommar (10v) → varje extra sommar = +1 år
+     totalWeeks = Math.ceil(nMiss / 2) * 52; // ungefär ett år per sommar
+   } else {
+     totalWeeks = nMiss * 5; // okand → heltid
+   }
+   // Konvertera veckor → år för compTime: ≤20v = 0, 21–40v = 1, 41–60v = 2
+   compTime = pace === 'sommar'
+     ? Math.ceil(nMiss / 2)
+     : totalWeeks <= 20 ? 0 : totalWeeks <= 40 ? 1 : 2;
  }
  const htStart = wantSoon && mo2 < 5 ? 'HT' + yr : 'HT' + (yr + 1);
  const startYr = parseInt(htStart.slice(2)) + Math.ceil(compTime);
@@ -1713,7 +1720,7 @@ function buildFP(name) {
  } else if (verifiedMissing && verifiedMissing.length > 0) {
    const pace = a.komvux_pace || 'heltid';
    const nMiss = verifiedMissing.length;
-   const paceTerms = { heltid: nMiss<=1?1:nMiss<=3?2:3, deltid: nMiss<=1?2:nMiss<=3?3:4, sommar: nMiss<=1?1:2, okand: nMiss<=1?1:nMiss<=3?2:3 };
+   const paceTerms = { heltid: Math.ceil(nMiss*5/20), deltid: Math.ceil(nMiss*10/20), sommar: Math.ceil(nMiss/2), okand: Math.ceil(nMiss*5/20) };
    const terms = paceTerms[pace];
    const termStr = terms === 1 ? '1 termin' : terms + ' terminer';
    const paceLabel = {heltid:'heltid dagtid', deltid:'deltid kväll/distans', sommar:'distans på sommaren', okand:'heltid (uppskattad)'}[pace];
@@ -2683,10 +2690,10 @@ function showVerifyResult() {
     if (verifyChecked.size > 0) {
       const savedPace = ans.komvux_pace || '';
       // Pace → number of terms
-      const paceTerms = { heltid: missing.length <= 1 ? 1 : missing.length <= 3 ? 2 : 3,
-                          deltid: missing.length <= 1 ? 2 : missing.length <= 3 ? 3 : 4,
-                          sommar: missing.length <= 1 ? 1 : 2,
-                          okand: missing.length <= 1 ? 1 : missing.length <= 3 ? 2 : 3 };
+      const paceTerms = { heltid: nMiss <= 4 ? Math.ceil(nMiss * 5 / 20) : Math.ceil(nMiss * 5 / 20),
+                          deltid: Math.ceil(nMiss * 10 / 20),
+                          sommar: Math.ceil(nMiss / 2),
+                          okand: Math.ceil(nMiss * 5 / 20) };
       const terms = savedPace ? paceTerms[savedPace] : paceTerms.heltid;
       const termStr = terms === 1 ? '1 termin' : terms + ' terminer';
       resultEl.innerHTML = `<div class="verify-result fail">
@@ -2701,7 +2708,7 @@ function showVerifyResult() {
             {v:'okand',  l:'Vet inte än', sub:'Vi räknar med heltid tills vidare'}
           ].map(opt => `<label onclick="selectKomvuxPace('${opt.v}')" id="kp-${opt.v}" style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;background:${savedPace===opt.v?'var(--al)':'var(--bg)'};border:1.5px solid ${savedPace===opt.v?'var(--ac)':'var(--bo)'};transition:all .15s">
             <div id="kpbox-${opt.v}" style="width:18px;height:18px;border-radius:50%;border:2px solid ${savedPace===opt.v?'var(--ac)':'var(--bo)'};background:${savedPace===opt.v?'var(--ac)':'#fff'};flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center">${savedPace===opt.v?'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':''}</div>
-            <div><div style="font-size:.85rem;font-weight:600">${opt.l}</div><div style="font-size:.75rem;color:var(--li)">${opt.sub} — ca ${paceTerms[opt.v] === 1 ? '1 termin' : paceTerms[opt.v] + ' terminer'}</div></div>
+            <div><div style="font-size:.85rem;font-weight:600">${opt.l}</div><div style="font-size:.75rem;color:var(--li)">${opt.sub} — ca ${({heltid:Math.ceil(nMiss*5/20),deltid:Math.ceil(nMiss*10/20),sommar:Math.ceil(nMiss/2),okand:Math.ceil(nMiss*5/20)}[opt.v]||1)===1?'1 termin':({heltid:Math.ceil(nMiss*5/20),deltid:Math.ceil(nMiss*10/20),sommar:Math.ceil(nMiss/2),okand:Math.ceil(nMiss*5/20)}[opt.v]||1)+' terminer'} (${({heltid:nMiss*5,deltid:nMiss*10,sommar:Math.ceil(nMiss/2)*13,okand:nMiss*5}[opt.v]||nMiss*5)} veckor)</div></div>
           </label>`).join('')}
         </div>
       </div>`;
