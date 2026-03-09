@@ -1726,7 +1726,9 @@ function buildFP(name) {
  pl += tlStep(`Senast ${applyDate.getDate()} ${months[applyDate.getMonth()]} ${startYr} · Deadline`,`Sök ${e.t} på antagning.se`,`<ul class="detail-list"><li>Sök det här programmet plus 2–3 backupalternativ</li><li>Du kan prioritera upp till 20 program — använd det</li></ul>`,true);
 
  if (a.need_csn !== 'no') {
- pl += tlStep('Direkt efter antagningsbesked','Ansök om CSN på csn.se',`<ul class="detail-list"><li>Bidrag: <strong>${fmtKr(BID)}/mån</strong>${barnCSN?' + barntillägg '+fmtKr(barnCSN):''}</li>${loan>0?'<li>Lån: <strong>'+fmtKr(loan)+'/mån</strong></li>':''}<li>CSN betalar inte retroaktivt — ansök direkt efter besked</li></ul>`);
+   const planBid = a.csn_verified ? (parseInt(document.getElementById('sl-bid')?.value) || BID) : BID;
+   const planLan = a.csn_verified ? (parseInt(document.getElementById('sl-lan')?.value) || 0) : loan;
+   pl += tlStep('Direkt efter antagningsbesked','Ansök om CSN på csn.se',`<ul class="detail-list"><li>Bidrag: <strong>${fmtKr(planBid)}/mån</strong>${barnCSN?' + barntillägg '+fmtKr(barnCSN):''}</li>${planLan>0?'<li>Lån: <strong>'+fmtKr(planLan)+'/mån</strong></li>':''}<li>CSN betalar inte retroaktivt — ansök direkt efter besked</li></ul>`);
  }
 
  pl += tlStep(`${studyStart.startsWith('HT')?'Augusti':'Januari'} ${startYr} · Mål`,`STUDIESTART — Examen ${gradYear}`,`<ul class="detail-list"><li>Utbildningstid: <strong>${Math.ceil(ry)} år</strong></li><li>Du är <strong>${gradAge} år</strong> när du tar examen</li><li>Ingångslön: <strong>${fmtKr(e.s0)}/mån</strong></li><li>${Math.ceil(ry)} år går oavsett — frågan är om du är ${gradAge} med eller utan examen</li></ul>`,false,true);
@@ -2339,20 +2341,14 @@ function buildCSNVerify() {
     ]});
   }
 
-  // 2. Lån
+  // 2. Lån — visa inte alls om 0 kr
   if (age >= 60) {
     rows.push({ok:false, title:'CSN Lån — inte berättigad', points:[
       'CSN ger inte studielån efter 60 år',
       'Du är '+age+' år',
       'Bidragsdelen (ovan) påverkas inte'
     ]});
-  } else if (lanV === 0) {
-    rows.push({ok:null, title:'CSN Lån — 0 kr (inget lån)', points:[
-      'Du har valt att inte ta lån',
-      'Max är '+fmtKr(lanMax)+'/mån om du vill'+(age >= 51 ? ' — men rätten till veckor är begränsad vid din ålder' : ''),
-      'Ska betalas tillbaka med 2,135% ränta (2026)'
-    ]});
-  } else if (lanV <= lanMax) {
+  } else if (lanV > 0) {
     rows.push({ok:true, title:'CSN Lån — '+fmtKr(lanV)+'/mån', points:[
       lanV < lanMax ? 'Du tar ut '+fmtKr(lanMax-lanV)+'/mån mindre än max ('+fmtKr(lanMax)+')' : 'Du tar ut maximalt lån'
       + (age >= 51 ? ' — men du är '+age+' år, begränsat antal veckor kvar' : '')
@@ -2376,7 +2372,7 @@ function buildCSNVerify() {
       'Du är '+age+' år och arbetar — grundkraven uppfylls',
       'Krav: tjänat ≥ 245 680 kr under 2025',
       'Ger ca '+fmtKr(tillaggMax)+' extra per 4-veckorsperiod utöver ordinarie lån',
-      'Ansök separat på csn.se — dra lånsslidern bortom den orange linjen'
+      'Ansök separat på csn.se'
     ]});
   }
 
@@ -2432,7 +2428,7 @@ function buildCSNVerify() {
   checks.push({ id:'csn-veckor', label:'Jag har inte förbrukat mina 240 veckor', sub:'Max 240 veckor totalt (ca 6 år heltid) under hela livet' });
   // Tilläggslån-inkomst — only if eligible by age/work
   if (gCsnTillaggEligible) {
-    checks.push({ id:'csn-tillinkomst', label:'Min inkomst 2025 var ≥ 245 680 kr', sub:'Krav för tilläggslån — om ja, dra lånsslidern förbi den orange markeringen' });
+    checks.push({ id:'csn-tillinkomst', label:'Min inkomst 2025 var ≥ 245 680 kr', sub:'Krav för tilläggslån — ansök separat på csn.se' });
   }
 
   html += '<div style="padding:12px 0 4px;border-top:2px solid var(--bo);margin-top:4px">'
