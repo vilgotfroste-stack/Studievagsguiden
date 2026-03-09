@@ -2689,8 +2689,9 @@ function showVerifyResult() {
   } else {
     if (verifyChecked.size > 0) {
       const savedPace = ans.komvux_pace || '';
+      const nMiss = missing.length;
       // Pace → number of terms
-      const paceTerms = { heltid: nMiss <= 4 ? Math.ceil(nMiss * 5 / 20) : Math.ceil(nMiss * 5 / 20),
+      const paceTerms = { heltid: Math.ceil(nMiss * 5 / 20),
                           deltid: Math.ceil(nMiss * 10 / 20),
                           sommar: Math.ceil(nMiss / 2),
                           okand: Math.ceil(nMiss * 5 / 20) };
