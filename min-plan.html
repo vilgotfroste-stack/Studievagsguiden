@@ -1734,7 +1734,8 @@ function buildFP(name) {
      ? (a.csn_verified_lan !== undefined ? a.csn_verified_lan : (parseInt(document.getElementById('sl-lan')?.value) || 0))
      : (parseInt(document.getElementById('sl-lan')?.value) || loan);
    const verifNote = verified ? '' : '<li style="color:var(--wa);font-weight:600">⚠ Verifiera ditt CSN under Behörighet-fliken för att bekräfta beloppen</li>';
-   pl += tlStep('Direkt efter antagningsbesked','Ansök om CSN på csn.se',`<ul class="detail-list"><li>Bidrag: <strong>${fmtKr(planBid)}/mån</strong>${barnCSN?' + barntillägg '+fmtKr(barnCSN):''}</li>${planLan>0?'<li>Lån: <strong>'+fmtKr(planLan)+'/mån</strong></li>':''}${verifNote}<li>CSN betalar inte retroaktivt — ansök direkt efter besked</li></ul>`);
+   const csnBody = `<ul class="detail-list" id="csn-plan-ul"><li>Bidrag: <strong>${fmtKr(planBid)}/mån</strong>${barnCSN?' + barntillägg '+fmtKr(barnCSN):''}</li>${planLan>0?'<li>Lån: <strong>'+fmtKr(planLan)+'/mån</strong></li>':''}${verifNote}<li>CSN betalar inte retroaktivt — ansök direkt efter besked</li></ul>`;
+   pl += tlStep('Direkt efter antagningsbesked','Ansök om CSN på csn.se', csnBody);
  }
 
  pl += tlStep(`${studyStart.startsWith('HT')?'Augusti':'Januari'} ${startYr} · Mål`,`STUDIESTART — Examen ${gradYear}`,`<ul class="detail-list"><li>Utbildningstid: <strong>${Math.ceil(ry)} år</strong></li><li>Du är <strong>${gradAge} år</strong> när du tar examen</li><li>Ingångslön: <strong>${fmtKr(e.s0)}/mån</strong></li><li>${Math.ceil(ry)} år går oavsett — frågan är om du är ${gradAge} med eller utan examen</li></ul>`,false,true);
@@ -2299,11 +2300,24 @@ function confirmCSNVerify() {
     if (heroBody)   heroBody.textContent   = 'Du har bekräftat att du uppfyller grundkraven.';
     if (heroCircle) { heroCircle.style.background = '#E3000B'; heroCircle.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'; }
     if (heroBtn)    heroBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg> Ändra verifiering';
-    // Rebuild plan panel with verified slider values
-    const planEl = document.getElementById('panel-plan');
-    if (planEl) buildFP();
+    // Update CSN step in Din plan directly without full rebuild
+    _refreshPlanCSNStep();
   }
   closeCSNModalFn();
+}
+
+function _refreshPlanCSNStep() {
+  const ul = document.getElementById('csn-plan-ul');
+  if (!ul) return;
+  const a = ans;
+  const nKids = a.has_kids === 'yes' ? (parseInt(a.num_kids)||1) : 0;
+  const barnCSN2 = nKids === 1 ? 780 : nKids === 2 ? 1276 : nKids === 3 ? 1536 : nKids >= 4 ? 1796 : 0;
+  const planBid = a.csn_verified_bid !== undefined ? a.csn_verified_bid : (parseInt(document.getElementById('sl-bid')?.value) || 0);
+  const planLan = a.csn_verified_lan !== undefined ? a.csn_verified_lan : (parseInt(document.getElementById('sl-lan')?.value) || 0);
+  ul.innerHTML =
+    '<li>Bidrag: <strong>'+fmtKr(planBid)+'/mån</strong>'+(barnCSN2?' + barntillägg '+fmtKr(barnCSN2):'')+'</li>'
+    +(planLan>0?'<li>Lån: <strong>'+fmtKr(planLan)+'/mån</strong></li>':'')
+    +'<li>CSN betalar inte retroaktivt — ansök direkt efter besked</li>';
 }
 
 function closeCSNModalFn(e) {
@@ -2359,7 +2373,9 @@ function buildCSNVerify() {
       'Du är '+age+' år',
       'Bidragsdelen (ovan) påverkas inte'
     ]});
-  } else if (lanV > 0) {
+  } else if (lanV === 0) {
+    // 0 kr — visa ingenting, användaren har valt bort lån
+  } else if (lanV <= lanMax) {
     rows.push({ok:true, title:'CSN Lån — '+fmtKr(lanV)+'/mån', points:[
       lanV < lanMax ? 'Du tar ut '+fmtKr(lanMax-lanV)+'/mån mindre än max ('+fmtKr(lanMax)+')' : 'Du tar ut maximalt lån'
       + (age >= 51 ? ' — men du är '+age+' år, begränsat antal veckor kvar' : '')
