@@ -2678,24 +2678,49 @@ function updateVerifyCourses() {
   verifyGym = document.getElementById('verifyGymSelect').value;
   const gymCourses = VERIFY_GYM_COURSES[verifyGym] || [];
 
-  // Reset checked when gym changes, keep empty
+  // Reset checked when gym changes
   verifyChecked = new Set();
 
-  // Show: required courses first (marked KRAV), then remaining gym courses
   const reqCourses = (edu && edu.req) ? edu.req.filter(r => !r.toLowerCase().includes('grundläggande behörighet')) : [];
-  const allCourses = [...new Set([...reqCourses, ...gymCourses])];
+
+  // For each gym course, find which req it satisfies (if any)
+  function _findReqFor(course) {
+    return reqCourses.find(r => _reqSatisfied(r, [course]));
+  }
+
+  // Which reqs are NOT covered by any gym course?
+  const coveredReqs = new Set();
+  gymCourses.forEach(c => { const r = _findReqFor(c); if (r) coveredReqs.add(r); });
+  const missingReqs = reqCourses.filter(r => !coveredReqs.has(r));
 
   const list = document.getElementById('verifyCourseList');
-  list.innerHTML = allCourses.map(course => {
-    const isReq = reqCourses.some(r => _reqSatisfied(r, [course]) || r === course);
+  let html = '';
+
+  // Gym courses — checkable
+  gymCourses.forEach(course => {
+    const satisfies = _findReqFor(course);
     const checked = verifyChecked.has(course);
-    return `<div class="verify-course${checked?' checked':''}" id="vc-${CSS.escape(course)}" onclick="toggleVerifyCourse('${course.replace(/'/g,"\'")}')">
+    html += `<div class="verify-course${checked?' checked':''}" id="vc-${CSS.escape(course)}" onclick="toggleVerifyCourse('${course.replace(/'/g,"\\'")}')">
       <div class="verify-course-check">${checked?'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':''}</div>
       <span>${course}</span>
-      ${isReq ? '<span style="margin-left:auto;font-size:.7rem;font-weight:700;color:var(--ac);background:var(--al);padding:2px 7px;border-radius:5px">Krav för antagning</span>' : ''}
+      ${satisfies ? '<span style="margin-left:auto;font-size:.7rem;font-weight:700;color:var(--ac);background:var(--al);padding:2px 7px;border-radius:5px">Uppfyller: '+satisfies+'</span>' : ''}
     </div>`;
-  }).join('');
+  });
 
+  // Missing reqs — not checkable, shown as warning
+  if (missingReqs.length > 0) {
+    html += '<div style="margin-top:12px;padding:10px 0 4px;border-top:1.5px solid var(--bo)"><div style="font-size:.72rem;font-weight:700;color:var(--wa);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">Saknas i ditt program</div>';
+    missingReqs.forEach(req => {
+      html += `<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;margin-bottom:4px;background:#FDF4E3;border:1.5px solid #E8D5A8;font-size:.88rem">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span style="font-weight:600;color:#6B4F00">${req}</span>
+        <span style="margin-left:auto;font-size:.7rem;font-weight:700;color:#B8860B;background:#FDF4E3;padding:2px 7px;border-radius:5px">Behöver Komvux</span>
+      </div>`;
+    });
+    html += '</div>';
+  }
+
+  list.innerHTML = html;
   document.getElementById('verifyResult').innerHTML = '';
 }
 
