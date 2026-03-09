@@ -1720,6 +1720,7 @@ function buildFP(name) {
  } else if (verifiedMissing && verifiedMissing.length > 0) {
    const pace = a.komvux_pace || 'heltid';
    const nMiss = verifiedMissing.length;
+   const paceLabel = {heltid:'heltid dagtid', deltid:'deltid kväll/distans', sommar:'distans på sommaren', okand:'heltid (uppskattad)'}[pace] || 'heltid dagtid';
    const weekMap = { heltid: nMiss*5, deltid: nMiss*10, sommar: Math.ceil(nMiss/2)*13, okand: nMiss*5 };
    const wks = weekMap[pace] || nMiss*5;
    const weekStr = wks + ' veckor';
