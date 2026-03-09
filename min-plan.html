@@ -1046,33 +1046,33 @@ function buildFP(name) {
  const need = !full;
  const now = new Date(), yr = now.getFullYear(), mo2 = now.getMonth();
  const wantSoon = a.when_start === 'asap' || a.when_start === 'next' || a.when_start === '6mo';
+ const htStart = wantSoon && mo2 < 5 ? 'HT' + yr : 'HT' + (yr + 1);
+ const baseYr = parseInt(htStart.slice(2));
 
  // Komvux time: use verified data if available
  const verifiedMissing = Array.isArray(a.verified_missing) ? a.verified_missing : null;
  const hasMissing = verifiedMissing ? verifiedMissing.length > 0 : need;
+ let komvuxWeeks = 0;
  let compTime = 0;
  if (hasMissing) {
    const nMiss = verifiedMissing ? verifiedMissing.length : (part ? 1 : 3);
    const pace = a.komvux_pace || 'heltid';
-   // Veckor per kurs: heltid=5v, deltid=10v, sommar=5v men max 2 kurser/sommar
-   let totalWeeks;
-   if (pace === 'heltid') {
-     totalWeeks = nMiss * 5;
-   } else if (pace === 'deltid') {
-     totalWeeks = nMiss * 10;
-   } else if (pace === 'sommar') {
-     // Max 2 kurser per sommar (10v) → varje extra sommar = +1 år
-     totalWeeks = Math.ceil(nMiss / 2) * 52; // ungefär ett år per sommar
+   if (pace === 'heltid' || pace === 'okand') komvuxWeeks = nMiss * 5;
+   else if (pace === 'deltid') komvuxWeeks = nMiss * 10;
+   else if (pace === 'sommar') komvuxWeeks = Math.ceil(nMiss / 2) * 52;
+   // Deadline-aware: om Komvux slutar efter 15 april det år htStart pekar på → missa rundan → +1 år
+   if (pace === 'sommar') {
+     compTime = Math.ceil(nMiss / 2);
    } else {
-     totalWeeks = nMiss * 5; // okand → heltid
+     const komvuxEnd = new Date(now.getTime() + komvuxWeeks * 7 * 86400000);
+     const deadline = new Date(baseYr, 3, 15); // 15 april baseYr
+     compTime = komvuxEnd > deadline ? 1 : 0;
+     // Om totalveckor > 40 (2+ år) → 2
+     if (komvuxWeeks > 40) compTime = 2;
    }
-   // Konvertera veckor → år för compTime: ≤20v = 0, 21–40v = 1, 41–60v = 2
-   compTime = pace === 'sommar'
-     ? Math.ceil(nMiss / 2)
-     : totalWeeks <= 20 ? 0 : totalWeeks <= 40 ? 1 : 2;
  }
- const htStart = wantSoon && mo2 < 5 ? 'HT' + yr : 'HT' + (yr + 1);
- const startYr = parseInt(htStart.slice(2)) + Math.ceil(compTime);
+ const startYr = baseYr + compTime;
+
  const studyStart = 'HT' + startYr;
  const gradYear = startYr + Math.ceil(ry);
  const gradAge = age + Math.ceil(ry) + compTime;
@@ -1720,11 +1720,10 @@ function buildFP(name) {
  } else if (verifiedMissing && verifiedMissing.length > 0) {
    const pace = a.komvux_pace || 'heltid';
    const nMiss = verifiedMissing.length;
-   const paceTerms = { heltid: Math.ceil(nMiss*5/20), deltid: Math.ceil(nMiss*10/20), sommar: Math.ceil(nMiss/2), okand: Math.ceil(nMiss*5/20) };
-   const terms = paceTerms[pace];
-   const termStr = terms === 1 ? '1 termin' : terms + ' terminer';
-   const paceLabel = {heltid:'heltid dagtid', deltid:'deltid kväll/distans', sommar:'distans på sommaren', okand:'heltid (uppskattad)'}[pace];
-   pl += tlStep('Redan nu · Brådskande', 'Ansök till Komvux', '<ul class="detail-list"><li>Du saknar: <strong>' + verifiedMissing.join(', ') + '</strong></li><li>Studietakt: <strong>' + paceLabel + '</strong> — ca <strong>' + termStr + '</strong></li><li>Sök på <strong>studera.nu</strong>' + (pace==='deltid'||pace==='sommar'?' — filtrera på distans + kväll':'') + '</li></ul>', true);
+   const weekMap = { heltid: nMiss*5, deltid: nMiss*10, sommar: Math.ceil(nMiss/2)*13, okand: nMiss*5 };
+   const wks = weekMap[pace] || nMiss*5;
+   const weekStr = wks + ' veckor';
+   pl += tlStep('Redan nu · Brådskande', 'Ansök till Komvux', '<ul class="detail-list"><li>Du saknar: <strong>' + verifiedMissing.join(', ') + '</strong></li><li>Studietakt: <strong>' + paceLabel + '</strong> — ca <strong>' + weekStr + '</strong></li><li>Sök på <strong>studera.nu</strong>' + (pace==='deltid'||pace==='sommar'?' — filtrera på distans + kväll':'') + '</li></ul>', true);
  } else if (!verifiedMissing && need) {
    pl += tlStep('Inom 2 veckor','Ansök till Komvux — '+missingReqs.slice(0,2).join(' & '),`Du saknar troligen <strong>${missingReqs.join(' och ')}</strong>. Välj ${a.work_status==='fulltime'?'<strong>deltid kväll/distans</strong> — du behåller lönen':'<strong>heltid</strong> — snabbaste vägen'}. Sök på <strong>studera.nu</strong>, filtrera på distans + kväll.`,true);
  }
@@ -2690,13 +2689,9 @@ function showVerifyResult() {
     if (verifyChecked.size > 0) {
       const savedPace = ans.komvux_pace || '';
       const nMiss = missing.length;
-      // Pace → number of terms
-      const paceTerms = { heltid: Math.ceil(nMiss * 5 / 20),
-                          deltid: Math.ceil(nMiss * 10 / 20),
-                          sommar: Math.ceil(nMiss / 2),
-                          okand: Math.ceil(nMiss * 5 / 20) };
-      const terms = savedPace ? paceTerms[savedPace] : paceTerms.heltid;
-      const termStr = terms === 1 ? '1 termin' : terms + ' terminer';
+      // Pace → weeks per course
+      const wkMap = { heltid: nMiss*5, deltid: nMiss*10, sommar: Math.ceil(nMiss/2)*13, okand: nMiss*5 };
+      const curWks = wkMap[savedPace] || nMiss*5;
       resultEl.innerHTML = `<div class="verify-result fail">
         <div class="verify-result-title">Komplettering behövs</div>
         <div style="font-size:.83rem;margin-top:4px">Du saknar: <strong>${missing.join(', ')}</strong></div>
@@ -2709,7 +2704,7 @@ function showVerifyResult() {
             {v:'okand',  l:'Vet inte än', sub:'Vi räknar med heltid tills vidare'}
           ].map(opt => `<label onclick="selectKomvuxPace('${opt.v}')" id="kp-${opt.v}" style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;background:${savedPace===opt.v?'var(--al)':'var(--bg)'};border:1.5px solid ${savedPace===opt.v?'var(--ac)':'var(--bo)'};transition:all .15s">
             <div id="kpbox-${opt.v}" style="width:18px;height:18px;border-radius:50%;border:2px solid ${savedPace===opt.v?'var(--ac)':'var(--bo)'};background:${savedPace===opt.v?'var(--ac)':'#fff'};flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center">${savedPace===opt.v?'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':''}</div>
-            <div><div style="font-size:.85rem;font-weight:600">${opt.l}</div><div style="font-size:.75rem;color:var(--li)">${opt.sub} — ca ${({heltid:Math.ceil(nMiss*5/20),deltid:Math.ceil(nMiss*10/20),sommar:Math.ceil(nMiss/2),okand:Math.ceil(nMiss*5/20)}[opt.v]||1)===1?'1 termin':({heltid:Math.ceil(nMiss*5/20),deltid:Math.ceil(nMiss*10/20),sommar:Math.ceil(nMiss/2),okand:Math.ceil(nMiss*5/20)}[opt.v]||1)+' terminer'} (${({heltid:nMiss*5,deltid:nMiss*10,sommar:Math.ceil(nMiss/2)*13,okand:nMiss*5}[opt.v]||nMiss*5)} veckor)</div></div>
+            <div><div style="font-size:.85rem;font-weight:600">${opt.l}</div><div style="font-size:.75rem;color:var(--li)">${opt.sub} — ca ${({heltid:nMiss*5,deltid:nMiss*10,sommar:Math.ceil(nMiss/2)*13,okand:nMiss*5}[opt.v]||nMiss*5)} veckor</div></div>
           </label>`).join('')}
         </div>
       </div>`;
