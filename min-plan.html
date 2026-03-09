@@ -469,13 +469,41 @@ const E=[
 ];
 const CIT={stockholm:7000,goteborg:5500,malmo:5000,uppsala:5500,linkoping:4500,lund:5500,umea:4000,orebro:4500,other:4500};
 const HOU={student:.75,shared:.85,rental:1.2,home:0};
-const FIX=5450,BID=4120,WR=150;
-// CSN 2024 — heltid / deltid (50%)
-const CSN_BID_HT=7754, CSN_BID_DT=3877;
-const CSN_LAN_HT=6412, CSN_LAN_DT=3206;
+const FIX=5450,BID=4120,WR=150; // BID = CSN bidrag per 4v heltid 2026
+// CSN 2026 — per 4-veckorsperiod, heltid / deltid (50%)
+const CSN_BID_HT=4120, CSN_BID_DT=2036;
+const CSN_LAN_HT=9472, CSN_LAN_DT=4760;
 const GYM=[{id:'natur',l:'Naturvetenskap',k:'Naturvetenskap'},{id:'teknik',l:'Teknik',k:'Teknik'},{id:'samhall',l:'Samhäll',k:'Samhäll'},{id:'ekonomi',l:'Ekonomi',k:'Ekonomi'},{id:'estet',l:'Estet',k:'Estet'},{id:'vard',l:'Vård och omsorg',k:'Vård'},{id:'bygg',l:'Bygg och anläggning',k:'Bygg'},{id:'el',l:'El och energi',k:'El och energi'},{id:'industri',l:'Industri',k:'Industri'},{id:'other',l:'Annat / Komvux',k:'other'}];
 let edu=null,sal=0,ws=0,ans={};
 let gCsnTillaggEligible = false;
+
+// Course matching helpers — used in behörighet + verify
+function _expandReqAlts(req) {
+  if (!req.includes('/')) return [req];
+  const si = req.indexOf('/');
+  const before = req.substring(0, si), after = req.substring(si + 1);
+  // Single variant letter: "Matte 1b/c" → ["Matte 1b","Matte 1c"]
+  if (after.length === 1 && /[a-z]/i.test(after)) {
+    return [before, before.slice(0, -1) + after];
+  }
+  // Number: "Matte 3c/4" → ["Matte 3c","Matte 4"]
+  const sp = before.lastIndexOf(' ');
+  return [before, before.substring(0, sp) + ' ' + after];
+}
+function _courseCovers(have, need) {
+  const h = have.trim().toLowerCase(), n = need.trim().toLowerCase();
+  if (h === n) return true;
+  const p = s => { const m = s.match(/^(.+?)\s+(\d+\w*)$/); return m ? [m[1], m[2]] : null; };
+  const pH = p(h), pN = p(n);
+  if (!pH || !pN || pH[0] !== pN[0]) return false;
+  const hN = parseInt(pH[1]), nN = parseInt(pN[1]);
+  if (hN > nN) return true;
+  if (hN === nN && pH[1].length < pN[1].length && pN[1].startsWith(pH[1])) return true;
+  return false;
+}
+function _reqSatisfied(req, courses) {
+  return _expandReqAlts(req).some(alt => courses.some(mc => _courseCovers(mc, alt)));
+}
 
 // 
 // DEV FUNCTION - SKIP TO PLAN
@@ -1035,7 +1063,7 @@ function buildFP(name) {
  const userExp = hou === 'home' ? (fixedExp + variableExp) : variableExp;
  const numKids = a.num_kids ? parseInt(a.num_kids)||1 : 0;
  const cc = a.has_kids === 'yes' ? 2000 * numKids : 0;
- const barnCSN = a.has_kids === 'yes' ? 2648 : 0;
+ const barnCSN = a.has_kids === 'yes' ? (numKids === 1 ? 780 : numKids === 2 ? 1276 : numKids === 3 ? 1536 : numKids >= 4 ? 1796 : 0) : 0;
  const rent = hou === 'home' ? 0 : Math.round((CIT[city]||4500) * (HOU[hou]||.75));
  const ti = defaultBid + barnCSN + loan + defaultJobb, to = rent + fixedExp + variableExp + cc, bal = ti - to;
  const salDiff = e.s0 - currentSal;
@@ -1516,15 +1544,15 @@ function buildFP(name) {
  // PANEL 3 — BEHÖRIGHET
  //
  const GYM_COURSES = {
- natur:['Matte 1','Matte 2a','Matte 2b','Matte 3c','Matte 4','Fysik 1a','Fysik 2','Kemi 1','Kemi 2','Biologi 1','Biologi 2','Naturkunskap 2','Samhällskunskap 1b'],
- teknik:['Matte 1','Matte 2a','Matte 2b','Matte 3c','Matte 4','Fysik 1a','Fysik 2','Kemi 1','Naturkunskap 2','Samhällskunskap 1b'],
- samhall:['Matte 1','Samhällskunskap 1b','Samhällskunskap 2','Historia 1b','Naturkunskap 1a1'],
- ekonomi:['Matte 1','Matte 2a','Matte 2b','Samhällskunskap 1b','Historia 1b','Företagsekonomi 1','Företagsekonomi 2','Naturkunskap 1a1'],
- estet:['Matte 1','Samhällskunskap 1b','Historia 1b','Naturkunskap 1a1'],
- vard:['Matte 1','Samhällskunskap 1b','Naturkunskap 1a1','Naturkunskap 2','Biologi 1','Psykologi 1'],
- bygg:['Matte 1','Matte 2a','Fysik 1a','Samhällskunskap 1b'],
- el:['Matte 1','Matte 2a','Matte 3c','Fysik 1a','Fysik 2','Samhällskunskap 1b'],
- industri:['Matte 1','Matte 2a','Fysik 1a','Samhällskunskap 1b'],
+ natur:['Matte 1','Matte 2a','Matte 2b','Matte 3c','Matte 4','Fysik 1a','Fysik 2','Kemi 1','Kemi 2','Biologi 1','Biologi 2','Naturkunskap 2','Samhällskunskap 1b','Engelska 5','Engelska 6','Svenska 3','Historia 1b'],
+ teknik:['Matte 1','Matte 2a','Matte 2b','Matte 3c','Matte 4','Fysik 1a','Fysik 2','Kemi 1','Naturkunskap 2','Samhällskunskap 1b','Engelska 5','Engelska 6','Svenska 3','Historia 1b'],
+ samhall:['Matte 1','Samhällskunskap 1b','Samhällskunskap 2','Historia 1b','Naturkunskap 1a1','Engelska 5','Engelska 6','Svenska 3'],
+ ekonomi:['Matte 1','Matte 2a','Matte 2b','Samhällskunskap 1b','Historia 1b','Företagsekonomi 1','Företagsekonomi 2','Naturkunskap 1a1','Engelska 5','Engelska 6','Svenska 3'],
+ estet:['Matte 1','Samhällskunskap 1b','Historia 1b','Naturkunskap 1a1','Engelska 5','Engelska 6','Svenska 3'],
+ vard:['Matte 1','Samhällskunskap 1b','Naturkunskap 1a1','Naturkunskap 2','Biologi 1','Psykologi 1','Engelska 5'],
+ bygg:['Matte 1','Matte 2a','Fysik 1a','Samhällskunskap 1b','Engelska 5'],
+ el:['Matte 1','Matte 2a','Matte 3c','Fysik 1a','Fysik 2','Samhällskunskap 1b','Engelska 5'],
+ industri:['Matte 1','Matte 2a','Fysik 1a','Samhällskunskap 1b','Engelska 5'],
  other:[]
  };
  const isVerified = Array.isArray(a.verified_courses) && a.verified_courses.length > 0;
@@ -1536,11 +1564,7 @@ function buildFP(name) {
  const specificReqs = e.req.filter(r => !r.toLowerCase().includes('grundläggande behörighet'));
 
  const reqStatus = specificReqs.map(req => {
-   const reqNorm = req.split('/')[0].trim().toLowerCase();
-   const found = myCourses.some(mc =>
-     mc.split('/')[0].trim().toLowerCase() === reqNorm ||
-     mc.toLowerCase().startsWith(reqNorm.split(' ').slice(0,2).join(' '))
-   );
+   const found = _reqSatisfied(req, myCourses);
    return { req, found };
  });
  const missingReqs = reqStatus.filter(r => !r.found).map(r => r.req);
@@ -1626,9 +1650,9 @@ function buildFP(name) {
  </div>
  </div>
  <div class="hp-pills">
- <span class="hp-pill">450 kr att skriva</span>
+ <span class="hp-pill">550 kr att skriva</span>
  <span class="hp-pill">Vår & höst</span>
- <span class="hp-pill">Giltigt 5 omgångar</span>
+ <span class="hp-pill">Giltigt 8 år</span>
  <span class="hp-pill">Max 2,0 poäng</span>
  </div>
  </div>`;
@@ -1660,11 +1684,12 @@ function buildFP(name) {
  document.getElementById('panel-beh').innerHTML = bh;
 
  // Extend loan slider for tilläggslån-eligible users + auto-run CSN status
+ const tillaggSliderMax = deltid ? 2328 : 4688; // CSN 2026 tilläggslån per 4v
  setTimeout(() => {
    const lanEl2 = document.getElementById('sl-lan');
    if (lanEl2 && csnTillaggEligible && !lanEl2.dataset.baseMax) {
      const baseMax = parseInt(lanEl2.max);
-     lanEl2.setAttribute('max', baseMax + 1200);
+     lanEl2.setAttribute('max', baseMax + tillaggSliderMax);
      lanEl2.setAttribute('data-base-max', String(baseMax));
      const meta = lanEl2.closest('.slider-block');
      if (meta) {
@@ -1887,8 +1912,9 @@ function updateBudget() {
  const fixedV = fixedEl ? parseInt(fixedEl.value) : (parseInt(a.fixed_expenses)||5000);
  const varV = varEl ? parseInt(varEl.value) : (parseInt(a.variable_expenses)||4000);
 
- const barnCSN = a.has_kids === 'yes' ? 2648 : 0;
- const cc2 = a.has_kids === 'yes' ? 2000 * (parseInt(a.num_kids)||1) : 0;
+ const nKidsUpd = a.has_kids === 'yes' ? (parseInt(a.num_kids)||1) : 0;
+ const barnCSN = a.has_kids === 'yes' ? (nKidsUpd === 1 ? 780 : nKidsUpd === 2 ? 1276 : nKidsUpd === 3 ? 1536 : nKidsUpd >= 4 ? 1796 : 0) : 0;
+ const cc2 = a.has_kids === 'yes' ? 2000 * nKidsUpd : 0;
 
  const inn = bidV + barnCSN + lanV + jobbV;
  const ut = boendeV + fixedV + varV + cc2;
@@ -2278,11 +2304,11 @@ async function confirmEdits() {
 
 // ---- Verify behörighet modal ----
 const VERIFY_GYM_COURSES = {
-  natur:['Matte 1','Matte 2a','Matte 2b','Matte 3c','Matte 4','Fysik 1a','Fysik 2','Kemi 1','Kemi 2','Biologi 1','Biologi 2','Naturkunskap 2','Samhällskunskap 1b'],
-  teknik:['Matte 1','Matte 2a','Matte 2b','Matte 3c','Matte 4','Fysik 1a','Fysik 2','Kemi 1','Naturkunskap 2','Samhällskunskap 1b'],
+  natur:['Matte 1','Matte 2a','Matte 2b','Matte 3c','Matte 4','Fysik 1a','Fysik 2','Kemi 1','Kemi 2','Biologi 1','Biologi 2','Naturkunskap 2','Samhällskunskap 1b','Engelska 5','Engelska 6','Svenska 3','Historia 1b'],
+  teknik:['Matte 1','Matte 2a','Matte 2b','Matte 3c','Matte 4','Fysik 1a','Fysik 2','Kemi 1','Naturkunskap 2','Samhällskunskap 1b','Engelska 5','Engelska 6','Svenska 3','Historia 1b'],
   samhall:['Matte 1','Samhällskunskap 1b','Samhällskunskap 2','Historia 1b','Naturkunskap 1a1','Engelska 5','Engelska 6','Svenska 2','Svenska 3'],
-  ekonomi:['Matte 1','Matte 2a','Matte 2b','Samhällskunskap 1b','Historia 1b','Företagsekonomi 1','Företagsekonomi 2','Naturkunskap 1a1','Engelska 5','Engelska 6'],
-  estet:['Matte 1','Samhällskunskap 1b','Historia 1b','Naturkunskap 1a1','Engelska 5'],
+  ekonomi:['Matte 1','Matte 2a','Matte 2b','Samhällskunskap 1b','Historia 1b','Företagsekonomi 1','Företagsekonomi 2','Naturkunskap 1a1','Engelska 5','Engelska 6','Svenska 3'],
+  estet:['Matte 1','Samhällskunskap 1b','Historia 1b','Naturkunskap 1a1','Engelska 5','Engelska 6','Svenska 3'],
   vard:['Matte 1','Samhällskunskap 1b','Naturkunskap 1a1','Naturkunskap 2','Biologi 1','Psykologi 1','Engelska 5'],
   bygg:['Matte 1','Matte 2a','Fysik 1a','Samhällskunskap 1b','Engelska 5'],
   el:['Matte 1','Matte 2a','Matte 3c','Fysik 1a','Fysik 2','Samhällskunskap 1b','Engelska 5'],
@@ -2378,7 +2404,7 @@ function buildCSNVerify() {
   const bidMax = deltid ? CSN_BID_DT : CSN_BID_HT;
   const lanMax = deltid ? CSN_LAN_DT : CSN_LAN_HT;
   const tillaggMax = 4688; // kr/4 veckor ≈ 1172/v
-  const fribeloppHalvyr = deltid ? 171892 : 114676;
+  const fribeloppHalvyr = deltid ? 172017 : 114676; // CSN 2026 fribelopp halvår, 20v
   const nKids = a.has_kids === 'yes' ? (parseInt(a.num_kids)||1) : 0;
   const barnMax = nKids === 1 ? 780 : nKids === 2 ? 1276 : nKids === 3 ? 1536 : nKids >= 4 ? 1796 : 0;
   // Tilläggslån eligibility: age >= 25 AND fulltime worker (likely income >= 245 680 kr/år)
@@ -2653,7 +2679,7 @@ function updateVerifyCourses() {
 
   const list = document.getElementById('verifyCourseList');
   list.innerHTML = allCourses.map(course => {
-    const isReq = reqCourses.some(r => r.split('/')[0].trim().toLowerCase() === course.split('/')[0].trim().toLowerCase() || course.toLowerCase().startsWith(r.split('/')[0].trim().toLowerCase().split(' ').slice(0,2).join(' ')));
+    const isReq = reqCourses.some(r => _reqSatisfied(r, [course]) || r === course);
     const checked = verifyChecked.has(course);
     return `<div class="verify-course${checked?' checked':''}" id="vc-${CSS.escape(course)}" onclick="toggleVerifyCourse('${course.replace(/'/g,"\'")}')">
       <div class="verify-course-check">${checked?'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':''}</div>
@@ -2683,7 +2709,8 @@ function toggleVerifyCourse(course) {
 
 function showVerifyResult() {
   const reqCourses = (edu && edu.req) ? edu.req.filter(r => !r.toLowerCase().includes('grundläggande behörighet')) : [];
-  const missing = reqCourses.filter(req => !verifyChecked.has(req));
+  const checkedArr = [...verifyChecked];
+  const missing = reqCourses.filter(req => !_reqSatisfied(req, checkedArr));
 
   const komvuxHeltid = missing.length <= 1 ? '1 termin' : missing.length <= 3 ? '1–2 terminer' : '2–3 terminer';
   const resultEl = document.getElementById('verifyResult');
@@ -2756,9 +2783,10 @@ async function confirmVerify() {
   ans.verified_courses = [...verifyChecked];
   try { localStorage.setItem('svg_answers', JSON.stringify(ans)); } catch(e) {}
 
-  // Compute verified status — exact match
+  // Compute verified status — improved matching
   const reqCourses = (edu && edu.req) ? edu.req.filter(r => !r.toLowerCase().includes('grundläggande behörighet')) : [];
-  const missing = reqCourses.filter(req => !verifyChecked.has(req));
+  const checkedArr2 = [...verifyChecked];
+  const missing = reqCourses.filter(req => !_reqSatisfied(req, checkedArr2));
   ans.verified_missing = missing;
   ans.verified_gym = verifyGym;
   // Save komvux_pace if already selected, else default to heltid
