@@ -1046,9 +1046,26 @@ function buildFP(name) {
  const need = !full;
  const now = new Date(), yr = now.getFullYear(), mo2 = now.getMonth();
  const wantSoon = a.when_start === 'asap' || a.when_start === 'next' || a.when_start === '6mo';
+
+ // Komvux time: use verified data if available
+ const verifiedMissing = Array.isArray(a.verified_missing) ? a.verified_missing : null;
+ const hasMissing = verifiedMissing ? verifiedMissing.length > 0 : need;
+ let compTime = 0;
+ if (hasMissing) {
+   const nMiss = verifiedMissing ? verifiedMissing.length : (part ? 1 : 3);
+   const pace = a.komvux_pace || 'heltid';
+   const paceTerms = {
+     heltid: nMiss <= 1 ? 1 : nMiss <= 3 ? 2 : 3,
+     deltid: nMiss <= 1 ? 2 : nMiss <= 3 ? 3 : 4,
+     sommar: nMiss <= 1 ? 1 : 2,
+     okand:  nMiss <= 1 ? 1 : nMiss <= 3 ? 2 : 3
+   };
+   compTime = paceTerms[pace] !== undefined ? Math.ceil(paceTerms[pace] / 2) : 1;
+   // compTime is in years (0.5 per term)
+   compTime = paceTerms[pace] * 0.5;
+ }
  const htStart = wantSoon && mo2 < 5 ? 'HT' + yr : 'HT' + (yr + 1);
- const compTime = need ? (part ? 1 : 2) : 0;
- const startYr = parseInt(htStart.slice(2)) + compTime;
+ const startYr = parseInt(htStart.slice(2)) + Math.ceil(compTime);
  const studyStart = 'HT' + startYr;
  const gradYear = startYr + Math.ceil(ry);
  const gradAge = age + Math.ceil(ry) + compTime;
@@ -1692,9 +1709,17 @@ function buildFP(name) {
  };
 
  if (a.has_grades === 'unsure') {
- pl += tlStep('Denna vecka · Brådskande','Kolla dina gymnasiebetyg',`Logga in på <strong>antagning.se</strong> med BankID → "Mina meriter". ${e.t} kräver: <strong>${e.req.join(', ')}</strong>. 10 minuter som avgör din tidslinje.`, true);
- } else if (need) {
- pl += tlStep('Inom 2 veckor','Ansök till Komvux — '+missingReqs.slice(0,2).join(' & '),`Du saknar troligen <strong>${missingReqs.join(' och ')}</strong>. Välj ${a.work_status==='fulltime'?'<strong>deltid kväll/distans</strong> — du behåller lönen':'<strong>heltid</strong> — snabbaste vägen'}. Sök på <strong>studera.nu</strong>, filtrera på distans + kväll.`,true);
+   pl += tlStep('Denna vecka · Brådskande','Kolla dina gymnasiebetyg',`Logga in på <strong>antagning.se</strong> med BankID → "Mina meriter". ${e.t} kräver: <strong>${e.req.join(', ')}</strong>. 10 minuter som avgör din tidslinje.`, true);
+ } else if (verifiedMissing && verifiedMissing.length > 0) {
+   const pace = a.komvux_pace || 'heltid';
+   const nMiss = verifiedMissing.length;
+   const paceTerms = { heltid: nMiss<=1?1:nMiss<=3?2:3, deltid: nMiss<=1?2:nMiss<=3?3:4, sommar: nMiss<=1?1:2, okand: nMiss<=1?1:nMiss<=3?2:3 };
+   const terms = paceTerms[pace];
+   const termStr = terms === 1 ? '1 termin' : terms + ' terminer';
+   const paceLabel = {heltid:'heltid dagtid', deltid:'deltid kväll/distans', sommar:'distans på sommaren', okand:'heltid (uppskattad)'}[pace];
+   pl += tlStep('Redan nu · Brådskande', 'Ansök till Komvux', '<ul class="detail-list"><li>Du saknar: <strong>' + verifiedMissing.join(', ') + '</strong></li><li>Studietakt: <strong>' + paceLabel + '</strong> — ca <strong>' + termStr + '</strong></li><li>Sök på <strong>studera.nu</strong>' + (pace==='deltid'||pace==='sommar'?' — filtrera på distans + kväll':'') + '</li></ul>', true);
+ } else if (!verifiedMissing && need) {
+   pl += tlStep('Inom 2 veckor','Ansök till Komvux — '+missingReqs.slice(0,2).join(' & '),`Du saknar troligen <strong>${missingReqs.join(' och ')}</strong>. Välj ${a.work_status==='fulltime'?'<strong>deltid kväll/distans</strong> — du behåller lönen':'<strong>heltid</strong> — snabbaste vägen'}. Sök på <strong>studera.nu</strong>, filtrera på distans + kväll.`,true);
  }
 
  if (a.work_status !== 'unemployed') {
@@ -2645,7 +2670,6 @@ function toggleVerifyCourse(course) {
 
 function showVerifyResult() {
   const reqCourses = (edu && edu.req) ? edu.req.filter(r => !r.toLowerCase().includes('grundläggande behörighet')) : [];
-  // Exact match only — the req string itself must be checked in the list
   const missing = reqCourses.filter(req => !verifyChecked.has(req));
 
   const komvuxHeltid = missing.length <= 1 ? '1 termin' : missing.length <= 3 ? '1–2 terminer' : '2–3 terminer';
@@ -2656,14 +2680,54 @@ function showVerifyResult() {
     resultEl.innerHTML = `<div class="verify-result ok"><div class="verify-result-title" style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Verifierat — du är behörig</div><div style="font-size:.83rem;margin-top:4px">Alla kurskrav är uppfyllda. Sök ${edu?edu.t:''} direkt på antagning.se.</div></div>`;
     if (confirmBtn) { confirmBtn.textContent = 'Spara verifiering och uppdatera plan'; confirmBtn.style.background = 'var(--ac)'; }
   } else {
-    // Only show result if at least one course has been checked
     if (verifyChecked.size > 0) {
-      resultEl.innerHTML = `<div class="verify-result fail"><div class="verify-result-title">Inte behörig ännu</div><div style="font-size:.83rem;margin-top:4px">Du saknar: <strong>${missing.join(', ')}</strong></div><div style="font-size:.83rem;margin-top:4px">Läs på Komvux — tar ca <strong>${komvuxHeltid}</strong> på heltid.</div></div>`;
+      const savedPace = ans.komvux_pace || '';
+      // Pace → number of terms
+      const paceTerms = { heltid: missing.length <= 1 ? 1 : missing.length <= 3 ? 2 : 3,
+                          deltid: missing.length <= 1 ? 2 : missing.length <= 3 ? 3 : 4,
+                          sommar: missing.length <= 1 ? 1 : 2,
+                          okand: missing.length <= 1 ? 1 : missing.length <= 3 ? 2 : 3 };
+      const terms = savedPace ? paceTerms[savedPace] : paceTerms.heltid;
+      const termStr = terms === 1 ? '1 termin' : terms + ' terminer';
+      resultEl.innerHTML = `<div class="verify-result fail">
+        <div class="verify-result-title">Komplettering behövs</div>
+        <div style="font-size:.83rem;margin-top:4px">Du saknar: <strong>${missing.join(', ')}</strong></div>
+        <div style="font-size:.85rem;font-weight:700;margin-top:12px;margin-bottom:6px">Vilken studietakt planerar du?</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          ${[
+            {v:'heltid', l:'Heltid dagtid', sub:'Snabbast — kräver tjänstledighet'},
+            {v:'deltid', l:'Deltid kväll/distans', sub:'Du behåller lönen'},
+            {v:'sommar', l:'Distans på sommaren', sub:'Kombineras med jobb'},
+            {v:'okand',  l:'Vet inte än', sub:'Vi räknar med heltid tills vidare'}
+          ].map(opt => `<label onclick="selectKomvuxPace('${opt.v}')" id="kp-${opt.v}" style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;background:${savedPace===opt.v?'var(--al)':'var(--bg)'};border:1.5px solid ${savedPace===opt.v?'var(--ac)':'var(--bo)'};transition:all .15s">
+            <div id="kpbox-${opt.v}" style="width:18px;height:18px;border-radius:50%;border:2px solid ${savedPace===opt.v?'var(--ac)':'var(--bo)'};background:${savedPace===opt.v?'var(--ac)':'#fff'};flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center">${savedPace===opt.v?'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':''}</div>
+            <div><div style="font-size:.85rem;font-weight:600">${opt.l}</div><div style="font-size:.75rem;color:var(--li)">${opt.sub} — ca ${paceTerms[opt.v] === 1 ? '1 termin' : paceTerms[opt.v] + ' terminer'}</div></div>
+          </label>`).join('')}
+        </div>
+      </div>`;
     } else {
       resultEl.innerHTML = '';
     }
     if (confirmBtn) { confirmBtn.textContent = 'Spara och uppdatera plan'; confirmBtn.style.background = 'var(--ac)'; }
   }
+}
+
+function selectKomvuxPace(v) {
+  ans.komvux_pace = v;
+  try { localStorage.setItem('svg_answers', JSON.stringify(ans)); } catch(e) {}
+  ['heltid','deltid','sommar','okand'].forEach(opt => {
+    const lbl = document.getElementById('kp-'+opt);
+    const box = document.getElementById('kpbox-'+opt);
+    if (!lbl || !box) return;
+    const sel = opt === v;
+    lbl.style.background = sel ? 'var(--al)' : 'var(--bg)';
+    lbl.style.borderColor = sel ? 'var(--ac)' : 'var(--bo)';
+    box.style.background = sel ? 'var(--ac)' : '#fff';
+    box.style.borderColor = sel ? 'var(--ac)' : 'var(--bo)';
+    box.innerHTML = sel ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : '';
+  });
+  // Re-run to update term estimates
+  showVerifyResult();
 }
 
 function closeVerifyModal(e) {
@@ -2687,6 +2751,8 @@ async function confirmVerify() {
   const missing = reqCourses.filter(req => !verifyChecked.has(req));
   ans.verified_missing = missing;
   ans.verified_gym = verifyGym;
+  // Save komvux_pace if already selected, else default to heltid
+  if (!ans.komvux_pace) ans.komvux_pace = 'heltid';
 
   // Save to Supabase
   const email = localStorage.getItem('svg_email');
