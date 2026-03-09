@@ -1060,20 +1060,33 @@ function buildFP(name) {
    if (pace === 'heltid' || pace === 'okand') komvuxWeeks = nMiss * 5;
    else if (pace === 'deltid') komvuxWeeks = nMiss * 10;
    else if (pace === 'sommar') komvuxWeeks = Math.ceil(nMiss / 2) * 52;
-   // Deadline-aware: om Komvux slutar efter 15 april det år htStart pekar på → missa rundan → +1 år
+   // Deadline-aware: två antagningsrundor — HT (deadline 15 apr, start aug) och VT (deadline 15 okt, start jan)
    if (pace === 'sommar') {
      compTime = Math.ceil(nMiss / 2);
    } else {
      const komvuxEnd = new Date(now.getTime() + komvuxWeeks * 7 * 86400000);
-     const deadline = new Date(baseYr, 3, 15); // 15 april baseYr
-     compTime = komvuxEnd > deadline ? 1 : 0;
-     // Om totalveckor > 40 (2+ år) → 2
+     const htDeadline = new Date(baseYr, 3, 15);    // 15 april
+     const vtDeadline = new Date(baseYr, 9, 15);    // 15 oktober
+     if (komvuxEnd <= htDeadline) {
+       // Klar i tid för HT → ingen push
+       compTime = 0;
+     } else if (komvuxEnd <= vtDeadline) {
+       // Klar i tid för VT → studiestart januari nästa år
+       compTime = 0; // startYr är fortfarande baseYr, men vi sätter VT-flagga
+     } else {
+       // Klar för sent för VT → nästa HT
+       compTime = 1;
+     }
      if (komvuxWeeks > 40) compTime = 2;
    }
+   // Bestäm om VT-start är aktuellt
+   const _komvuxEnd2 = pace !== 'sommar' ? new Date(now.getTime() + komvuxWeeks * 7 * 86400000) : null;
+   const _htDeadline2 = new Date(baseYr, 3, 15);
+   const _vtDeadline2 = new Date(baseYr, 9, 15);
+   const vtStart = _komvuxEnd2 && _komvuxEnd2 > _htDeadline2 && _komvuxEnd2 <= _vtDeadline2 && komvuxWeeks <= 40;
  }
  const startYr = baseYr + compTime;
-
- const studyStart = 'HT' + startYr;
+ const studyStart = vtStart ? 'VT' + startYr : 'HT' + startYr;
  const gradYear = startYr + Math.ceil(ry);
  const gradAge = age + Math.ceil(ry) + compTime;
  const firstName = name.split(' ')[0];
@@ -1155,9 +1168,9 @@ function buildFP(name) {
  }
 
 
- // Dates
- const applyDate = new Date(startYr, 3, 15);
- const startDate = new Date(startYr, 7, 15);
+ // Dates — VT: ansökan 15 okt året innan, start jan. HT: ansökan 15 apr, start aug.
+ const applyDate = vtStart ? new Date(startYr - 1, 9, 15) : new Date(startYr, 3, 15);
+ const startDate = vtStart ? new Date(startYr, 0, 15) : new Date(startYr, 7, 15);
  const daysUntilApply = Math.max(0, Math.ceil((applyDate - Date.now()) / 86400000));
  const mo3 = Math.max(0, Math.round((startDate - Date.now()) / 2592000000));
  const months = ['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec'];
