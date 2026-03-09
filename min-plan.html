@@ -1726,9 +1726,15 @@ function buildFP(name) {
  pl += tlStep(`Senast ${applyDate.getDate()} ${months[applyDate.getMonth()]} ${startYr} · Deadline`,`Sök ${e.t} på antagning.se`,`<ul class="detail-list"><li>Sök det här programmet plus 2–3 backupalternativ</li><li>Du kan prioritera upp till 20 program — använd det</li></ul>`,true);
 
  if (a.need_csn !== 'no') {
-   const planBid = a.csn_verified ? (parseInt(document.getElementById('sl-bid')?.value) || BID) : BID;
-   const planLan = a.csn_verified ? (parseInt(document.getElementById('sl-lan')?.value) || 0) : loan;
-   pl += tlStep('Direkt efter antagningsbesked','Ansök om CSN på csn.se',`<ul class="detail-list"><li>Bidrag: <strong>${fmtKr(planBid)}/mån</strong>${barnCSN?' + barntillägg '+fmtKr(barnCSN):''}</li>${planLan>0?'<li>Lån: <strong>'+fmtKr(planLan)+'/mån</strong></li>':''}<li>CSN betalar inte retroaktivt — ansök direkt efter besked</li></ul>`);
+   const verified = a.csn_verified === true;
+   const planBid = verified
+     ? (a.csn_verified_bid !== undefined ? a.csn_verified_bid : (parseInt(document.getElementById('sl-bid')?.value) || defaultBid))
+     : (parseInt(document.getElementById('sl-bid')?.value) || defaultBid);
+   const planLan = verified
+     ? (a.csn_verified_lan !== undefined ? a.csn_verified_lan : (parseInt(document.getElementById('sl-lan')?.value) || 0))
+     : (parseInt(document.getElementById('sl-lan')?.value) || loan);
+   const verifNote = verified ? '' : '<li style="color:var(--wa);font-weight:600">⚠ Verifiera ditt CSN under Behörighet-fliken för att bekräfta beloppen</li>';
+   pl += tlStep('Direkt efter antagningsbesked','Ansök om CSN på csn.se',`<ul class="detail-list"><li>Bidrag: <strong>${fmtKr(planBid)}/mån</strong>${barnCSN?' + barntillägg '+fmtKr(barnCSN):''}</li>${planLan>0?'<li>Lån: <strong>'+fmtKr(planLan)+'/mån</strong></li>':''}${verifNote}<li>CSN betalar inte retroaktivt — ansök direkt efter besked</li></ul>`);
  }
 
  pl += tlStep(`${studyStart.startsWith('HT')?'Augusti':'Januari'} ${startYr} · Mål`,`STUDIESTART — Examen ${gradYear}`,`<ul class="detail-list"><li>Utbildningstid: <strong>${Math.ceil(ry)} år</strong></li><li>Du är <strong>${gradAge} år</strong> när du tar examen</li><li>Ingångslön: <strong>${fmtKr(e.s0)}/mån</strong></li><li>${Math.ceil(ry)} år går oavsett — frågan är om du är ${gradAge} med eller utan examen</li></ul>`,false,true);
@@ -2266,22 +2272,24 @@ function openCSNModal() {
 }
 
 function confirmCSNVerify() {
-  // Check mandatory boxes
   const mandatoryIds = ['csn-bosatt','csn-veckor'];
   const allDone = mandatoryIds.every(id => {
     const b = document.getElementById('box-'+id);
     return b && b.innerHTML.includes('polyline');
   });
-  // Save checks regardless
   const allIds = ['csn-bosatt','csn-veckor','csn-tillinkomst'];
   ans.csn_checks = allIds.filter(id => {
     const b = document.getElementById('box-'+id);
     return b && b.innerHTML.includes('polyline');
   });
   ans.csn_verified = allDone;
+  // Save actual slider values so Din plan can use them
+  const bidEl = document.getElementById('sl-bid');
+  const lanEl = document.getElementById('sl-lan');
+  if (bidEl) ans.csn_verified_bid = parseInt(bidEl.value) || 0;
+  if (lanEl) ans.csn_verified_lan = parseInt(lanEl.value) || 0;
   try { localStorage.setItem('svg_answers', JSON.stringify(ans)); } catch(e) {}
 
-  // Update hero card
   const heroTitle  = document.querySelector('#csn-hero .status-title');
   const heroBody   = document.querySelector('#csn-hero .status-body');
   const heroCircle = document.querySelector('#csn-hero .status-circle');
@@ -2290,7 +2298,10 @@ function confirmCSNVerify() {
     if (heroTitle)  heroTitle.textContent  = 'Verifierat — du är berättigad till CSN';
     if (heroBody)   heroBody.textContent   = 'Du har bekräftat att du uppfyller grundkraven.';
     if (heroCircle) { heroCircle.style.background = '#E3000B'; heroCircle.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'; }
-    if (heroBtn)    heroBtn.textContent = ' Ändra verifiering';
+    if (heroBtn)    heroBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg> Ändra verifiering';
+    // Rebuild plan panel with verified slider values
+    const planEl = document.getElementById('panel-plan');
+    if (planEl) buildFP();
   }
   closeCSNModalFn();
 }
