@@ -519,7 +519,7 @@ function _reqSatisfied(req, courses) {
 function devFillAndShowPlan() {
  // Set salary and education (Systemutvecklare = id:2)
  sal = 22000;
- edu = E.find(e => e.id === 2); // Systemutvecklare
+ edu = E.find(e => e.id === 1); // Systemutvecklare
  
  if (!edu) {
  console.warn('DEV: Kunde inte hitta Systemutvecklare (id:2)');
