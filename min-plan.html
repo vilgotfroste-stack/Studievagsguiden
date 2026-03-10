@@ -2186,10 +2186,41 @@ const EDIT_QUESTIONS = [
 ];
 
 let editDraft = {};
+let editEduId = null;
 
 function openEditModal() {
   document.getElementById('profilePopup').classList.remove('open');
   editDraft = Object.assign({}, ans);
+  editEduId = edu ? edu.id : null;
+
+  // Render education picker
+  const eduSection = document.getElementById('editEduSection');
+  const groups = [
+    { label: 'IT & Teknik', ids: [1,2,3,4,5,6,7] },
+    { label: 'Ekonomi & Business', ids: [8,9,10,11,12,13] },
+    { label: 'Vård & Hälsa', ids: [14,15,16,17,18] },
+    { label: 'Samhälle & Människor', ids: [19,20,21,22,23] },
+    { label: 'Tekniska / Praktiska', ids: [24,25,26,27] },
+    { label: 'Övriga', ids: [28,29] }
+  ];
+  let opts = groups.map(g =>
+    `<optgroup label="${g.label}">${g.ids.map(id => { const e = E.find(x=>x.id===id); return e ? `<option value="${e.id}"${e.id===editEduId?' selected':''}>${e.t}</option>` : ''; }).join('')}</optgroup>`
+  ).join('');
+  eduSection.innerHTML = `
+    <div class="eq-item" style="margin-bottom:8px">
+      <div class="eq-head" style="cursor:default;padding-bottom:10px">
+        <div>
+          <div class="eq-label">Utbildning</div>
+          <div class="eq-val" id="eq-val-edu">${edu ? edu.t : '—'}</div>
+        </div>
+      </div>
+      <div style="padding:0 0 4px">
+        <select id="eq-edu-select" onchange="editEduId=+this.value;document.getElementById('eq-val-edu').textContent=this.options[this.selectedIndex].text" style="width:100%;padding:10px;border:1.5px solid #e8ede8;border-radius:8px;font-size:.88rem;background:#fff;color:var(--tx)">
+          ${opts}
+        </select>
+      </div>
+    </div>`;
+
   const list = document.getElementById('editQList');
   list.innerHTML = '';
   EDIT_QUESTIONS.forEach(q => {
@@ -2318,9 +2349,17 @@ function closeEditModal(e) {
 
 async function confirmEdits() {
   ans = Object.assign(ans, editDraft);
-  // Save to localStorage
+  // Update edu if changed
+  if (editEduId && (!edu || editEduId !== edu.id)) {
+    edu = E.find(e => e.id === editEduId) || edu;
+    // Clear stale verification data when education changes
+    ans.verified_missing = undefined;
+    ans.verified_courses = undefined;
+    ans.verified_gym = undefined;
+    ans.csn_checks = undefined;
+    ans.csn_verified = undefined;
+  }
   try { localStorage.setItem('svg_answers', JSON.stringify(ans)); } catch(e) {}
-  // Save to Supabase
   const email = localStorage.getItem('svg_email');
   if (email) {
     try {
@@ -2332,7 +2371,7 @@ async function confirmEdits() {
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal'
         },
-        body: JSON.stringify({ data: ans })
+        body: JSON.stringify({ data: ans, education_id: edu ? edu.id : undefined })
       });
     } catch(e) { console.warn('Supabase update failed:', e); }
   }
@@ -3072,6 +3111,7 @@ function svgModalClose(val) {
    <button class="eq-cancel" onclick="document.getElementById('editModalOverlay').classList.remove('open');document.body.style.overflow=''">Avbryt</button>
  </div>
  <div class="edit-modal-scroll">
+   <div id="editEduSection"></div>
    <div id="editQList"></div>
  </div>
  </div>
