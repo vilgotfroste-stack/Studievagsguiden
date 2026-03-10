@@ -3022,18 +3022,28 @@ async function saveAndRedirect() {
         console.warn('Supabase save failed, localStorage backup aktivt:', e.message);
     }
 
-    // Spara plan i plans-tabellen med mail + lösenord (UPSERT — uppdaterar om email redan finns)
+    // Spara plan: radera gammal + skapa ny (säkerställer att lösenordshash-triggern kör)
+    const planEmail = (ans.user_email || '').trim().toLowerCase();
     try {
+        // Ta bort eventuell befintlig plan för denna email
+        await fetch(SUPABASE_URL + '/rest/v1/plans?email=eq.' + encodeURIComponent(planEmail), {
+            method: 'DELETE',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': 'Bearer ' + SUPABASE_KEY
+            }
+        });
+        // Skapa ny plan (INSERT → triggern hashar lösenordet)
         await fetch(SUPABASE_URL + '/rest/v1/plans', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'apikey': SUPABASE_KEY,
                 'Authorization': 'Bearer ' + SUPABASE_KEY,
-                'Prefer': 'return=minimal,resolution=merge-duplicates'
+                'Prefer': 'return=minimal'
             },
             body: JSON.stringify({
-                email: (ans.user_email || '').trim().toLowerCase(),
+                email: planEmail,
                 password: (ans.user_password || '').trim(),
                 session_id: sid,
                 education_id: edu ? edu.id : null,
