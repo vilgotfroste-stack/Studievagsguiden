@@ -1537,7 +1537,7 @@ function buildFP(name) {
 
  <div class="slider-block">
  <div class="slider-top">
- <div class="slider-name"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><polyline points='9 22 9 12 15 12 15 22'/></svg> Boende</div>
+ <div class="slider-name"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><polyline points='9 22 9 12 15 12 15 22'/></svg> Boende <span class="slider-badge" style="background:var(--bll);color:var(--bl)">${({stockholm:'Stockholm',goteborg:'Göteborg',malmo:'Malmö',uppsala:'Uppsala',linkoping:'Linköping',lund:'Lund',umea:'Umeå',orebro:'Örebro',other:'Din ort'})[city]||'Din ort'}, ${{student:'studentbostad',shared:'delad',rental:'hyresrätt',home:'hemma'}[hou]||hou}</span></div>
  <div class="slider-val" id="sv-boende">${fmtKr(initRent)}</div>
  </div>
  <div style="display:flex;gap:4px;margin-bottom:8px">
