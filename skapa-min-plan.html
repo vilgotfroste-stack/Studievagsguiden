@@ -3022,7 +3022,7 @@ async function saveAndRedirect() {
         console.warn('Supabase save failed, localStorage backup aktivt:', e.message);
     }
 
-    // Spara plan i plans-tabellen med mail + lösenord
+    // Spara plan i plans-tabellen med mail + lösenord (UPSERT — uppdaterar om email redan finns)
     try {
         await fetch(SUPABASE_URL + '/rest/v1/plans', {
             method: 'POST',
@@ -3030,7 +3030,7 @@ async function saveAndRedirect() {
                 'Content-Type': 'application/json',
                 'apikey': SUPABASE_KEY,
                 'Authorization': 'Bearer ' + SUPABASE_KEY,
-                'Prefer': 'return=minimal'
+                'Prefer': 'return=minimal,resolution=merge-duplicates'
             },
             body: JSON.stringify({
                 email: (ans.user_email || '').trim().toLowerCase(),
