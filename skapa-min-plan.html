@@ -464,15 +464,6 @@ const E=[
    {n:'Socionomprogrammet',school:'Ersta Sköndal Bräcke högskola',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026'],length:'3,5 år (210 hp)',csn:true,fee:0,lang:'swedish',cutoff:14.2,vfu:'26 veckor VFU',url:'https://esh.se/socionom',p:.9,t:['Mindre skola','Personlig']}
  ],
  sc:{st:'Socialsekreterare',ho:'Byter kommun / verksamhet',sp:'Familjerätt / missbruk',le:'Enhetschef'}},
-{id:30,t:'Elektriker (YH)',y:2,s0:30000,s1:37700,dem:5,ai:6,stress:3,future:5,tc:10000,req:['Grundläggande behörighet'],rp:['El och energi','Teknik','Naturvetenskap'],pp:['Bygg','Industri','Samhäll'],
- sch:[
-   {n:'Elinstallation',school:'Yrgo',c:'goteborg',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'26 veckor LIA',url:'https://www.yrgo.se/elinstallation',p:0,t:['YH','50% praktik','Hög anställning']},
-   {n:'Elektriker',school:'TUC Yrkeshögskola',c:'other',f:'campus',pace:'fulltime',starts:['HT2026'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'26 veckor LIA',url:'https://www.tucsweden.se/elektriker',p:0,t:['YH','Rikstäckande','Bred bas']},
-   {n:'Elinstallatör',school:'Hermods',c:'other',f:'both',pace:'fulltime',starts:['HT2026','VT2027'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'26 veckor LIA',url:'https://www.hermods.se/elinstallator',p:0,t:['YH','Campus + Distans','Flexibelt']},
-   {n:'Elektriker med inriktning automation',school:'Nackademin',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'20 veckor LIA',url:'https://nackademin.se/elektriker-automation',p:0,t:['YH','Automationsfokus','Stockholm']},
-   {n:'Elektriker serviceteknik',school:'Jensen Yrkeshögskola',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'26 veckor LIA',url:'https://jensen.se/elektriker',p:0,t:['YH','Serviceinriktad','Praktik']}
- ],
- sc:{st:'Installationselektriker',ho:'Byter arbetsgivare / ort',sp:'Automationstekniker',le:'Arbetsledare / eget företag'}},
 {id:4,t:'UX-designer (YH)',y:2,s0:32000,s1:48000,dem:3,ai:22,stress:2,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik','Estet'],pp:[],
  sch:[
    {n:'UX-designer',school:'Nackademin',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'16 veckor LIA',url:'https://nackademin.se/ux-designer',p:0,t:['YH','Hög kvalitet','Industrikontakter']},
@@ -481,7 +472,30 @@ const E=[
    {n:'Frontendutvecklare med UX',school:'Medieinstitutet',c:'stockholm',f:'campus',pace:'fulltime',starts:['HT2026','VT2027'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'16 veckor LIA',url:'https://medieinstitutet.se/ux-frontend',p:0,t:['YH','Kod + Design','Bred kompetens']},
    {n:'UX-designer (distans)',school:'Jensen Yrkeshögskola',c:'other',f:'distance',pace:'fulltime',starts:['HT2026'],length:'2 år (400 YH-poäng)',csn:true,fee:0,lang:'swedish',cutoff:null,vfu:'16 veckor LIA',url:'https://jensen.se/ux-designer-distans',p:0,t:['YH','Distans','Flexibelt']}
  ],
- sc:{st:'In-house UX',ho:'Konsult / frilans',sp:'UX Research / Design systems',le:'Head of Design'}}
+ sc:{st:'In-house UX',ho:'Konsult / frilans',sp:'UX Research / Design systems',le:'Head of Design'}},
+// Övriga utbildningar (utan skolrekommendationer än)
+{id:2,t:'Dataanalytiker',y:3,s0:33000,s1:54500,dem:4,ai:12,stress:2,future:5,tc:8000,req:['Matte 3c','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sch:[],sc:{st:'Dataanalytiker junior',ho:'Senior analytiker / konsult',sp:'Data scientist / BI-specialist',le:'Analytics manager'}},
+{id:3,t:'IT-säkerhetsspecialist',y:3,s0:33000,s1:52600,dem:5,ai:5,stress:3,future:5,tc:8000,req:['Matte 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sch:[],sc:{st:'Säkerhetsanalytiker',ho:'Konsult / byter organisation',sp:'Cybersecurity specialist',le:'CISO / säkerhetschef'}},
+{id:6,t:'Högskoleingenjör',y:3,s0:38800,s1:45600,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matte 3c','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:[],sch:[],sc:{st:'Ingenjör junior',ho:'Konsult / byter bransch',sp:'Senior ingenjör',le:'Projektledare / teamlead'}},
+{id:7,t:'DevOps / Cloud engineer',y:2,s0:35000,s1:52000,dem:5,ai:10,stress:2,future:5,tc:8000,req:['Grundläggande behörighet'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sch:[],sc:{st:'DevOps-ingenjör junior',ho:'Konsult / byter bolag',sp:'Cloud architect / SRE',le:'Platform engineering lead'}},
+{id:9,t:'Redovisningsekonom',y:2,s0:30000,s1:44300,dem:4,ai:20,stress:2,future:3,tc:8000,req:['Matte 2','Engelska 6'],rp:['Ekonomi','Samhäll'],pp:['Naturvetenskap','Teknik'],sch:[],sc:{st:'Redovisningsekonom',ho:'Konsult / byter byrå',sp:'Auktoriserad revisor',le:'Ekonomichef'}},
+{id:10,t:'Controller',y:3,s0:33000,s1:48200,dem:4,ai:20,stress:3,future:3,tc:9000,req:['Matte 3c','Engelska 6'],rp:['Ekonomi','Naturvetenskap','Teknik'],pp:['Samhäll'],sch:[],sc:{st:'Junior controller',ho:'Byter bransch / konsult',sp:'Senior controller',le:'CFO / ekonomichef'}},
+{id:11,t:'Digital marknadsförare',y:2,s0:30000,s1:43000,dem:3,ai:18,stress:3,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Ekonomi','Samhäll','Estet'],pp:['Naturvetenskap','Teknik'],sch:[],sc:{st:'Digital marknadsförare',ho:'Konsult / byrå',sp:'Specialist SEO/SEM/social',le:'Marknadschef'}},
+{id:12,t:'HR-specialist',y:3,s0:30000,s1:42000,dem:3,ai:12,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matte 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sch:[],sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
+{id:13,t:'Projektledare',y:3,s0:33000,s1:49000,dem:4,ai:10,stress:3,future:4,tc:9000,req:['Grundläggande behörighet'],rp:['Ekonomi','Teknik','Samhäll','Naturvetenskap'],pp:['Estet'],sch:[],sc:{st:'Projektkoordinator',ho:'Byter bransch / konsult',sp:'Senior projektledare / PMP',le:'Programchef / affärsutvecklare'}},
+{id:15,t:'Fysioterapeut',y:3,s0:30000,s1:39100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sch:[],sc:{st:'Legitimerad fysioterapeut',ho:'Byter vårdgivare / privat',sp:'Specialist / idrottsfysio',le:'Verksamhetschef'}},
+{id:16,t:'Arbetsterapeut',y:3,s0:29000,s1:38100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sch:[],sc:{st:'Leg. arbetsterapeut',ho:'Byter region / verksamhet',sp:'Specialist / konsult',le:'Verksamhetschef'}},
+{id:17,t:'Biomedicinsk analytiker',y:3,s0:30000,s1:41200,dem:4,ai:8,stress:2,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sch:[],sc:{st:'Biomedicinsk analytiker',ho:'Byter laboratorium / region',sp:'Cytodiagnostiker / specialist',le:'Laboratoriekemist / chef'}},
+{id:18,t:'Tandhygienist',y:3,s0:30000,s1:40900,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sch:[],sc:{st:'Leg. tandhygienist',ho:'Byter klinik / region',sp:'Specialist / konsult',le:'Klinikchet / eget företag'}},
+{id:21,t:'Gymnasielärare',y:4.5,s0:31000,s1:42700,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sch:[],sc:{st:'Ämneslärare',ho:'Byter skola / ämne',sp:'Förstelärare',le:'Rektor / skolledare'}},
+{id:22,t:'Studie- och yrkesvägledare',y:3,s0:29000,s1:40100,dem:4,ai:5,stress:2,future:4,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll'],pp:['Naturvetenskap','Teknik'],sch:[],sc:{st:'Studie- och yrkesvägledare',ho:'Byter skola / sektor',sp:'Senior vägledare / specialist',le:'Verksamhetschef'}},
+{id:23,t:'Personalvetare',y:3,s0:29000,s1:42000,dem:3,ai:10,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sch:[],sc:{st:'HR-koordinator / personalvetare',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
+{id:24,t:'Byggingenjör',y:3,s0:34000,s1:46000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matte 3c','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sch:[],sc:{st:'Byggingenjör',ho:'Konsult / byter projekt',sp:'Projektingenjör / specialist',le:'Projektchef / platschef'}},
+{id:25,t:'Fastighetsförvaltare',y:3,s0:34000,s1:50600,dem:4,ai:8,stress:2,future:4,tc:9000,req:['Matte 2'],rp:['Ekonomi','Teknik','Samhäll'],pp:['Naturvetenskap'],sch:[],sc:{st:'Fastighetsförvaltare',ho:'Byter bolag / region',sp:'Teknisk förvaltare / specialist',le:'Förvaltningschef / fastighetschef'}},
+{id:26,t:'VVS-ingenjör',y:2,s0:33000,s1:45000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matte 2','Fysik 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sch:[],sc:{st:'VVS-konstruktör / tekniker',ho:'Konsult / byter projekt',sp:'Senior ingenjör / specialist',le:'Projektchef / avdelningschef'}},
+{id:27,t:'Automationsingenjör',y:3,s0:34000,s1:48000,dem:5,ai:8,stress:2,future:5,tc:9000,req:['Matte 3c','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sch:[],sc:{st:'Automationsingenjör',ho:'Konsult / byter industri',sp:'Senior ingenjör / specialist',le:'Automationschef / projektledare'}},
+{id:28,t:'Kriminolog',y:3,s0:28000,s1:39500,dem:3,ai:8,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll'],pp:['Naturvetenskap','Teknik'],sch:[],sc:{st:'Utredare / handläggare',ho:'Byter myndighet / sektor',sp:'Specialist brottsprevention',le:'Enhetschef / verksamhetschef'}},
+{id:29,t:'Beteendevetare',y:3,s0:28000,s1:58400,dem:3,ai:8,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sch:[],sc:{st:'Utredare / konsulent',ho:'Byter organisation / sektor',sp:'Specialist beteende / HR',le:'Enhetschef / konsultchef'}}
 ];
 const CIT={stockholm:7000,goteborg:5500,malmo:5000,uppsala:5500,linkoping:4500,lund:5500,umea:4000,orebro:4500,other:4500};
 const HOU={student:.75,shared:.85,rental:1.2,home:0};
@@ -663,7 +677,6 @@ const PN={
 8:{pro:['Bred arbetsmarknad — bank, revision, konsult, industri, startup','Lönetak på 52 000+ kr, betydligt högre inom finans','Internationellt gångbar examen med möjlighet till utlandstjänst','Starkt alumninätverk, särskilt från handelshögskolorna'],con:['25% AI-automatiseringsrisk — analys- och rapportarbete ersätts','Hård konkurrens om trainee- och graduate-platser','Långa arbetsdagar norm inom revision och investment banking','Stor variation i lön beroende på bransch och stad']},
 5:{pro:['Högst ingångslön av alla utbildningar (38 000 kr)','Lönetak på 58 000+ kr, högre i chefsroll','Bred anställningsbarhet — tech, energi, fordon, bygg, försvar','Stark internationell efterfrågan på svensk ingenjörskompetens'],con:['5 års utbildningstid — längst av alla alternativ','Hög studietakt med matematik, fysik och kemi','18% AI-risk — simulering och beräkningsarbete automatiseras','Kräver ofta flytt till storstadsregion för bästa tjänsterna']},
 19:{pro:['Stor efterfrågan — kommuner har svårt att rekrytera socialsekreterare','Bred arbetsmarknad: socialtjänst, kriminalvård, migration, skola','Offentlig anställning med kollektivavtal och tjänstepension','Relativt kort utbildning (3,5 år) med praktik (VFU)'],con:['Högst personalomsättning inom socialtjänsten — snitt 2–3 år','Tunga myndighetsutövningsbeslut (LVU, tvångsomhändertaganden)','Lägst ingångslön av alla högskoleutbildningar i listan (30 000 kr)','Hög sjukfrånvaro i branschen jämfört med andra yrken']},
-30:{pro:['Mycket hög efterfrågan — elektrikerbrist i hela landet','Kort utbildning (2 år) med 50% praktik på företag','Snabb löneutveckling med certifikat och behörigheter','Möjlighet till eget företag med relativt låg startkostnad'],con:['Jour och beredskap krävs, även helger och kvällar','Fysiskt krävande med arbete i trånga utrymmen och höjder','Elsäkerhetsrisker — strikt reglerat med personligt ansvar','Konjunkturkänsligt — byggsektorn styr efterfrågan']},
 4:{pro:['32 000 kr ingångslön med potential upp till 48 000+','Kort utbildning (2 år YH) med praktik på riktiga företag','Remote och frilans vanligt — hög geografisk flexibilitet','Tvärfunktionell roll som fungerar i de flesta branscher'],con:['22% AI-risk — designverktyg automatiserar allt mer','Stor konkurrens om juniora tjänster efter examen','Ofta bland de första som sägs upp vid nedskärningar','Svårt att kvantifiera affärsvärde — budgeten skärs lätt ned']}
 };
 
@@ -1749,7 +1762,6 @@ function buildFP(name){
         8:{students:'~3 800',employ:'82%',avgAge:'23'},
         5:{students:'~2 400',employ:'91%',avgAge:'22'},
         19:{students:'~2 900',employ:'87%',avgAge:'27'},
-        30:{students:'~1 800',employ:'94%',avgAge:'25'},
         4:{students:'~1 200',employ:'78%',avgAge:'26'}
     };
     const stats=eduStats[e.id]||{students:'~2 500',employ:'85%',avgAge:'25'};
@@ -2427,11 +2439,6 @@ function buildFP(name){
             {quote:'Var sjukvårdsbiträde i 9 år. Tog steget till socionom vid 35. Svårt ekonomiskt — men jobbet efteråt är meningsfullt på ett helt annat plan.',from:'Akademikerförbundet SSR, forum',yr:'2023'},
             {quote:'Folk frågar om det är tungt att jobba med svåra fall. Det är det. Men det är också ett av de enda jobb där du faktiskt märker att du gjort skillnad.',from:'Flashback, Vård & omsorg',yr:'2024'},
             {quote:'VFU-handledaren erbjöd mig jobb direkt. 26 veckor praktik bygger relationer och referenserna är guld värda.',from:'Socionomprogrammets alumnigrupp, Facebook',yr:'2023'}
-        ],
-        30:[
-            {quote:'YH-utbildningen var praktisk från dag 1. Inget fluff. Fick jobb 3 veckor efter examen — arbetsgivaren hade sett mig under LIA redan.',from:'Yrgo.se studentblogg',yr:'2024'},
-            {quote:'Elektriker är det bästa yrkesvalet jag gjort. Alltid jobb. Kan jobba i alla städer. Kan starta eget. Och AI kan inte dra kabel åt dig.',from:'Flashback, El & energi',yr:'2023'},
-            {quote:'Folk tittar ned på yrkesutbildningar. De tjänar 28 000 kr. Jag tjänar 38 000. De undrar varför.',from:'Reddit r/sweden, lön-diskussion',yr:'2024'}
         ],
         4:[
             {quote:'Sökte utan portfolio. Fick backa och börja om med riktiga projekt. Bästa rådet: bygg tre fall-studier under utbildningen — inte kursinlämningar, utan skarpa projekt.',from:'Nackademin studentblogg',yr:'2024'},
