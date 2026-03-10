@@ -2782,16 +2782,20 @@ function updateVerifyCourses() {
     </div>`;
   });
 
-  // Missing reqs — not checkable, shown as warning
+  // Missing reqs — clickable "Redan klar" toggle
   if (missingReqs.length > 0) {
     html += '<div style="margin-top:12px;padding:10px 0 4px;border-top:1.5px solid var(--bo)"><div style="font-size:.72rem;font-weight:700;color:var(--wa);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">Saknas i ditt program</div>';
     missingReqs.forEach(req => {
-      html += `<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;margin-bottom:4px;background:#FDF4E3;border:1.5px solid #E8D5A8;font-size:.88rem">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        <span style="font-weight:600;color:#6B4F00">${req}</span>
-        <span style="margin-left:auto;font-size:.7rem;font-weight:700;color:#B8860B;background:#FDF4E3;padding:2px 7px;border-radius:5px">Behöver Komvux</span>
+      const done = verifyChecked.has(req);
+      html += `<div id="vm-${CSS.escape(req)}" onclick="toggleMissingReq('${req.replace(/'/g,"\\'")}')" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;margin-bottom:4px;cursor:pointer;transition:background .15s,border-color .15s;${done?'background:#E8F5EE;border:1.5px solid var(--ac)':'background:#FDF4E3;border:1.5px solid #E8D5A8'}">
+        <div style="width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;${done?'background:var(--ac)':'background:#E8D5A8'}">
+          ${done?'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'}
+        </div>
+        <span style="font-weight:600;${done?'color:var(--ah)':'color:#6B4F00'}">${req}</span>
+        <span style="margin-left:auto;font-size:.7rem;font-weight:700;padding:2px 7px;border-radius:5px;white-space:nowrap;${done?'color:var(--ah);background:var(--al)':'color:#B8860B;background:#FDF4E3'}">${done?'Redan klar ✓':'Behöver Komvux'}</span>
       </div>`;
     });
+    html += '<div style="font-size:.73rem;color:var(--li);margin-top:6px;padding:0 2px">Har du läst kursen som individuellt val eller via Komvux? Markera som klar.</div>';
     html += '</div>';
   }
 
@@ -2812,6 +2816,31 @@ function toggleVerifyCourse(course) {
   }
 
   // Live-update result
+  showVerifyResult();
+}
+
+function toggleMissingReq(req) {
+  if (verifyChecked.has(req)) verifyChecked.delete(req);
+  else verifyChecked.add(req);
+
+  // Re-render the missing row in place
+  const el = document.getElementById('vm-' + CSS.escape(req));
+  if (el) {
+    const done = verifyChecked.has(req);
+    el.style.background = done ? '#E8F5EE' : '#FDF4E3';
+    el.style.borderColor = done ? 'var(--ac)' : '#E8D5A8';
+    const circle = el.children[0];
+    circle.style.background = done ? 'var(--ac)' : '#E8D5A8';
+    circle.innerHTML = done
+      ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+      : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#B8860B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+    const label = el.children[2];
+    label.textContent = done ? 'Redan klar ✓' : 'Behöver Komvux';
+    label.style.color = done ? 'var(--ah)' : '#B8860B';
+    label.style.background = done ? 'var(--al)' : '#FDF4E3';
+    el.children[1].style.color = done ? 'var(--ah)' : '#6B4F00';
+  }
+
   showVerifyResult();
 }
 
