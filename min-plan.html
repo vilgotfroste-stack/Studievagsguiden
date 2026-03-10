@@ -321,6 +321,29 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 const SUPABASE_URL = 'https://qofvdpvxrvvjalgdiflg.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_Vfm1BArZN_RAWrwTOzVGXA_WWvIk77V';
 const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+let _saveTimer = null;
+function debouncedSave() {
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(saveToSupabase, 1500);
+}
+async function saveToSupabase() {
+  const email = localStorage.getItem('svg_email');
+  if (!email || !ans) return;
+  try {
+    await fetch(SUPABASE_URL + '/rest/v1/plans?email=eq.' + encodeURIComponent(email), {
+      method: 'PATCH',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ data: ans })
+    });
+    try { localStorage.setItem('svg_answers', JSON.stringify(ans)); } catch(e) {}
+  } catch(e) { console.warn('Auto-save failed:', e); }
+}
 </script>
 
 <!-- Auth gate -->
@@ -1059,11 +1082,15 @@ function buildFP(name) {
  // Förifyllning: bidrag alltid max, lån från wizard
  const defaultBid = bidMax;
  const defaultLoan = a.need_csn === 'no' ? 0 : a.need_csn === 'grant' ? 0 : lanMax;
- const loan = defaultLoan;
- const fixedExp = parseInt(a.fixed_expenses) || 5000;
- const variableExp = parseInt(a.variable_expenses) || 4000;
+ // Use stored slider overrides if present, otherwise fall back to computed defaults
+ const loan = (a.slider_lan !== undefined) ? Math.min(a.slider_lan, lanMax) : defaultLoan;
+ const fixedExp = (a.slider_fixed !== undefined) ? a.slider_fixed : (parseInt(a.fixed_expenses) || 5000);
+ const variableExp = (a.slider_var !== undefined) ? a.slider_var : (parseInt(a.variable_expenses) || 4000);
  // Extrajobb: prefill från wizard
  const defaultJobb = a.work_during === 'parttime' ? 5000 : a.work_during === 'yes' ? 3000 : 0;
+ const initBid = (a.slider_bid !== undefined) ? Math.min(a.slider_bid, bidMax) : defaultBid;
+ const initJobb = (a.slider_jobb !== undefined) ? a.slider_jobb : defaultJobb;
+ const initRent = (() => { if (a.slider_rent !== undefined) return a.slider_rent; const hou2 = a.housing || 'student'; return hou2 === 'home' ? 0 : Math.round((CIT[mapCity(a.current_location)]||4500) * (HOU[hou2]||.75)); })();
  const wh = workNeeded ? 15 : (a.need_csn === 'both') ? 10 : 0;
  const wi = Math.round(wh * WR * 4.3);
  const mo = Math.round(ry * 10), debt = loan * mo;
@@ -1073,7 +1100,7 @@ function buildFP(name) {
  const cc = a.has_kids === 'yes' ? 2000 * numKids : 0;
  const barnCSN = a.has_kids === 'yes' ? (numKids === 1 ? 780 : numKids === 2 ? 1276 : numKids === 3 ? 1536 : numKids >= 4 ? 1796 : 0) : 0;
  const rent = hou === 'home' ? 0 : Math.round((CIT[city]||4500) * (HOU[hou]||.75));
- const ti = defaultBid + barnCSN + loan + defaultJobb, to = rent + fixedExp + variableExp + cc, bal = ti - to;
+ const ti = initBid + barnCSN + loan + initJobb, to = initRent + fixedExp + variableExp + cc, bal = ti - to;
  const salDiff = e.s0 - currentSal;
  const op = currentSal * 12 * ry, yg = (e.s0 - currentSal) * 12, be = yg > 0 ? Math.ceil((op + debt) / yg) : 0;
  const gp = GYM.find(g => g.id === a.gym), gk = gp ? gp.k : 'other';
@@ -1480,9 +1507,9 @@ function buildFP(name) {
  <div class="slider-block">
  <div class="slider-top">
  <div class="slider-name"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M22 10v6M2 10l10-5 10 5-10 5z'/><path d='M6 12v5c3 3 9 3 12 0v-5'/></svg> CSN Bidrag <span class="slider-badge" style="background:#E8F5EE;color:#4A8C6A">${deltid ? 'Deltid' : 'Heltid'}</span></div>
- <div class="slider-val" id="sv-bid">${fmtKr(defaultBid)}</div>
+ <div class="slider-val" id="sv-bid">${fmtKr(initBid)}</div>
  </div>
- <input type="range" class="green" id="sl-bid" min="0" max="${bidMax}" step="100" value="${defaultBid}" oninput="updateBudget()">
+ <input type="range" class="green" id="sl-bid" min="0" max="${bidMax}" step="100" value="${initBid}" oninput="updateBudget()">
  <div class="slider-meta"><span>0 kr</span><span>Max ${fmtKr(bidMax)}</span></div>
  </div>
 
@@ -1498,9 +1525,9 @@ function buildFP(name) {
  <div class="slider-block">
  <div class="slider-top">
  <div class="slider-name"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x='2' y='7' width='20' height='14' rx='2'/><path d='M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2'/></svg> Extrajobb</div>
- <div class="slider-val" id="sv-jobb">${fmtKr(defaultJobb)}</div>
+ <div class="slider-val" id="sv-jobb">${fmtKr(initJobb)}</div>
  </div>
- <input type="range" class="green" id="sl-jobb" min="0" max="10000" step="500" value="${defaultJobb}" oninput="updateBudget()">
+ <input type="range" class="green" id="sl-jobb" min="0" max="10000" step="500" value="${initJobb}" oninput="updateBudget()">
  <div class="slider-meta"><span>0 kr</span><span>10 000 kr</span></div>
  </div>
 
@@ -1511,7 +1538,7 @@ function buildFP(name) {
  <div class="slider-block">
  <div class="slider-top">
  <div class="slider-name"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><polyline points='9 22 9 12 15 12 15 22'/></svg> Boende</div>
- <div class="slider-val" id="sv-boende">${fmtKr(rent)}</div>
+ <div class="slider-val" id="sv-boende">${fmtKr(initRent)}</div>
  </div>
  <div style="display:flex;gap:4px;margin-bottom:8px">
  <button class="hou-btn${hou==='student'?' act':''}" onclick="setHouBtn('student',${Math.round((CIT[city]||4500)*(HOU.student||.75))},this)">Student</button>
@@ -1519,7 +1546,7 @@ function buildFP(name) {
  <button class="hou-btn${hou==='rental'?' act':''}" onclick="setHouBtn('rental',${Math.round((CIT[city]||4500)*(HOU.rental||1.2))},this)">Hyresrätt</button>
  <button class="hou-btn${hou==='home'?' act':''}" onclick="setHouBtn('home',0,this)">Hemma</button>
  </div>
- <input type="range" class="red" id="sl-boende" min="0" max="12000" step="250" value="${rent}" oninput="updateBudget()">
+ <input type="range" class="red" id="sl-boende" min="0" max="12000" step="250" value="${initRent}" oninput="updateBudget()">
  <div class="slider-meta"><span>0 kr</span><span>12 000 kr</span></div>
  </div>
 
@@ -1954,6 +1981,13 @@ function updateBudget() {
  const sv = (id, v) => { const el = document.getElementById(id); if(el) el.textContent = fmtKr(v); };
  sv('sv-bid', bidV); sv('sv-lan', lanV); sv('sv-jobb', jobbV);
  sv('sv-boende', boendeV); sv('sv-fixed', fixedV); sv('sv-var', varV);
+
+ // Persist slider state to ans + debounced Supabase save
+ if (ans) {
+   ans.slider_bid = bidV; ans.slider_lan = lanV; ans.slider_jobb = jobbV;
+   ans.slider_rent = boendeV; ans.slider_fixed = fixedV; ans.slider_var = varV;
+   debouncedSave();
+ }
 
  // Balance hero
  const balEl = document.getElementById('bal-display');
@@ -2599,6 +2633,7 @@ function toggleCSNCheck(id) {
   });
   ans.csn_checks = saved;
   try { localStorage.setItem('svg_answers', JSON.stringify(ans)); } catch(e) {}
+  debouncedSave();
   _updateCsnCheckResult();
 }
 
@@ -2636,6 +2671,7 @@ function _updateCsnCheckResult() {
     // Persist
     ans.csn_verified = true;
     try { localStorage.setItem('svg_answers', JSON.stringify(ans)); } catch(e) {}
+    debouncedSave();
   } else {
     const missing = ['csn-bosatt','csn-veckor'].filter(id => {
       const b = document.getElementById('box-'+id);
