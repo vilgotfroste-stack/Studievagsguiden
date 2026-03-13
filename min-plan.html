@@ -1961,7 +1961,7 @@ function buildFP(name) {
  <div class="expand-icon" style="background:#EEF4FF"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
  <div>
  <div class="expand-title">Hur ser en studiedag ut?</div>
- <span class="expand-tag" style="background:#EEF4FF;color:#2D5F8A">Jämfört med att jobba</span>
+
  </div>
  </div>
  <span class="expand-arrow"></span>
@@ -1981,7 +1981,7 @@ function buildFP(name) {
        { time:'08–10', label:'Föreläsning', note:'Genomgång av nytt material — liknar ett möte, men du antecknar aktivt', color:'#EEF4FF', tc:'#2D5F8A' },
        { time:'10–12', label:'Seminarium / övning', note:'Grupp­arbete, case eller labbuppgift — du arbetar med problem, inte bara lyssnar', color:'#E8F5EE', tc:'var(--ah)' },
        { time:'12–13', label:'Lunch', note:'Ofta med kursare — nätverket du bygger nu är värt lika mycket som papperet', color:'var(--bg)', tc:'var(--li)' },
-       { time:'13–16', label:'Självstudier', note:'Den stora skillnaden mot jobbet — du disponerar din tid helt själv. Inga möten, inget slack', color:'#FDF4E3', tc:'#8B6914' },
+       { time:'13–16', label:'Självstudier', note:'Du disponerar din tid helt själv — inga fasta möten, du planerar när du gör vad', color:'#FDF4E3', tc:'#8B6914' },
        { time:'16–18', label:'Eget arbete', note: isIT ? 'Kod­projekt, inlämningar, läsa dokumentation — kursen fortsätter utanför salen' : hasPractice ? 'Förbereda praktikmoment, läsa protokoll och studiematerial' : 'Inlämningar, grupparbeten, tentaförberedelse' , color:'#F3F0FF', tc:'#5B3FA6' }
      ],
      distans: [
@@ -2016,10 +2016,10 @@ function buildFP(name) {
 
    // Key difference callout
    const diffNote = scheduleType === 'deltid'
-     ? `Du behåller din lön och jobbar parallellt — men kvällar och helger tillhör böckerna. De flesta på deltid tar <strong>~1 år längre</strong> att bli klara.`
+     ? 'Du behåller din lön och jobbar parallellt — men kvällar och helger tillhör böckerna. De flesta på deltid tar <strong>~1 år längre</strong> att bli klara.'
      : scheduleType === 'distans'
-     ? `Distans ger maximal frihet men kräver att du själv skapar struktur. Tips: boka in studietid i kalendern som om det vore jobbet.`
-     : `Den stora skillnaden mot jobbet: <strong>du bestämmer din dag</strong>. Inga möten som kallas med 5 min varsel — men du måste leverera inlämningar och tentor på deadline.`;
+     ? 'Distans ger maximal frihet men kräver att du själv skapar struktur. Tips: boka in studietid i kalendern som fasta block.'
+     : 'Du bestämmer din dag och planerar din tid — men du måste leverera inlämningar och tentor på deadline.';
 
    html += `<div style="padding:10px 12px;background:var(--al);border-radius:8px;font-size:.82rem;color:var(--mu);line-height:1.55;border-left:3px solid var(--ac)">${diffNote}</div>`;
 
