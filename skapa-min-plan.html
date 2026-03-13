@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Skapa din plan — Studievägsguiden</title>
-   <link rel="icon" type="image/png" href="/favicon.png">
 <meta name="description" content="Besvara 26 frågor och få din personliga studievägsplan med ekonomisk kalkyl, behörighetskontroll och tidslinje.">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -978,7 +977,6 @@ const QS=[
     // Del 2 – Behörighet
     {id:'gym',t:'Vilket gymnasieprogram gick du?',w:'Avgör om du har rätt behörighet eller behöver komplettera.',tp:'opts',opts:GYM.map(g=>({v:g.id,l:g.l}))},
     {id:'has_grades',t:'Har du fullständiga gymnasiebetyg?',w:'Avgör om du kan söka direkt.',tp:'opts',opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}]},
-    {id:'hp_considered',t:'Har du skrivit Högskoleprov (HP)?',w:'Ange ditt totala HP-poäng (0.0–2.0). Klicka "Inget HP" om du inte skrivit.',tp:'hp_single'},
 
     // Del 3 – Nuvarande situation
     {id:'age',t:'Hur gammal är du?',w:'Påverkar skuldfri ålder och livstidsberäkning.',tp:'input',ph:'T.ex. 29',inputType:'number',min:18,max:70,su:'år'},
