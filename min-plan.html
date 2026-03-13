@@ -1667,8 +1667,9 @@ function buildFP(name) {
  industri:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Samhällskunskap 1a1','Naturkunskap 1a1'],
  other:[]
  };
- const isVerified = Array.isArray(a.verified_courses) && a.verified_courses.length > 0;
- const myCourses = isVerified ? a.verified_courses : (GYM_COURSES[a.gym] || []);
+ const isVerified = ans.beh_verified === true;
+ const rawVerifiedCourses = isVerified ? a.verified_courses : (GYM_COURSES[a.gym] || []);
+ const myCourses = (rawVerifiedCourses || []).filter(c => c !== '__verified__');
  const hasExam = a.has_grades === 'yes';
  const isOther = a.gym === 'other';
 
@@ -2958,11 +2959,14 @@ function openVerifyModal() {
   const sel = document.getElementById('verifyGymSelect');
   sel.value = verifyGym;
 
-  // Pre-fill with previously verified courses if they exist
-  verifyChecked = (Array.isArray(ans.verified_courses) && ans.verified_courses.length > 0) ? new Set(ans.verified_courses) : new Set();
+  // Pre-fill with previously verified courses — filter sentinel, set BEFORE updateVerifyCourses so it doesn't reset
+  const prevCourses = (Array.isArray(ans.verified_courses) ? ans.verified_courses : []).filter(c => c !== '__verified__');
+  verifyChecked = prevCourses.length > 0 ? new Set(prevCourses) : new Set();
 
-  updateVerifyCourses();
-  document.getElementById('verifyResult').innerHTML = '';
+  updateVerifyCourses(true); // true = preserve existing verifyChecked
+  // If previously verified, show result immediately
+  if (ans.beh_verified) showVerifyResult();
+  else document.getElementById('verifyResult').innerHTML = '';
   document.getElementById('verifyModalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 
@@ -2980,12 +2984,12 @@ function openVerifyModal() {
   overlay.addEventListener('wheel', overlay._scrollHandler, { passive: false });
 }
 
-function updateVerifyCourses() {
+function updateVerifyCourses(preserveChecked) {
   verifyGym = document.getElementById('verifyGymSelect').value;
   const gymCourses = VERIFY_GYM_COURSES[verifyGym] || [];
 
-  // Reset checked when gym changes
-  verifyChecked = new Set();
+  // Reset checked only when gym changes (not on initial open)
+  if (!preserveChecked) verifyChecked = new Set();
 
   const reqCourses = (edu && edu.req) ? edu.req.filter(r => !r.toLowerCase().includes('grundläggande behörighet')) : [];
 
@@ -3083,36 +3087,34 @@ function showVerifyResult() {
   const komvuxHeltid = missing.length <= 1 ? '1 termin' : missing.length <= 3 ? '1–2 terminer' : '2–3 terminer';
   const resultEl = document.getElementById('verifyResult');
 
+  const hasExamVerify = ans.has_grades === 'yes';
+  const noSpecificReqs = reqCourses.length === 0;
   const confirmBtn = document.querySelector('.verify-confirm');
-  if (missing.length === 0) {
-    resultEl.innerHTML = `<div class="verify-result ok"><div class="verify-result-title" style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Verifierat — du är behörig</div><div style="font-size:.83rem;margin-top:4px">Alla kurskrav är uppfyllda. Sök ${edu?edu.t:''} direkt på antagning.se.</div></div>`;
+  if (missing.length === 0 && hasExamVerify) {
+    resultEl.innerHTML = `<div class="verify-result ok"><div class="verify-result-title" style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Verifierat — du är behörig</div><div style="font-size:.83rem;margin-top:4px">${noSpecificReqs ? 'Grundläggande behörighet räcker — sök direkt på antagning.se.' : 'Alla kurskrav är uppfyllda. Sök '+(edu?edu.t:'')+' direkt på antagning.se.'}</div></div>`;
     if (confirmBtn) { confirmBtn.textContent = 'Spara verifiering och uppdatera plan'; confirmBtn.style.background = 'var(--ac)'; }
+  } else if (missing.length === 0 && !hasExamVerify) {
+    resultEl.innerHTML = `<div class="verify-result fail"><div class="verify-result-title">Gymnasieexamen saknas</div><div style="font-size:.83rem;margin-top:4px">Kurserna finns i ditt program, men du behöver slutföra gymnasieexamen för grundläggande behörighet.</div></div>`;
+    if (confirmBtn) { confirmBtn.textContent = 'Spara och uppdatera plan'; confirmBtn.style.background = 'var(--ac)'; }
   } else {
-    if (verifyChecked.size > 0) {
-      const savedPace = ans.komvux_pace || '';
-      const nMiss = missing.length;
-      // Pace → weeks per course
-      const wkMap = { heltid: nMiss*5, deltid: nMiss*10, sommar: Math.ceil(nMiss/2)*13, okand: nMiss*5 };
-      const curWks = wkMap[savedPace] || nMiss*5;
-      resultEl.innerHTML = `<div class="verify-result fail">
-        <div class="verify-result-title">Komplettering behövs</div>
+    const savedPace = ans.komvux_pace || '';
+    const nMiss = missing.length;
+    resultEl.innerHTML = `<div class="verify-result fail">
+        <div class="verify-result-title">Komplettering beh\u00f6vs</div>
         <div style="font-size:.83rem;margin-top:4px">Du saknar: <strong>${missing.join(', ')}</strong></div>
         <div style="font-size:.85rem;font-weight:700;margin-top:12px;margin-bottom:6px">Vilken studietakt planerar du?</div>
         <div style="display:flex;flex-direction:column;gap:6px">
           ${[
-            {v:'heltid', l:'Heltid dagtid', sub:'Snabbast — kräver tjänstledighet'},
-            {v:'deltid', l:'Deltid kväll/distans', sub:'Du behåller lönen'},
-            {v:'sommar', l:'Distans på sommaren', sub:'Kombineras med jobb'},
-            {v:'okand',  l:'Vet inte än', sub:'Vi räknar med heltid tills vidare'}
+            {v:'heltid', l:'Heltid dagtid', sub:'Snabbast \u2014 kr\u00e4ver tj\u00e4nstledighet'},
+            {v:'deltid', l:'Deltid kv\u00e4ll/distans', sub:'Du beh\u00e5ller l\u00f6nen'},
+            {v:'sommar', l:'Distans p\u00e5 sommaren', sub:'Kombineras med jobb'},
+            {v:'okand',  l:'Vet inte \u00e4n', sub:'Vi r\u00e4knar med heltid tills vidare'}
           ].map(opt => `<label onclick="selectKomvuxPace('${opt.v}')" id="kp-${opt.v}" style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;background:${savedPace===opt.v?'var(--al)':'var(--bg)'};border:1.5px solid ${savedPace===opt.v?'var(--ac)':'var(--bo)'};transition:all .15s">
             <div id="kpbox-${opt.v}" style="width:18px;height:18px;border-radius:50%;border:2px solid ${savedPace===opt.v?'var(--ac)':'var(--bo)'};background:${savedPace===opt.v?'var(--ac)':'#fff'};flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center">${savedPace===opt.v?'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':''}</div>
-            <div><div style="font-size:.85rem;font-weight:600">${opt.l}</div><div style="font-size:.75rem;color:var(--li)">${opt.sub} — ca ${({heltid:nMiss*5,deltid:nMiss*10,sommar:Math.ceil(nMiss/2)*13,okand:nMiss*5}[opt.v]||nMiss*5)} veckor</div></div>
+            <div><div style="font-size:.85rem;font-weight:600">${opt.l}</div><div style="font-size:.75rem;color:var(--li)">${opt.sub} \u2014 ca ${({heltid:nMiss*5,deltid:nMiss*10,sommar:Math.ceil(nMiss/2)*13,okand:nMiss*5}[opt.v]||nMiss*5)} veckor</div></div>
           </label>`).join('')}
         </div>
       </div>`;
-    } else {
-      resultEl.innerHTML = '';
-    }
     if (confirmBtn) { confirmBtn.textContent = 'Spara och uppdatera plan'; confirmBtn.style.background = 'var(--ac)'; }
   }
 }
@@ -3148,7 +3150,9 @@ async function confirmVerify() {
   // Update gym in ans + editDraft
   ans.gym = verifyGym;
   editDraft.gym = verifyGym;
-  ans.verified_courses = [...verifyChecked];
+  ans.beh_verified = true;
+  // Use sentinel '__verified__' if no courses were checked (e.g. only grundläggande behörighet needed)
+  ans.verified_courses = [...verifyChecked].length > 0 ? [...verifyChecked] : ['__verified__'];
   try { localStorage.setItem('svg_answers', JSON.stringify(ans)); } catch(e) {}
 
   // Compute verified status — improved matching
