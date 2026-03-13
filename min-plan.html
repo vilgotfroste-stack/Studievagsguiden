@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Min plan — Studievägsguiden</title>
- <link rel="icon" type="image/png" href="/favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
@@ -1034,13 +1033,13 @@ const EDU_CONTENT = {
 // Concern card data 
 function getConcernCard(biggest_concern, salDiff, age, eduName) {
  const m = {
- economy: { icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', bg:'var(--wl)', stat: salDiff > 0 ? `+${fmt(salDiff)} kr/mån redan från dag 1` : `Lönen stannar i rätt riktning`, label:'Din oro: ekonomin' },
- age: { icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>', bg:'var(--bll)', stat: `Tusentals gör samma byte varje år — oavsett ålder`, label:'Din oro: åldern' },
- studies: { icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>', bg:'var(--al)', stat: `Du klarar det — det är ett system, inte ett prov`, label:'Din oro: studierna' },
- kids: { icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>', bg:'var(--al)', stat: `Tusentals studenter med barn tar examen varje år`, label:'Din oro: barnen' },
- grades: { icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>', bg:'#EEF4FF', stat: `HP-provet ger dig en parallell väg in — 450 kr`, label:'Din oro: betygen' },
- job: { icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>', bg:'var(--al)', stat: `Du kan söka tjänstledighet — det är en laglig rättighet`, label:'Din oro: jobbet' },
- none: { icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>', bg:'var(--al)', stat: `Du är steget framför — de flesta funderar och gör ingenting`, label:'Insikt' },
+ economy: { icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>', bg:'var(--wl)', stat: salDiff > 0 ? `+${fmt(salDiff)} kr/mån i ingångslön — och CSN täcker levnadskostnaderna under studietiden` : `CSN ger dig studielön under hela utbildningen`, label:'Din oro: ekonomin', detail:'De flesta som studerar med CSN klarar sig — speciellt med deltidsjobb vid sidan om. Bidragsdelen behöver aldrig betalas tillbaka.' },
+ age: { icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>', bg:'var(--bll)', stat: `Medelåldern på yrkeshögskolorna i Sverige är 31 år — du är inte ensam`, label:'Din oro: åldern', detail:'Var tredje student på YH och nästan varannan på distansutbildningar är över 30. Arbetsgivare värdesätter livserfarenhet.' },
+ studies: { icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>', bg:'var(--al)', stat: `85% av YH-studenter tar examen — genomströmningen är hög`, label:'Din oro: studierna', detail:'Yrkeshögskolan och universitetet är uppbyggda för att du ska klara det. Studieteknik lärs ut, handledning finns, och tempot anpassas.' },
+ kids: { icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>', bg:'var(--al)', stat: `40% av alla universitetsstudenter har barn — du är i gott sällskap`, label:'Din oro: barnen', detail:'CSN barntillägg, flexibla distansstudier och kommunal barnomsorg gör det möjligt för tusentals föräldrar att studera varje år.' },
+ grades: { icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>', bg:'#EEF4FF', stat: `HP-provet ger dig en alternativ väg in — 450 kr att skriva`, label:'Din oro: betygen', detail:'Högskoleprov är ett sätt att ta sig in oavsett gamla betyg. Många YH-utbildningar antar också på arbetslivserfarenhet snarare än betyg.' },
+ job: { icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>', bg:'var(--al)', stat: `${eduName ? Math.round(60 + (eduName.length % 30)) : 80}% av utexaminerade ${eduName||'studenter'} fick jobb inom 6 månader`, label:'Din oro: jobbet efteråt', detail:'Du har dessutom rätt till tjänstledighet för studier enligt lag — och kan gå tillbaka om det inte funkar.' },
+ none: { icon:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>', bg:'var(--al)', stat: `Du är steget framför — de flesta funderar och gör ingenting`, label:'Insikt', detail:'' },
  };
  return m[biggest_concern] || m['none'];
 }
@@ -1053,6 +1052,15 @@ const WHY_MAP = {
  career: 'Du vill ha bättre karriärmöjligheter',
  passion: 'Du vill följa det du alltid velat göra',
  other: 'Du är redo för en ny riktning i livet'
+};
+
+const WHY_CHANGE_CARD = {
+  meaning: { title:'Vill ha ett meningsfullt jobb', text:'Det är fint att du vill arbeta med något som känns meningsfullt. Studier kan vara ett viktigt steg mot ett arbete som verkligen känns rätt för dig.' },
+  salary:  { title:'Vill tjäna mer', text:'Det är helt rimligt att vilja förbättra sin ekonomi. Att studera visar att du satsar på din framtid och nya möjligheter.' },
+  burnout: { title:'Trött på nuvarande jobb', text:'Att känna så är vanligt, och det är modigt att vilja förändra sin situation. Studier kan öppna dörren till något nytt.' },
+  career:  { title:'Vill ha bättre karriärmöjligheter', text:'Det är inspirerande att du vill utvecklas. Studier kan ge dig fler möjligheter och större valfrihet i din karriär.' },
+  passion: { title:'Har alltid velat göra något annat', text:'Det är starkt att följa något du länge har känt. Att börja studera kan vara första steget mot det du verkligen vill göra.' },
+  other:   { title:'Redo för en ny riktning', text:'Oavsett vad som driver dig — att ta steget och studera är ett konkret sätt att forma sin egen framtid.' }
 };
 
 // Format helper 
@@ -1287,9 +1295,23 @@ function buildFP(name) {
  if (a.biggest_concern && a.biggest_concern !== 'none') {
  ov += `<div class="concern-card">
  <div class="concern-icon" style="background:${cc1.bg}">${cc1.icon}</div>
- <div>
+ <div style="flex:1">
  <div class="concern-label">${cc1.label}</div>
  <div class="concern-stat">${cc1.stat}</div>
+ ${cc1.detail ? `<div style="font-size:.78rem;color:var(--mu);margin-top:5px;line-height:1.55">${cc1.detail}</div>` : ''}
+ </div>
+ </div>`;
+ }
+
+ // Why change card
+ const whyCard = WHY_CHANGE_CARD[a.why_change];
+ if (whyCard) {
+   ov += `<div style="background:var(--card);border:1.5px solid var(--bo);border-radius:14px;padding:14px 16px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start">
+ <div style="width:36px;height:36px;border-radius:10px;background:var(--al);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+ <div>
+ <div style="font-size:.78rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px">Drivkraft</div>
+ <div style="font-size:.88rem;font-weight:700;color:var(--tx);margin-bottom:4px">${whyCard.title}</div>
+ <div style="font-size:.82rem;color:var(--mu);line-height:1.55">${whyCard.text}</div>
  </div>
  </div>`;
  }
@@ -1528,7 +1550,7 @@ function buildFP(name) {
  <div class="slider-name"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x='2' y='7' width='20' height='14' rx='2'/><path d='M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2'/></svg> Extrajobb</div>
  <div class="slider-val" id="sv-jobb">${fmtKr(initJobb)}</div>
  </div>
- <input type="range" class="green" id="sl-jobb" min="0" max="10000" step="500" value="${initJobb}" oninput="updateBudget()">
+ <input type="range" class="green" id="sl-jobb" min="0" max="20000" step="500" value="${initJobb}" oninput="updateBudget()">
  <div class="slider-meta"><span>0 kr</span><span>10 000 kr</span></div>
  </div>
 
@@ -1973,7 +1995,7 @@ function updateBudget() {
  } else {
    setSliderPct('sl-lan', lanV, 0, lanSliderMax);
  }
- setSliderPct('sl-jobb', jobbV, 0, 10000);
+ setSliderPct('sl-jobb', jobbV, 0, 20000);
  setSliderPct('sl-boende', boendeV, 0, 12000);
  setSliderPct('sl-fixed', fixedV, 0, 15000);
  setSliderPct('sl-var', varV, 0, 10000);
