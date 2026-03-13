@@ -455,37 +455,37 @@ async function saveToSupabase() {
 <script>
 const E=[
 // IT & Teknik 
-{id:1,t:'Systemutvecklare',y:3,s0:35000,s1:54900,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matte 2','Engelska 6'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Utvecklare på företag',ho:'Konsult / byter bolag',sp:'Arkitekt / specialist',le:'Tech lead / CTO'}},
-{id:2,t:'Dataanalytiker',y:3,s0:33000,s1:54500,dem:4,ai:12,stress:2,future:5,tc:8000,req:['Matte 3c','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Dataanalytiker junior',ho:'Senior analytiker / konsult',sp:'Data scientist / BI-specialist',le:'Analytics manager'}},
-{id:3,t:'IT-säkerhetsspecialist',y:3,s0:33000,s1:52600,dem:5,ai:5,stress:3,future:5,tc:8000,req:['Matte 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Säkerhetsanalytiker',ho:'Konsult / byter organisation',sp:'Cybersecurity specialist',le:'CISO / säkerhetschef'}},
+{id:1,t:'Systemutvecklare',y:3,s0:35000,s1:54900,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matematik 2','Engelska 6'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Utvecklare på företag',ho:'Konsult / byter bolag',sp:'Arkitekt / specialist',le:'Tech lead / CTO'}},
+{id:2,t:'Dataanalytiker',y:3,s0:33000,s1:54500,dem:4,ai:12,stress:2,future:5,tc:8000,req:['Matematik 3','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Dataanalytiker junior',ho:'Senior analytiker / konsult',sp:'Data scientist / BI-specialist',le:'Analytics manager'}},
+{id:3,t:'IT-säkerhetsspecialist',y:3,s0:33000,s1:52600,dem:5,ai:5,stress:3,future:5,tc:8000,req:['Matematik 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Säkerhetsanalytiker',ho:'Konsult / byter organisation',sp:'Cybersecurity specialist',le:'CISO / säkerhetschef'}},
 {id:4,t:'UX/UI-designer',y:2,s0:32000,s1:48000,dem:3,ai:22,stress:2,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik','Estet'],pp:[],sc:{st:'Junior UX-designer',ho:'Byter bolag / konsult',sp:'Lead designer / UX-researcher',le:'Design manager'}},
-{id:5,t:'Civilingenjör',y:5,s0:41000,s1:56200,dem:4,ai:18,stress:2,future:5,tc:8000,req:['Matte 4','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:[],sc:{st:'Ingenjör på företag',ho:'Konsult / byter bransch',sp:'Teknisk specialist',le:'Engineering manager'}},
-{id:6,t:'Högskoleingenjör',y:3,s0:38800,s1:45600,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matte 3c','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:[],sc:{st:'Ingenjör junior',ho:'Konsult / byter bransch',sp:'Senior ingenjör',le:'Projektledare / teamlead'}},
+{id:5,t:'Civilingenjör',y:5,s0:41000,s1:56200,dem:4,ai:18,stress:2,future:5,tc:8000,req:['Matematik 4','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:[],sc:{st:'Ingenjör på företag',ho:'Konsult / byter bransch',sp:'Teknisk specialist',le:'Engineering manager'}},
+{id:6,t:'Högskoleingenjör',y:3,s0:38800,s1:45600,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matematik 3','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:[],sc:{st:'Ingenjör junior',ho:'Konsult / byter bransch',sp:'Senior ingenjör',le:'Projektledare / teamlead'}},
 {id:7,t:'DevOps / Cloud engineer',y:2,s0:35000,s1:52000,dem:5,ai:10,stress:2,future:5,tc:8000,req:['Grundläggande behörighet'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'DevOps-ingenjör junior',ho:'Konsult / byter bolag',sp:'Cloud architect / SRE',le:'Platform engineering lead'}},
 // Ekonomi & Business 
-{id:8,t:'Civilekonom',y:4,s0:34000,s1:54000,dem:3,ai:25,stress:3,future:3,tc:9000,req:['Matte 3c','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Controller / ekonom',ho:'Konsult / byter bransch',sp:'Finansanalytiker',le:'CFO / VD'}},
-{id:9,t:'Redovisningsekonom',y:2,s0:30000,s1:44300,dem:4,ai:20,stress:2,future:3,tc:8000,req:['Matte 2','Engelska 6'],rp:['Ekonomi','Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Redovisningsekonom',ho:'Konsult / byter byrå',sp:'Auktoriserad revisor',le:'Ekonomichef'}},
-{id:10,t:'Controller',y:3,s0:33000,s1:48200,dem:4,ai:20,stress:3,future:3,tc:9000,req:['Matte 3c','Engelska 6'],rp:['Ekonomi','Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Junior controller',ho:'Byter bransch / konsult',sp:'Senior controller',le:'CFO / ekonomichef'}},
+{id:8,t:'Civilekonom',y:4,s0:34000,s1:54000,dem:3,ai:25,stress:3,future:3,tc:9000,req:['Matematik 3'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Controller / ekonom',ho:'Konsult / byter bransch',sp:'Finansanalytiker',le:'CFO / VD'}},
+{id:9,t:'Redovisningsekonom',y:2,s0:30000,s1:44300,dem:4,ai:20,stress:2,future:3,tc:8000,req:['Matematik 2','Engelska 6'],rp:['Ekonomi','Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Redovisningsekonom',ho:'Konsult / byter byrå',sp:'Auktoriserad revisor',le:'Ekonomichef'}},
+{id:10,t:'Controller',y:3,s0:33000,s1:48200,dem:4,ai:20,stress:3,future:3,tc:9000,req:['Matematik 3'],rp:['Ekonomi','Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Junior controller',ho:'Byter bransch / konsult',sp:'Senior controller',le:'CFO / ekonomichef'}},
 {id:11,t:'Digital marknadsförare',y:2,s0:30000,s1:43000,dem:3,ai:18,stress:3,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Ekonomi','Samhäll','Estet'],pp:['Naturvetenskap','Teknik'],sc:{st:'Digital marknadsförare',ho:'Konsult / byrå',sp:'Specialist SEO/SEM/social',le:'Marknadschef'}},
-{id:12,t:'HR-specialist',y:3,s0:30000,s1:42000,dem:3,ai:12,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matte 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
+{id:12,t:'HR-specialist',y:3,s0:30000,s1:42000,dem:3,ai:12,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matematik 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
 {id:13,t:'Projektledare',y:3,s0:33000,s1:49000,dem:4,ai:10,stress:3,future:4,tc:9000,req:['Grundläggande behörighet'],rp:['Ekonomi','Teknik','Samhäll','Naturvetenskap'],pp:['Estet'],sc:{st:'Projektkoordinator',ho:'Byter bransch / konsult',sp:'Senior projektledare / PMP',le:'Programchef / affärsutvecklare'}},
 // Vård & Hälsa 
-{id:14,t:'Sjuksköterska',y:3,s0:36000,s1:43900,dem:5,ai:5,stress:4,future:5,tc:11000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Leg. sjuksköterska',ho:'Byter specialitet / region',sp:'Specialistsjuksköterska',le:'Vårdenhetschef'}},
-{id:15,t:'Fysioterapeut',y:3,s0:30000,s1:39100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Legitimerad fysioterapeut',ho:'Byter vårdgivare / privat',sp:'Specialist / idrottsfysio',le:'Verksamhetschef'}},
-{id:16,t:'Arbetsterapeut',y:3,s0:29000,s1:38100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. arbetsterapeut',ho:'Byter region / verksamhet',sp:'Specialist / konsult',le:'Verksamhetschef'}},
-{id:17,t:'Biomedicinsk analytiker',y:3,s0:30000,s1:41200,dem:4,ai:8,stress:2,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Biomedicinsk analytiker',ho:'Byter laboratorium / region',sp:'Cytodiagnostiker / specialist',le:'Laboratoriekemist / chef'}},
-{id:18,t:'Tandhygienist',y:3,s0:30000,s1:40900,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. tandhygienist',ho:'Byter klinik / region',sp:'Specialist / konsult',le:'Klinikchet / eget företag'}},
+{id:14,t:'Sjuksköterska',y:3,s0:36000,s1:43900,dem:5,ai:5,stress:4,future:5,tc:11000,req:['Matematik 2','Naturkunskap 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Leg. sjuksköterska',ho:'Byter specialitet / region',sp:'Specialistsjuksköterska',le:'Vårdenhetschef'}},
+{id:15,t:'Fysioterapeut',y:3,s0:30000,s1:39100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Matematik 2','Naturkunskap 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Legitimerad fysioterapeut',ho:'Byter vårdgivare / privat',sp:'Specialist / idrottsfysio',le:'Verksamhetschef'}},
+{id:16,t:'Arbetsterapeut',y:3,s0:29000,s1:38100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Matematik 2','Naturkunskap 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. arbetsterapeut',ho:'Byter region / verksamhet',sp:'Specialist / konsult',le:'Verksamhetschef'}},
+{id:17,t:'Biomedicinsk analytiker',y:3,s0:30000,s1:41200,dem:4,ai:8,stress:2,future:4,tc:10000,req:['Matematik 3','Kemi 2','Biologi 2','Fysik 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Biomedicinsk analytiker',ho:'Byter laboratorium / region',sp:'Cytodiagnostiker / specialist',le:'Laboratoriekemist / chef'}},
+{id:18,t:'Tandhygienist',y:3,s0:30000,s1:40900,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Matematik 2','Naturkunskap 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. tandhygienist',ho:'Byter klinik / region',sp:'Specialist / konsult',le:'Klinikchet / eget företag'}},
 // Samhälle & Människor 
-{id:19,t:'Socionom',y:3.5,s0:29000,s1:40300,dem:4,ai:8,stress:5,future:4,tc:10000,req:['Samhällskunskap 1b'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik','Vård'],pp:['Estet'],sc:{st:'Socialsekreterare',ho:'Byter kommun / verksamhet',sp:'Familjerätt / missbruk',le:'Enhetschef'}},
-{id:20,t:'Grundskollärare',y:3.5,s0:29000,s1:40200,dem:5,ai:5,stress:4,future:4,tc:10000,req:['Matte 2','Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Klassrumslärare',ho:'Byter skola / kommun',sp:'Förstelärare',le:'Rektor / skolledare'}},
+{id:19,t:'Socionom',y:3.5,s0:29000,s1:40300,dem:4,ai:8,stress:5,future:4,tc:10000,req:['Samhällskunskap 1b','Matematik 2'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik','Vård'],pp:['Estet'],sc:{st:'Socialsekreterare',ho:'Byter kommun / verksamhet',sp:'Familjerätt / missbruk',le:'Enhetschef'}},
+{id:20,t:'Grundskollärare',y:3.5,s0:29000,s1:40200,dem:5,ai:5,stress:4,future:4,tc:10000,req:['Matematik 2','Samhällskunskap 1b','Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Klassrumslärare',ho:'Byter skola / kommun',sp:'Förstelärare',le:'Rektor / skolledare'}},
 {id:21,t:'Gymnasielärare',y:4.5,s0:31000,s1:42700,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Ämneslärare',ho:'Byter skola / ämne',sp:'Förstelärare',le:'Rektor / skolledare'}},
 {id:22,t:'Studie- och yrkesvägledare',y:3,s0:29000,s1:40100,dem:4,ai:5,stress:2,future:4,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Studie- och yrkesvägledare',ho:'Byter skola / sektor',sp:'Senior vägledare / specialist',le:'Verksamhetschef'}},
-{id:23,t:'Personalvetare',y:3,s0:29000,s1:42000,dem:3,ai:10,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator / personalvetare',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
+{id:23,t:'Personalvetare',y:3,s0:29000,s1:42000,dem:3,ai:10,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matematik 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator / personalvetare',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
 // Tekniska / Praktiska 
-{id:24,t:'Byggingenjör',y:3,s0:34000,s1:46000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matte 3c','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Byggingenjör',ho:'Konsult / byter projekt',sp:'Projektingenjör / specialist',le:'Projektchef / platschef'}},
-{id:25,t:'Fastighetsförvaltare',y:3,s0:34000,s1:50600,dem:4,ai:8,stress:2,future:4,tc:9000,req:['Matte 2'],rp:['Ekonomi','Teknik','Samhäll'],pp:['Naturvetenskap'],sc:{st:'Fastighetsförvaltare',ho:'Byter bolag / region',sp:'Teknisk förvaltare / specialist',le:'Förvaltningschef / fastighetschef'}},
-{id:26,t:'VVS-ingenjör',y:2,s0:33000,s1:45000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matte 2','Fysik 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'VVS-konstruktör / tekniker',ho:'Konsult / byter projekt',sp:'Senior ingenjör / specialist',le:'Projektchef / avdelningschef'}},
-{id:27,t:'Automationsingenjör',y:3,s0:34000,s1:48000,dem:5,ai:8,stress:2,future:5,tc:9000,req:['Matte 3c','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Automationsingenjör',ho:'Konsult / byter industri',sp:'Senior ingenjör / specialist',le:'Automationschef / projektledare'}},
+{id:24,t:'Byggingenjör',y:3,s0:34000,s1:46000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matematik 3','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Byggingenjör',ho:'Konsult / byter projekt',sp:'Projektingenjör / specialist',le:'Projektchef / platschef'}},
+{id:25,t:'Fastighetsförvaltare',y:3,s0:34000,s1:50600,dem:4,ai:8,stress:2,future:4,tc:9000,req:['Matematik 2'],rp:['Ekonomi','Teknik','Samhäll'],pp:['Naturvetenskap'],sc:{st:'Fastighetsförvaltare',ho:'Byter bolag / region',sp:'Teknisk förvaltare / specialist',le:'Förvaltningschef / fastighetschef'}},
+{id:26,t:'VVS-ingenjör',y:2,s0:33000,s1:45000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matematik 2','Fysik 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'VVS-konstruktör / tekniker',ho:'Konsult / byter projekt',sp:'Senior ingenjör / specialist',le:'Projektchef / avdelningschef'}},
+{id:27,t:'Automationsingenjör',y:3,s0:34000,s1:48000,dem:5,ai:8,stress:2,future:5,tc:9000,req:['Matematik 3','Fysik 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Automationsingenjör',ho:'Konsult / byter industri',sp:'Senior ingenjör / specialist',le:'Automationschef / projektledare'}},
 // Övriga 
 {id:28,t:'Kriminolog',y:3,s0:28000,s1:39500,dem:3,ai:8,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Utredare / handläggare',ho:'Byter myndighet / sektor',sp:'Specialist brottsprevention',le:'Enhetschef / verksamhetschef'}},
 {id:29,t:'Beteendevetare',y:3,s0:28000,s1:58400,dem:3,ai:8,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'Utredare / konsulent',ho:'Byter organisation / sektor',sp:'Specialist beteende / HR',le:'Enhetschef / konsultchef'}}
@@ -1656,15 +1656,15 @@ function buildFP(name) {
  // PANEL 3 — BEHÖRIGHET
  //
  const GYM_COURSES = {
- natur:['Matte 1','Matte 2a','Matte 2b','Matte 3c','Matte 4','Fysik 1a','Fysik 2','Kemi 1','Kemi 2','Biologi 1','Biologi 2','Naturkunskap 2','Samhällskunskap 1b','Engelska 5','Engelska 6','Svenska 3','Historia 1b'],
- teknik:['Matte 1','Matte 2a','Matte 2b','Matte 3c','Matte 4','Fysik 1a','Fysik 2','Kemi 1','Naturkunskap 2','Samhällskunskap 1b','Engelska 5','Engelska 6','Svenska 3','Historia 1b'],
- samhall:['Matte 1','Samhällskunskap 1b','Samhällskunskap 2','Historia 1b','Naturkunskap 1a1','Engelska 5','Engelska 6','Svenska 3'],
- ekonomi:['Matte 1','Matte 2a','Matte 2b','Samhällskunskap 1b','Historia 1b','Företagsekonomi 1','Företagsekonomi 2','Naturkunskap 1a1','Engelska 5','Engelska 6','Svenska 3'],
- estet:['Matte 1','Samhällskunskap 1b','Historia 1b','Naturkunskap 1a1','Engelska 5','Engelska 6','Svenska 3'],
- vard:['Matte 1','Samhällskunskap 1b','Naturkunskap 1a1','Naturkunskap 2','Biologi 1','Psykologi 1','Engelska 5'],
- bygg:['Matte 1','Matte 2a','Fysik 1a','Samhällskunskap 1b','Engelska 5'],
- el:['Matte 1','Matte 2a','Matte 3c','Fysik 1a','Fysik 2','Samhällskunskap 1b','Engelska 5'],
- industri:['Matte 1','Matte 2a','Fysik 1a','Samhällskunskap 1b','Engelska 5'],
+ natur:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1c','Matematik 2c','Matematik 3c','Matematik 4','Fysik 1','Fysik 2','Kemi 1','Kemi 2','Biologi 1','Biologi 2','Samhällskunskap 1b','Naturkunskap 1b'],
+ teknik:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1c','Matematik 2c','Matematik 3c','Matematik 4','Fysik 1','Fysik 2','Kemi 1','Samhällskunskap 1b','Naturkunskap 1b'],
+ samhall:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1b','Samhällskunskap 1b','Samhällskunskap 2','Naturkunskap 1b'],
+ ekonomi:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1b','Matematik 2b','Samhällskunskap 1b','Naturkunskap 1b'],
+ estet:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1b','Samhällskunskap 1b','Naturkunskap 1b'],
+ vard:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Naturkunskap 1a1','Naturkunskap 1a2','Samhällskunskap 1a1','Biologi 1'],
+ bygg:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Samhällskunskap 1a1','Naturkunskap 1a1'],
+ el:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Fysik 1','Samhällskunskap 1a1','Naturkunskap 1a1'],
+ industri:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Samhällskunskap 1a1','Naturkunskap 1a1'],
  other:[]
  };
  const isVerified = Array.isArray(a.verified_courses) && a.verified_courses.length > 0;
@@ -1688,40 +1688,59 @@ function buildFP(name) {
  // Status: grön om inga kurser saknas OCH har examen (eller other med inga saknade kurser)
  const behOk = missingReqs.length === 0 && hasExam;
 
+ // ── ANTAGNING HERO ─────────────────────────────────────────────────────────
  let bh = '';
- if (behOk) {
+
+ // Three states: unverified (amber) | verified+ok (green) | verified+missing (red)
+ const svgCheck = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+ const svgCross = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+ const svgQ    = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.4" fill="#fff"/><path d="M12 8.5a3 3 0 0 1 2 5.2V15"/></svg>';
+
+ if (!isVerified) {
+   // AMBER — not yet verified
+   bh += `<div class="status-hero" style="background:#FFF8EC;border-color:#D97706">
+ <div class="status-circle" style="background:#D97706">${svgQ}</div>
+ <div>
+   <div class="status-title" style="color:#92400E">Verifiera din behörighet</div>
+   <div class="status-body">Vi utgår från ditt gymnasieprogram — bekräfta vilka kurser du faktiskt läst.</div>
+   <button class="verify-btn" style="border-color:#D97706;color:#D97706" onclick="openVerifyModal()">
+     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+     Verifiera behörighet
+   </button>
+ </div>
+</div>`;
+ } else if (behOk) {
+   // GREEN — verified and eligible
    bh += `<div class="status-hero ok">
- <div class="status-circle">${isVerified
-   ? '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
-   : '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.5" fill="#fff"/><path d="M12 8.5a3 3 0 0 1 2 5.2V15"/></svg>'
- }</div>
+ <div class="status-circle">${svgCheck}</div>
  <div>
- <div class="status-title">${isVerified ? 'Verifierat — du är behörig' : 'Troligen behörig — sök direkt'}</div>
- <div class="status-body">${isVerified ? 'Du har manuellt verifierat att du uppfyller alla kurskrav för '+e.t+'.' : (gp?gp.l:'Ditt gymnasieprogram')+' inkluderar normalt alla kurser '+e.t+' kräver.'}</div>
- <button class="verify-btn" onclick="openVerifyModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${isVerified ? 'Ändra verifiering' : 'Verifiera kurser'}</button>
+   <div class="status-title">Behörig — du kan söka direkt</div>
+   <div class="status-body">Du uppfyller alla kurskrav för ${e.t}.</div>
+   <button class="verify-btn" onclick="openVerifyModal()">
+     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+     Ändra verifiering
+   </button>
  </div>
- </div>`;
+</div>`;
  } else {
+   // RED — verified but missing courses
    const bodyText = !hasExam
-     ? (missingReqs.length > 0
-         ? `${missingReqs.join(' och ')} ingår troligen inte i ditt program. Du behöver också slutföra din gymnasieexamen.`
-         : 'Kurserna finns i ditt program — men du behöver slutföra din gymnasieexamen för grundläggande behörighet.')
-     : isOther
-       ? (missingReqs.length > 0
-           ? `${missingReqs.join(' och ')} saknas troligen — kontakta din gamla skola för att verifiera exakt vad du läst.`
-           : 'Kontakta din gamla skola för att verifiera att du har gymnasieexamen och rätt kurser.')
-       : `${missingReqs.join(' och ')} ingår inte i ${gp?gp.l:'ditt program'} — behöver läsas på Komvux (~${komvuxHeltid}).`;
+     ? `Saknar gymnasieexamen${missingReqs.length > 0 ? ' + ' + missingReqs.join(', ') : ''} — komplettering behövs.`
+     : `Saknar: ${missingReqs.join(', ')} — ingår i din Komvux-plan (~${komvuxHeltid}).`;
    bh += `<div class="status-hero warn">
- <div class="status-circle"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+ <div class="status-circle">${svgCross}</div>
  <div>
- <div class="status-title">Komplettering behövs</div>
- <div class="status-body">${bodyText}</div>
- <button class="verify-btn" onclick="openVerifyModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${isVerified ? 'Ändra verifiering' : 'Verifiera kurser'}</button>
+   <div class="status-title">Komplettering krävs</div>
+   <div class="status-body">${bodyText}</div>
+   <button class="verify-btn" onclick="openVerifyModal()">
+     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+     Ändra verifiering
+   </button>
  </div>
- </div>`;
+</div>`;
  }
 
- // ── CSN STATUS HERO ────────────────────────────────────────────────────────
+ // ── CSN HERO ───────────────────────────────────────────────────────────────
  const csnTillaggEligible = age >= 25 && (a.work_status === 'fulltime' || a.work_status === 'parttime');
  gCsnTillaggEligible = csnTillaggEligible;
  const noCSN2 = a.need_csn === 'no';
@@ -1731,25 +1750,48 @@ function buildFP(name) {
  const csnBidOk = !noCSN2 && defaultBid <= csnBidMax;
  const csnLanOk = (a.need_csn === 'no' || a.need_csn === 'grant') || (loan <= csnLanMax && age < 60);
  const csnAllOk = csnBidOk && csnLanOk;
-
  const csnAlreadyVerified = ans.csn_verified === true;
 
- bh += `<div class="status-hero" style="background:#FFF0F0;border-color:#E3000B;margin-top:10px" id="csn-hero">
-  <div class="status-circle" style="background:#E3000B">
-   ${csnAlreadyVerified
-    ? '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
-    : '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.5" fill="#fff"/><path d="M12 8.5a3 3 0 0 1 2 5.2V15"/></svg>'
-   }
-  </div>
+ if (!csnAlreadyVerified) {
+   // AMBER — not yet verified
+   bh += `<div class="status-hero" style="background:#FFF8EC;border-color:#D97706;margin-top:10px" id="csn-hero">
+  <div class="status-circle" style="background:#D97706">${svgQ}</div>
   <div>
-   <div class="status-title" style="color:#B8000A">${csnAlreadyVerified ? 'Verifierat — du är berättigad till CSN' : (csnAllOk ? 'Troligen berättigad till CSN' : 'Kontrollera ditt CSN')}</div>
-   <div class="status-body">${csnAlreadyVerified ? 'Du har bekräftat att du uppfyller grundkraven.' : (csnAllOk ? 'Dina belopp ryms inom CSN:s regler.' : 'Ett eller flera belopp kan behöva justeras.')}</div>
-   <button class="verify-btn" style="border-color:#E3000B;color:#E3000B" onclick="openCSNModal()">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-    ${csnAlreadyVerified ? 'Ändra verifiering' : 'Verifiera CSN'}
-   </button>
+    <div class="status-title" style="color:#92400E">Verifiera ditt CSN</div>
+    <div class="status-body">Bekräfta att du uppfyller grundkraven för studiestöd.</div>
+    <button class="verify-btn" style="border-color:#D97706;color:#D97706" onclick="openCSNModal()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+      Verifiera CSN
+    </button>
   </div>
- </div>`;
+</div>`;
+ } else if (csnAllOk) {
+   // GREEN — verified and ok
+   bh += `<div class="status-hero ok" style="margin-top:10px" id="csn-hero">
+  <div class="status-circle">${svgCheck}</div>
+  <div>
+    <div class="status-title">Berättigad till CSN</div>
+    <div class="status-body">Du uppfyller grundkraven för studiestöd.</div>
+    <button class="verify-btn" onclick="openCSNModal()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+      Ändra verifiering
+    </button>
+  </div>
+</div>`;
+ } else {
+   // RED — verified but problem
+   bh += `<div class="status-hero warn" style="margin-top:10px" id="csn-hero">
+  <div class="status-circle">${svgCross}</div>
+  <div>
+    <div class="status-title">Kontrollera ditt CSN</div>
+    <div class="status-body">Ett eller flera belopp avviker från CSN:s regler — justera i Ekonomi-fliken.</div>
+    <button class="verify-btn" onclick="openCSNModal()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+      Ändra verifiering
+    </button>
+  </div>
+</div>`;
+ }
 
  // HP card
  bh += `<div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1='5' y1='12' x2='19' y2='12'/><polyline points='12 5 19 12 12 19'/></svg> Alternativ väg in</div>
@@ -2574,15 +2616,15 @@ async function confirmEdits() {
 
 // ---- Verify behörighet modal ----
 const VERIFY_GYM_COURSES = {
-  natur:['Matte 1','Matte 2a','Matte 2b','Matte 3c','Matte 4','Fysik 1a','Fysik 2','Kemi 1','Kemi 2','Biologi 1','Biologi 2','Naturkunskap 2','Samhällskunskap 1b','Engelska 5','Engelska 6','Svenska 3','Historia 1b'],
-  teknik:['Matte 1','Matte 2a','Matte 2b','Matte 3c','Matte 4','Fysik 1a','Fysik 2','Kemi 1','Naturkunskap 2','Samhällskunskap 1b','Engelska 5','Engelska 6','Svenska 3','Historia 1b'],
-  samhall:['Matte 1','Samhällskunskap 1b','Samhällskunskap 2','Historia 1b','Naturkunskap 1a1','Engelska 5','Engelska 6','Svenska 2','Svenska 3'],
-  ekonomi:['Matte 1','Matte 2a','Matte 2b','Samhällskunskap 1b','Historia 1b','Företagsekonomi 1','Företagsekonomi 2','Naturkunskap 1a1','Engelska 5','Engelska 6','Svenska 3'],
-  estet:['Matte 1','Samhällskunskap 1b','Historia 1b','Naturkunskap 1a1','Engelska 5','Engelska 6','Svenska 3'],
-  vard:['Matte 1','Samhällskunskap 1b','Naturkunskap 1a1','Naturkunskap 2','Biologi 1','Psykologi 1','Engelska 5'],
-  bygg:['Matte 1','Matte 2a','Fysik 1a','Samhällskunskap 1b','Engelska 5'],
-  el:['Matte 1','Matte 2a','Matte 3c','Fysik 1a','Fysik 2','Samhällskunskap 1b','Engelska 5'],
-  industri:['Matte 1','Matte 2a','Fysik 1a','Samhällskunskap 1b','Engelska 5'],
+  natur:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1c','Matematik 2c','Matematik 3c','Matematik 4','Fysik 1','Fysik 2','Kemi 1','Kemi 2','Biologi 1','Biologi 2','Samhällskunskap 1b','Naturkunskap 1b'],
+  teknik:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1c','Matematik 2c','Matematik 3c','Matematik 4','Fysik 1','Fysik 2','Kemi 1','Samhällskunskap 1b','Naturkunskap 1b'],
+  samhall:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1b','Samhällskunskap 1b','Samhällskunskap 2','Naturkunskap 1b'],
+  ekonomi:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1b','Matematik 2b','Samhällskunskap 1b','Naturkunskap 1b'],
+  estet:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1b','Samhällskunskap 1b','Naturkunskap 1b'],
+  vard:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Naturkunskap 1a1','Naturkunskap 1a2','Samhällskunskap 1a1','Biologi 1'],
+  bygg:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Samhällskunskap 1a1','Naturkunskap 1a1'],
+  el:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Fysik 1','Samhällskunskap 1a1','Naturkunskap 1a1'],
+  industri:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Samhällskunskap 1a1','Naturkunskap 1a1'],
   other:[]
 };
 
