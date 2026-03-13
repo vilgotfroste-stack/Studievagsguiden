@@ -1237,11 +1237,36 @@ function buildFP(name) {
  }
 
 
- // Dates — VT: ansökan 15 okt året innan, start jan. HT: ansökan 15 apr, start aug.
- const applyDate = vtStart ? new Date(startYr - 1, 9, 15) : new Date(startYr, 3, 15);
- const startDate = vtStart ? new Date(startYr, 0, 15) : new Date(startYr, 7, 15);
- const daysUntilApply = Math.max(0, Math.ceil((applyDate - Date.now()) / 86400000));
- const mo3 = Math.max(0, Math.round((startDate - Date.now()) / 2592000000));
+ // Determine if user is seeking YH or uni
+ const eduTypesArr = Array.isArray(a.education_type) ? a.education_type : (a.education_type ? [a.education_type] : []);
+ const isUniOnly = eduTypesArr.length > 0 && !eduTypesArr.includes('yh');
+
+ // Admission status — only precise dates for uni (antagning.se)
+ const nowD = new Date();
+ const nowMonth = nowD.getMonth();
+ const nowDay = nowD.getDate();
+ const onOrAfter = (m, d) => nowMonth > m || (nowMonth === m && nowDay >= d);
+ const before    = (m, d) => nowMonth < m || (nowMonth === m && nowDay < d);
+
+ let applyStatus, beskedLabel, startLabel;
+
+ if (vtStart) {
+   beskedLabel = 'Dec ' + (startYr - 1);
+   startLabel  = 'Jan ' + startYr;
+   if (isUniOnly) {
+     if (onOrAfter(8, 15) && before(9, 10))      applyStatus = 'Öppen nu';
+     else if (onOrAfter(9, 10) && before(9, 15)) applyStatus = 'Stänger 15 okt';
+     else                                          applyStatus = 'Öppnar 15 sep';
+   }
+ } else {
+   beskedLabel = 'Juni–juli';
+   startLabel  = 'Aug ' + startYr;
+   if (isUniOnly) {
+     if (onOrAfter(9, 15) || before(3, 1))        applyStatus = 'Öppen nu';
+     else if (onOrAfter(3, 1) && before(3, 15))   applyStatus = 'Stänger 15 april';
+     else                                           applyStatus = 'Öppnar 15 okt';
+   }
+ }
  const months = ['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec'];
 
  // Savings buffer
@@ -1817,20 +1842,22 @@ function buildFP(name) {
  // 
  let pl = '';
 
- // Date chips
- pl += `<div class="date-chips">
+ // Date chips — only for uni, YH dates vary per school
+ pl += isUniOnly ? `<div class="date-chips">
  <div class="date-chip ans">
- <span class="chip-date">${applyDate.getDate()} ${months[applyDate.getMonth()]}</span>
- <span class="chip-label">Ansökan</span>
+ <span class="chip-date">${applyStatus}</span>
+ <span class="chip-label">Ansökan antagning.se</span>
  </div>
  <div class="date-chip bes">
- <span class="chip-date">${studyStart.startsWith('HT')?'Juli':'Dec'}</span>
+ <span class="chip-date">${beskedLabel}</span>
  <span class="chip-label">Besked</span>
  </div>
  <div class="date-chip sta">
- <span class="chip-date">${studyStart.startsWith('HT')?'Aug':'Jan'} ${startYr}</span>
+ <span class="chip-date">${startLabel}</span>
  <span class="chip-label">Studiestart</span>
  </div>
+ </div>` : `<div style="padding:10px 14px;background:#FFF8EC;border:1.5px solid #D97706;border-radius:12px;margin-bottom:12px;font-size:.82rem;color:#92400E;line-height:1.5">
+ Ansökan, besked och startdatum varierar per skola — kolla direkt på <a href="https://www.yrkeshogskolan.se" target="_blank" style="color:#92400E;font-weight:700;text-decoration:underline">yrkeshogskolan.se</a> för din utbildning.
  </div>`;
 
  pl += `<div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1='8' y1='6' x2='21' y2='6'/><line x1='8' y1='12' x2='21' y2='12'/><line x1='8' y1='18' x2='21' y2='18'/><line x1='3' y1='6' x2='3.01' y2='6'/><line x1='3' y1='12' x2='3.01' y2='12'/><line x1='3' y1='18' x2='3.01' y2='18'/></svg> Steg för steg</div>`;
@@ -1877,6 +1904,8 @@ function buildFP(name) {
      pl += tlStep('Redan nu','Säkra din buffert',`<ul class="detail-list"><li>Du har ${fmtKr(savingsAmt)} sparat — täcker utgifterna under CSN-väntan</li><li>Se till att pengarna ligger lättillgängligt, inte låsta i fonder</li></ul>`);
    } else {
      const bufTarget = monthlyExp;
+     const startDate = vtStart ? new Date(startYr, 0, 15) : new Date(startYr, 7, 15);
+     const mo3 = Math.max(1, Math.round((startDate - Date.now()) / 2592000000));
      const monthly = mo3 > 0 ? Math.round((bufTarget - savingsAmt) / mo3) : bufTarget;
      pl += tlStep('Redan nu',`Bygg buffert: ${fmtKr(bufTarget)}`,`<ul class="detail-list"><li>CSN tar 4–6 veckor att betala ut — du behöver en buffert</li><li>${savingsAmt>0?'Du har '+fmtKr(savingsAmt)+' sparat — räcker ca '+bufferWeeks+' veckor.'  :'Du har inget sparat — börja nu.'}</li><li>Sätt in ca ${fmtKr(Math.max(1000,monthly))}/mån på ett separat konto tills studiestart</li></ul>`);
    }
@@ -1898,7 +1927,7 @@ function buildFP(name) {
  pl += tlStep('2–3 mån före start','Prata med din arbetsgivare',`<ul class="detail-list"><li>Tjänstledighet för studier är en laglig rättighet (Studieledighetslagen)</li><li>Kolla din uppsägningstid i anställningsavtalet</li><li>Räkna in innestående semesterdagar som extra buffert</li></ul>`);
  }
 
- pl += tlStep(`Senast ${applyDate.getDate()} ${months[applyDate.getMonth()]} ${startYr} · Deadline`,`Sök ${e.t} på antagning.se`,`<ul class="detail-list"><li>Sök det här programmet plus 2–3 backupalternativ</li><li>Du kan prioritera upp till 20 program — använd det</li></ul>`,true);
+ pl += tlStep(`${applyStatus === 'Öppen nu' || applyStatus === 'Stänger snart' ? applyStatus + ' · Deadline' : applyStatus} · ${startYr}`,`Sök ${e.t} på antagning.se`,`<ul class="detail-list"><li>Sök det här programmet plus 2–3 backupalternativ</li><li>Du kan prioritera upp till 20 program — använd det</li></ul>`,true);
 
  if (a.need_csn !== 'no') {
    const verified = a.csn_verified === true;
