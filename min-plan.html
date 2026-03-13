@@ -2000,19 +2000,6 @@ function buildFP(name) {
    const rows = schedules[scheduleType];
    let html = '';
 
-   // Compare header
-   html += `<div style="display:grid;grid-template-columns:1fr 1px 1fr;gap:0;margin-bottom:14px;padding-bottom:12px;border-bottom:1.5px solid var(--bo)">
-     <div style="padding:0 12px 0 0;text-align:center">
-       <div style="font-size:.7rem;font-weight:700;color:var(--re);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Jobba kvar</div>
-       <div style="font-size:.82rem;color:var(--mu);line-height:1.5">Fast schema · chefen sätter dagarna · möten styr tempot · lite eget lärande</div>
-     </div>
-     <div style="background:var(--bo)"></div>
-     <div style="padding:0 0 0 12px;text-align:center">
-       <div style="font-size:.7rem;font-weight:700;color:var(--ah);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Studera</div>
-       <div style="font-size:.82rem;color:var(--mu);line-height:1.5">${scheduleType==='deltid'?'Kväll/helg · jobbar dagen · ~10–15 h/v studier':scheduleType==='distans'?'Flexibelt schema · du styr · kräver egen disciplin':'Dagtid · du styr din tid · mer frihet men mer ansvar'}</div>
-     </div>
-   </div>`;
-
    // Schedule rows
    html += `<div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--li);margin-bottom:8px">${scheduleType==='heltid'?'Typisk heltidsdag':scheduleType==='distans'?'Typisk distanskursvecka':'Typisk deltidsvecka'}</div>`;
    html += `<div style="display:grid;gap:6px;margin-bottom:14px">`;
