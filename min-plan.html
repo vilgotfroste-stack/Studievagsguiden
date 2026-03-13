@@ -2100,6 +2100,25 @@ function buildFP(name) {
  <a href="${studentumUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;background:var(--ac);color:#fff;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none">
  Utforska program på Studentum →
  </a>
+ ${(()=>{
+   const komvuxUrls = {
+     stockholm: 'https://komvux.stockholm.se/vux/vux/courses',
+     goteborg:  'https://goteborg.se/wps/portal?uri=gbglnk:2024123135659982',
+     malmo:     'https://sjalvservice.malmo.se/oversikt/overview/555',
+     uppsala:   'https://open24.ist-asp.com/uppsala/vux/Vux/Start',
+     linkoping: 'https://open24.ist-asp.com/linkoping/vux/Vux/Start',
+     umea:      'https://www.umea.se/forskolaskolaochutbildning/vuxenutbildning/komvux/ansokan/ansokanochantagningkomvux.4.47feee1318e0c85245e63792.html',
+     orebro:    'https://gymnasieskolor.orebro.se/komvux/ansokanantagning.4.52bb39351615069577a8d3b.html',
+   };
+   const komvuxUrl = komvuxUrls[city];
+   if (komvuxUrl) {
+     return `<a href="${komvuxUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;margin-top:8px;background:#fff;color:var(--te);border:1.5px solid var(--bo);border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none">
+ Ansök på Komvux ${cityName} →
+ </a>`;
+   } else {
+     return `<div style="margin-top:8px;font-size:.8rem;color:var(--li);text-align:center">Googla "Komvux [din kommun]" för att hitta din kommuns ansökningssida.</div>`;
+   }
+ })()}
  </div>`;
 
 
