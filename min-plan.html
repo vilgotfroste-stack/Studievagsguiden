@@ -1100,6 +1100,10 @@ function buildFP(name) {
  const initBid = (a.slider_bid !== undefined) ? Math.min(a.slider_bid, bidMax) : defaultBid;
  const initJobb = (a.slider_jobb !== undefined) ? a.slider_jobb : defaultJobb;
  const initRent = (() => { if (a.slider_rent !== undefined) return a.slider_rent; const hou2 = a.housing || 'student'; return hou2 === 'home' ? 0 : Math.round((CIT[mapCity(a.current_location)]||4500) * (HOU[hou2]||.75)); })();
+ // CSN repayment slider: default = minimum viable (interest-only rounds up to min 500)
+ const CSN_RATE_MONTHLY = 0.02135 / 12;
+ const defaultRepay = loan > 0 ? Math.max(500, Math.round(loan * 0.04 / 12 / 100) * 100) : 0;
+ const initRepay = a.slider_repay !== undefined ? a.slider_repay : defaultRepay;
  const wh = workNeeded ? 15 : (a.need_csn === 'both') ? 10 : 0;
  const wi = Math.round(wh * WR * 4.3);
  const mo = Math.round(ry * 10), debt = loan * mo;
@@ -1593,6 +1597,31 @@ function buildFP(name) {
 
  ${cc > 0 ? `<div style="display:flex;align-items:center;justify-content:space-between;background:#FFF3F3;border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:.83rem"><span style="color:var(--mu)"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg> Barn (${numKids} st)</span><span style="font-weight:700;color:var(--re)">−${fmtKr(cc)}</span></div>` : ''}
 
+ ${loan > 0 ? `
+ <div style="margin-top:14px;padding-top:14px;border-top:1.5px solid var(--bo)">
+   <div style="font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--li);margin-bottom:10px;display:flex;align-items:center;gap:6px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Återbetalning av CSN-lån</div>
+   <div class="slider-block">
+     <div class="slider-top">
+       <div class="slider-name"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Återbetalning / mån</div>
+       <div class="slider-val" id="sv-repay">${fmtKr(initRepay)}</div>
+     </div>
+     <input type="range" class="amber" id="sl-repay" min="500" max="10000" step="100" value="${initRepay}" oninput="updateBudget()">
+     <div class="slider-meta"><span>500 kr</span><span>10 000 kr</span></div>
+     <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1px 1fr;gap:0">
+       <div style="text-align:center;padding:0 10px">
+         <div style="font-family:'DM Serif Display',serif;font-size:1.5rem;color:#8B6914;line-height:1" id="repay-years">—</div>
+         <div style="font-size:.72rem;color:var(--mu);margin-top:3px">år att betala av</div>
+       </div>
+       <div style="background:var(--bo)"></div>
+       <div style="text-align:center;padding:0 10px">
+         <div style="font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--ah);line-height:1" id="repay-age">—</div>
+         <div style="font-size:.72rem;color:var(--mu);margin-top:3px">skuldfri ålder</div>
+       </div>
+     </div>
+     <div style="font-size:.72rem;color:var(--li);margin-top:8px;line-height:1.5">Aktuell CSN-ränta 2026: <strong>2,135%</strong> — räntan kan förändras. Återbetalning börjar 6 mån efter examen.</div>
+   </div>
+ </div>` : ''}
+
  `;
 
  document.getElementById('panel-ekonomi').innerHTML = ek;
@@ -2009,6 +2038,7 @@ function updateBudget() {
  if (ans) {
    ans.slider_bid = bidV; ans.slider_lan = lanV; ans.slider_jobb = jobbV;
    ans.slider_rent = boendeV; ans.slider_fixed = fixedV; ans.slider_var = varV;
+   // slider_repay is written inline in the repay block above
    debouncedSave();
  }
 
@@ -2036,6 +2066,38 @@ function updateBudget() {
  const stEl = document.getElementById('skuld-total'); if (stEl) stEl.textContent = '~' + fmtKr(newDebt);
  const srEl = document.getElementById('skuld-repay'); if (srEl) srEl.textContent = '~' + fmtKr(newRepay) + '/mån';
  const syEl = document.getElementById('skuld-years'); if (syEl) syEl.textContent = newYrs > 0 && newYrs < 30 ? '~' + newYrs + ' år' : '—';
+
+ // Repayment slider (bottom of economy panel)
+ const repayEl = document.getElementById('sl-repay');
+ if (repayEl) {
+   const repayV = parseInt(repayEl.value);
+   const svRepay = document.getElementById('sv-repay');
+   if (svRepay) svRepay.textContent = fmtKr(repayV);
+   setSliderPct('sl-repay', repayV, 500, 10000);
+   if (ans) { ans.slider_repay = repayV; }
+
+   // Amortisation with interest: months = -ln(1 - L*r/P) / ln(1+r)
+   const r = 0.02135 / 12;
+   const L = newDebt;
+   const P = repayV;
+   const minPayment = L * r; // interest-only
+   const ryEl = document.getElementById('repay-years');
+   const raEl = document.getElementById('repay-age');
+   if (ryEl && raEl) {
+     if (L <= 0) {
+       ryEl.textContent = '0'; raEl.textContent = a.age || '—';
+     } else if (P <= minPayment) {
+       ryEl.textContent = '∞'; raEl.textContent = '—';
+     } else {
+       const months = -Math.log(1 - L * r / P) / Math.log(1 + r);
+       const yrs = Math.ceil(months / 12);
+       const studyEndAge = (parseInt(a.age) || 30) + Math.ceil(ry2) + 0.5; // +0.5 for the 6 month grace period
+       const debtFreeAge = Math.round(studyEndAge + yrs);
+       ryEl.textContent = yrs < 40 ? '~' + yrs : '>40';
+       raEl.textContent = debtFreeAge < 80 ? debtFreeAge + ' år' : '—';
+     }
+   }
+ }
  // Refresh CSN verification if open
  if (document.getElementById('csn-hero-body') && document.getElementById('csn-hero-body').style.display !== 'none') buildCSNVerify();
 }
