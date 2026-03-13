@@ -1374,7 +1374,7 @@ function buildFP(name) {
      <div style="font-size:.78rem;color:${gainColor};margin-top:6px">Att plugga ger dig totalt ${Math.abs(lifetimeGain / 1e6).toFixed(1)} miljoner ${lifetimeGain >= 0 ? 'mer' : 'mindre'} över ${workLife} år</div>
    </div>
 
-   <div style="font-size:.72rem;color:var(--li);margin-top:10px;padding:8px 10px;background:var(--bg);border-radius:8px;line-height:1.5"><strong>OBS:</strong> Förenklad kalkyl. Ny lönen modelleras som linjär tillväxt från ${fmt(e.s0)} kr (ingångslön) till ${fmt(e.s1)} kr (toppinkomst). Utan hänsyn till inflation, skatt eller individuella löneökningar.</div>
+   <div style="font-size:.72rem;color:var(--li);margin-top:10px;padding:8px 10px;background:var(--bg);border-radius:8px;line-height:1.5"><strong>OBS:</strong> Förenklad kalkyl. Snittlönen för ${e.t.toLowerCase()} beräknas som medel av ingångslön (${fmt(e.s0)} kr) och toppinkomst (${fmt(e.s1)} kr). Utan hänsyn till inflation, skatt eller individuella löneökningar.</div>
  </div>
 </div>`; }
 
