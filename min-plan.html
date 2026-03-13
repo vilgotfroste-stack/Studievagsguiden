@@ -1323,34 +1323,60 @@ function buildFP(name) {
 
  // Alternativkostnad — hook tidigt i översikt
  const studyYears = e.y;
- const yr10diff = currentSal > 0 ? (e.s0 * 12 * (10 - studyYears)) - (currentSal * 12 * (10 - studyYears)) : null;
+ // Lifetime comparison — salary growth model
+ if (currentSal > 0) {
+   const workLife = 40; // years
+   const workYears = workLife - studyYears; // years earning in new career
+   // Stay: flat current salary (conservative — no raise modelled)
+   const stayTotal = currentSal * 12 * workLife;
+   // Switch: linear growth from s0 to s1 over workYears, minus study cost
+   const avgNewSal = (e.s0 + e.s1) / 2;
+   const switchTotal = avgNewSal * 12 * workYears - (e.tc * 12 * studyYears);
+   const lifetimeGain = switchTotal - stayTotal;
+   const fmtM = v => { const m = v / 1e6; return (m >= 0 ? '' : '−') + Math.abs(m).toFixed(1) + ' M kr'; };
+   const fmtMsign = v => (v >= 0 ? '+' : '−') + Math.abs(v / 1e6).toFixed(1) + ' M kr';
+   const barMax = Math.max(stayTotal, switchTotal);
+   const stayPct = Math.round(stayTotal / barMax * 100);
+   const switchPct = Math.round(switchTotal / barMax * 100);
+   const gainColor = lifetimeGain >= 0 ? 'var(--ah)' : 'var(--re)';
+   const gainBg = lifetimeGain >= 0 ? 'var(--al)' : '#FFF3F3';
 
- if (currentSal > 0 && yr10diff !== null) {
-   const diffSign = yr10diff >= 0 ? '+' : '';
-   const diffColor = yr10diff >= 0 ? 'var(--ah)' : 'var(--re)';
-   ov += `<div style="background:var(--card);border:1.5px solid var(--bo);border-radius:16px;padding:18px 20px;margin-bottom:8px">
- <div style="font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--li);margin-bottom:12px">Om du stannar vs byter — 10-årsvy</div>
- <div style="display:grid;grid-template-columns:1fr 1px 1fr;gap:0;margin-bottom:14px">
-   <div style="text-align:center;padding:0 12px">
-     <div style="font-size:.72rem;color:var(--mu);margin-bottom:4px">Stannar kvar</div>
-     <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--tx);line-height:1">${fmt(currentSal * 12 * 10)} kr</div>
-     <div style="font-size:.7rem;color:var(--li);margin-top:3px">på 10 år</div>
+   ov += `<div style="background:var(--card);border:1.5px solid var(--bo);border-radius:16px;overflow:hidden;margin-bottom:8px">
+ <button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none';this.textContent=this.nextElementSibling.style.display==='none'?'Visa livstidsanalys ↓':'Dölj livstidsanalys ↑'" style="width:100%;padding:14px 18px;background:var(--ac);border:none;color:#fff;font-weight:700;font-size:.88rem;cursor:pointer;text-align:center">Visa livstidsanalys ↓</button>
+ <div style="display:none;padding:18px 18px 14px">
+   <div style="font-size:.88rem;font-weight:700;color:var(--ah);margin-bottom:14px">Jämförelse över ${workLife} års arbetsliv</div>
+
+   <div style="margin-bottom:14px">
+     <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px">
+       <span style="font-size:.82rem;color:var(--tx)">Fortsätt med nuvarande jobb</span>
+       <span style="font-size:.95rem;font-weight:700;color:var(--re)">${fmtM(stayTotal)}</span>
+     </div>
+     <div style="height:18px;border-radius:6px;background:var(--bo);overflow:hidden">
+       <div style="height:100%;width:${stayPct}%;background:var(--re);border-radius:6px;transition:width .4s"></div>
+     </div>
+     <div style="font-size:.7rem;color:var(--li);margin-top:3px">${fmt(currentSal)} kr/mån × ${workLife} år</div>
    </div>
-   <div style="background:var(--bo)"></div>
-   <div style="text-align:center;padding:0 12px">
-     <div style="font-size:.72rem;color:var(--mu);margin-bottom:4px">Byter till ${e.t}</div>
-     <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ah);line-height:1">${fmt(e.s0 * 12 * (10 - studyYears) + e.s1 * 12 * 0)} kr</div>
-     <div style="font-size:.7rem;color:var(--li);margin-top:3px">efter ${studyYears} år utb.</div>
+
+   <div style="margin-bottom:16px">
+     <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px">
+       <span style="font-size:.82rem;color:var(--tx)">Plugga till ${e.t.toLowerCase()}</span>
+       <span style="font-size:.95rem;font-weight:700;color:var(--ah)">${fmtM(switchTotal)}</span>
+     </div>
+     <div style="height:18px;border-radius:6px;background:var(--bo);overflow:hidden">
+       <div style="height:100%;width:${switchPct}%;background:var(--ac);border-radius:6px;transition:width .4s"></div>
+     </div>
+     <div style="font-size:.7rem;color:var(--li);margin-top:3px">${fmt(Math.round(avgNewSal))} kr/mån (snitt) × ${workYears} år − studiekostnad (${fmtM(e.tc * 12 * studyYears)})</div>
    </div>
+
+   <div style="background:${gainBg};border:1.5px solid ${gainColor};border-radius:12px;padding:14px;text-align:center">
+     <div style="font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:${gainColor};margin-bottom:4px">Livstidsvinst</div>
+     <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:${gainColor};line-height:1">${fmtMsign(lifetimeGain)}</div>
+     <div style="font-size:.78rem;color:${gainColor};margin-top:6px">Att plugga ger dig totalt ${Math.abs(lifetimeGain / 1e6).toFixed(1)} miljoner ${lifetimeGain >= 0 ? 'mer' : 'mindre'} över ${workLife} år</div>
+   </div>
+
+   <div style="font-size:.72rem;color:var(--li);margin-top:10px;padding:8px 10px;background:var(--bg);border-radius:8px;line-height:1.5"><strong>OBS:</strong> Förenklad kalkyl. Ny lönen modelleras som linjär tillväxt från ${fmt(e.s0)} kr (ingångslön) till ${fmt(e.s1)} kr (toppinkomst). Utan hänsyn till inflation, skatt eller individuella löneökningar.</div>
  </div>
- <div style="background:${yr10diff >= 0 ? 'var(--al)' : '#FFF3F3'};border-radius:10px;padding:10px 14px;font-size:.82rem;text-align:center">
-   <span style="color:var(--mu)">Skillnad de 10 åren: </span>
-   <strong style="color:${diffColor}">${diffSign}${fmt(Math.abs(yr10diff))} kr</strong>
-   <span style="color:var(--li);font-size:.72rem"> · inkl. ${studyYears} år utan ingångslön</span>
- </div>
- <div style="font-size:.72rem;color:var(--li);margin-top:8px;text-align:center">Toppinkomst ${e.t.toLowerCase()}: upp till ${fmt(e.s1)} kr/mån — ${fmt(e.s1 * 12)} kr/år</div>
- </div>`;
- }
+</div>`; }
 
  // Yrket section
  ov += `<div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x='2' y='7' width='20' height='14' rx='2'/><path d='M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2'/></svg> Yrket</div>
@@ -1597,8 +1623,7 @@ function buildFP(name) {
 
  ${cc > 0 ? `<div style="display:flex;align-items:center;justify-content:space-between;background:#FFF3F3;border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:.83rem"><span style="color:var(--mu)"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg> Barn (${numKids} st)</span><span style="font-weight:700;color:var(--re)">−${fmtKr(cc)}</span></div>` : ''}
 
- ${loan > 0 ? `
- <div style="margin-top:14px;padding-top:14px;border-top:1.5px solid var(--bo)">
+ <div id="repay-section" style="margin-top:14px;padding-top:14px;border-top:1.5px solid var(--bo);display:${loan > 0 ? 'block' : 'none'}">
    <div style="font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--li);margin-bottom:10px;display:flex;align-items:center;gap:6px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Återbetalning av CSN-lån</div>
    <div class="slider-block">
      <div class="slider-top">
@@ -1620,7 +1645,7 @@ function buildFP(name) {
      </div>
      <div style="font-size:.72rem;color:var(--li);margin-top:8px;line-height:1.5">Aktuell CSN-ränta 2026: <strong>2,135%</strong> — räntan kan förändras. Återbetalning börjar 6 mån efter examen.</div>
    </div>
- </div>` : ''}
+ </div>
 
  `;
 
@@ -2068,6 +2093,8 @@ function updateBudget() {
  const syEl = document.getElementById('skuld-years'); if (syEl) syEl.textContent = newYrs > 0 && newYrs < 30 ? '~' + newYrs + ' år' : '—';
 
  // Repayment slider (bottom of economy panel)
+ const repaySection = document.getElementById('repay-section');
+ if (repaySection) repaySection.style.display = lanV > 0 ? 'block' : 'none';
  const repayEl = document.getElementById('sl-repay');
  if (repayEl) {
    const repayV = parseInt(repayEl.value);
