@@ -1955,6 +1955,96 @@ function buildFP(name) {
  </div></div>
  </div>
 
+ <div class="expand-block" id="exp-studiedag">
+ <div class="expand-head" onclick="toggle('exp-studiedag')">
+ <div class="expand-head-left">
+ <div class="expand-icon" style="background:#EEF4FF"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+ <div>
+ <div class="expand-title">Hur ser en studiedag ut?</div>
+ <span class="expand-tag" style="background:#EEF4FF;color:#2D5F8A">Jämfört med att jobba</span>
+ </div>
+ </div>
+ <span class="expand-arrow"></span>
+ </div>
+ <div class="expand-body"><div class="expand-inner">
+ ${(() => {
+   const isDistance = a.study_mode === 'distance';
+   const isParttime = a.study_pace === 'parttime';
+   const isYH = Array.isArray(a.education_type) ? a.education_type.includes('yh') : a.education_type === 'yh';
+   const hasPractice = [14,15,16,17,18,19,20,21].includes(e.id);
+   const isIT = [1,2,3,4,7].includes(e.id);
+
+   const scheduleType = isParttime ? 'deltid' : isDistance ? 'distans' : 'heltid';
+
+   const schedules = {
+     heltid: [
+       { time:'08–10', label:'Föreläsning', note:'Genomgång av nytt material — liknar ett möte, men du antecknar aktivt', color:'#EEF4FF', tc:'#2D5F8A' },
+       { time:'10–12', label:'Seminarium / övning', note:'Grupp­arbete, case eller labbuppgift — du arbetar med problem, inte bara lyssnar', color:'#E8F5EE', tc:'var(--ah)' },
+       { time:'12–13', label:'Lunch', note:'Ofta med kursare — nätverket du bygger nu är värt lika mycket som papperet', color:'var(--bg)', tc:'var(--li)' },
+       { time:'13–16', label:'Självstudier', note:'Den stora skillnaden mot jobbet — du disponerar din tid helt själv. Inga möten, inget slack', color:'#FDF4E3', tc:'#8B6914' },
+       { time:'16–18', label:'Eget arbete', note: isIT ? 'Kod­projekt, inlämningar, läsa dokumentation — kursen fortsätter utanför salen' : hasPractice ? 'Förbereda praktikmoment, läsa protokoll och studiematerial' : 'Inlämningar, grupparbeten, tentaförberedelse' , color:'#F3F0FF', tc:'#5B3FA6' }
+     ],
+     distans: [
+       { time:'Valfri tid', label:'Inspelade föreläsningar', note:'Du tittar när det passar — morgon, kväll, helg. Ingen pendling, ingen sal', color:'#EEF4FF', tc:'#2D5F8A' },
+       { time:'1–2×/vecka', label:'Livesändning / zoom', note:'Schemalagda pass, ofta kväll 18–20 — kan kombineras med heltidsjobb', color:'#E8F5EE', tc:'var(--ah)' },
+       { time:'Fri tid', label:'Inlämningsuppgifter', note:'Deadlines styr tempot, inte ett schema — kräver egen disciplin att strukturera veckan', color:'#FDF4E3', tc:'#8B6914' },
+       { time:'Löpande', label:'Forum & kommunikation', note:'Diskussioner och frågor i kurssystemet — mer asynkront än ett vanligt jobb', color:'var(--bg)', tc:'var(--li)' }
+     ],
+     deltid: [
+       { time:'Kväll/helg', label:'Schemalagda pass', note:'Typiskt 2–3 kvällar per vecka, 17–20 — du jobbar dagen, studerar kvällen', color:'#EEF4FF', tc:'#2D5F8A' },
+       { time:'Lunch', label:'Genomgång online', note:'Många deltidskurser har ett lunch-pass per vecka som komplement', color:'#E8F5EE', tc:'var(--ah)' },
+       { time:'Helgen', label:'Självstudier & inlämningar', note:'Lördag–söndag blir ofta studiedagar — räkna med 10–15 h/v totalt', color:'#FDF4E3', tc:'#8B6914' }
+     ]
+   };
+
+   const rows = schedules[scheduleType];
+   let html = '';
+
+   // Compare header
+   html += `<div style="display:grid;grid-template-columns:1fr 1px 1fr;gap:0;margin-bottom:14px;padding-bottom:12px;border-bottom:1.5px solid var(--bo)">
+     <div style="padding:0 12px 0 0;text-align:center">
+       <div style="font-size:.7rem;font-weight:700;color:var(--re);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Jobba kvar</div>
+       <div style="font-size:.82rem;color:var(--mu);line-height:1.5">Fast schema · chefen sätter dagarna · möten styr tempot · lite eget lärande</div>
+     </div>
+     <div style="background:var(--bo)"></div>
+     <div style="padding:0 0 0 12px;text-align:center">
+       <div style="font-size:.7rem;font-weight:700;color:var(--ah);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Studera</div>
+       <div style="font-size:.82rem;color:var(--mu);line-height:1.5">${scheduleType==='deltid'?'Kväll/helg · jobbar dagen · ~10–15 h/v studier':scheduleType==='distans'?'Flexibelt schema · du styr · kräver egen disciplin':'Dagtid · du styr din tid · mer frihet men mer ansvar'}</div>
+     </div>
+   </div>`;
+
+   // Schedule rows
+   html += `<div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--li);margin-bottom:8px">${scheduleType==='heltid'?'Typisk heltidsdag':scheduleType==='distans'?'Typisk distanskursvecka':'Typisk deltidsvecka'}</div>`;
+   html += `<div style="display:grid;gap:6px;margin-bottom:14px">`;
+   rows.forEach(r => {
+     html += `<div style="display:grid;grid-template-columns:72px 1fr;gap:10px;align-items:start;padding:8px 10px;border-radius:8px;background:${r.color}">
+       <div style="font-size:.72rem;font-weight:700;color:${r.tc};white-space:nowrap;padding-top:2px">${r.time}</div>
+       <div>
+         <div style="font-size:.82rem;font-weight:700;color:${r.tc};margin-bottom:2px">${r.label}</div>
+         <div style="font-size:.75rem;color:var(--mu);line-height:1.45">${r.note}</div>
+       </div>
+     </div>`;
+   });
+   html += `</div>`;
+
+   // Key difference callout
+   const diffNote = scheduleType === 'deltid'
+     ? `Du behåller din lön och jobbar parallellt — men kvällar och helger tillhör böckerna. De flesta på deltid tar <strong>~1 år längre</strong> att bli klara.`
+     : scheduleType === 'distans'
+     ? `Distans ger maximal frihet men kräver att du själv skapar struktur. Tips: boka in studietid i kalendern som om det vore jobbet.`
+     : `Den stora skillnaden mot jobbet: <strong>du bestämmer din dag</strong>. Inga möten som kallas med 5 min varsel — men du måste leverera inlämningar och tentor på deadline.`;
+
+   html += `<div style="padding:10px 12px;background:var(--al);border-radius:8px;font-size:.82rem;color:var(--mu);line-height:1.55;border-left:3px solid var(--ac)">${diffNote}</div>`;
+
+   if (hasPractice) {
+     html += `<div style="margin-top:8px;padding:10px 12px;background:#EEF4FF;border-radius:8px;font-size:.82rem;color:#2D5F8A;line-height:1.55"><strong>Praktik:</strong> ${e.id===14?'Sjuksköterskeprogrammet har ~30% praktik (VFU) fördelat över alla år — du arbetar på riktiga avdelningar med handledare':e.id===20||e.id===21?'Lärarutbildningen har VFU (verksamhetsförlagd utbildning) — du undervisar riktiga elever från år 1':'Utbildningen inkluderar praktikperioder — du arbetar i verklig miljö med handledare'} · Praktik räknas som studietid och CSN betalas ut som vanligt.</div>`;
+   }
+
+   return html;
+ })()}
+ </div></div>
+ </div>
+
  <div class="expand-block" id="exp-st3">
  <div class="expand-head" onclick="toggle('exp-st3')">
  <div class="expand-head-left">
