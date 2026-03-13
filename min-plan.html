@@ -1068,7 +1068,9 @@ function fmtKr(n) { return n.toLocaleString('sv-SE') + ' kr'; }
 
 function mapCity(txt){
  if(!txt)return'other';const t=txt.toLowerCase().trim();
- const m={stockholm:'stockholm',sthlm:'stockholm',göteborg:'goteborg',gbg:'goteborg',malmö:'malmo',uppsala:'uppsala',linköping:'linkoping',lund:'lund',umeå:'umea',örebro:'orebro'};
+ const direct={stockholm:'stockholm',goteborg:'goteborg',malmo:'malmo',uppsala:'uppsala',linkoping:'linkoping',lund:'lund',umea:'umea',orebro:'orebro'};
+ if(direct[t])return direct[t];
+ const m={sthlm:'stockholm',göteborg:'goteborg',gbg:'goteborg',malmö:'malmo',linköping:'linkoping',umeå:'umea',örebro:'orebro'};
  for(const[k,v]of Object.entries(m))if(t.includes(k))return v;
  return'other';
 }
