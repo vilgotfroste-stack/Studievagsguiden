@@ -181,15 +181,21 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .section-label { font-size: .65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--li); margin: 16px 0 8px; }
 
 /* EKONOMI */
-.balance-hero { background: var(--card); border: 1.5px solid var(--bo); border-radius: 20px; padding: 20px; margin-bottom: 12px; text-align: center; }
-.balance-label { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--li); margin-bottom: 8px; }
-.balance-amount { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: var(--ah); line-height: 1; margin-bottom: 4px; }
-.balance-amount.neg { color: var(--re); }
-.balance-sub { font-size: .78rem; color: var(--mu); }
-.balance-row { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--bo); }
-.balance-row-item { text-align: center; }
-.balance-row-item .val { font-weight: 700; font-size: .95rem; }
-.balance-row-item .lbl { font-size: .65rem; color: var(--li); margin-top: 2px; text-transform: uppercase; letter-spacing: .5px; }
+.balance-hero { background: var(--card); border: 1.5px solid var(--bo); border-radius: 14px; padding: 20px; margin-bottom: 12px; }
+.bal-split { display: grid; grid-template-columns: 1fr 1px 1fr; margin-bottom: 16px; }
+.bal-divider { background: var(--bo); }
+.bal-side { text-align: center; padding: 0 12px; }
+.bal-lbl { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--li); margin-bottom: 6px; }
+.bal-num { font-size: 2rem; font-weight: 800; line-height: 1; margin-bottom: 3px; letter-spacing: -.02em; }
+.bal-sub { font-size: .7rem; color: var(--mu); }
+.bal-num.pos { color: var(--ah); } .bal-num.neg { color: var(--re); } .bal-num.amber { color: var(--wa); }
+.bal-foot { display: flex; justify-content: space-around; padding-top: 14px; border-top: 1px solid var(--bo); }
+.bal-ft-item { text-align: center; }
+.bal-ft-val { font-weight: 700; font-size: .9rem; }
+.bal-ft-lbl { font-size: .6rem; color: var(--li); margin-top: 2px; text-transform: uppercase; letter-spacing: .5px; }
+/* slider-row inside slider-group */
+.slider-row { padding: 12px 14px; border-bottom: 1px solid var(--bo); }
+.slider-row:last-child { border-bottom: none; }
 .slider-block { background: var(--card); border: 1.5px solid var(--bo); border-radius: 14px; padding: 14px 16px; margin-bottom: 8px; }
 .slider-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .slider-name { font-size: .82rem; font-weight: 600; color: var(--tx); display: flex; align-items: center; gap: 6px; }
@@ -288,8 +294,30 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 .btn { width: 100%; padding: 15px; background: var(--ac); color: #fff; border: none; border-radius: 10px; font-family: inherit; font-size: 1.02rem; font-weight: 700; cursor: pointer; transition: all .2s; margin-top: 8px; }
 .btn:hover { background: var(--ah); }
 
-/* BOTTOM HINT */
-.bottom-hint { text-align: center; padding: 12px; font-size: .65rem; color: var(--li); border-top: 1px solid var(--bo); letter-spacing: .5px; text-transform: uppercase; }
+/* COMBO CARD — oro + drivkraft merged */
+.combo-card { background: var(--card); border: 1.5px solid var(--bo); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+.combo-row { display: flex; align-items: center; gap: 9px; padding: 11px 14px; border-bottom: 1px solid var(--bo); }
+.combo-row:last-child { border-bottom: none; }
+.combo-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 6px; }
+.combo-lbl { font-size: .6rem; font-weight: 700; color: var(--li); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 2px; }
+.combo-main { font-size: .88rem; font-weight: 700; color: var(--tx); line-height: 1.3; }
+.combo-sub { font-size: .78rem; color: var(--mu); margin-top: 3px; line-height: 1.45; }
+
+/* FIT CARD — varför du passar */
+.fit-card { background: var(--card); border: 1.5px solid var(--bo); border-radius: 10px; padding: 13px 14px; margin-bottom: 10px; }
+.fit-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px; }
+.fit-row:last-child { margin-bottom: 0; }
+.fit-check { width: 14px; height: 14px; flex-shrink: 0; margin-top: 3px; color: var(--ac); }
+.fit-text { font-size: .82rem; color: var(--mu); line-height: 1.55; }
+
+/* ALONE NOTE */
+.alone-note { font-size: .76rem; color: var(--mu); line-height: 1.6; padding: 10px 12px; border-left: 2px solid var(--ac); margin-top: 8px; }
+
+/* SLIDER GROUP — prototype grouped style */
+.slider-group { background: var(--card); border: 1.5px solid var(--bo); border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
+.slider-group-title { padding: 10px 14px; font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--mu); border-bottom: 1px solid var(--bo); background: var(--bg); display: flex; align-items: center; gap: 6px; }
+.slider-row { padding: 12px 14px; border-bottom: 1px solid var(--bo); }
+.slider-row:last-child { border-bottom: none; }
 
 /* NOT-ALONE GRID */
 .alone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
@@ -1371,30 +1399,38 @@ function buildFP(name) {
  </div>
  </div>`;
 
- // Concern card
- if (a.biggest_concern && a.biggest_concern !== 'none') {
- ov += `<div class="concern-card">
- <div class="concern-icon" style="background:${cc1.bg}">${cc1.icon}</div>
- <div style="flex:1">
- <div class="concern-label">${cc1.label}</div>
- <div class="concern-stat">${cc1.stat}</div>
- ${cc1.detail ? `<div style="font-size:.78rem;color:var(--mu);margin-top:5px;line-height:1.55">${cc1.detail}</div>` : ''}
- </div>
- </div>`;
+ // Merged Oro + Drivkraft — combo-card prototype style
+ {
+   const hasConcern = a.biggest_concern && a.biggest_concern !== 'none';
+   const whyCard = WHY_CHANGE_CARD[a.why_change];
+   if (hasConcern || whyCard) {
+     ov += `<div class="section-label" style="margin-top:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block;vertical-align:-2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Dina tankar</div>
+     <div class="combo-card">`;
+     if (hasConcern) {
+       ov += `<div class="combo-row">
+       <div class="combo-icon" style="background:${cc1.bg}">${cc1.icon}</div>
+       <div>
+         <div class="combo-lbl">Din oro</div>
+         <div class="combo-main">${cc1.stat}</div>
+         ${cc1.detail ? `<div class="combo-sub">${cc1.detail}</div>` : ''}
+       </div>
+     </div>`;
+     }
+     if (whyCard) {
+       ov += `<div class="combo-row">
+       <div class="combo-icon" style="background:var(--al)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+       <div>
+         <div class="combo-lbl">Drivkraft</div>
+         <div class="combo-main">${whyCard.title}</div>
+         <div class="combo-sub">${whyCard.text}</div>
+       </div>
+     </div>`;
+     }
+     ov += `</div>`;
+   }
  }
 
- // Why change card
- const whyCard = WHY_CHANGE_CARD[a.why_change];
- if (whyCard) {
-   ov += `<div style="background:var(--card);border:1.5px solid var(--bo);border-radius:14px;padding:14px 16px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start">
- <div style="width:36px;height:36px;border-radius:10px;background:var(--al);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
- <div>
- <div style="font-size:.78rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px">Drivkraft</div>
- <div style="font-size:.88rem;font-weight:700;color:var(--tx);margin-bottom:4px">${whyCard.title}</div>
- <div style="font-size:.82rem;color:var(--mu);line-height:1.55">${whyCard.text}</div>
- </div>
- </div>`;
- }
+
 
 
  // Alternativkostnad — hook tidigt i översikt
@@ -1516,17 +1552,13 @@ function buildFP(name) {
  </div>`;
  }
 
- // Du är inte ensam
+ // Du är inte ensam — 2 stats + alone-note (prototype style)
  ov += `<div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg> Du är inte ensam</div>
- <div style="background:var(--card);border:1.5px solid var(--bo);border-radius:14px;padding:16px;margin-bottom:8px">
- <div class="alone-grid">
- ${ec.alone_stats.map(s=>`<div class="alone-cell" style="background:${s.bg}">
- <div class="alone-val" style="color:${s.col}">${s.val}</div>
- <div class="alone-lbl">${s.label}</div>
- </div>`).join('')}
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+   <div class="alone-cell" style="background:var(--al);border:1.5px solid var(--bo)"><div class="alone-val" style="color:var(--ah)">${ec.alone_stats[0].val}</div><div class="alone-lbl">${ec.alone_stats[0].label}</div></div>
+   <div class="alone-cell" style="background:var(--bll);border:1.5px solid var(--bo)"><div class="alone-val" style="color:var(--bh)">${ec.alone_stats[3].val}</div><div class="alone-lbl">${ec.alone_stats[3].label}</div></div>
  </div>
- <div style="font-size:.78rem;color:var(--mu);line-height:1.55;padding:10px 12px;background:var(--bg);border-radius:8px">${ec.alone_summary}</div>
- </div>`;
+ <div class="alone-note">${ec.alone_summary}</div>`;
 
  document.getElementById('panel-overview').innerHTML = ov;
 
@@ -1542,31 +1574,31 @@ function buildFP(name) {
 
  let ek = `
  <div class="balance-hero">
- <div style="display:grid;grid-template-columns:1fr 1px 1fr;gap:0;margin-bottom:14px">
-   <div style="text-align:center;padding:0 12px">
-     <div class="balance-label">Kvar per månad</div>
-     <div class="balance-amount${balDisp < 0 ? ' neg' : ''}" id="bal-display" style="font-size:2.2rem">${balDisp >= 0 ? '+' : ''}${fmtKr(balDisp)}</div>
-     <div class="balance-sub" id="bal-sub" style="font-size:.72rem">${balDisp >= 500 ? 'Bra marginal' : balDisp >= 0 ? 'Tight men det går ihop' : 'Underskott — justera nedan'}</div>
+ <div class="bal-split">
+   <div class="bal-side">
+     <div class="bal-lbl">Kvar per månad</div>
+     <div class="bal-num ${balDisp < 0 ? 'neg' : balDisp < 500 ? 'amber' : 'pos'}" id="bal-display">${balDisp >= 0 ? '+' : ''}${fmtKr(balDisp)}</div>
+     <div class="bal-sub" id="bal-sub">${balDisp >= 500 ? 'Bra marginal' : balDisp >= 0 ? 'Tight men det går ihop' : 'Underskott — justera nedan'}</div>
    </div>
-   <div style="background:var(--bo);height:100%"></div>
+   <div class="bal-divider"></div>
    ${loan > 0 ? `
-   <div style="text-align:center;padding:0 12px;cursor:pointer" onclick="toggle('exp-skuld')">
-     <div class="balance-label">Total CSN-skuld</div>
-     <div style="font-family:'Playfair Display',serif;font-size:2.2rem;color:#8B6914;line-height:1" id="skuld-total">~${fmtKr(debt)}</div>
-     <div style="font-size:.72rem;color:var(--mu);margin-top:4px">efter examen <span class="expand-arrow" style="font-size:.7rem">▾</span></div>
+   <div class="bal-side" style="cursor:pointer" onclick="toggle('exp-skuld')">
+     <div class="bal-lbl">Total CSN-skuld</div>
+     <div class="bal-num amber" id="skuld-total">~${fmtKr(debt)}</div>
+     <div class="bal-sub">efter examen ▾</div>
    </div>` : `
-   <div style="text-align:center;padding:0 12px">
-     <div class="balance-label">CSN-skuld</div>
-     <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--ah);line-height:1">0 kr</div>
-     <div style="font-size:.72rem;color:var(--ah);margin-top:4px">skuldfri student</div>
+   <div class="bal-side">
+     <div class="bal-lbl">CSN-skuld</div>
+     <div class="bal-num pos">0 kr</div>
+     <div class="bal-sub">skuldfri student</div>
    </div>`}
  </div>
- <div class="balance-row">
-   <div class="balance-row-item"><div class="val" id="disp-in">${fmtKr(totalIn)}</div><div class="lbl">Totalt in</div></div>
-   <div style="width:1px;height:30px;background:var(--bo)"></div>
-   <div class="balance-row-item"><div class="val" id="disp-ut">${fmtKr(totalOut)}</div><div class="lbl">Totalt ut</div></div>
-   <div style="width:1px;height:30px;background:var(--bo)"></div>
-   <div class="balance-row-item"><div class="val" id="disp-be">${beDisp}</div><div class="lbl">Break-even</div></div>
+ <div class="bal-foot">
+   <div class="bal-ft-item"><div class="bal-ft-val" id="disp-in">${fmtKr(totalIn)}</div><div class="bal-ft-lbl">Totalt in</div></div>
+   <div style="width:1px;background:var(--bo)"></div>
+   <div class="bal-ft-item"><div class="bal-ft-val" id="disp-ut">${fmtKr(totalOut)}</div><div class="bal-ft-lbl">Totalt ut</div></div>
+   <div style="width:1px;background:var(--bo)"></div>
+   <div class="bal-ft-item"><div class="bal-ft-val" id="disp-be">${beDisp}</div><div class="bal-ft-lbl">Break-even</div></div>
  </div>
  </div>
 
@@ -1587,9 +1619,10 @@ function buildFP(name) {
    </div></div>
  </div>` : ``}
 
- <div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><polyline points='23 6 13.5 15.5 8.5 10.5 1 18'/><polyline points='17 6 23 6 23 12'/></svg> Intäkter</div>
+ <div class="slider-group">
+ <div class="slider-group-title"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Intäkter</div>
 
- <div class="slider-block">
+ <div class="slider-row">
  <div class="slider-top">
  <div class="slider-name"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M22 10v6M2 10l10-5 10 5-10 5z'/><path d='M6 12v5c3 3 9 3 12 0v-5'/></svg> CSN Bidrag <span class="slider-badge" style="background:#E8F5EE;color:#4A8C6A">${deltid ? 'Deltid' : 'Heltid'}</span></div>
  <div class="slider-val" id="sv-bid">${fmtKr(initBid)}</div>
@@ -1598,7 +1631,7 @@ function buildFP(name) {
  <div class="slider-meta"><span>0 kr</span><span>Max ${fmtKr(bidMax)}</span></div>
  </div>
 
- <div class="slider-block">
+ <div class="slider-row">
  <div class="slider-top">
  <div class="slider-name"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='16'/><line x1='8' y1='12' x2='16' y2='12'/></svg> CSN Lån <span class="slider-badge" style="background:#FDF4E3;color:#8B6914">Frivilligt</span></div>
  <div class="slider-val" id="sv-lan">${fmtKr(loan)}</div>
@@ -1607,7 +1640,7 @@ function buildFP(name) {
  <div class="slider-meta"><span>0 kr</span><span>Max ${fmtKr(lanMax)}</span></div>
  </div>
 
- <div class="slider-block">
+ <div class="slider-row">
  <div class="slider-top">
  <div class="slider-name"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x='2' y='7' width='20' height='14' rx='2'/><path d='M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2'/></svg> Extrajobb</div>
  <div class="slider-val" id="sv-jobb">${fmtKr(initJobb)}</div>
@@ -1618,9 +1651,11 @@ function buildFP(name) {
 
  ${barnCSN > 0 ? `<div style="display:flex;align-items:center;justify-content:space-between;background:var(--al);border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:.83rem"><span style="color:var(--mu)"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg> Barntillägg CSN</span><span style="font-weight:700;color:var(--ah)">+${fmtKr(barnCSN)}</span></div>` : ''}
 
- <div class="section-label" style="margin-top:12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1='18' y1='20' x2='18' y2='10'/><line x1='12' y1='20' x2='12' y2='4'/><line x1='6' y1='20' x2='6' y2='14'/></svg> Utgifter</div>
+ </div>
+ <div class="slider-group" style="margin-top:10px">
+ <div class="slider-group-title"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Utgifter</div>
 
- <div class="slider-block">
+ <div class="slider-row">
  <div class="slider-top">
  <div class="slider-name"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><polyline points='9 22 9 12 15 12 15 22'/></svg> Boende <span class="slider-badge" style="background:var(--bll);color:var(--bl)">${({stockholm:'Stockholm',goteborg:'Göteborg',malmo:'Malmö',uppsala:'Uppsala',linkoping:'Linköping',lund:'Lund',umea:'Umeå',orebro:'Örebro',other:'Din ort'})[city]||'Din ort'}, ${{student:'studentbostad',shared:'delad',rental:'hyresrätt',home:'hemma'}[hou]||hou}</span></div>
  <div class="slider-val" id="sv-boende">${fmtKr(initRent)}</div>
@@ -1635,7 +1670,7 @@ function buildFP(name) {
  <div class="slider-meta"><span>0 kr</span><span>12 000 kr</span></div>
  </div>
 
- <div class="slider-block">
+ <div class="slider-row">
  <div class="slider-top">
  <div class="slider-name"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1='8' y1='6' x2='21' y2='6'/><line x1='8' y1='12' x2='21' y2='12'/><line x1='8' y1='18' x2='21' y2='18'/><line x1='3' y1='6' x2='3.01' y2='6'/><line x1='3' y1='12' x2='3.01' y2='12'/><line x1='3' y1='18' x2='3.01' y2='18'/></svg> Fasta utgifter <span class="slider-badge" style="background:var(--bll);color:var(--bl)">Försäkring, telefon m.m.</span></div>
  <div class="slider-val" id="sv-fixed">${fmtKr(fixedExp)}</div>
@@ -1644,7 +1679,7 @@ function buildFP(name) {
  <div class="slider-meta"><span>0 kr</span><span>15 000 kr</span></div>
  </div>
 
- <div class="slider-block">
+ <div class="slider-row">
  <div class="slider-top">
  <div class="slider-name"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z'/><line x1='3' y1='6' x2='21' y2='6'/><path d='M16 10a4 4 0 0 1-8 0'/></svg> Rörliga utgifter <span class="slider-badge" style="background:var(--bll);color:var(--bl)">Mat, nöje, transport</span></div>
  <div class="slider-val" id="sv-var">${fmtKr(variableExp)}</div>
@@ -1655,9 +1690,10 @@ function buildFP(name) {
 
  ${cc > 0 ? `<div style="display:flex;align-items:center;justify-content:space-between;background:#FFF3F3;border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:.83rem"><span style="color:var(--mu)"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg> Barn (${numKids} st)</span><span style="font-weight:700;color:var(--re)">−${fmtKr(cc)}</span></div>` : ''}
 
+ </div>
  <div id="repay-section" style="margin-top:14px;padding-top:14px;border-top:1.5px solid var(--bo);display:${loan > 0 ? 'block' : 'none'}">
    <div style="font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--li);margin-bottom:10px;display:flex;align-items:center;gap:6px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Återbetalning av CSN-lån</div>
-   <div class="slider-block">
+   <div class="slider-row">
      <div class="slider-top">
        <div class="slider-name"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Återbetalning / mån</div>
        <div class="slider-val" id="sv-repay">${fmtKr(initRepay)}</div>
@@ -2505,7 +2541,7 @@ function updateBudget() {
 
  // Balance hero
  const balEl = document.getElementById('bal-display');
- if (balEl) { balEl.textContent = (balV >= 0 ? '+' : '') + fmtKr(balV); balEl.className = 'balance-amount' + (balV < 0 ? ' neg' : ''); }
+ if (balEl) { balEl.textContent = (balV >= 0 ? '+' : '') + fmtKr(balV); balEl.className = 'bal-num' + (balV < 0 ? ' neg' : balV < 500 ? ' amber' : ' pos'); }
  const subEl = document.getElementById('bal-sub');
  if (subEl) subEl.textContent = balV >= 500 ? 'Bra marginal — du klarar dig komfortabelt.' : balV >= 0 ? 'Tight men det går ihop — justera nedan.' : 'Underskott — öka lån eller extrajobb.';
  const inEl = document.getElementById('disp-in'); if (inEl) inEl.textContent = fmtKr(inn);
