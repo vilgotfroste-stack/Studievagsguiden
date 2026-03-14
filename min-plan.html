@@ -525,7 +525,7 @@ const CSN_BID_HT=4120, CSN_BID_DT=2036;
 const CSN_LAN_HT=9472, CSN_LAN_DT=4760;
 const GYM=[{id:'natur',l:'Naturvetenskap',k:'Naturvetenskap'},{id:'teknik',l:'Teknik',k:'Teknik'},{id:'samhall',l:'Samhäll',k:'Samhäll'},{id:'ekonomi',l:'Ekonomi',k:'Ekonomi'},{id:'estet',l:'Estet',k:'Estet'},{id:'vard',l:'Vård och omsorg',k:'Vård'},{id:'bygg',l:'Bygg och anläggning',k:'Bygg'},{id:'el',l:'El och energi',k:'El och energi'},{id:'industri',l:'Industri',k:'Industri'},{id:'other',l:'Annat / Komvux',k:'other'}];
 let edu=null,sal=0,ws=0,ans={};
-const planState = { lifetimeGain:0, missingCount:0, startYr:0, studyYears:0 };
+const planState = { lifetimeGain:null, missingCount:0, startYr:0, studyYears:0 };
 let gCsnTillaggEligible = false;
 
 // Course matching helpers — used in behörighet + verify
@@ -2207,105 +2207,123 @@ function buildFP(name) {
 
 
  document.getElementById('panel-plan').innerHTML = pl;
- setTimeout(updateScore, 50);
+ // Update score immediately after render — no setTimeout blink
+ updateScore();
 
  // Init sliders 
  setTimeout(() => { updateBudget(loan, rent); }, 50);
 }
 
-// Score calculation
+// Shared balance calculation — single source of truth
+// Reads from live slider DOM elements if available, falls back to ans.slider_* then defaults
+function calcBalance() {
+  const a = ans;
+  if (!a) return 0;
+  const CSN_BID_DEF = a.study_pace === 'parttime' ? CSN_BID_DT : CSN_BID_HT;
+  const readSlider = (id, fallbackKey, def) => {
+    const el = document.getElementById(id);
+    if (el) return parseInt(el.value) || 0;
+    return a[fallbackKey] !== undefined ? a[fallbackKey] : def;
+  };
+  const bidV    = readSlider('sl-bid',    'slider_bid',   CSN_BID_DEF);
+  const lanV    = readSlider('sl-lan',    'slider_lan',   0);
+  const jobbV   = readSlider('sl-jobb',   'slider_jobb',  0);
+  const boendeV = readSlider('sl-boende', 'slider_rent',  6000);
+  const fixedV  = readSlider('sl-fixed',  'slider_fixed', 5000);
+  const varV    = readSlider('sl-var',    'slider_var',   4000);
+  const nKids   = a.has_kids === 'yes' ? (parseInt(a.num_kids)||1) : 0;
+  const barnCSN = nKids===1?780:nKids===2?1276:nKids===3?1536:nKids>=4?1796:0;
+  const inn = bidV + barnCSN + lanV + jobbV;
+  const ut  = boendeV + fixedV + varV + nKids*2000;
+  return { bal: inn - ut, lanV, jobbV, nKids };
+}
+
+
 function calcScore() {
   const a = ans, e = edu;
   if (!a || !e) return { score: 50, factors: [] };
 
-  let score = 100;
-  const factors = [];
+  const hint = (txt, panel) => {
+    const click = panel ? `onclick="const t=document.querySelector('[data-panel='+String.raw\`${panel}\`+']');if(t)t.click();updateScore();" style="cursor:pointer;text-decoration:underline dotted;"` : '';
+    return `<span ${click} style="font-size:.7rem;opacity:.75;font-weight:500"> · ${txt}</span>`;
+  };
 
-  // Helper: hint link
-  const hint = txt => `<span style="font-size:.7rem;opacity:.7;font-weight:500"> · ${txt}</span>`;
+  const { bal: balV, lanV, jobbV } = calcBalance();
+  const fw = [];
 
-  // 1. Budget-marginal (max −30p) — beräkna direkt, ej från DOM
-  const CSN_BID = a.study_pace === 'parttime' ? 2864 : 3363;
-  const bidV   = a.slider_bid  !== undefined ? a.slider_bid  : CSN_BID;
-  const lanV   = a.slider_lan  !== undefined ? a.slider_lan  : 0;
-  const jobbV  = a.slider_jobb !== undefined ? a.slider_jobb : 0;
-  const nKids  = a.has_kids === 'yes' ? (parseInt(a.num_kids)||1) : 0;
-  const barnCSN = nKids === 1 ? 780 : nKids === 2 ? 1276 : nKids === 3 ? 1536 : nKids >= 4 ? 1796 : 0;
-  const boendeV = a.slider_rent  !== undefined ? a.slider_rent  : 6000;
-  const fixedV  = a.slider_fixed !== undefined ? a.slider_fixed : 5000;
-  const varV    = a.slider_var   !== undefined ? a.slider_var   : 4000;
-  const cc2     = nKids > 0 ? 2000 * nKids : 0;
-  const balV    = (bidV + barnCSN + lanV + jobbV) - (boendeV + fixedV + varV + cc2);
-  if (balV >= 3000)      { factors.push({t:'Bra ekonomisk marginal', c:'ok'}); }
-  else if (balV >= 0)    { score -= 15; factors.push({t:'Tight budget' + hint('Justera sliders i ekonomin'), c:'warn'}); }
-  else                   { score -= 30; factors.push({t:'Underskott i budget' + hint('Justera sliders i ekonomin'), c:'bad'}); }
+  // 1. Livstidsvinst — w:25
+  const lg = planState.lifetimeGain;
+  if      (lg === null)  fw.push({s:60, w:25,t:'Livstidsvinst okänd',c:'warn'});
+  else if (lg > 1.5e6)   fw.push({s:100,w:25,t:'Stark livstidsvinst',c:'ok'});
+  else if (lg > 0)       fw.push({s:55, w:25,t:'Liten livstidsvinst'+hint('Prova annan utbildning','plan'),c:'warn'});
+  else                   fw.push({s:0,  w:25,t:'Negativ livstidsvinst'+hint('Prova annan utbildning','plan'),c:'bad'});
 
-  // 2. Behörighet (max −20p)
+  // 2. Budget-marginal — w:25
+  if      (balV >= 3000) fw.push({s:100,w:25,t:'Bra ekonomisk marginal',c:'ok'});
+  else if (balV >= 0)    fw.push({s:50, w:25,t:'Tight budget'+hint('Justera ekonomin','ekonomi'),c:'warn'});
+  else                   fw.push({s:0,  w:25,t:'Underskott i budget'+hint('Justera ekonomin','ekonomi'),c:'bad'});
+
+  // 3. Behörighet — w:20
   const miss = planState.missingCount;
-  const bVerified = !!a.beh_verified;
-  if (bVerified && miss === 0) {
-    factors.push({t:'Behörig direkt ✓', c:'ok'});
-  } else if (!bVerified) {
-    score -= 5; factors.push({t:'Behörighet ej verifierad' + hint('Verifiera behörighet'), c:'warn'});
-  } else if (miss <= 2) {
-    score -= 10; factors.push({t: miss + ' komvux-kurs' + (miss > 1 ? 'er' : '') + hint('Ändra studietakt i planen'), c:'warn'});
-  } else {
-    score -= 20; factors.push({t: miss + ' komvux-kurser krävs' + hint('Ändra studietakt i planen'), c:'bad'});
-  }
+  if      (!a.beh_verified) fw.push({s:60, w:20,t:'Behörighet ej verifierad'+hint('Verifiera nu','beh'),c:'warn'});
+  else if (miss === 0)      fw.push({s:100,w:20,t:'Behörig direkt ✓',c:'ok'});
+  else if (miss <= 2)       fw.push({s:50, w:20,t:miss+' komvux-kurs'+(miss>1?'er':'')+hint('Ändra studietakt','plan'),c:'warn'});
+  else                      fw.push({s:0,  w:20,t:miss+' komvux-kurser krävs'+hint('Ändra studietakt','plan'),c:'bad'});
 
-  // 3. Livstidsvinst (max −20p)
-  if (planState.lifetimeGain > 1e6)      { factors.push({t:'Stark livstidsvinst', c:'ok'}); }
-  else if (planState.lifetimeGain > 0)   { score -= 8; factors.push({t:'Liten livstidsvinst' + hint('Prova annan utbildning'), c:'warn'}); }
-  else                                   { score -= 20; factors.push({t:'Negativ livstidsvinst' + hint('Prova annan utbildning'), c:'bad'}); }
+  // 4. Ålder / tid kvar — w:15
+  const age = parseInt(a.age)||30;
+  const wYrs = 65 - age - (e.y||3) - miss*0.25;
+  if      (wYrs >= 25) fw.push({s:100,w:15,t:'God tid att tjäna igen',c:'ok'});
+  else if (wYrs >= 15) fw.push({s:55, w:15,t:'Medellång återbetalningstid',c:'warn'});
+  else                 fw.push({s:0,  w:15,t:'Kort tid kvar till pension'+hint('Välj kortare utbildning','plan'),c:'bad'});
 
-  // 4. Buffert (max −15p)
-  const savMap = {'none':0,'under10':5000,'10-50':30000,'50-100':75000,'100+':150000};
-  const sav = savMap[a.savings_amount] || 0;
-  if (sav >= 30000)      { factors.push({t:'Bra buffert', c:'ok'}); }
-  else if (sav > 0)      { score -= 8; factors.push({t:'Liten buffert' + hint('Spara innan start'), c:'warn'}); }
-  else                   { score -= 15; factors.push({t:'Ingen buffert' + hint('Spara innan start'), c:'bad'}); }
+  // 5. Buffert — w:10
+  const sav = ({'none':0,'under10':5000,'10-50':30000,'50-100':75000,'100+':150000})[a.savings_amount]||0;
+  if      (sav >= 30000) fw.push({s:100,w:10,t:'Bra buffert',c:'ok'});
+  else if (sav > 0)      fw.push({s:50, w:10,t:'Liten buffert'+hint('Spara innan start','ekonomi'),c:'warn'});
+  else                   fw.push({s:0,  w:10,t:'Ingen buffert'+hint('Spara innan start','ekonomi'),c:'bad'});
 
-  // 5. Ålder / tid kvar (max −15p)
-  const age = parseInt(a.age) || 30;
-  const workYrsLeft = 65 - age - (e.y || 3) - miss * 0.25;
-  if (workYrsLeft >= 25)      { factors.push({t:'God tid att tjäna igen', c:'ok'}); }
-  else if (workYrsLeft >= 15) { score -= 8; factors.push({t:'Medellång återbetalningstid', c:'warn'}); }
-  else                        { score -= 15; factors.push({t:'Kort tid kvar till pension' + hint('Välj kortare utbildning'), c:'bad'}); }
+  // 6. Arbetsmarknad — w:10
+  const dem = e.dem || 3;
+  if      (dem >= 4) fw.push({s:100,w:10,t:'Hög efterfrågan på yrket',c:'ok'});
+  else if (dem === 3) fw.push({s:65, w:10,t:'Normal efterfrågan',c:'ok'});
+  else               fw.push({s:20, w:10,t:'Låg efterfrågan'+hint('Prova annan utbildning','plan'),c:'warn'});
 
-  // 6. Studietakt + jobbar (bonus/malus)
+  // 7. AI-risk — w:5
+  const ai = e.ai || 0;
+  if      (ai <= 5)  fw.push({s:100,w:5,t:'Låg AI-risk ✓',c:'ok'});
+  else if (ai <= 15) fw.push({s:60, w:5,t:'Måttlig AI-risk',c:'warn'});
+  else               fw.push({s:20, w:5,t:'Hög AI-risk'+hint('Prova annan utbildning','plan'),c:'bad'});
+
+  // Optional — only added when triggered
   const pace = a.study_pace;
-  const workDuring = a.work_during;
-  if (pace === 'parttime' && (workDuring === 'parttime' || workDuring === 'yes')) {
-    score += 5; factors.push({t:'Deltid + extrainkomst ✓', c:'ok'});
-  } else if (pace === 'fulltime' && workDuring === 'no' && balV < 1000) {
-    score -= 8; factors.push({t:'Heltid utan inkomst' + hint('Ändra svar → jobba deltid?'), c:'warn'});
+  if (pace === 'parttime' && jobbV > 0) {
+    fw.push({s:100,w:5,t:'Deltid + extrainkomst ✓',c:'ok'});
+  } else if (pace === 'fulltime' && jobbV === 0 && balV < 500) {
+    fw.push({s:0,  w:5,t:'Heltid utan inkomst'+hint('Jobba deltid?','plan'),c:'bad'});
   }
 
-  // 7. Distans + barn (bonus)
-  if (a.study_mode === 'distance' && a.has_kids === 'yes') {
-    score += 5; factors.push({t:'Distans passar med barn ✓', c:'ok'});
-  } else if (a.has_kids === 'yes' && a.study_mode === 'campus' && pace === 'fulltime') {
-    score -= 8; factors.push({t:'Campus heltid + barn' + hint('Ändra svar → distans?'), c:'warn'});
+  if (a.has_kids === 'yes') {
+    if (a.study_mode === 'distance') {
+      fw.push({s:100,w:5,t:'Distans passar med barn ✓',c:'ok'});
+    } else if (a.study_mode === 'campus' && pace === 'fulltime') {
+      fw.push({s:10, w:5,t:'Campus heltid + barn'+hint('Distans?','plan'),c:'bad'});
+    }
+  } else if (a.study_mode === 'distance') {
+    fw.push({s:90, w:3,t:'Flexibel studieform',c:'ok'});
   }
 
-  // 8. CSN-lån (skuldbörda)
-  if (lanV > 7000) {
-    score -= 8; factors.push({t:'Hög CSN-skuld' + hint('Sänk lånet i ekonomin'), c:'warn'});
-  } else if (lanV === 0 && balV >= 0) {
-    score += 3; factors.push({t:'Lånar minimalt', c:'ok'});
+  if (a.work_status === 'unemployed') {
+    fw.push({s:100,w:5,t:'Ingen inkomst att förlora ✓',c:'ok'});
   }
 
-  // 9. Motivation / oro (mjuka faktorer)
-  const concern = a.biggest_concern;
-  if (concern === 'grades' || concern === 'fail') {
-    score -= 5; factors.push({t:'Oro för att inte klara det' + hint('Ändra svar → kolla stöd'), c:'warn'});
-  }
-  if (a.why_change === 'passion' || a.why_change === 'growth') {
-    score += 3; factors.push({t:'Stark inre drivkraft ✓', c:'ok'});
-  }
+  if      (lanV > 7000)             fw.push({s:20, w:5,t:'Hög CSN-skuld'+hint('Sänk lånet','ekonomi'),c:'warn'});
+  else if (lanV === 0 && balV >= 0) fw.push({s:100,w:5,t:'Lånar minimalt ✓',c:'ok'});
 
-  score = Math.max(10, Math.min(99, score));
-  return { score, factors };
+  const totalW   = fw.reduce((s,f) => s+f.w, 0);
+  const rawScore = totalW > 0 ? fw.reduce((s,f) => s+f.s*f.w, 0) / totalW : 50;
+  const score    = Math.round(Math.min(97, Math.max(8, rawScore)));
+  return { score, factors: fw };
 }
 
 function updateScore() {
@@ -2340,8 +2358,12 @@ function calcWaitCost(extraYears) {
   if (!e) return 0;
   const avgNew = (e.s0 + e.s1) / 2;
   const salNow = sal || 0;
-  const gainPerYear = (avgNew - salNow) * 12;
-  return Math.round(gainPerYear * extraYears);
+  // Cost = lost years of higher salary at END of career (irreversible)
+  // During wait years: still earn current salary (no loss there)
+  // But lose `extraYears` of new-career salary at the end
+  const lostNewCareerEarnings = avgNew * 12 * extraYears;
+  const keptOldEarnings       = salNow * 12 * extraYears;
+  return Math.round(lostNewCareerEarnings - keptOldEarnings);
 }
 
 function setWait(years, btn) {
