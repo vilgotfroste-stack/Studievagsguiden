@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <link rel="icon" type="image/png" href="/favicon.png">
 <title>Min plan — Studievägsguiden</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 :root {
@@ -14,7 +14,7 @@
  --rl: #FDEAEA; --wa: #D4A853; --wl: #FDF4E3; --bl: #5B8DB8; --bll: #E3EEF8;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--tx); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--tx); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
 /* PLAN WRAP */
 .plan-wrap { max-width: 480px; margin: 0 auto; background: var(--bg); min-height: 100vh; position: relative; }
@@ -26,12 +26,12 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
  display: flex; align-items: center; justify-content: space-between;
  position: sticky; top: 0; z-index: 100;
 }
-.nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; }
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; }
 .nav-logo .s1 { color: #6BA3D0; } .nav-logo .s2 { color: var(--ac); }
 .nav-name {
  font-size: .78rem; font-weight: 600; color: var(--mu); background: var(--al);
  padding: 5px 12px; border-radius: 20px; cursor: pointer; position: relative;
- user-select: none; border: none; font-family: 'DM Sans', sans-serif; transition: background .15s;
+ user-select: none; border: none; font-family: 'Plus Jakarta Sans', sans-serif; transition: background .15s;
 }
 .nav-name:active { background: #d4eddf; }
 .profile-popup {
@@ -47,7 +47,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .popup-edu { font-size: .75rem; color: var(--mu); margin-top: 2px; }
 .popup-btn {
  display: flex; align-items: center; gap: 10px; width: 100%; padding: 12px 16px;
- border: none; background: none; font-family: 'DM Sans', sans-serif; font-size: .83rem;
+ border: none; background: none; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .83rem;
  font-weight: 600; color: var(--tx); cursor: pointer; text-align: left; transition: background .12s;
 }
 .popup-btn:hover { background: var(--bg); }
@@ -112,7 +112,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 }
 .tab-btn {
  padding: 12px 4px 10px; border: none; background: none;
- font-family: 'DM Sans', sans-serif; font-size: .68rem; font-weight: 600;
+ font-family: 'Plus Jakarta Sans', sans-serif; font-size: .68rem; font-weight: 600;
  color: var(--li); cursor: pointer; border-bottom: 2px solid transparent;
  margin-bottom: -2px; transition: all .2s; display: flex; flex-direction: column;
  align-items: center; gap: 4px;
@@ -137,12 +137,12 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
  border-radius: 50%;
 }
 .hero-eyebrow { font-size: .65rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ac); margin-bottom: 6px; }
-.hero-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: #fff; line-height: 1.2; margin-bottom: 4px; }
+.hero-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #fff; line-height: 1.2; margin-bottom: 4px; }
 .hero-sub { font-size: .8rem; color: rgba(255,255,255,.5); margin-bottom: 20px; }
 .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .stat-card { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 12px; }
 .stat-label { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: rgba(255,255,255,.45); margin-bottom: 6px; }
-.stat-value { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: #fff; line-height: 1; margin-bottom: 3px; }
+.stat-value { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #fff; line-height: 1; margin-bottom: 3px; }
 .stat-sub { font-size: .68rem; color: rgba(255,255,255,.5); }
 .stat-card.good .stat-value { color: #7AC29A; }
 .stat-card.warn .stat-value { color: #D4A853; }
@@ -156,7 +156,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 }
 .concern-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
 .concern-label { font-size: .72rem; font-weight: 700; color: var(--li); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 3px; }
-.concern-stat { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--tx); line-height: 1.2; }
+.concern-stat { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--tx); line-height: 1.2; }
 
 /* EXPAND BLOCKS */
 .expand-block { background: var(--card); border: 1.5px solid var(--bo); border-radius: 14px; margin-bottom: 8px; overflow: hidden; }
@@ -183,7 +183,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 /* EKONOMI */
 .balance-hero { background: var(--card); border: 1.5px solid var(--bo); border-radius: 20px; padding: 20px; margin-bottom: 12px; text-align: center; }
 .balance-label { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--li); margin-bottom: 8px; }
-.balance-amount { font-family: 'DM Serif Display', serif; font-size: 2.8rem; color: var(--ah); line-height: 1; margin-bottom: 4px; }
+.balance-amount { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: var(--ah); line-height: 1; margin-bottom: 4px; }
 .balance-amount.neg { color: var(--re); }
 .balance-sub { font-size: .78rem; color: var(--mu); }
 .balance-row { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--bo); }
@@ -194,7 +194,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 .slider-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .slider-name { font-size: .82rem; font-weight: 600; color: var(--tx); display: flex; align-items: center; gap: 6px; }
 .slider-badge { font-size: .65rem; font-weight: 700; padding: 2px 7px; border-radius: 4px; }
-.slider-val { font-family: 'DM Serif Display', serif; font-size: 1rem; color: var(--ah); font-weight: 700; }
+.slider-val { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--ah); font-weight: 700; }
 input[type="range"] { -webkit-appearance: none; width: 100%; height: 4px; border-radius: 2px; outline: none; cursor: pointer; }
 input[type="range"].green { background: linear-gradient(to right, var(--ac) 0%, var(--ac) var(--pct,50%), var(--bo) var(--pct,50%)); }
 input[type="range"].amber { background: linear-gradient(to right, var(--wa) 0%, var(--wa) var(--pct,40%), var(--bo) var(--pct,40%)); }
@@ -204,7 +204,7 @@ input[type="range"].green::-webkit-slider-thumb { border-color: var(--ac); }
 input[type="range"].amber::-webkit-slider-thumb { border-color: var(--wa); }
 input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 .slider-meta { display: flex; justify-content: space-between; font-size: .65rem; color: var(--li); margin-top: 5px; }
-.hou-btn { flex: 1; padding: 6px 4px; border: 1.5px solid var(--bo); border-radius: 8px; background: var(--card); font-family: 'DM Sans', sans-serif; font-size: .68rem; font-weight: 600; color: var(--mu); cursor: pointer; transition: all .15s; }
+.hou-btn { flex: 1; padding: 6px 4px; border: 1.5px solid var(--bo); border-radius: 8px; background: var(--card); font-family: 'Plus Jakarta Sans', sans-serif; font-size: .68rem; font-weight: 600; color: var(--mu); cursor: pointer; transition: all .15s; }
 .hou-btn.act { border-color: var(--re); background: #FFF0F0; color: var(--re); }
 
 /* BEHÖRIGHET */
@@ -214,7 +214,7 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 .status-circle { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
 .status-hero.ok .status-circle { background: var(--ac); }
 .status-hero.warn .status-circle { background: var(--wa); }
-.status-title { font-family: 'DM Serif Display', serif; font-size: 1.1rem; margin-bottom: 3px; }
+.status-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 3px; }
 .status-body { font-size: .8rem; color: var(--mu); line-height: 1.5; }
 .req-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--bo); font-size: .83rem; }
 .req-row:last-child { border-bottom: none; }
@@ -258,7 +258,7 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 /* Date chips */
 .date-chips { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
 .date-chip { padding: 6px 12px; border-radius: 20px; font-size: .72rem; font-weight: 700; display: flex; flex-direction: column; align-items: center; line-height: 1.2; }
-.date-chip .chip-date { font-family: 'DM Serif Display', serif; font-size: .95rem; }
+.date-chip .chip-date { font-family: 'Playfair Display', serif; font-size: .95rem; }
 .date-chip .chip-label { font-size: .58rem; opacity: .8; letter-spacing: .5px; text-transform: uppercase; margin-top: 1px; }
 .date-chip.ans { background: var(--wl); color: #8B6914; border: 1.5px solid var(--wa); }
 .date-chip.bes { background: var(--al); color: var(--ah); border: 1.5px solid var(--ac); }
@@ -276,7 +276,7 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
  background: radial-gradient(circle, rgba(122,194,154,.15) 0%, transparent 70%);
 }
 .why-card .why-label { font-size: .65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 6px; }
-.why-card .why-text { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: #fff; line-height: 1.35; }
+.why-card .why-text { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: #fff; line-height: 1.35; }
 
 /* AUTH GATE */
 #authGate { display: none; min-height: 100vh; align-items: flex-start; justify-content: center; padding: 80px 24px 60px; }
@@ -294,7 +294,7 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 /* NOT-ALONE GRID */
 .alone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
 .alone-cell { text-align: center; padding: 10px; border-radius: 10px; }
-.alone-val { font-family: 'DM Serif Display', serif; font-size: 1.5rem; }
+.alone-val { font-family: 'Playfair Display', serif; font-size: 1.5rem; }
 .alone-lbl { font-size: .68rem; color: var(--mu); margin-top: 3px; line-height: 1.4; }
 
 /* SCHOOL RECOMMENDATION */
@@ -306,33 +306,46 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 .school-tag { background: var(--al); color: var(--ac); padding: 3px 9px; border-radius: 5px; font-size: .7rem; font-weight: 600; }
 
 @keyframes fu { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.score-header { background: #fff; border: 1.5px solid var(--bo); border-radius: 16px; padding: 18px 20px; margin-bottom: 14px; }
-.score-row { display: flex; align-items: center; gap: 16px; }
-.score-num { font-size: 3rem; font-weight: 800; line-height: 1; min-width: 70px; }
+.score-header { background: var(--card); border: 1.5px solid var(--bo); border-radius: 12px; padding: 18px; margin-bottom: 12px; }
+.score-row { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+.score-num { font-size: 3rem; font-weight: 800; line-height: 1; min-width: 68px; letter-spacing: -.03em; }
 .score-right { flex: 1; }
-.score-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--li); margin-bottom: 2px; }
-.score-text { font-size: .85rem; color: var(--te); font-weight: 500; margin-bottom: 8px; }
-.score-bar-wrap { height: 8px; background: var(--bo); border-radius: 99px; overflow: hidden; }
+.score-label { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--li); margin-bottom: 2px; }
+.score-text { font-size: .83rem; color: var(--mu); margin-bottom: 7px; }
+.score-bar-wrap { height: 5px; background: var(--bo); border-radius: 99px; overflow: hidden; }
 .score-bar-fill { height: 100%; border-radius: 99px; transition: width .5s cubic-bezier(.4,0,.2,1), background .5s; }
-.score-factors { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-.score-factor { font-size: .75rem; padding: 3px 8px; border-radius: 99px; font-weight: 600; }
-.score-factor.ok { background: #ECFDF5; color: #065F46; }
-.score-factor.warn { background: #FFF8EC; color: #92400E; }
+.score-factors { display: flex; flex-wrap: wrap; gap: 5px; }
+.score-factor { font-size: .7rem; padding: 3px 8px; border-radius: 4px; font-weight: 600; display: flex; align-items: center; gap: 3px; }
+.score-factor.ok { background: var(--al); color: var(--ah); }
+.score-factor.warn { background: var(--wl); color: var(--wa); }
 .score-factor.bad { background: #FEF2F2; color: #991B1B; }
-.wait-block { background: #F8F5FF; border: 1.5px solid #C4B5FD; border-radius: 14px; padding: 16px; margin: 14px 0; }
-.wait-title { font-weight: 700; font-size: .9rem; color: #4C1D95; margin-bottom: 12px; }
-.wait-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-.wait-btn { padding: 6px 14px; border-radius: 8px; border: 1.5px solid #C4B5FD; background: #fff; font-size: .8rem; font-weight: 700; cursor: pointer; color: #4C1D95; transition: all .15s; }
-.wait-btn.active { background: #7C3AED; color: #fff; border-color: #7C3AED; }
-.wait-cost { font-size: 1.4rem; font-weight: 800; color: #7C3AED; margin: 6px 0 2px; }
-.wait-sub { font-size: .78rem; color: var(--li); }
-.wait-timeline { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
-.wait-col { background: #fff; border-radius: 10px; padding: 10px 12px; border: 1.5px solid #E5E7EB; }
-.wait-col-title { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
-.wait-col.now .wait-col-title { color: #065F46; }
-.wait-col.later .wait-col-title { color: #991B1B; }
-.wait-row { font-size: .78rem; color: var(--te); margin-bottom: 3px; }
-.wait-row span { font-weight: 700; }
+.wait-lifetime { background: var(--card); border: 1.5px solid var(--bo); border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+.wl-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.wl-title { font-family: 'Playfair Display', serif; font-size: .95rem; color: var(--tx); }
+.wait-btns { display: flex; gap: 5px; }
+.wait-btn { padding: 5px 11px; border-radius: 5px; border: 1.5px solid var(--bo); background: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .75rem; font-weight: 700; cursor: pointer; color: var(--mu); transition: all .15s; }
+.wait-btn.act { background: var(--ah); color: #fff; border-color: var(--ah); }
+.opp-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--bo); }
+.opp-label { font-size: .75rem; color: var(--mu); }
+.opp-val { font-size: 1.3rem; font-weight: 800; color: var(--re); transition: all .3s; letter-spacing: -.02em; }
+.opp-sub { font-size: .68rem; color: var(--li); margin-top: 2px; }
+.lt-bar-row { margin-bottom: 10px; }
+.lt-bar-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+.lt-bar-head span { font-size: .78rem; color: var(--mu); }
+.lt-bar-head strong { font-size: .88rem; font-weight: 800; letter-spacing: -.01em; }
+.lt-bar { height: 12px; border-radius: 3px; background: var(--bo); overflow: hidden; }
+.lt-fill { height: 100%; border-radius: 3px; transition: width .45s cubic-bezier(.4,0,.2,1); }
+.lt-meta { font-size: .62rem; color: var(--li); margin-top: 3px; }
+.lt-gain { background: var(--al); border-radius: 8px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+.lt-gain-lbl { font-size: .75rem; color: var(--mu); }
+.lt-gain-val { font-size: 1.1rem; font-weight: 800; transition: color .3s; letter-spacing: -.01em; }
+/* Study schema in timeline */
+.study-schema { display: grid; gap: 4px; margin-top: 8px; }
+.schema-row { display: flex; align-items: flex-start; gap: 8px; padding: 7px 10px; border-left: 2px solid var(--bl); font-size: .77rem; }
+.schema-period { font-weight: 700; color: var(--bh); min-width: 70px; font-size: .74rem; flex-shrink: 0; }
+.schema-desc { color: var(--mu); line-height: 1.4; }
+.tl-card.study { border-color: var(--bl); }
+.tl-dot.study { border-color: var(--bl); background: var(--bl); }
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5NFR33BFDF"></script>
@@ -378,13 +391,13 @@ async function saveToSupabase() {
 <div id="authGate" style="display:none">
  <div style="max-width:480px;margin:0 auto;padding:80px 24px 60px">
  <div style="text-align:center;margin-bottom:28px">
- <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;margin-bottom:4px"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span></div>
+ <div style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:4px"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span></div>
  </div>
  <div class="auth-box">
  <div style="width:56px;height:56px;background:var(--al);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
  </div>
- <div style="font-family:'DM Serif Display',serif;font-size:1.5rem;margin-bottom:8px">Hämta din plan</div>
+ <div style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:8px">Hämta din plan</div>
  <div style="color:var(--mu);font-size:.88rem;line-height:1.6;margin-bottom:24px">Ange den e-post du angav när du skapade din plan.</div>
  <div class="fld">
  <label>E-postadress</label>
@@ -413,7 +426,7 @@ async function saveToSupabase() {
 <!-- Error: plan ej betald -->
 <div id="unpaidState" style="display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:24px;text-align:center">
  <div style="font-size:2.5rem"></div>
- <div style="font-family:'DM Serif Display',serif;font-size:1.5rem">Planen är inte upplåst</div>
+ <div style="font-family:'Playfair Display',serif;font-size:1.5rem">Planen är inte upplåst</div>
  <div style="color:var(--mu);max-width:360px;line-height:1.6">Du behöver slutföra betalningen för att se din fullständiga plan.</div>
  <a href="/din-plan" style="background:var(--ac);color:#fff;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:700">Gå till betalning →</a>
 </div>
@@ -1386,61 +1399,16 @@ function buildFP(name) {
 
  // Alternativkostnad — hook tidigt i översikt
  const studyYears = e.y;
- // Lifetime comparison — salary growth model
+ // Lifetime comparison — used for score and plan panel
  if (currentSal > 0) {
-   const workLife = 40; // years
-   const workYears = workLife - studyYears; // years earning in new career
-   // Stay: flat current salary (conservative — no raise modelled)
+   const workLife = 40;
+   const workYears = workLife - studyYears;
    const stayTotal = currentSal * 12 * workLife;
-   // Switch: linear growth from s0 to s1 over workYears, minus study cost
    const avgNewSal = (e.s0 + e.s1) / 2;
    const switchTotal = avgNewSal * 12 * workYears - (e.tc * 12 * studyYears);
    const lifetimeGain = switchTotal - stayTotal;
    planState.lifetimeGain = lifetimeGain;
-   const fmtM = v => { const m = v / 1e6; return (m >= 0 ? '' : '−') + Math.abs(m).toFixed(1) + ' M kr'; };
-   const fmtMsign = v => (v >= 0 ? '+' : '−') + Math.abs(v / 1e6).toFixed(1) + ' M kr';
-   const barMax = Math.max(stayTotal, switchTotal);
-   const stayPct = Math.round(stayTotal / barMax * 100);
-   const switchPct = Math.round(switchTotal / barMax * 100);
-   const gainColor = lifetimeGain >= 0 ? 'var(--ah)' : 'var(--re)';
-   const gainBg = lifetimeGain >= 0 ? 'var(--al)' : '#FFF3F3';
-
-   ov += `<div style="background:var(--card);border:1.5px solid var(--bo);border-radius:16px;overflow:hidden;margin-bottom:8px">
- <button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none';this.textContent=this.nextElementSibling.style.display==='none'?'Visa livstidsanalys ↓':'Dölj livstidsanalys ↑'" style="width:100%;padding:14px 18px;background:var(--ac);border:none;color:#fff;font-weight:700;font-size:.88rem;cursor:pointer;text-align:center">Visa livstidsanalys ↓</button>
- <div style="display:none;padding:18px 18px 14px">
-   <div style="font-size:.88rem;font-weight:700;color:var(--ah);margin-bottom:14px">Jämförelse över ${workLife} års arbetsliv</div>
-
-   <div style="margin-bottom:14px">
-     <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px">
-       <span style="font-size:.82rem;color:var(--tx)">Fortsätt med nuvarande jobb</span>
-       <span style="font-size:.95rem;font-weight:700;color:var(--re)">${fmtM(stayTotal)}</span>
-     </div>
-     <div style="height:18px;border-radius:6px;background:var(--bo);overflow:hidden">
-       <div style="height:100%;width:${stayPct}%;background:var(--re);border-radius:6px;transition:width .4s"></div>
-     </div>
-     <div style="font-size:.7rem;color:var(--li);margin-top:3px">${fmt(currentSal)} kr/mån × ${workLife} år</div>
-   </div>
-
-   <div style="margin-bottom:16px">
-     <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px">
-       <span style="font-size:.82rem;color:var(--tx)">Plugga till ${e.t.toLowerCase()}</span>
-       <span style="font-size:.95rem;font-weight:700;color:var(--ah)">${fmtM(switchTotal)}</span>
-     </div>
-     <div style="height:18px;border-radius:6px;background:var(--bo);overflow:hidden">
-       <div style="height:100%;width:${switchPct}%;background:var(--ac);border-radius:6px;transition:width .4s"></div>
-     </div>
-     <div style="font-size:.7rem;color:var(--li);margin-top:3px">${fmt(Math.round(avgNewSal))} kr/mån (snitt) × ${workYears} år − studiekostnad (${fmtM(e.tc * 12 * studyYears)})</div>
-   </div>
-
-   <div style="background:${gainBg};border:1.5px solid ${gainColor};border-radius:12px;padding:14px;text-align:center">
-     <div style="font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:${gainColor};margin-bottom:4px">Livstidsvinst</div>
-     <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:${gainColor};line-height:1">${fmtMsign(lifetimeGain)}</div>
-     <div style="font-size:.78rem;color:${gainColor};margin-top:6px">Att plugga ger dig totalt ${Math.abs(lifetimeGain / 1e6).toFixed(1)} miljoner ${lifetimeGain >= 0 ? 'mer' : 'mindre'} över ${workLife} år</div>
-   </div>
-
-   <div style="font-size:.72rem;color:var(--li);margin-top:10px;padding:8px 10px;background:var(--bg);border-radius:8px;line-height:1.5"><strong>OBS:</strong> Förenklad kalkyl. Snittlönen för ${e.t.toLowerCase()} beräknas som medel av ingångslön (${fmt(e.s0)} kr) och toppinkomst (${fmt(e.s1)} kr). Utan hänsyn till inflation, skatt eller individuella löneökningar.</div>
- </div>
-</div>`; }
+ }
 
  // Yrket section
  ov += `<div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><rect x='2' y='7' width='20' height='14' rx='2'/><path d='M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2'/></svg> Yrket</div>
@@ -1584,12 +1552,12 @@ function buildFP(name) {
    ${loan > 0 ? `
    <div style="text-align:center;padding:0 12px;cursor:pointer" onclick="toggle('exp-skuld')">
      <div class="balance-label">Total CSN-skuld</div>
-     <div style="font-family:'DM Serif Display',serif;font-size:2.2rem;color:#8B6914;line-height:1" id="skuld-total">~${fmtKr(debt)}</div>
+     <div style="font-family:'Playfair Display',serif;font-size:2.2rem;color:#8B6914;line-height:1" id="skuld-total">~${fmtKr(debt)}</div>
      <div style="font-size:.72rem;color:var(--mu);margin-top:4px">efter examen <span class="expand-arrow" style="font-size:.7rem">▾</span></div>
    </div>` : `
    <div style="text-align:center;padding:0 12px">
      <div class="balance-label">CSN-skuld</div>
-     <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--ah);line-height:1">0 kr</div>
+     <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--ah);line-height:1">0 kr</div>
      <div style="font-size:.72rem;color:var(--ah);margin-top:4px">skuldfri student</div>
    </div>`}
  </div>
@@ -1698,12 +1666,12 @@ function buildFP(name) {
      <div class="slider-meta"><span>500 kr</span><span>10 000 kr</span></div>
      <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1px 1fr;gap:0">
        <div style="text-align:center;padding:0 10px">
-         <div style="font-family:'DM Serif Display',serif;font-size:1.5rem;color:#8B6914;line-height:1" id="repay-years">—</div>
+         <div style="font-family:'Playfair Display',serif;font-size:1.5rem;color:#8B6914;line-height:1" id="repay-years">—</div>
          <div style="font-size:.72rem;color:var(--mu);margin-top:3px">år att betala av</div>
        </div>
        <div style="background:var(--bo)"></div>
        <div style="text-align:center;padding:0 10px">
-         <div style="font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--ah);line-height:1" id="repay-age">—</div>
+         <div style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--ah);line-height:1" id="repay-age">—</div>
          <div style="font-size:.72rem;color:var(--mu);margin-top:3px">skuldfri ålder</div>
        </div>
      </div>
@@ -1857,6 +1825,31 @@ function buildFP(name) {
  }
 
 
+
+ // Komvux link — only show if missing courses
+ if (planState.missingCount > 0) {
+   const komvuxUrls = {
+     stockholm:'https://komvux.stockholm.se/vux/vux/courses',
+     goteborg:'https://goteborg.se/wps/portal?uri=gbglnk:2024123135659982',
+     malmo:'https://sjalvservice.malmo.se/oversikt/overview/555',
+     uppsala:'https://open24.ist-asp.com/uppsala/vux/Vux/Start',
+     linkoping:'https://open24.ist-asp.com/linkoping/vux/Vux/Start',
+     umea:'https://www.umea.se/forskolaskolaochutbildning/vuxenutbildning/komvux/ansokan/ansokanochantagningkomvux.4.47feee1318e0c85245e63792.html',
+     orebro:'https://gymnasieskolor.orebro.se/komvux/ansokanantagning.4.52bb39351615069577a8d3b.html',
+   };
+   const komvuxUrl = komvuxUrls[city];
+   bh += `<div style="margin-top:10px">`;
+   if (komvuxUrl) {
+     bh += `<a href="${komvuxUrl}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#fff;border:1.5px solid var(--bl);border-radius:8px;color:var(--bl);font-size:.78rem;font-weight:700;text-decoration:none">
+       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+       Ansök på Komvux ${cityName} →
+     </a>`;
+   } else {
+     bh += `<div style="font-size:.78rem;color:var(--li)">Googla "Komvux [din kommun]" för att hitta din kommuns ansökningssida.</div>`;
+   }
+   bh += `</div>`;
+ }
+
  document.getElementById('panel-beh').innerHTML = bh;
 
  // Extend loan slider for tilläggslån-eligible users + auto-run CSN status
@@ -1884,11 +1877,11 @@ function buildFP(name) {
  // Score header
  pl += `<div class="score-header">
  <div class="score-row">
-   <div class="score-num" id="score-num" style="color:#D97706">—</div>
+   <div class="score-num" id="score-num" style="color:var(--wa)">—</div>
    <div class="score-right">
      <div class="score-label">Genomförbarhetsindex</div>
      <div class="score-text" id="score-text">Beräknar din plan…</div>
-     <div class="score-bar-wrap"><div class="score-bar-fill" id="score-bar" style="width:0%;background:#D97706"></div></div>
+     <div class="score-bar-wrap"><div class="score-bar-fill" id="score-bar" style="width:0%;background:var(--wa)"></div></div>
    </div>
  </div>
  <div class="score-factors" id="score-factors"></div>
@@ -1995,6 +1988,40 @@ function buildFP(name) {
  }
 
  pl += tlStep(`${studyStart.startsWith('HT')?'Augusti':'Januari'} ${startYr} · Mål`,`STUDIESTART — Examen ${gradYear}`,`<ul class="detail-list"><li>Utbildningstid: <strong>${Math.ceil(ry)} år</strong></li><li>Du är <strong>${gradAge} år</strong> när du tar examen</li><li>Ingångslön: <strong>${fmtKr(e.s0)}/mån</strong></li><li>${Math.ceil(ry)} år går oavsett — frågan är om du är ${gradAge} med eller utan examen</li></ul>`,false,true);
+
+ // Study schema step — blue dot, expandable year-by-year
+ {
+   const tlId = 'tl-' + (++tlN);
+   const yrs = Math.ceil(ry);
+   const hasPractice = [14,15,16,17,18,19,20,21].includes(e.id);
+   const schemaRows = [];
+   for (let y = 1; y <= yrs; y++) {
+     const yr1 = startYr + y - 1;
+     const yr2 = yr1 + 1;
+     let desc = y === 1
+       ? 'Grundkurser, introduktion till yrket' + (hasPractice ? ' · Praktik/VFU period 1' : '')
+       : y === yrs
+       ? 'Fördjupning, examensarbete' + (hasPractice ? ' · VFU sista period' : '') + ` · Examen ${gradYear}`
+       : 'Fördjupade kurser' + (hasPractice ? ` · VFU period ${y}` : '');
+     schemaRows.push(`<div class="schema-row"><span class="schema-period">År ${y} · ${yr1}–${yr2}</span><span class="schema-desc">${desc}</span></div>`);
+   }
+   pl += `<div class="tl-step" id="${tlId}">
+   <div class="tl-dot study"></div>
+   <div class="tl-card study">
+     <div class="tl-head" onclick="toggleTl('${tlId}')">
+       <div>
+         <div class="tl-when" style="color:var(--bl)">${studyStart} → ${studyStart.startsWith('HT')?'Jun':'Dec'} ${gradYear}</div>
+         <div class="tl-title">${e.t} · ${yrs} år</div>
+       </div>
+       <span class="tl-arrow"></span>
+     </div>
+     <div class="tl-body"><div class="tl-inner">
+       <p style="font-size:.79rem;color:var(--mu);margin-bottom:8px">${Math.ceil(ry)*60} hp${hasPractice ? ' inkl. verksamhetsförlagd utbildning (VFU/praktik)' : ''}. ${a.study_mode==='distance'?'Distansutbildning — du studerar hemifrån med schemalagda digitala lektioner.':a.study_mode==='parttime'?'Deltidsstudier — går att kombinera med deltidsjobb.':'Heltid, campus.'}</p>
+       <div class="study-schema">${schemaRows.join('')}</div>
+     </div></div>
+   </div>
+   </div>`;
+ }
 
  pl += `</div>`; // end timeline
 
@@ -2129,37 +2156,55 @@ function buildFP(name) {
  </div></div>
  </div>`;
 
- // "Om du väntar" block
+ // Merged livstidsanalys + om du väntar — prototype style
  {
-   const nowStart = planState.startYr || startYr;
-   const nowExam  = nowStart + (planState.studyYears || Math.ceil(ry));
-   const nowJob   = nowExam + 1;
-   const waitYears = [1, 3, 5];
-   const waitBtns = waitYears.map((y,i) =>
-     `<button class="wait-btn${i===1?' active':''}" onclick="setWait(${y},this)">${y} år</button>`
-   ).join('');
-   pl += `<div class="wait-block">
-   <div class="wait-title">⏳ Om du väntar…</div>
-   <div class="wait-btns">${waitBtns}</div>
-   <div class="wait-cost" id="wait-cost">−${new Intl.NumberFormat('sv-SE').format(Math.abs(calcWaitCost(3)))} kr</div>
-   <div class="wait-sub" id="wait-sub">i förlorad inkomst jämfört med att börja nu</div>
-   <div class="wait-timeline">
-     <div class="wait-col now">
-       <div class="wait-col-title">✓ Börjar nu</div>
-       <div class="wait-row">${new Date().getFullYear()} — <span>Ansökan</span></div>
-       <div class="wait-row">${nowStart} — <span>Studiestart</span></div>
-       <div class="wait-row">${nowExam} — <span>Examen</span></div>
-       <div class="wait-row">${nowJob} — <span>Första jobbet</span></div>
+   const workLife = 40;
+   const workYears = workLife - studyYears;
+   const avgNewSal = (e.s0 + e.s1) / 2;
+   const stayTotalLt = currentSal * 12 * workLife;
+   const switchTotalLt = avgNewSal * 12 * workYears - (e.tc * 12 * studyYears);
+   const lifetimeGainLt = switchTotalLt - stayTotalLt;
+   const barMaxLt = Math.max(stayTotalLt, switchTotalLt);
+   const stayPctLt = Math.round(stayTotalLt / barMaxLt * 100);
+   const switchPctLt = Math.round(switchTotalLt / barMaxLt * 100);
+   const gainColorLt = lifetimeGainLt >= 0 ? 'var(--ah)' : 'var(--re)';
+   const fmtMLt = v => (Math.abs(v)/1e6).toFixed(1) + ' M kr';
+   const fmtMsignLt = v => (v >= 0 ? '+' : '\u2212') + Math.abs(v/1e6).toFixed(1) + ' M kr';
+
+   pl += `<div class="section-label" style="margin-top:14px">Livstidsanalys</div>
+   <div class="wait-lifetime" id="wait-block">
+     <div class="lt-bar-row">
+       <div class="lt-bar-head"><span>Fortsätt nuvarande jobb</span><strong id="lt-stay-val" style="color:var(--re)">${fmtMLt(stayTotalLt)}</strong></div>
+       <div class="lt-bar" style="background:rgba(192,83,58,.12)"><div class="lt-fill" id="lt-stay" style="width:${stayPctLt}%;background:var(--re)"></div></div>
+       <div class="lt-meta">${fmtKr(currentSal)} kr/m\u00e5n \u00d7 ${workLife} \u00e5r</div>
      </div>
-     <div class="wait-col later" id="wait-later-col">
-       <div class="wait-col-title">Om 3 år</div>
-       <div class="wait-row">${new Date().getFullYear()+3} — <span>Ansökan</span></div>
-       <div class="wait-row">${nowStart+3} — <span>Studiestart</span></div>
-       <div class="wait-row">${nowExam+3} — <span>Examen</span></div>
-       <div class="wait-row">${nowJob+3} — <span>Första jobbet</span></div>
+     <div class="lt-bar-row">
+       <div class="lt-bar-head"><span>Plugga till ${e.t.toLowerCase()}</span><strong id="lt-switch-val" style="color:var(--ah)">${fmtMLt(switchTotalLt)}</strong></div>
+       <div class="lt-bar"><div class="lt-fill" id="lt-switch" style="width:${switchPctLt}%;background:var(--ac)"></div></div>
+       <div class="lt-meta" id="lt-switch-meta">${fmtKr(Math.round(avgNewSal))} kr/m\u00e5n (snitt) \u00d7 ${workYears} \u00e5r \u2212 studiekostnad</div>
      </div>
-   </div>
+     <div class="lt-gain">
+       <div class="lt-gain-lbl">Din f\u00f6rdel om du b\u00f6rjar nu</div>
+       <div class="lt-gain-val" id="lt-gain-val" style="color:${gainColorLt}">${fmtMsignLt(lifetimeGainLt)}</div>
+     </div>
+     <div style="margin-top:14px;padding-top:13px;border-top:1px solid var(--bo);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+       <span style="font-size:.75rem;font-weight:600;color:var(--mu)">Om du v\u00e4ntar...</span>
+       <div class="wait-btns">
+         <button class="wait-btn act" onclick="setWait(0,this)">Nu</button>
+         <button class="wait-btn" onclick="setWait(1,this)">+1 \u00e5r</button>
+         <button class="wait-btn" onclick="setWait(3,this)">+3 \u00e5r</button>
+         <button class="wait-btn" onclick="setWait(5,this)">+5 \u00e5r</button>
+       </div>
+     </div>
+     <div id="opp-section" style="display:none;margin-top:10px">
+       <div style="display:flex;align-items:baseline;justify-content:space-between">
+         <span class="opp-label">F\u00f6rlorad inkomstskillnad</span>
+         <span class="opp-val" id="opp-val">0 kr</span>
+       </div>
+       <div class="opp-sub" id="opp-sub"></div>
+     </div>
    </div>`;
+   window._ltBase = { stayTotal:stayTotalLt, switchTotal:switchTotalLt, lifetimeGain:lifetimeGainLt, workYears, avgNewSal, workLife, stayPct:stayPctLt, switchPct:switchPctLt };
  }
 
  // Studentum widget — gröna taggar som filterinstruktion
@@ -2173,37 +2218,14 @@ function buildFP(name) {
  else if (a.study_mode === 'campus') stuFilters.push('På plats');
  if (startTagText) stuFilters.push('Start ' + startTagText);
 
- pl += `<div class="section-label" style="margin-top:20px">Hitta din utbildning</div>
- <div class="school-rec">
- <div class="school-rec-head">
- <div class="school-rec-badge"></div>
- <div class="school-rec-title">Utforska ${e.t}-program på Studentum</div>
+ pl += `<a href="${studentumUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;width:100%;padding:16px 18px;background:var(--ah);border:none;border-radius:10px;margin-bottom:12px;cursor:pointer;text-decoration:none">
+ <div>
+   <div style="font-size:.58rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:4px">Nästa steg</div>
+   <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#fff">Hitta ${e.t}-program</div>
+   ${stuFilters.length > 0 ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:7px">${stuFilters.map(t=>'<span style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.85);font-size:.63rem;font-weight:600;padding:3px 8px;border-radius:4px">'+t+'</span>').join('')}</div>` : ''}
  </div>
- ${stuFilters.length > 0 ? `<div style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--li);margin-bottom:8px">Filtrera på Studentum</div>
- <div class="school-tags" style="margin-bottom:14px">${stuFilters.map(t=>'<span class="school-tag">'+t+'</span>').join('')}</div>` : ''}
- <a href="${studentumUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;background:var(--ac);color:#fff;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none">
- Utforska program på Studentum →
- </a>
- ${(()=>{
-   const komvuxUrls = {
-     stockholm: 'https://komvux.stockholm.se/vux/vux/courses',
-     goteborg:  'https://goteborg.se/wps/portal?uri=gbglnk:2024123135659982',
-     malmo:     'https://sjalvservice.malmo.se/oversikt/overview/555',
-     uppsala:   'https://open24.ist-asp.com/uppsala/vux/Vux/Start',
-     linkoping: 'https://open24.ist-asp.com/linkoping/vux/Vux/Start',
-     umea:      'https://www.umea.se/forskolaskolaochutbildning/vuxenutbildning/komvux/ansokan/ansokanochantagningkomvux.4.47feee1318e0c85245e63792.html',
-     orebro:    'https://gymnasieskolor.orebro.se/komvux/ansokanantagning.4.52bb39351615069577a8d3b.html',
-   };
-   const komvuxUrl = komvuxUrls[city];
-   if (komvuxUrl) {
-     return `<a href="${komvuxUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;margin-top:8px;background:#fff;color:var(--te);border:1.5px solid var(--bo);border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none">
- Ansök på Komvux ${cityName} →
+ <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
  </a>`;
-   } else {
-     return `<div style="margin-top:8px;font-size:.8rem;color:var(--li);text-align:center">Googla "Komvux [din kommun]" för att hitta din kommuns ansökningssida.</div>`;
-   }
- })()}
- </div>`;
 
 
 
@@ -2336,19 +2358,23 @@ function updateScore() {
 
   const { score, factors } = calcScore();
 
-  const color = score >= 75 ? '#059669' : score >= 50 ? '#D97706' : '#DC2626';
+  // Color: red < 40, orange 40-74, green >= 75
+  const color = score >= 75 ? 'var(--ah)' : score >= 40 ? 'var(--wa)' : 'var(--re)';
+  const barColor = score >= 75 ? 'var(--ac)' : score >= 40 ? 'var(--wa)' : 'var(--re)';
   el.textContent = score;
   el.style.color = color;
-  if (barEl) { barEl.style.width = score + '%'; barEl.style.background = color; }
+  if (barEl) { barEl.style.width = score + '%'; barEl.style.background = barColor; }
   if (textEl) {
     textEl.textContent = score >= 75 ? 'Starka förutsättningar — dags att agera.' :
-                         score >= 55 ? 'Bra grund — några justeringar kan stärka din plan.' :
+                         score >= 55 ? 'Genomförbart — stärk planen nedan.' :
                          score >= 40 ? 'Möjligt men utmanande — se vad som kan förbättras.' :
                          'Tufft läge just nu — justera planen nedan.';
   }
   if (facEl) {
+    const checkSvg = '<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
+    const warnSvg  = '<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
     facEl.innerHTML = factors.map(f =>
-      `<span class="score-factor ${f.c}">${f.t}</span>`
+      `<span class="score-factor ${f.c}">${f.c === 'ok' ? checkSvg : warnSvg}${f.t}</span>`
     ).join('');
   }
 }
@@ -2368,27 +2394,49 @@ function calcWaitCost(extraYears) {
 }
 
 function setWait(years, btn) {
-  document.querySelectorAll('.wait-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const cost = calcWaitCost(years);
-  const fmt = v => new Intl.NumberFormat('sv-SE').format(Math.abs(v));
-  const costEl = document.getElementById('wait-cost');
-  const subEl  = document.getElementById('wait-sub');
-  const colEl  = document.getElementById('wait-later-col');
-  if (costEl) costEl.textContent = (cost < 0 ? '+' : '−') + fmt(cost) + ' kr';
-  if (subEl)  subEl.textContent  = 'i förlorad inkomst jämfört med att börja nu';
-  if (colEl) {
-    const ns = planState.startYr || 0;
-    const ne = ns + (planState.studyYears || 3);
-    const now = new Date().getFullYear();
-    colEl.querySelector('.wait-col-title').textContent = `Om ${years} år`;
-    colEl.querySelectorAll('.wait-row').forEach((r, i) => {
-      const offsets = [years, years, years, years];
-      const labels  = ['Ansökan','Studiestart','Examen','Första jobbet'];
-      const bases   = [now, ns, ne, ne + 1];
-      r.innerHTML   = `${bases[i] + offsets[i]} — <span>${labels[i]}</span>`;
-    });
+  document.querySelectorAll('.wait-btn').forEach(b => b.classList.remove('act'));
+  btn.classList.add('act');
+  const b = window._ltBase;
+  if (!b) return;
+  const e = edu;
+  const avgNew = b.avgNewSal;
+  const salNow = sal || 0;
+  const fmt = v => new Intl.NumberFormat('sv-SE').format(Math.abs(Math.round(v/1e6*10)/10)) + ' M kr';
+  const fmtSign = v => (v >= 0 ? '+' : '−') + Math.abs(v/1e6).toFixed(1) + ' M kr';
+
+  if (years === 0) {
+    // Reset to base
+    document.getElementById('lt-stay').style.width = b.stayPct + '%';
+    document.getElementById('lt-switch').style.width = b.switchPct + '%';
+    document.getElementById('lt-switch-val').textContent = fmt(b.switchTotal);
+    document.getElementById('lt-gain-val').textContent = fmtSign(b.lifetimeGain);
+    document.getElementById('lt-gain-val').style.color = b.lifetimeGain >= 0 ? 'var(--ah)' : 'var(--re)';
+    document.getElementById('opp-section').style.display = 'none';
+    return;
   }
+
+  // With delay: lose `years` of new career earnings at end
+  const newWorkYears = b.workYears - years;
+  const newSwitch = newWorkYears > 0 ? avgNew * 12 * newWorkYears - (e.tc * 12 * (b.workLife - b.workYears)) : 0;
+  const newGain = newSwitch - b.stayTotal;
+  const barMax = Math.max(b.stayTotal, Math.max(b.switchTotal, newSwitch));
+  const newSwitchPct = Math.round(newSwitch / barMax * 100);
+  const newStayPct = Math.round(b.stayTotal / barMax * 100);
+  const gainColor = newGain >= 0 ? 'var(--ah)' : 'var(--re)';
+
+  document.getElementById('lt-stay').style.width = newStayPct + '%';
+  document.getElementById('lt-switch').style.width = Math.max(0, newSwitchPct) + '%';
+  document.getElementById('lt-switch-val').textContent = fmt(newSwitch);
+  document.getElementById('lt-gain-val').textContent = fmtSign(newGain);
+  document.getElementById('lt-gain-val').style.color = gainColor;
+
+  const oppVal = calcWaitCost(years);
+  const oppEl = document.getElementById('opp-val');
+  const subEl = document.getElementById('opp-sub');
+  const sec = document.getElementById('opp-section');
+  if (oppEl) oppEl.textContent = '−' + new Intl.NumberFormat('sv-SE').format(Math.abs(oppVal)) + ' kr';
+  if (subEl) subEl.textContent = years + ' år × ' + new Intl.NumberFormat('sv-SE').format(Math.round((avgNew - (sal||0)) * 12)) + ' kr/år i inkomstskillnad';
+  if (sec) sec.style.display = 'block';
 }
 
  
