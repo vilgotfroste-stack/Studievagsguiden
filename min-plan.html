@@ -305,6 +305,33 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 .school-tag { background: var(--al); color: var(--ac); padding: 3px 9px; border-radius: 5px; font-size: .7rem; font-weight: 600; }
 
 @keyframes fu { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.score-header { background: #fff; border: 1.5px solid var(--bo); border-radius: 16px; padding: 18px 20px; margin-bottom: 14px; }
+.score-row { display: flex; align-items: center; gap: 16px; }
+.score-num { font-size: 3rem; font-weight: 800; line-height: 1; min-width: 70px; }
+.score-right { flex: 1; }
+.score-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--li); margin-bottom: 2px; }
+.score-text { font-size: .85rem; color: var(--te); font-weight: 500; margin-bottom: 8px; }
+.score-bar-wrap { height: 8px; background: var(--bo); border-radius: 99px; overflow: hidden; }
+.score-bar-fill { height: 100%; border-radius: 99px; transition: width .5s cubic-bezier(.4,0,.2,1), background .5s; }
+.score-factors { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.score-factor { font-size: .75rem; padding: 3px 8px; border-radius: 99px; font-weight: 600; }
+.score-factor.ok { background: #ECFDF5; color: #065F46; }
+.score-factor.warn { background: #FFF8EC; color: #92400E; }
+.score-factor.bad { background: #FEF2F2; color: #991B1B; }
+.wait-block { background: #F8F5FF; border: 1.5px solid #C4B5FD; border-radius: 14px; padding: 16px; margin: 14px 0; }
+.wait-title { font-weight: 700; font-size: .9rem; color: #4C1D95; margin-bottom: 12px; }
+.wait-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.wait-btn { padding: 6px 14px; border-radius: 8px; border: 1.5px solid #C4B5FD; background: #fff; font-size: .8rem; font-weight: 700; cursor: pointer; color: #4C1D95; transition: all .15s; }
+.wait-btn.active { background: #7C3AED; color: #fff; border-color: #7C3AED; }
+.wait-cost { font-size: 1.4rem; font-weight: 800; color: #7C3AED; margin: 6px 0 2px; }
+.wait-sub { font-size: .78rem; color: var(--li); }
+.wait-timeline { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.wait-col { background: #fff; border-radius: 10px; padding: 10px 12px; border: 1.5px solid #E5E7EB; }
+.wait-col-title { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+.wait-col.now .wait-col-title { color: #065F46; }
+.wait-col.later .wait-col-title { color: #991B1B; }
+.wait-row { font-size: .78rem; color: var(--te); margin-bottom: 3px; }
+.wait-row span { font-weight: 700; }
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5NFR33BFDF"></script>
@@ -498,6 +525,7 @@ const CSN_BID_HT=4120, CSN_BID_DT=2036;
 const CSN_LAN_HT=9472, CSN_LAN_DT=4760;
 const GYM=[{id:'natur',l:'Naturvetenskap',k:'Naturvetenskap'},{id:'teknik',l:'Teknik',k:'Teknik'},{id:'samhall',l:'Samhäll',k:'Samhäll'},{id:'ekonomi',l:'Ekonomi',k:'Ekonomi'},{id:'estet',l:'Estet',k:'Estet'},{id:'vard',l:'Vård och omsorg',k:'Vård'},{id:'bygg',l:'Bygg och anläggning',k:'Bygg'},{id:'el',l:'El och energi',k:'El och energi'},{id:'industri',l:'Industri',k:'Industri'},{id:'other',l:'Annat / Komvux',k:'other'}];
 let edu=null,sal=0,ws=0,ans={};
+const planState = { lifetimeGain:0, missingCount:0, startYr:0, studyYears:0 };
 let gCsnTillaggEligible = false;
 
 // Course matching helpers — used in behörighet + verify
@@ -1157,6 +1185,10 @@ function buildFP(name) {
    }
  }
  const startYr = baseYr + compTime;
+ const studyYrs = Math.ceil(ry);
+ planState.startYr = startYr;
+ planState.studyYears = studyYrs;
+ planState.missingCount = verifiedMissing ? verifiedMissing.length : (hasMissing ? 3 : 0);
  const studyStart = vtStart ? 'VT' + startYr : 'HT' + startYr;
  const gradYear = startYr + Math.ceil(ry);
  const gradAge = age + Math.ceil(ry) + compTime;
@@ -1361,6 +1393,7 @@ function buildFP(name) {
    const avgNewSal = (e.s0 + e.s1) / 2;
    const switchTotal = avgNewSal * 12 * workYears - (e.tc * 12 * studyYears);
    const lifetimeGain = switchTotal - stayTotal;
+   planState.lifetimeGain = lifetimeGain;
    const fmtM = v => { const m = v / 1e6; return (m >= 0 ? '' : '−') + Math.abs(m).toFixed(1) + ' M kr'; };
    const fmtMsign = v => (v >= 0 ? '+' : '−') + Math.abs(v / 1e6).toFixed(1) + ' M kr';
    const barMax = Math.max(stayTotal, switchTotal);
@@ -1845,6 +1878,19 @@ function buildFP(name) {
  // 
  let pl = '';
 
+ // Score header
+ pl += `<div class="score-header">
+ <div class="score-row">
+   <div class="score-num" id="score-num" style="color:#D97706">—</div>
+   <div class="score-right">
+     <div class="score-label">Genomförbarhetsindex</div>
+     <div class="score-text" id="score-text">Beräknar din plan…</div>
+     <div class="score-bar-wrap"><div class="score-bar-fill" id="score-bar" style="width:0%;background:#D97706"></div></div>
+   </div>
+ </div>
+ <div class="score-factors" id="score-factors"></div>
+ </div>`;
+
  // Date chips — only for uni, YH dates vary per school
  pl += isUniOnly ? `<div class="date-chips">
  <div class="date-chip ans">
@@ -2080,6 +2126,39 @@ function buildFP(name) {
  </div></div>
  </div>`;
 
+ // "Om du väntar" block
+ {
+   const nowStart = planState.startYr || startYr;
+   const nowExam  = nowStart + (planState.studyYears || Math.ceil(ry));
+   const nowJob   = nowExam + 1;
+   const waitYears = [1, 3, 5];
+   const waitBtns = waitYears.map((y,i) =>
+     `<button class="wait-btn${i===1?' active':''}" onclick="setWait(${y},this)">${y} år</button>`
+   ).join('');
+   pl += `<div class="wait-block">
+   <div class="wait-title">⏳ Om du väntar…</div>
+   <div class="wait-btns">${waitBtns}</div>
+   <div class="wait-cost" id="wait-cost">−${new Intl.NumberFormat('sv-SE').format(Math.abs(calcWaitCost(3)))} kr</div>
+   <div class="wait-sub" id="wait-sub">i förlorad inkomst jämfört med att börja nu</div>
+   <div class="wait-timeline">
+     <div class="wait-col now">
+       <div class="wait-col-title">✓ Börjar nu</div>
+       <div class="wait-row">${new Date().getFullYear()} — <span>Ansökan</span></div>
+       <div class="wait-row">${nowStart} — <span>Studiestart</span></div>
+       <div class="wait-row">${nowExam} — <span>Examen</span></div>
+       <div class="wait-row">${nowJob} — <span>Första jobbet</span></div>
+     </div>
+     <div class="wait-col later" id="wait-later-col">
+       <div class="wait-col-title">Om 3 år</div>
+       <div class="wait-row">${new Date().getFullYear()+3} — <span>Ansökan</span></div>
+       <div class="wait-row">${nowStart+3} — <span>Studiestart</span></div>
+       <div class="wait-row">${nowExam+3} — <span>Examen</span></div>
+       <div class="wait-row">${nowJob+3} — <span>Första jobbet</span></div>
+     </div>
+   </div>
+   </div>`;
+ }
+
  // Studentum widget — gröna taggar som filterinstruktion
  const stuFilters = [];
  const eduTypes = Array.isArray(a.education_type) ? a.education_type : (a.education_type ? [a.education_type] : []);
@@ -2126,12 +2205,117 @@ function buildFP(name) {
 
 
  document.getElementById('panel-plan').innerHTML = pl;
+ setTimeout(updateScore, 50);
 
  // Init sliders 
  setTimeout(() => { updateBudget(loan, rent); }, 50);
 }
 
-// Budget slider logic 
+// Score calculation
+function calcScore() {
+  const a = ans, e = edu;
+  if (!a || !e) return 50;
+
+  let score = 100;
+  const factors = [];
+
+  // 1. Budget marginal (30p) — from live sliders if available
+  const balEl = document.getElementById('bal-display');
+  const balV = balEl ? parseInt(balEl.textContent.replace(/[^0-9-]/g,'')) || 0 : 0;
+  if (balV >= 3000)       { factors.push({t:'Bra ekonomisk marginal', c:'ok'}); }
+  else if (balV >= 0)     { score -= 15; factors.push({t:'Tight budget', c:'warn'}); }
+  else                    { score -= 30; factors.push({t:'Underskott i budget', c:'bad'}); }
+
+  // 2. Behörighet (20p)
+  if (planState.missingCount === 0) {
+    factors.push({t:'Behörig direkt', c:'ok'});
+  } else if (planState.missingCount <= 2) {
+    score -= 10; factors.push({t: planState.missingCount + ' komvux-kurs' + (planState.missingCount > 1 ? 'er' : ''), c:'warn'});
+  } else {
+    score -= 20; factors.push({t: planState.missingCount + ' komvux-kurser', c:'bad'});
+  }
+
+  // 3. Livstidsvinst (20p)
+  if (planState.lifetimeGain > 1e6)       { factors.push({t:'Stark livstidsvinst', c:'ok'}); }
+  else if (planState.lifetimeGain > 0)    { score -= 8; factors.push({t:'Liten livstidsvinst', c:'warn'}); }
+  else                                    { score -= 20; factors.push({t:'Negativ livstidsvinst', c:'bad'}); }
+
+  // 4. Buffert/sparkapital (15p)
+  const savMap = {'none':0,'under10':5000,'10-50':30000,'50-100':75000,'100+':150000};
+  const sav = savMap[a.savings_amount] || 0;
+  if (sav >= 30000)       { factors.push({t:'Bra buffert', c:'ok'}); }
+  else if (sav > 0)       { score -= 8; factors.push({t:'Liten buffert', c:'warn'}); }
+  else                    { score -= 15; factors.push({t:'Ingen buffert', c:'bad'}); }
+
+  // 5. Ålder / återbetalningstid (15p)
+  const age = parseInt(a.age) || 30;
+  const workYrsLeft = 65 - age - (e.y || 3) - planState.missingCount * 0.25;
+  if (workYrsLeft >= 25)  { factors.push({t:'Lång tid att tjäna in', c:'ok'}); }
+  else if (workYrsLeft >= 15) { score -= 8; factors.push({t:'Medellång återbetalningstid', c:'warn'}); }
+  else                    { score -= 15; factors.push({t:'Kort tid kvar till pension', c:'bad'}); }
+
+  return { score: Math.max(10, Math.min(99, score)), factors };
+}
+
+function updateScore() {
+  const el = document.getElementById('score-num');
+  const barEl = document.getElementById('score-bar');
+  const textEl = document.getElementById('score-text');
+  const facEl = document.getElementById('score-factors');
+  if (!el) return;
+
+  const { score, factors } = calcScore();
+
+  const color = score >= 75 ? '#059669' : score >= 50 ? '#D97706' : '#DC2626';
+  el.textContent = score;
+  el.style.color = color;
+  if (barEl) { barEl.style.width = score + '%'; barEl.style.background = color; }
+  if (textEl) {
+    textEl.textContent = score >= 75 ? 'Starka förutsättningar — dags att agera.' :
+                         score >= 55 ? 'Bra grund — några justeringar kan stärka din plan.' :
+                         score >= 40 ? 'Möjligt men utmanande — se vad som kan förbättras.' :
+                         'Tufft läge just nu — justera planen nedan.';
+  }
+  if (facEl) {
+    facEl.innerHTML = factors.map(f => `<span class="score-factor ${f.c}">${f.t}</span>`).join('');
+  }
+}
+
+// "Om du väntar" calculation
+function calcWaitCost(extraYears) {
+  const e = edu;
+  if (!e) return 0;
+  const avgNew = (e.s0 + e.s1) / 2;
+  const salNow = sal || 0;
+  const gainPerYear = (avgNew - salNow) * 12;
+  return Math.round(gainPerYear * extraYears);
+}
+
+function setWait(years, btn) {
+  document.querySelectorAll('.wait-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const cost = calcWaitCost(years);
+  const fmt = v => new Intl.NumberFormat('sv-SE').format(Math.abs(v));
+  const costEl = document.getElementById('wait-cost');
+  const subEl  = document.getElementById('wait-sub');
+  const colEl  = document.getElementById('wait-later-col');
+  if (costEl) costEl.textContent = (cost < 0 ? '+' : '−') + fmt(cost) + ' kr';
+  if (subEl)  subEl.textContent  = 'i förlorad inkomst jämfört med att börja nu';
+  if (colEl) {
+    const ns = planState.startYr || 0;
+    const ne = ns + (planState.studyYears || 3);
+    const now = new Date().getFullYear();
+    colEl.querySelector('.wait-col-title').textContent = `Om ${years} år`;
+    colEl.querySelectorAll('.wait-row').forEach((r, i) => {
+      const offsets = [years, years, years, years];
+      const labels  = ['Ansökan','Studiestart','Examen','Första jobbet'];
+      const bases   = [now, ns, ne, ne + 1];
+      r.innerHTML   = `${bases[i] + offsets[i]} — <span>${labels[i]}</span>`;
+    });
+  }
+}
+
+ 
 function updateBudget() {
  const a = ans, e = edu;
  if (!a || !e) return;
@@ -2255,6 +2439,7 @@ function updateBudget() {
  }
  // Refresh CSN verification if open
  if (document.getElementById('csn-hero-body') && document.getElementById('csn-hero-body').style.display !== 'none') buildCSNVerify();
+ updateScore();
 }
 
 function setSliderPct(id, val, min, max) {
