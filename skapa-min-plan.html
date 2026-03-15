@@ -524,7 +524,7 @@ function devFillAndShowPlan() {
     user_phone: '0701234567',
     current_location: 'Stockholm',
     willing_to_move: 'no',
-    education_type: ['yh', 'uni'],
+    education_type: 'uni',
     study_pace: 'fulltime',
     study_mode: 'campus',
     when_start: 'asap',
@@ -967,23 +967,22 @@ function buildTeaser(){
 const QS=[
     // Del 1 – Studiepreferenser
     {id:'current_location',t:'Var bor du idag?',w:'Hjälper oss beräkna boendekostnader och matchade skolor.',tp:'opts',opts:[{v:'stockholm',l:'Stockholm'},{v:'goteborg',l:'Göteborg'},{v:'malmo',l:'Malmö'},{v:'uppsala',l:'Uppsala'},{v:'linkoping',l:'Linköping'},{v:'lund',l:'Lund'},{v:'umea',l:'Umeå'},{v:'orebro',l:'Örebro'},{v:'other',l:'Annan ort'}]},
-    {id:'education_type',t:'Vilken utbildningsform söker du?',w:'Välj en eller flera alternativ.',tp:'multi',
+    {id:'education_type',t:'Vilken utbildningsform söker du?',w:'YH och universitet har olika ansökningsdatum och process.',tp:'opts',
       cond:()=>{
-        // Auto-sätt och hoppa om utbildningen är entydigt YH eller uni
-        const YH_ONLY=[4,7,9,11,25,26];
-        const UNI_ONLY=[5,6,8,10,14,15,16,17,18,19,20,21,22,23,24,27,28,29];
-        if(edu&&YH_ONLY.includes(edu.id)){ans.education_type=['yh'];return false;}
-        if(edu&&UNI_ONLY.includes(edu.id)){ans.education_type=['uni'];return false;}
+        const YH_ONLY=[3,4,7,9,10,11,12,13,25,26,27];
+        const UNI_ONLY=[5,6,8,14,16,17,18,19,20,21,22,24,28,29];
+        if(edu&&YH_ONLY.includes(edu.id)){ans.education_type='yh';return false;}
+        if(edu&&UNI_ONLY.includes(edu.id)){ans.education_type='uni';return false;}
         return true;
       },
-      opts:[{v:'yh',l:'Yrkeshögskola (YH)'},{v:'uni',l:'Högskola / Universitet'},{v:'any',l:'Spelar ingen roll'}]},
+      opts:[{v:'yh',l:'Yrkeshögskola (YH)'},{v:'uni',l:'Högskola / Universitet'},{v:'unsure',l:'Osäker'}]},
     {id:'study_pace',t:'Vilken studietakt passar dig?',w:'Avgör om du kan arbeta samtidigt.',tp:'opts',opts:[{v:'fulltime',l:'Heltid'},{v:'parttime',l:'Deltid'},{v:'flexible',l:'Flexibel'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'study_mode',t:'Hur vill du studera?',w:'Påverkar dina studiealternativ.',tp:'opts',opts:[{v:'campus',l:'På plats'},{v:'distance',l:'Distans'},{v:'hybrid',l:'Hybrid'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'willing_to_move',t:'Är du villig att flytta för studier?',w:'Påverkar vilka skolor som passar dig.',tp:'opts',cond:()=>ans.study_mode!=='distance',opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'}]},
     {id:'when_start',t:'När vill du börja studera?',w:'Styr tidslinjen i din plan.',tp:'opts',opts:[{v:'asap',l:'Så snart som möjligt'},{v:'6mo',l:'Inom 6 månader'},{v:'12mo',l:'Inom 12 månader'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'fee_ok',t:'Är du öppen för avgiftsbelagda utbildningar?',w:'Privata YH och utbildningar kan kosta.',tp:'opts',
       cond:()=>{
-        const UNI_ONLY=[5,6,8,10,14,15,16,17,18,19,20,21,22,23,24,27,28,29];
+        const UNI_ONLY=[5,6,8,14,16,17,18,19,20,21,22,24,28,29];
         if(edu&&UNI_ONLY.includes(edu.id)){ans.fee_ok='no';return false;}
         return true;
       },
@@ -1196,9 +1195,9 @@ function showBlurredPlan(){
         else{
             // Matcha utbildning på bas av wizard-svar
             const durPref='any'; // Fråga borttagen — visa alla längder
-            const eduTypes=ans.education_type||[];
+            const eduTypeVal2=ans.education_type||'';
             const maxYrs={'short':0.5,'6to12':1,'1to2':2,'3plus':99,'any':99}[durPref]||99;
-            const wantYH=Array.isArray(eduTypes)&&eduTypes.includes('yh');
+            const wantYH=eduTypeVal2==='yh';
             const scored=E.map(ex=>{
                 let sc=0;
                 // Matcha utbildningslängd
@@ -1690,10 +1689,10 @@ function buildFP(name){
         if(a.study_mode==='distance'&&s.f==='campus')return false;
         
         // Utbildningstyp filter
-        const eduTypes=Array.isArray(a.education_type)?a.education_type:(a.education_type?[a.education_type]:[]);
-        if(eduTypes.length>0&&!eduTypes.includes('any')){
-            const wantsYH=eduTypes.includes('yh');
-            const wantsUni=eduTypes.includes('uni');
+        const eduTypeV=a.education_type||'';
+        if(eduTypeV&&eduTypeV!=='unsure'){
+            const wantsYH=eduTypeV==='yh';
+            const wantsUni=eduTypeV==='uni';
             const isYH=s.p===0;
             const isUni=s.p>0;
             
@@ -2749,7 +2748,8 @@ function buildFP(name){
     h+=`</div>`;
 
     // Sök utbildning
-    const eduTypeText2=Array.isArray(a.education_type)?a.education_type.map(t=>({yh:'Yrkeshögskola',uni:'Högskola/Universitet',komvux:'Komvux',folk:'Folkhögskola',private:'Privat skola'}[t]||t)).filter(t=>t!=='any').join(', '):'';
+    const _etMap={yh:'Yrkeshögskola',uni:'Högskola/Universitet',unsure:''};
+    const eduTypeText2=_etMap[a.education_type]||'';
     const studyModeText2={campus:'Campus',distance:'Distans',hybrid:'Hybrid'}[a.study_mode]||'';
     const filterParts2=[eduTypeText2,studyModeText2,e.t,cityName!=='hela Sverige'?cityName:''].filter(Boolean);
 
