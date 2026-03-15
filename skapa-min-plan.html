@@ -1002,8 +1002,6 @@ const QS=[
     // Del 3 – Nuvarande situation
     {id:'age',t:'Hur gammal är du?',w:'Påverkar skuldfri ålder och livstidsberäkning.',tp:'input',ph:'T.ex. 29',inputType:'number',min:18,max:70,su:'år'},
     {id:'work_status',t:'Arbetar du idag?',w:'Avgör om du tappar inkomst under studier.',tp:'opts',opts:[{v:'fulltime',l:'Heltid'},{v:'parttime',l:'Deltid'},{v:'hourly',l:'Timanställd'},{v:'unemployed',l:'Arbetssökande'},{v:'other',l:'Annat'}]},
-    {id:'need_csn',t:'Kommer du behöva studiestöd från CSN under utbildningen?',w:'Avgör din studentbudget.',tp:'opts',opts:[{v:'both',l:'Ja, bidrag och lån'},{v:'grant',l:'Endast bidrag'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}]},
-    {id:'work_during',t:'Planerar du att arbeta vid sidan av studierna?',w:'Påverkar din totala inkomst.',tp:'opts',opts:[{v:'parttime',l:'Ja, deltid'},{v:'extra',l:'Ja, extra vid behov'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}]},
 
     // Del 4 – Familj / ansvar
     {id:'has_kids',t:'Har du barn eller ekonomiskt ansvar för andra?',w:'Påverkar barntillägg och budget.',tp:'opts',opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'}]},
@@ -1690,16 +1688,16 @@ function buildFP(name){
     const hou=a.housing||'student';
     
     // Determine if working needed based on work status
-    const workNeeded=a.work_during==='parttime'||a.work_status==='parttime';
+    const workNeeded=a.work_status==='parttime'||a.work_status==='hourly';
     
     const pm=workNeeded?2:1,ry=e.y*pm;
     const rent=hou==='home'?0:Math.round((CIT[city]||4500)*(HOU[hou]||.75));
     
-    // CSN loan - default based on user's answer
+    // CSN — borttagen från wizard, default bidrag+lån. Justeras via sliders i planen.
     const defaultLoan=a.need_csn==='grant'?0:a.need_csn==='no'?0:6000;
     const loan=defaultLoan;
     
-    const wh=workNeeded?15:(a.need_csn==='both')?10:0;
+    const wh=workNeeded?15:10;
     const wi=Math.round(wh*WR*4.3);
     const mo=Math.round(ry*10),debt=loan*mo,pb=debt>0?Math.round(debt*.04/12):0;
     
@@ -2179,7 +2177,7 @@ function buildFP(name){
     </div>
     
     <div style="padding:14px 16px;background:#fff;border-radius:10px;border:2px solid #e0e0d8;margin-bottom:20px;font-size:.85rem;color:#495057;line-height:1.65">
-    <strong style="color:var(--ah)">Kan man klara sig på CSN?</strong> Baserat på din situation (${hou==='home'?'bo kvar hemma':hou==='student'?'studentboende':'egen bostad'}, ${a.work_during==='no'?'inget extrajobb':'extrajobb'}) ser ditt utgångsläge ${bal>=0?'balanserat ut — men det är tajt':'ansträngt ut'}. ${loan>0?'CSN-lånet ger mer luft i budgeten men bygger skuld som återbetalas efter examen — vad som passar beror på din situation och risktolerans.':'Du klarar dig utan lån i ditt scenario.'} ${a.work_during!=='no'?'Att jobba extra är möjligt — de flesta program tillåter deltid (helger, kväll) utan att studerandet lider.':'Om budgeten kärvar kan ett deltidsjobb (10–15 h/v) göra stor skillnad utan att studierna påverkas.'}
+    <strong style="color:var(--ah)">Kan man klara sig på CSN?</strong> Baserat på din situation (${hou==='home'?'bo kvar hemma':hou==='student'?'studentboende':'egen bostad'}) ser ditt utgångsläge ${bal>=0?'balanserat ut — men det är tajt':'ansträngt ut'}. ${loan>0?'CSN-lånet ger mer luft i budgeten men bygger skuld som återbetalas efter examen — vad som passar beror på din situation och risktolerans.':'Du klarar dig utan lån i ditt scenario.'} Om ekonomin kärvar kan ett deltidsjobb (10–15 h/v) göra stor skillnad utan att studierna påverkas.
     </div>`;
 
     // Interactive budget
@@ -2260,9 +2258,9 @@ function buildFP(name){
     if(a.need_csn==='grant'){
         h+=`<div style="font-size:.72rem;color:#856404;margin-bottom:6px;line-height:1.4;opacity:.85">Du valde endast bidrag. Lånet är frivilligt och kan aktiveras om du behöver.</div>`;
     }else if(a.need_csn==='no'){
-        h+=`<div style="font-size:.72rem;color:#856404;margin-bottom:6px;line-height:1.4;opacity:.85">Du valde inget CSN-stöd. Lånet kan aktiveras om du ändrar dig.</div>`;
+        h+=`<div style="font-size:.72rem;color:#856404;margin-bottom:6px;line-height:1.4;opacity:.85">Lånet kan aktiveras om du behöver mer luft i budgeten.</div>`;
     }else{
-        h+=`<div style="font-size:.72rem;color:#856404;margin-bottom:6px;line-height:1.4;opacity:.85">Frivilligt lån med låg ränta (~0.55%). Justera efter behov.</div>`;
+        h+=`<div style="font-size:.72rem;color:#856404;margin-bottom:6px;line-height:1.4;opacity:.85">Frivilligt lån med låg ränta (2,135%). Justera efter behov.</div>`;
     }
     
     h+=`<input type="range" class="bslider" id="fL" min="0" max="9484" step="100" value="${loan}" oninput="upd()" style="accent-color:#d4a853;width:100%">
@@ -2488,9 +2486,7 @@ function buildFP(name){
         h+=step('2–3 mån före start','Prata med din arbetsgivare',`Undersök om tjänstledighet är möjligt — du har rätt att söka det (Studieledighetslagen). ${a.study_pace==='parttime'?'Med deltidsstudier kan du kanske gå ner till halvtid istället för att säga upp dig helt.':'Om du måste säga upp dig: kolla din uppsägningstid och beräkna innestående semesterdagar som extra buffert.'}`);
     }
     h+=step(`Senast ${studyStart.startsWith('HT')?'15 april':'15 oktober'} ${startYr+compTime}`,`Sök ${e.t} på antagning.se`,`Sök det här programmet plus 2–3 backupalternativ. Du kan prioritera upp till 20 program — använd det. ${schs.length>0?'Dina närmaste alternativ: <strong>'+schs.slice(0,2).map(s=>s.school).join('</strong>, <strong>')+'</strong>.':''}`,true);
-    if(a.need_csn!=='no'){
-        h+=step('Direkt efter antagningsbesked','Ansök om CSN på csn.se',`Bidrag: <strong>${fmt(BID)} kr/mån</strong>${barnCSN?' + barntillägg '+fmt(barnCSN)+' kr':''}${loan>0?'. Lån: <strong>'+fmt(loan)+' kr/mån</strong>':''}. Ansök direkt — CSN betalar inte retroaktivt. Ha personnummer och programkod redo.`);
-    }
+    h+=step('Direkt efter antagningsbesked','Ansök om CSN på csn.se',`Bidrag: <strong>${fmt(BID)} kr/mån</strong>${barnCSN?' + barntillägg '+fmt(barnCSN)+' kr':''}${loan>0?'. Lån: <strong>'+fmt(loan)+' kr/mån</strong>':''}. Ansök direkt — CSN betalar inte retroaktivt. Ha personnummer och programkod redo.`);
     h+=step(studyStart.startsWith('HT')?'Augusti '+(startYr+compTime):'Januari '+(startYr+compTime),'STUDIESTART',`${Math.ceil(ry)} år. Du tar examen ${gradYear} — ${gradAge} år gammal.`);
     h+=`</div>`;
 
@@ -2520,7 +2516,7 @@ function buildFP(name){
 
         {period:`Termin 1`,title:'Det svåraste halvåret',
         desc:`Studietakten är annorlunda än jobbet — mer självstudier, mer ansvar. ${e.id===14?'VFU-veckor (praktik på vårdinstitution) börjar redan år 1 för många sjuksköterskeprogrammen.':e.id===1?'Första programmeringskurserna är intensiva. Plug-and-play lösningar finns inte — du måste förstå.':'Det tar en termin att lära sig hur man studerar. Det är normalt.'} De flesta som hoppar av gör det nu — de som stannar kvar är nöjda att de gjorde det.`,
-        note:`${a.work_during!=='no'?'Du planerar att jobba extra — håll det under 10–15 h/v det första halvåret.':'Om ekonomin kärvar: ett extra skifte i veckan gör stor skillnad utan att studierna påverkas.'}`},
+        note:`Om ekonomin kärvar: ett extra skifte i veckan gör stor skillnad utan att studierna påverkas.`},
 
         {period:`År ${Math.min(2,Math.ceil(ry))}${Math.ceil(ry)>1?'–'+Math.ceil(ry-1):''}`,title:'Ryggmärgen',
         desc:`Nu vet du hur systemet fungerar. Examinationsstressen minskar. Du börjar se dig själv som ${e.t.toLowerCase()}. ${e.id===14?'VFU-perioder börjar växa — du träffar patienter, arbetar i team, förstår varför du valde detta.':e.id===1?'Du börjar bygga projekt, lär dig Git, förstår varför saker fungerar som de gör.':'Kurser som kändes abstrakta år 1 faller på plats.'} ${a.has_partner==='yes_same'?'Stäm av regelbundet med din partner — studietiden påverkar relationen mer än folk tror, men det går om ni pratar om det.':''}`,
@@ -2744,7 +2740,7 @@ function buildFP(name){
     steps2.push({when:applyDL+applyYearNote,icon:'🎯',title:`Sök ${e.t} på antagning.se`,desc:`Gå till <strong>antagning.se</strong> → sök "${e.t}" → välj ${schs.length>0?'"'+schs[0].school+(schs.length>1?'" eller "'+schs[1].school:'')+'"':'din skola'}. Du kan prioritera upp till 20 program. <strong>Deadline: ${applyDL}</strong>. Sent inkommen ansökan = ingen plats.${compTime>0?' Obs: Kompletteringen tar '+compTime+(compTime===1?' år':' år') +' — därav det senare datumet.':''}`,urgent:true});
 
     // Steg 6: CSN
-    if(a.need_csn!=='no'){
+    {
         const csnYear=startYr+compTime;
         const csnMonth=studyStart.startsWith('HT')?'juli':'december';
         steps2.push({when:'Efter antagningsbesked ('+csnMonth+' '+csnYear+')',icon:'💳',title:'Ansök om CSN',desc:`Logga in på <strong>csn.se</strong> direkt när du fått antagningsbesked. Bidrag: <strong>${fmt(BID)} kr/mån</strong>${barnCSN?' + barntillägg '+fmt(barnCSN)+' kr/mån':''}${loan>0?', lån: '+fmt(loan)+' kr/mån':''}. Viktigt: ansök i tid — utbetalning sker inte retroaktivt.`});
