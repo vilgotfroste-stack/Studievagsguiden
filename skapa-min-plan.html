@@ -980,7 +980,6 @@ const QS=[
     {id:'study_mode',t:'Hur vill du studera?',w:'Påverkar dina studiealternativ.',tp:'opts',opts:[{v:'campus',l:'På plats'},{v:'distance',l:'Distans'},{v:'hybrid',l:'Hybrid'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'willing_to_move',t:'Är du villig att flytta för studier?',w:'Påverkar vilka skolor som passar dig.',tp:'opts',cond:()=>ans.study_mode!=='distance',opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'}]},
     {id:'when_start',t:'När vill du börja studera?',w:'Styr tidslinjen i din plan.',tp:'opts',opts:[{v:'asap',l:'Så snart som möjligt'},{v:'6mo',l:'Inom 6 månader'},{v:'12mo',l:'Inom 12 månader'},{v:'any',l:'Spelar ingen roll'}]},
-    {id:'duration',t:'Hur lång utbildning är du beredd att gå?',w:'Filtrerar bort för långa program.',tp:'opts',opts:[{v:'short',l:'Kortare än 6 månader'},{v:'6to12',l:'6–12 månader'},{v:'1to2',l:'1–2 år'},{v:'3plus',l:'3 år eller längre'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'fee_ok',t:'Är du öppen för avgiftsbelagda utbildningar?',w:'Privata YH och utbildningar kan kosta.',tp:'opts',
       cond:()=>{
         const UNI_ONLY=[5,6,8,10,14,15,16,17,18,19,20,21,22,23,24,27,28,29];
@@ -1197,7 +1196,7 @@ function showBlurredPlan(){
         if(eid&&E.find(ex=>ex.id===eid)){edu=E.find(ex=>ex.id===eid);}
         else{
             // Matcha utbildning på bas av wizard-svar
-            const durPref=ans.duration||'any';
+            const durPref='any'; // Fråga borttagen — visa alla längder
             const eduTypes=ans.education_type||[];
             const maxYrs={'short':0.5,'6to12':1,'1to2':2,'3plus':99,'any':99}[durPref]||99;
             const wantYH=Array.isArray(eduTypes)&&eduTypes.includes('yh');
