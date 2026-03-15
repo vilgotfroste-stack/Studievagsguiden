@@ -618,7 +618,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // Step 1
 async function calcG(){
-    sal=parseInt(document.getElementById('inSal').value)||0;
+    sal=Math.min(70000, parseInt(document.getElementById('inSal').value)||0);
     const eid=parseInt(document.getElementById('inEdu').value);
     if(!sal||!eid){await svgAlert('Fyll i din lön och välj utbildning.','📝');return}
     edu=E.find(e=>e.id===eid);
@@ -1009,8 +1009,8 @@ const QS=[
 
     // Del 5 – Boende & utgifter
     {id:'housing',t:'Hur tänker du bo under studietiden?',w:'Bestämmer din boendekostnad i budgeten.',tp:'opts',opts:[{v:'student',l:'Studentboende / korridor'},{v:'shared',l:'Dela lägenhet'},{v:'rental',l:'Egen hyresrätt'},{v:'home',l:'Bo kvar där jag bor'}]},
-    {id:'fixed_expenses',t:'Hur mycket har du i fasta utgifter per månad?',w:'Hyra, el, försäkringar, abonnemang.',tp:'input',ph:'T.ex. 8500',su:'kr/mån',cond:()=>ans.housing==='home'},
-    {id:'variable_expenses',t:'Hur mycket har du i rörliga utgifter per månad?',w:'Mat, nöje, kläder, transport.',tp:'input',ph:'T.ex. 4000',su:'kr/mån',cond:()=>ans.housing==='home'},
+    {id:'fixed_expenses',t:'Hur mycket har du i fasta utgifter per månad?',w:'Försäkringar, telefon, abonnemang — exklusive hyra.',tp:'input',ph:'T.ex. 3500',su:'kr/mån'},
+    {id:'variable_expenses',t:'Hur mycket har du i rörliga utgifter per månad?',w:'Mat, nöje, kläder, transport.',tp:'input',ph:'T.ex. 4000',su:'kr/mån'},
 
     // Del 6 – Sparande
     {id:'savings_amount',t:'Hur mycket har du sparat som kan användas under studietiden?',w:'CSN tar ~6 veckor innan första utbetalning.',tp:'slider',min:0,max:100000,step:1000,unit:'kr',default:0},
@@ -1590,79 +1590,8 @@ function showPaywall(firstName,e,debt,be,sal,full,part,gp,loan,mo,BID){
 }
 
 
-function renderPay(){
-    const vqs=getVisibleQS();
-    const e=edu,a=ans;
-    const age=Math.min(70,Math.max(18,parseInt(a.age)||29));
-    const city=mapCity(a.current_location);
-    const cn={stockholm:'Stockholm',goteborg:'Göteborg',malmo:'Malmö',uppsala:'Uppsala',linkoping:'Linköping',lund:'Lund',umea:'Umeå',orebro:'Örebro',other:'hela Sverige'};
-    const cityName=cn[city]||'din stad';
-    const gp=GYM.find(g=>g.id===a.gym),gk=gp?gp.k:'other';
-    const full=a.has_grades==='yes'&&e.rp.includes(gk);
-    const part=a.has_grades==='yes'&&e.pp.includes(gk);
-    const behTxt=full?'Behörig — sök direkt':part?'Komplettering ~1 termin':'Kolla dina betyg';
-    const behCol=full?'var(--ac)':part?'var(--wa)':'var(--re)';
-    const netNow=Math.round(sal*0.7); // nettolön (ungefärlig) för budgetkalkyl
 
-    document.getElementById('wTi').textContent='Din plan är klar';
-    document.getElementById('wBar').style.width='100%';
-    document.getElementById('wSL').textContent='';
-    document.getElementById('wB').innerHTML=`<div class="wq">
-    <div style="background:linear-gradient(135deg,var(--ac),var(--ah));border-radius:12px;padding:20px;color:#fff;margin-bottom:20px;text-align:center">
-    <div style="font-family:'DM Serif Display',serif;font-size:1.15rem;margin-bottom:4px">${age} år — din väg till ${e.t.toLowerCase()}</div>
-    <div style="opacity:.85;font-size:.84rem">${cityName} · ${e.y} år · Examen ${new Date().getFullYear()+(new Date().getMonth()<5?0:1)+e.y}</div>
-    </div>
 
-    <div style="display:grid;gap:6px;margin-bottom:20px">
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border:1.5px solid var(--bo)">
-    <div style="width:8px;height:8px;border-radius:50%;background:${behCol};flex-shrink:0"></div>
-    <span style="font-size:.86rem;font-weight:600">Behörighet</span>
-    <span style="margin-left:auto;font-size:.82rem;color:${behCol};font-weight:600">${behTxt}</span></div>
-
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border:1.5px solid var(--bo)">
-    <div style="width:8px;height:8px;border-radius:50%;background:var(--bl);flex-shrink:0"></div>
-    <span style="font-size:.86rem;font-weight:600">Ekonomi</span>
-    <span style="margin-left:auto;font-size:.82rem;color:var(--mu)">${fmt(netNow)} kr → <span style="filter:blur(4px)">XX XXX kr</span></span></div>
-
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border:1.5px solid var(--bo)">
-    <div style="width:8px;height:8px;border-radius:50%;background:var(--wa);flex-shrink:0"></div>
-    <span style="font-size:.86rem;font-weight:600">Handlingsplan</span>
-    <span style="margin-left:auto;font-size:.82rem;color:var(--mu)">6 steg + checklista</span></div>
-
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border:1.5px solid var(--bo)">
-    <div style="width:8px;height:8px;border-radius:50%;background:var(--pu);flex-shrink:0"></div>
-    <span style="font-size:.86rem;font-weight:600">Skolor</span>
-    <span style="margin-left:auto;font-size:.82rem;color:var(--mu)">${e.sch.length} matchade</span></div>
-    </div>
-
-    <div style="text-align:center;margin-bottom:16px"><div style="font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:4px">Lås upp hela planen</div><div style="font-size:.82rem;color:var(--mu)">Personlig budget, tidslinje, skolmatchning — allt baserat på dina ${vqs.length} svar.</div></div>
-
-    <div class="fld"><label>Namn</label><input type="text" id="pNam" placeholder="Ditt namn"></div>
-    <div class="fld"><label>Mejl</label><input type="email" id="pEm" placeholder="namn@mejl.se"></div>
-    <div class="fld"><label>Telefon (valfritt)</label><input type="tel" id="pTel" placeholder="070-123 45 67"></div>
-    <button class="btn" onclick="pay()">Betala 50 kr — lås upp</button>
-    <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-size:.76rem;color:var(--li)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Säker betalning — engångsbetalning</div>
-    <div class="wnav" style="margin-top:16px"><button class="wbk" onclick="ws=${vqs.length-1};renderW()">← Tillbaka</button><div></div></div>
-    </div>`;
-}
-
-// pay() ersatt av saveAndRedirect — se nedan
-function pay_DISABLED_REPLACED(){
-    // Använd userName från answers istället för input fields
-    const userName=ans.user_name||'Användare';
-    
-    // Bygg hela planen direkt
-    buildFP(userName);
-    
-    // Visa planen
-    document.getElementById('fpDiv').classList.add('v');
-    document.getElementById('fpDiv').style.display='block';
-    
-    setTimeout(()=>{
-        const fpDiv=document.getElementById('fpDiv');
-        window.scrollTo({top:fpDiv.offsetTop-70,behavior:'smooth'});
-    },200);
-}
 
 
 
@@ -3163,6 +3092,13 @@ function updPayback(){
 
 
 async function saveAndRedirect() {
+    // Fix 3: Validera e-post
+    const emailRaw = (ans.user_email || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailRaw)) {
+        await svgAlert('Ange en giltig e-postadress för att spara din plan.', '📧');
+        return;
+    }
+
     // Hämta eller skapa session_id
     let sid = localStorage.getItem('svg_sid');
     if (!sid) { sid = crypto.randomUUID(); localStorage.setItem('svg_sid', sid); }
@@ -3172,7 +3108,6 @@ async function saveAndRedirect() {
     try { localStorage.setItem('svg_answers', JSON.stringify(saveData)); } catch(e) {}
     try { localStorage.setItem('svg_sal', sal || 0); } catch(e) {}
     try { localStorage.setItem('svg_edu', edu ? edu.id : 0); } catch(e) {}
-    // Spara e-post + lösenord för att förifylla på /din-plan
     try { if(ans.user_email) localStorage.setItem('svg_email', ans.user_email); } catch(e) {}
     try { if(ans.user_password) localStorage.setItem('svg_password', ans.user_password); } catch(e) {}
 
@@ -3189,9 +3124,24 @@ async function saveAndRedirect() {
     <style>@keyframes progress{from{width:40%}to{width:80%}}</style>`;
     document.body.appendChild(loadMsg);
 
-    // Spara till Supabase via raw fetch (undviker DataCloneError)
+    // Fix 5: Retry-hjälpfunktion
+    async function fetchWithRetry(url, opts, retries=2) {
+        for (let i=0; i<=retries; i++) {
+            try {
+                const res = await fetch(url, opts);
+                if (res.ok || res.status === 409) return res; // 409 = conflict, ok att ignorera
+                if (i < retries) await new Promise(r => setTimeout(r, 800));
+                else return res;
+            } catch(e) {
+                if (i < retries) await new Promise(r => setTimeout(r, 800));
+                else throw e;
+            }
+        }
+    }
+
+    // Spara till Supabase answers-tabell
     try {
-        const res = await fetch(SUPABASE_URL + '/rest/v1/answers', {
+        await fetchWithRetry(SUPABASE_URL + '/rest/v1/answers', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -3205,24 +3155,18 @@ async function saveAndRedirect() {
                 data: saveData
             })
         });
-        if (!res.ok) console.warn('Supabase insert fel:', res.status, await res.text());
     } catch(e) {
-        console.warn('Supabase save failed, localStorage backup aktivt:', e.message);
+        console.warn('Supabase answers save failed, localStorage backup aktivt:', e.message);
     }
 
-    // Spara plan: radera gammal + skapa ny (säkerställer att lösenordshash-triggern kör)
-    const planEmail = (ans.user_email || '').trim().toLowerCase();
+    // Spara plan: radera gammal + skapa ny
+    const planEmail = emailRaw.toLowerCase();
     try {
-        // Ta bort eventuell befintlig plan för denna email
-        await fetch(SUPABASE_URL + '/rest/v1/plans?email=eq.' + encodeURIComponent(planEmail), {
+        await fetchWithRetry(SUPABASE_URL + '/rest/v1/plans?email=eq.' + encodeURIComponent(planEmail), {
             method: 'DELETE',
-            headers: {
-                'apikey': SUPABASE_KEY,
-                'Authorization': 'Bearer ' + SUPABASE_KEY
-            }
+            headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
         });
-        // Skapa ny plan (INSERT → triggern hashar lösenordet)
-        await fetch(SUPABASE_URL + '/rest/v1/plans', {
+        const planRes = await fetchWithRetry(SUPABASE_URL + '/rest/v1/plans', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -3239,11 +3183,13 @@ async function saveAndRedirect() {
                 data: saveData
             })
         });
+        if (planRes && !planRes.ok) console.warn('Plans insert fel:', planRes.status);
     } catch(e) {
-        console.warn('Plans save failed:', e.message);
+        // localStorage-backup finns — redirect ändå så användaren inte fastnar
+        console.warn('Plans save failed, fortsätter med localStorage:', e.message);
     }
 
-    // Direkt till /min-plan
+    // Redirecta alltid — localStorage är backup om Supabase misslyckas
     window.location.href = '/min-plan';
 }
 
