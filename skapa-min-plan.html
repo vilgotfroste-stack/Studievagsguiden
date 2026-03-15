@@ -1297,106 +1297,277 @@ function showBlurredPlan(){
 }
 
 function showPaywall(firstName,e,debt,be,sal,full,part,gp,loan,mo,BID){
+    const a=ans;
     const fmt=n=>n.toLocaleString('sv-SE');
     const salDiff=e.s0-sal;
-    const gradYr=new Date().getFullYear()+Math.ceil(e.y)+(full?0:part?1:2);
+    const age=Math.min(70,Math.max(18,parseInt(a.age)||29));
+    const city=a.current_location||'other';
+    const cn={stockholm:'Stockholm',goteborg:'Göteborg',malmo:'Malmö',uppsala:'Uppsala',linkoping:'Linköping',lund:'Lund',umea:'Umeå',orebro:'Örebro',other:'din ort'};
+    const cityName=cn[city]||'din ort';
+    const nSvar=Object.keys(a).filter(k=>a[k]&&k!=='user_name'&&k!=='user_phone').length;
+
+    // Oro — kort slagkraftig mening
+    const concernStat={
+        economy: salDiff>0?`+${fmt(salDiff)} kr/mån från dag ett — CSN täcker studietiden`:`CSN ger dig studielön — du behöver inte ha råd idag`,
+        time: a.study_pace==='parttime'?`Du studerar deltid — du behåller inkomsten under hela utbildningen`:`Din tidslinje är beräknad med din livssituation`,
+        grades: `HP-provet ger dig en alternativ väg in — 450 kr att skriva`,
+        age: age>=35?`Medelåldern på YH är 31 år — du är i gott sällskap`:`Var tredje student är 25+ — du är inte ensam`,
+        job: `${e.dem===5?'Akut brist':e.dem===4?'Hög efterfrågan':'Stabil marknad'} — ${e.dem>=4?'jobb garanterat vid examen':'bred arbetsmarknad'}`,
+        none: `Du verkar redo — planen visar exakt nästa steg`
+    };
+    const concern=a.biggest_concern||'none';
+    const concernLabel={economy:'Din oro: ekonomin',time:'Din oro: tiden',grades:'Din oro: betygen',age:'Din oro: åldern',job:'Din oro: jobbet efteråt',none:'Din inställning'}[concern]||'Din oro';
+    const concernText=concernStat[concern]||concernStat.none;
+
+    // Drivkraft
+    const whyLabel='Drivkraft';
+    const whyText={meaning:'Vill ha ett meningsfullt jobb',salary:'Vill tjäna mer och få ekonomisk trygghet',burnout:'Redo att lämna något bakom sig',career:'Vill ha bättre karriärmöjligheter',passion:'Har alltid velat göra något annat',other:'Redo för en ny riktning'}[a.why_change]||'';
+
+    // Jobbmarknad-text
+    const demTxt=e.dem===5?'Akut brist — jobb garanterat':e.dem===4?'Hög efterfrågan':'Stabil marknad';
+
+    // Dynamiska tidslinjesdatum
+    const months=['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec'];
+    const nowD=new Date(), nowMo=nowD.getMonth(), nowYr=nowD.getFullYear();
+    const mNow=months[nowMo].charAt(0).toUpperCase()+months[nowMo].slice(1)+' '+nowYr;
+    const nextApp=nowMo<9?'Okt '+nowYr:'Mar '+(nowYr+1);
+    const besked=nowMo<9?'Jun–jul '+nowYr:'Dec '+nowYr;
+    const komvuxExtra=full?0:part?1:2;
+    const gradYr=nowYr+Math.ceil(e.y)+komvuxExtra;
+    const gradMon=e.y%1===0.5?'Jan':'Jun';
+
+    // Enkel score-uppskattning (visas blurrad men stapeln är meningsfull)
+    let score=50;
+    if(salDiff>5000) score+=12;
+    if(e.dem>=4) score+=10;
+    if(e.ai<=8) score+=8;
+    if(full) score+=10; else if(part) score+=5;
+    if(loan<6000) score+=5;
+    score=Math.min(95,Math.max(40,score));
+    const scorePct=score;
 
     const pw=document.createElement('div');
-    pw.style.cssText='position:fixed;inset:0;background:#f5f4f0;z-index:9990;overflow-y:auto;';
+    pw.id='svgPaywall';
+    pw.style.cssText='position:fixed;inset:0;background:var(--bg);z-index:9990;overflow-y:auto;-webkit-overflow-scrolling:touch;';
     pw.innerHTML=`
-    <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 16px 48px">
+    <style>
+    .pw-body{max-width:480px;margin:0 auto;padding:0 16px 48px;}
+    .pw-nav{padding:14px 20px;border-bottom:1px solid var(--bo);display:flex;align-items:center;justify-content:space-between;background:rgba(247,247,244,.97);position:sticky;top:0;z-index:10;backdrop-filter:blur(10px);}
+    .pw-logo{font-family:'DM Serif Display',serif;font-size:1.1rem;}
+    .pw-badge{font-size:.7rem;font-weight:700;background:var(--al);color:var(--ah);padding:5px 11px;border-radius:6px;}
+    .pw-combo{background:var(--card);border:1.5px solid var(--bo);border-radius:10px;margin-bottom:10px;overflow:hidden;}
+    .pw-crow{display:flex;align-items:center;gap:9px;padding:11px 14px;border-bottom:1px solid var(--bo);}
+    .pw-crow:last-child{border-bottom:none;}
+    .pw-clbl{font-size:.6rem;font-weight:700;color:var(--li);text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;}
+    .pw-cmain{font-family:'DM Serif Display',serif;font-size:.93rem;color:var(--tx);line-height:1.3;}
+    .pw-hero{background:linear-gradient(140deg,#0F1F0F,#1A3A2A);border-radius:16px;padding:20px;margin-bottom:10px;position:relative;overflow:hidden;}
+    .pw-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;background:radial-gradient(circle,rgba(122,194,154,.12) 0%,transparent 70%);}
+    .pw-eye{font-size:.6rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--ac);margin-bottom:7px;}
+    .pw-title{font-family:'DM Serif Display',serif;font-size:1.35rem;color:#fff;line-height:1.15;margin-bottom:3px;}
+    .pw-sub{font-size:.74rem;color:rgba(255,255,255,.35);margin-bottom:17px;}
+    .pw-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+    .pw-sc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 12px;}
+    .pw-scl{font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:rgba(255,255,255,.35);margin-bottom:4px;}
+    .pw-scv{font-family:'DM Serif Display',serif;font-size:1.1rem;color:#fff;line-height:1;margin-bottom:2px;}
+    .pw-scs{font-size:.62rem;color:rgba(255,255,255,.35);}
+    .pw-sc.good .pw-scv{color:#7AC29A;}.pw-sc.warn .pw-scv{color:#D4A853;}.pw-sc.neu .pw-scv{color:#6BA3D0;}
+    .pw-score-card{background:var(--card);border:1.5px solid var(--bo);border-radius:12px;padding:16px 18px;margin-bottom:10px;position:relative;}
+    .pw-score-row{display:flex;align-items:center;gap:14px;margin-bottom:10px;}
+    .pw-score-num{font-size:2.8rem;font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--wa);filter:blur(5px);user-select:none;min-width:64px;}
+    .pw-score-right{flex:1;}
+    .pw-score-lbl{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--li);margin-bottom:4px;display:flex;justify-content:space-between;}
+    .pw-bar{height:5px;background:var(--bo);border-radius:99px;overflow:hidden;margin-bottom:4px;}
+    .pw-bar-fill{height:100%;border-radius:99px;background:var(--wa);}
+    .pw-bar-scale{display:flex;justify-content:space-between;font-size:.55rem;color:var(--li);}
+    .pw-score-blur{filter:blur(4px);user-select:none;pointer-events:none;}
+    .pw-score-txt{font-size:.82rem;color:var(--mu);margin-bottom:6px;}
+    .pw-tags{display:flex;flex-wrap:wrap;gap:5px;}
+    .pw-tag{font-size:.7rem;padding:3px 8px;border-radius:4px;font-weight:600;}
+    .pw-tag.ok{background:var(--al);color:var(--ah);}.pw-tag.warn{background:var(--wl);color:var(--wa);}
+    .pw-lock{position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(transparent,rgba(247,247,244,.96));display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;border-radius:0 0 12px 12px;pointer-events:none;}
+    .pw-lock-txt{display:flex;align-items:center;gap:5px;font-size:.7rem;color:var(--li);font-weight:600;}
+    .pw-tl{background:var(--card);border:1.5px solid var(--bo);border-radius:10px;overflow:hidden;margin-bottom:10px;}
+    .pw-tl-row{padding:11px 14px;border-bottom:1px solid var(--bo);display:flex;align-items:center;gap:10px;}
+    .pw-tl-row:last-child{border-bottom:none;}
+    .pw-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;}
+    .pw-when{font-size:.57rem;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px;}
+    .pw-tl-blur{filter:blur(4px);user-select:none;}
+    .pw-tl-line{height:9px;background:var(--bo);border-radius:4px;}
+    .pw-ben{background:var(--card);border:1.5px solid var(--bo);border-radius:10px;padding:11px 14px;margin-bottom:6px;display:flex;align-items:flex-start;gap:10px;}
+    .pw-ben-check{width:18px;height:18px;border-radius:50%;background:var(--al);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+    .pw-ben-text{font-size:.83rem;color:var(--tx);line-height:1.5;}
+    .pw-social{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:20px;padding:10px 16px;background:var(--al);border-radius:8px;}
+    .pw-dot-pulse{width:8px;height:8px;border-radius:50%;background:var(--ac);flex-shrink:0;animation:pwPulse 2s infinite;}
+    @keyframes pwPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+    .pw-cta-btn{display:block;width:100%;padding:16px 20px;background:var(--ah);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:1rem;font-weight:800;cursor:pointer;margin-bottom:8px;letter-spacing:.01em;}
+    .pw-cta-sub{text-align:center;font-size:.72rem;color:var(--li);line-height:1.6;margin-bottom:8px;}
+    .pw-stripe{display:flex;align-items:center;justify-content:center;gap:4px;font-size:.71rem;color:var(--li);}
+    </style>
 
-    <!-- Header -->
-    <div style="text-align:center;margin-bottom:28px;max-width:480px">
-        <div style="display:inline-block;background:var(--ac);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:6px 14px;border-radius:100px;margin-bottom:14px">Din plan är klar</div>
-        <h2 style="font-family:'DM Serif Display',serif;font-size:1.75rem;color:var(--ah);line-height:1.25;margin-bottom:8px">${firstName} — din väg till ${e.t.toLowerCase()}</h2>
-        <p style="font-size:.88rem;color:#6c757d">Vi har analyserat din situation och tagit fram din personliga plan.</p>
+    <div class="pw-nav">
+      <div class="pw-logo"><span style="color:var(--bl)">Studievägs</span><span style="color:var(--ac)">guiden</span></div>
+      <div class="pw-badge">Din plan är klar</div>
     </div>
 
-    <!-- Blurrad plan-preview -->
-    <div style="width:100%;max-width:480px;margin-bottom:24px;border-radius:18px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.12);position:relative">
+    <div class="pw-body">
 
-        <!-- Synliga nyckeltal — lockbete -->
-        <div style="background:#fff;padding:20px;border-bottom:1px solid #e0e0d8">
-        <div style="font-size:.7rem;font-weight:700;color:#6c757d;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Ur din plan</div>
-        <div class="mob-grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-            <div style="padding:12px 8px;background:${salDiff>0?'#D9F0E3':'#f8d7da'};border-radius:10px;text-align:center">
-            <div style="font-size:.6rem;font-weight:700;color:${salDiff>0?'var(--ah)':'#721c24'};text-transform:uppercase;margin-bottom:3px">Löneförändring</div>
-            <div style="font-family:'DM Serif Display',serif;font-size:1.05rem;color:${salDiff>0?'var(--ah)':'#721c24'};font-weight:700">${salDiff>0?'+':''}${fmt(salDiff)} kr</div>
-            <div style="font-size:.6rem;color:${salDiff>0?'var(--ah)':'#721c24'};opacity:.8">per månad</div>
-            </div>
-            <div style="padding:12px 8px;background:#fff3cd;border-radius:10px;text-align:center">
-            <div style="font-size:.6rem;font-weight:700;color:#856404;text-transform:uppercase;margin-bottom:3px">CSN-skuld</div>
-            <div style="font-family:'DM Serif Display',serif;font-size:1.05rem;color:#856404;font-weight:700">${fmt(debt)} kr</div>
-            <div style="font-size:.6rem;color:#856404;opacity:.8">totalt lån</div>
-            </div>
-            <div style="padding:12px 8px;background:#cfe2ff;border-radius:10px;text-align:center">
-            <div style="font-size:.6rem;font-weight:700;color:#084298;text-transform:uppercase;margin-bottom:3px">Break-even</div>
-            <div style="font-family:'DM Serif Display',serif;font-size:1.05rem;color:#084298;font-weight:700">${be>0&&be<40?'~'+be+' år':'—'}</div>
-            <div style="font-size:.6rem;color:#084298;opacity:.8">sedan tjänar mer</div>
-            </div>
-        </div>
-        </div>
+      <!-- DINA TANKAR — först -->
+      <div class="pw-combo" style="margin-top:16px">
+        ${concern!=='none'?`<div class="pw-crow">
+          <div style="width:20px;height:20px;display:flex;align-items:center;justify-content:center;opacity:.65">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--wa)" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div><div class="pw-clbl">${concernLabel}</div><div class="pw-cmain">${concernText}</div></div>
+        </div>`:''}
+        ${whyText?`<div class="pw-crow">
+          <div style="width:20px;height:20px;display:flex;align-items:center;justify-content:center;opacity:.65">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div><div class="pw-clbl">${whyLabel}</div><div class="pw-cmain">${whyText}</div></div>
+        </div>`:''}
+      </div>
 
-        <!-- Blurrad resten -->
-        <div style="background:#fff;padding:20px;filter:blur(5px);pointer-events:none;user-select:none">
-        <div style="height:12px;background:#e0e0d8;border-radius:6px;margin-bottom:10px;width:80%"></div>
-        <div style="height:12px;background:#e0e0d8;border-radius:6px;margin-bottom:10px;width:60%"></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-            <div style="height:60px;background:#f0f4f1;border-radius:10px"></div>
-            <div style="height:60px;background:#fff3cd;border-radius:10px"></div>
+      <!-- HERO -->
+      <div class="pw-hero">
+        <div class="pw-eye">Din plan är analyserad</div>
+        <div class="pw-title">${firstName} — din väg till ${e.t.toLowerCase()}</div>
+        <div class="pw-sub">${nSvar} svar · ${cityName} · ${age} år${gp?' · '+gp.l:''}</div>
+        <div class="pw-grid">
+          <div class="pw-sc good">
+            <div class="pw-scl">Löneökning</div>
+            <div class="pw-scv">${salDiff>0?'+'+fmt(salDiff)+' kr':'~'+fmt(e.s0)+' kr'}</div>
+            <div class="pw-scs">${salDiff>0?'per månad från dag ett':'ingångslön'}</div>
+          </div>
+          <div class="pw-sc ${e.dem>=4?'good':'neu'}">
+            <div class="pw-scl">Jobbsäkerhet</div>
+            <div class="pw-scv">${e.dem===5?'Akut brist':e.dem===4?'Hög efterfrågan':'Stabil'}</div>
+            <div class="pw-scs">${e.dem>=4?'Jobb garanterat':'Bred marknad'}</div>
+          </div>
+          <div class="pw-sc warn">
+            <div class="pw-scl">Studietid</div>
+            <div class="pw-scv">${e.y} år</div>
+            <div class="pw-scs">Examen ${gradMon} ${gradYr}</div>
+          </div>
+          <div class="pw-sc neu">
+            <div class="pw-scl">Break-even</div>
+            <div class="pw-scv">${be>0&&be<40?'~'+be+' år':'—'}</div>
+            <div class="pw-scs">sedan tjänar du mer totalt</div>
+          </div>
         </div>
-        <div style="height:12px;background:#e0e0d8;border-radius:6px;margin-bottom:8px;width:90%"></div>
-        <div style="height:12px;background:#e0e0d8;border-radius:6px;margin-bottom:8px;width:70%"></div>
-        <div style="height:48px;background:#D9F0E3;border-radius:10px;margin-bottom:8px"></div>
-        <div style="height:12px;background:#e0e0d8;border-radius:6px;margin-bottom:8px;width:55%"></div>
-        <div style="height:12px;background:#e0e0d8;border-radius:6px;width:75%"></div>
-        </div>
+      </div>
 
-        <!-- Lås-overlay -->
-        <div style="position:absolute;bottom:0;left:0;right:0;height:140px;background:linear-gradient(transparent,rgba(245,244,240,.98));display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px">
-        <div style="display:flex;align-items:center;gap:6px;font-size:.8rem;color:#6c757d">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-            Lås upp för att se hela planen
+      <!-- SCORE — siffra blurrad, stapel synlig -->
+      <div class="pw-score-card">
+        <div class="pw-score-row">
+          <div class="pw-score-num">${score}</div>
+          <div class="pw-score-right">
+            <div class="pw-score-lbl"><span>Genomförbarhetsindex</span><span>0 — 100</span></div>
+            <div class="pw-bar"><div class="pw-bar-fill" style="width:${scorePct}%"></div></div>
+            <div class="pw-bar-scale"><span>Svårt</span><span style="color:var(--wa);font-weight:700">Ditt resultat</span><span>Optimalt</span></div>
+          </div>
         </div>
+        <div class="pw-score-blur">
+          <div class="pw-score-txt">Genomförbart — ${score>=70?'starka förutsättningar':'det finns saker att åtgärda'}</div>
+          <div class="pw-tags">
+            <span class="pw-tag ${full||part?'ok':'warn'}">${full?'Behörig':'Behörighet på väg'}</span>
+            <span class="pw-tag ok">Jobbmarknad</span>
+            <span class="pw-tag ${loan>8000?'warn':'ok'}">${loan>8000?'Hög skuld':'Hanterbar skuld'}</span>
+            <span class="pw-tag ${e.ai<=8?'ok':'warn'}">${e.ai<=8?'Låg AI-risk':'Medel AI-risk'}</span>
+          </div>
         </div>
-    </div>
+        <div class="pw-lock">
+          <div class="pw-lock-txt">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Vad håller ner ditt score?
+          </div>
+        </div>
+      </div>
 
-    <!-- Vad ingår -->
-    <div style="width:100%;max-width:480px;margin-bottom:20px">
-        <div style="display:grid;gap:8px">
-        ${[
-            ['behörighet','Din exakta behörighet',`Kurs för kurs baserat på ${gp?gp.l:'ditt gymnasieprogram'}`],
-            ['datum','Konkreta datum och deadlines',`Ansökningsdag, Komvux-start, HP-anmälan`],
-            ['budget','Interaktiv månadsbudget',`Justera CSN, hyra och extrajobb i realtid`],
-            ['plan','Steg-för-steg handlingsplan',`Vad du gör denna vecka, nästa månad, nästa år`],
-            ['skolor','Matchade utbildningar','Filtrerat på din ort, studieform och studietakt']
-        ].map(([ic,ti,su])=>`<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff;border-radius:10px;border:1px solid #e0e0d8">
-            <div style="width:28px;height:28px;border-radius:7px;background:#f0f4f1;flex-shrink:0;display:flex;align-items:center;justify-content:center">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-            <div><div style="font-weight:700;font-size:.85rem;color:var(--ah)">${ti}</div><div style="font-size:.76rem;color:#6c757d">${su}</div></div>
-        </div>`).join('')}
+      <!-- TIDSLINJE — datum + urgency, uppgifter blurrade -->
+      <div class="pw-tl">
+        <div class="pw-tl-row">
+          <div class="pw-dot" style="background:var(--ac)"></div>
+          <div style="flex:1">
+            <div class="pw-when" style="color:var(--ac)">Brådskande · ${mNow}</div>
+            <div class="pw-tl-blur"><div class="pw-tl-line" style="width:72%"></div></div>
+          </div>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--li)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
-    </div>
+        <div class="pw-tl-row">
+          <div class="pw-dot" style="border:2px solid var(--bo)"></div>
+          <div style="flex:1">
+            <div class="pw-when" style="color:var(--li)">${nextApp}</div>
+            <div class="pw-tl-blur"><div class="pw-tl-line" style="width:58%"></div></div>
+          </div>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--li)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="pw-tl-row">
+          <div class="pw-dot" style="border:2px solid var(--bo)"></div>
+          <div style="flex:1">
+            <div class="pw-when" style="color:var(--li)">${besked}</div>
+            <div class="pw-tl-blur"><div class="pw-tl-line" style="width:65%"></div></div>
+          </div>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--li)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div class="pw-tl-row">
+          <div class="pw-dot" style="background:var(--ah)"></div>
+          <div style="flex:1">
+            <div class="pw-when" style="color:var(--ah)">${gradMon} ${gradYr} · Examen</div>
+            <div class="pw-tl-blur"><div class="pw-tl-line" style="width:80%"></div></div>
+          </div>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--li)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
 
-    <!-- CTA -->
-    <div style="width:100%;max-width:480px">
-        <button onclick="pw.remove();document.body.style.overflow='';pay();" style="width:100%;background:linear-gradient(135deg,var(--ac),var(--ah));color:#fff;border:none;padding:18px 32px;border-radius:14px;font-size:1.1rem;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(45,90,61,.35);letter-spacing:.2px">
-            Lås upp min plan — 99 kr
-        </button>
-        <p style="text-align:center;font-size:.76rem;color:#6c757d;margin-top:10px">
-            Engångsbetalning &nbsp;·&nbsp; Ingen prenumeration &nbsp;·&nbsp; Dina svar sparas
-        </p>
-    </div>
+      <!-- BENEFITS -->
+      <div style="margin-bottom:16px">
+        <div class="pw-ben">
+          <div class="pw-ben-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="pw-ben-text">Du vet exakt vilka kurser du behöver komplettera — och hur lång tid det tar</div>
+        </div>
+        <div class="pw-ben">
+          <div class="pw-ben-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="pw-ben-text">Du vet om det lönar sig ekonomiskt — över ett helt arbetsliv, för just din situation</div>
+        </div>
+        <div class="pw-ben">
+          <div class="pw-ben-check"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="pw-ben-text">Du lämnar med ett beslut, inte ett funderande</div>
+        </div>
+      </div>
+
+      <!-- SOCIAL PROOF -->
+      <div class="pw-social">
+        <div class="pw-dot-pulse"></div>
+        <span style="font-size:.78rem;color:var(--ah);font-weight:600"><span id="pwCounter">37</span> personer låste upp sin plan den senaste veckan</span>
+      </div>
+
+      <!-- CTA -->
+      <div>
+        <button class="pw-cta-btn" id="pwCtaBtn">Se min plan — 99 kr</button>
+        <div class="pw-cta-sub">Engångsbetalning &nbsp;·&nbsp; Ingen prenumeration &nbsp;·&nbsp; Dina svar sparas</div>
+        <div class="pw-stripe">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Säker betalning via Stripe — planen öppnas direkt
+        </div>
+      </div>
 
     </div>`;
 
-    // Fix knapp-referens till pw
     document.body.appendChild(pw);
     document.body.style.overflow='hidden';
     window.scrollTo(0,0);
-    pw.querySelector('button').onclick=function(){pw.remove();document.body.style.overflow='';pay();};
+
+    // CTA-knapp
+    document.getElementById('pwCtaBtn').onclick=function(){pw.remove();document.body.style.overflow='';pay();};
+
+    // Rullande räknare
+    (function(){
+        const el=document.getElementById('pwCounter');
+        if(!el)return;
+        let n=parseInt(el.textContent);
+        function tick(){n++;el.textContent=n;setTimeout(tick,5000+Math.random()*7000);}
+        setTimeout(tick,5000+Math.random()*7000);
+    })();
 }
 
 
