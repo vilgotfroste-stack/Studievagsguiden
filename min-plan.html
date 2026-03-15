@@ -597,9 +597,9 @@ const E=[
 // Ekonomi & Business 
 {id:8,t:'Civilekonom',y:4,s0:34000,s1:54000,dem:3,ai:25,stress:3,future:3,tc:9000,req:['Matematik 3'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Controller / ekonom',ho:'Konsult / byter bransch',sp:'Finansanalytiker',le:'CFO / VD'}},
 {id:9,yh:true,t:'Redovisningsekonom',y:2,s0:30000,s1:44300,dem:4,ai:20,stress:2,future:3,tc:8000,req:['Matematik 2','Engelska 6'],rp:['Ekonomi','Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Redovisningsekonom',ho:'Konsult / byter byrå',sp:'Auktoriserad revisor',le:'Ekonomichef'}},
-{id:10,t:'Controller',y:3,s0:33000,s1:48200,dem:4,ai:20,stress:3,future:3,tc:9000,req:['Matematik 3'],rp:['Ekonomi','Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Junior controller',ho:'Byter bransch / konsult',sp:'Senior controller',le:'CFO / ekonomichef'}},
+{id:10,yh:true,t:'Controller',y:3,s0:33000,s1:48200,dem:4,ai:20,stress:3,future:3,tc:9000,req:['Matematik 3'],rp:['Ekonomi','Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Junior controller',ho:'Byter bransch / konsult',sp:'Senior controller',le:'CFO / ekonomichef'}},
 {id:11,yh:true,t:'Digital marknadsförare',y:2,s0:30000,s1:43000,dem:3,ai:18,stress:3,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Ekonomi','Samhäll','Estet'],pp:['Naturvetenskap','Teknik'],sc:{st:'Digital marknadsförare',ho:'Konsult / byrå',sp:'Specialist SEO/SEM/social',le:'Marknadschef'}},
-{id:12,t:'HR-specialist',y:3,s0:30000,s1:42000,dem:3,ai:12,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matematik 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
+{id:12,yh:true,t:'HR-specialist',y:3,s0:30000,s1:42000,dem:3,ai:12,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matematik 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
 {id:13,yh:true,t:'Projektledare',y:3,s0:33000,s1:49000,dem:4,ai:10,stress:3,future:4,tc:9000,req:['Grundläggande behörighet'],rp:['Ekonomi','Teknik','Samhäll','Naturvetenskap'],pp:['Estet'],sc:{st:'Projektkoordinator',ho:'Byter bransch / konsult',sp:'Senior projektledare / PMP',le:'Programchef / affärsutvecklare'}},
 // Vård & Hälsa 
 {id:14,t:'Sjuksköterska',y:3,s0:36000,s1:43900,dem:5,ai:5,stress:4,future:5,tc:11000,req:['Matematik 2','Naturkunskap 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Leg. sjuksköterska',ho:'Byter specialitet / region',sp:'Specialistsjuksköterska',le:'Vårdenhetschef'}},
@@ -689,7 +689,7 @@ function devFillAndShowPlan() {
  user_phone: '0701234567',
  current_location: 'Stockholm',
  willing_to_move: 'no',
- education_type: ['yh', 'uni'],
+ education_type: 'uni',
  study_pace: 'fulltime',
  study_mode: 'campus',
  when_start: 'next',
@@ -1378,10 +1378,32 @@ function buildFP(name) {
  }
 
 
- // Determine if user is seeking YH or uni
- // e.yh = primarily a YH education regardless of wizard answer
- const eduTypesArr = Array.isArray(a.education_type) ? a.education_type : (a.education_type ? [a.education_type] : []);
- const isUniOnly = !e.yh && eduTypesArr.length > 0 && !eduTypesArr.includes('yh');
+ // Explicit ID-based classification
+ const YH_ONLY_IDS  = [3,4,7,9,10,11,12,13,25,26,27];
+ const UNI_ONLY_IDS = [5,6,8,14,16,17,18,19,20,21,22,24,28,29];
+ const BOTH_IDS     = [1,2,15,23];
+
+ // Resolve education_type answer (string or array)
+ const eduTypeRaw = a.education_type;
+ const eduTypeVal = Array.isArray(eduTypeRaw) ? eduTypeRaw[0] : (eduTypeRaw || '');
+
+ let showYH  = false;
+ let showUni = false;
+ let showUnsure = false;
+
+ if (YH_ONLY_IDS.includes(e.id)) {
+   showYH = true;
+ } else if (UNI_ONLY_IDS.includes(e.id)) {
+   showUni = true;
+ } else {
+   // BOTH_IDS — depends on wizard answer
+   if (eduTypeVal === 'yh')  showYH = true;
+   else if (eduTypeVal === 'uni') showUni = true;
+   else showUnsure = true; // 'unsure' or missing
+ }
+
+ // Legacy alias — keep isUniOnly for any downstream code that uses it
+ const isUniOnly = showUni;
 
  // Admission status — only precise dates for uni (antagning.se)
  const nowD = new Date();
@@ -1980,8 +2002,9 @@ function buildFP(name) {
  <div class="score-factors" id="score-factors"></div>
  </div>`;
 
- // Date chips — only for uni, YH dates vary per school
- pl += isUniOnly ? `<div class="date-chips">
+ // Date chips / admission message — three-way logic
+ if (showUni) {
+   pl += `<div class="date-chips">
  <div class="date-chip ans">
  <span class="chip-date">${applyStatus}</span>
  <span class="chip-label">Ansökan antagning.se</span>
@@ -1994,9 +2017,16 @@ function buildFP(name) {
  <span class="chip-date">${startLabel}</span>
  <span class="chip-label">Studiestart</span>
  </div>
- </div>` : `<div style="padding:10px 14px;background:#FFF8EC;border:1.5px solid #D97706;border-radius:12px;margin-bottom:12px;font-size:.82rem;color:#92400E;line-height:1.5">
+ </div>`;
+ } else if (showYH) {
+   pl += `<div style="padding:10px 14px;background:#FFF8EC;border:1.5px solid #D97706;border-radius:12px;margin-bottom:12px;font-size:.82rem;color:#92400E;line-height:1.5">
  Ansökan, besked och startdatum varierar per skola — kolla direkt på <a href="https://www.yrkeshogskolan.se" target="_blank" style="color:#92400E;font-weight:700;text-decoration:underline">yrkeshogskolan.se</a> för din utbildning.
  </div>`;
+ } else {
+   pl += `<div style="padding:10px 14px;background:var(--bll);border:1.5px solid var(--bl);border-radius:12px;margin-bottom:12px;font-size:.82rem;color:var(--bh);line-height:1.5">
+ Du har inte valt utbildningsform ännu. <a href="#" onclick="openEditModal();return false;" style="color:var(--bh);font-weight:700;text-decoration:underline">Uppdatera ditt svar</a> för att se ansökningsdatum.
+ </div>`;
+ }
 
  pl += `<div class="section-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-2px;flex-shrink:0"><line x1='8' y1='6' x2='21' y2='6'/><line x1='8' y1='12' x2='21' y2='12'/><line x1='8' y1='18' x2='21' y2='18'/><line x1='3' y1='6' x2='3.01' y2='6'/><line x1='3' y1='12' x2='3.01' y2='12'/><line x1='3' y1='18' x2='3.01' y2='18'/></svg> Steg för steg</div>`;
 
@@ -2065,7 +2095,13 @@ function buildFP(name) {
  pl += tlStep('2–3 mån före start','Prata med din arbetsgivare',`<ul class="detail-list"><li>Tjänstledighet för studier är en laglig rättighet (Studieledighetslagen)</li><li>Kolla din uppsägningstid i anställningsavtalet</li><li>Räkna in innestående semesterdagar som extra buffert</li></ul>`);
  }
 
- pl += tlStep(`${applyStatus === 'Öppen nu' || applyStatus === 'Stänger snart' ? applyStatus + ' · Deadline' : applyStatus} · ${startYr}`,`Sök ${e.t} på antagning.se`,`<ul class="detail-list"><li>Sök det här programmet plus 2–3 backupalternativ</li><li>Du kan prioritera upp till 20 program — använd det</li></ul>`,true);
+ if (showUni) {
+   pl += tlStep(`${applyStatus === 'Öppen nu' || applyStatus === 'Stänger snart' ? applyStatus + ' · Deadline' : applyStatus} · ${startYr}`,`Sök ${e.t} på antagning.se`,`<ul class="detail-list"><li>Sök det här programmet plus 2–3 backupalternativ</li><li>Du kan prioritera upp till 20 program — använd det</li></ul>`,true);
+ } else if (showYH) {
+   pl += tlStep(`Före studiestart · ${startYr}`,`Sök ${e.t} på yrkeshogskolan.se`,`<ul class="detail-list"><li>Ansökningsdatum varierar per skola — kolla direkt på yrkeshogskolan.se</li><li>Ansök till flera skolor för att öka chansen</li></ul>`,true);
+ } else {
+   pl += tlStep('Ej valt ännu','Välj utbildningsform för att se ansökningssteg',`<ul class="detail-list"><li>Uppdatera ditt svar på utbildningsform (YH eller Universitet) under inställningar</li><li>Då ser du exakta datum och nästa steg</li></ul>`,false);
+ }
 
  if (a.need_csn !== 'no') {
    const verified = a.csn_verified === true;
@@ -2137,7 +2173,7 @@ function buildFP(name) {
  ${(() => {
    const isDistance = a.study_mode === 'distance';
    const isParttime = a.study_pace === 'parttime';
-   const isYH = Array.isArray(a.education_type) ? a.education_type.includes('yh') : a.education_type === 'yh';
+   const isYH = showYH;
    const hasPractice = [14,15,16,17,18,19,20,21].includes(e.id);
    const isIT = [1,2,3,4,7].includes(e.id);
 
@@ -2268,9 +2304,8 @@ function buildFP(name) {
 
  // Studentum CTA
  const stuFilters = [];
- const eduTypes = Array.isArray(a.education_type) ? a.education_type : (a.education_type ? [a.education_type] : []);
- if (eduTypes.includes('yh')) stuFilters.push('YH-utbildning');
- else if (eduTypes.includes('uni')) stuFilters.push('Högskola / Universitet');
+ if (showYH) stuFilters.push('YH-utbildning');
+ else if (showUni) stuFilters.push('Högskola / Universitet');
  if (a.study_pace === 'parttime') stuFilters.push('Deltid');
  else if (a.study_pace === 'fulltime') stuFilters.push('Heltid');
  if (a.study_mode === 'distance') stuFilters.push('Distans');
@@ -2726,10 +2761,10 @@ const EDIT_QUESTIONS = [
     {v:'uppsala',l:'Uppsala'},{v:'linkoping',l:'Linköping'},{v:'lund',l:'Lund'},
     {v:'umea',l:'Umeå'},{v:'orebro',l:'Örebro'},{v:'other',l:'Annan ort'}
   ]},
-  { key:'education_type', label:'Vilken utbildningsform söker du?', tp:'multi', opts:[
-    {v:'yh',l:'Yrkeshögskola (YH)'},{v:'uni',l:'Högskola / Universitet'},
-    {v:'komvux',l:'Komvux'},{v:'folk',l:'Folkhögskola'},
-    {v:'private',l:'Privat utbildning'},{v:'any',l:'Spelar ingen roll'}
+  { key:'education_type', label:'Vilken utbildningsform söker du?', tp:'opts',
+    cond:()=>{ const BOTH=[1,2,15,23]; return edu && BOTH.includes(edu.id); },
+    opts:[
+    {v:'yh',l:'Yrkeshögskola (YH)'},{v:'uni',l:'Högskola / Universitet'},{v:'unsure',l:'Osäker'}
   ]},
   { key:'study_pace', label:'Vilken studietakt passar dig?', opts:[
     {v:'fulltime',l:'Heltid'},{v:'parttime',l:'Deltid'},{v:'flexible',l:'Flexibel'},{v:'any',l:'Spelar ingen roll'}
