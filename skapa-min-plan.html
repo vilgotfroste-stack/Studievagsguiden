@@ -5,32 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Skapa din plan — Studievägsguiden</title>
 <meta name="description" content="Besvara 26 frågor och få din personliga studievägsplan med ekonomisk kalkyl, behörighetskontroll och tidslinje.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#FAFAF7;--card:#FFF;--tx:#1A1A18;--mu:#6B6B63;--li:#9C9C91;--ac:#7AC29A;--al:#D9F0E3;--ah:#5AA87A;--wa:#6BA3D0;--wl:#D4E8F5;--re:#E07A7A;--rl:#F8E8E8;--bl:#6BA3D0;--bll:#D4E8F5;--pu:#9B87C2;--pl:#EDE7F5;--bo:#E8E8E2;--sh:0 2px 20px rgba(0,0,0,.06);--shl:0 8px 40px rgba(0,0,0,.1);--r:12px}
+:root{
+  --bg:#F7F7F4;--card:#FFF;--tx:#141414;--mu:#5C5C58;--li:#9A9A94;
+  --ac:#7AC29A;--al:#EEF7F2;--ah:#1A3A2A;
+  --wa:#A07830;--wl:#FBF5EA;
+  --re:#C0533A;--rl:#FBF0ED;
+  --bl:#6BA3D0;--bll:#EBF3FA;--bh:#1A3A5C;
+  --bo:#DEDED8;--r:10px;
+}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,247,244,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;letter-spacing:0.01em}
 .logo .i-dot{position:relative;display:inline-block}
-.logo .i-dot::after{content:'';position:absolute;top:0.25em;left:50%;transform:translateX(-50%);width:0.2em;height:0.2em;background:#6BA3D0;border-radius:50%}
+.logo .i-dot::after{content:'';position:absolute;top:0.25em;left:50%;transform:translateX(-50%);width:0.2em;height:0.2em;background:var(--bl);border-radius:50%}
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 24px 60px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-30%;left:-20%;width:60%;height:60%;background:radial-gradient(ellipse,rgba(122,194,154,.06) 0%,transparent 70%)}
-.badge{display:inline-flex;align-items:center;gap:6px;background:var(--al);color:var(--ac);padding:8px 16px;border-radius:20px;font-size:.82rem;font-weight:600;margin-bottom:32px;opacity:0;animation:fu .8s ease forwards .2s}
-.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.12;max-width:680px;margin-bottom:18px;letter-spacing:-1px;opacity:0;animation:fu .8s ease forwards .4s}
-.hero>p{font-size:1.12rem;color:var(--mu);max-width:480px;margin-bottom:44px;opacity:0;animation:fu .8s ease forwards .6s}
-.cbox{background:var(--card);border:2px solid var(--bo);border-radius:16px;padding:28px;width:100%;max-width:500px;box-shadow:var(--shl);position:relative;z-index:1;opacity:0;animation:fu .8s ease forwards .8s}
+.hero::before{content:'';position:absolute;top:-30%;left:-20%;width:60%;height:60%;background:radial-gradient(ellipse,rgba(107,163,208,.05) 0%,transparent 70%)}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--al);color:var(--ah);padding:7px 14px;border-radius:6px;font-size:.78rem;font-weight:700;letter-spacing:.3px;margin-bottom:28px;opacity:0;animation:fu .8s ease forwards .2s}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.6rem);line-height:1.12;max-width:680px;margin-bottom:18px;letter-spacing:-.5px;opacity:0;animation:fu .8s ease forwards .4s}
+.hero>p{font-size:1.05rem;color:var(--mu);max-width:480px;margin-bottom:44px;opacity:0;animation:fu .8s ease forwards .6s}
+.cbox{background:var(--card);border:1.5px solid var(--bo);border-radius:14px;padding:28px;width:100%;max-width:500px;position:relative;z-index:1;opacity:0;animation:fu .8s ease forwards .8s}
 .fld{margin-bottom:18px}
-.fld label{display:block;font-size:.78rem;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px}
-.fld input,.fld select{width:100%;padding:13px 15px;border:2px solid var(--bo);border-radius:10px;font-family:inherit;font-size:1rem;color:var(--tx);background:var(--bg);transition:border-color .2s;appearance:none;-webkit-appearance:none}
+.fld label{display:block;font-size:.72rem;font-weight:700;color:var(--li);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px}
+.fld input,.fld select{width:100%;padding:12px 14px;border:1.5px solid var(--bo);border-radius:var(--r);font-family:inherit;font-size:.97rem;color:var(--tx);background:var(--bg);transition:border-color .2s;appearance:none;-webkit-appearance:none}
 .fld input:focus,.fld select:focus{outline:none;border-color:var(--ac)}
-.fld select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B6B63' stroke-width='2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
-.btn{width:100%;padding:15px;background:var(--ac);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:1.02rem;font-weight:700;cursor:pointer;transition:all .2s}
-.btn:hover{background:var(--ah);transform:translateY(-1px);box-shadow:0 4px 16px rgba(122,194,154,.3)}
+.fld select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239A9A94' stroke-width='2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.btn{width:100%;padding:14px;background:var(--ah);color:#fff;border:none;border-radius:var(--r);font-family:inherit;font-size:.97rem;font-weight:800;cursor:pointer;transition:background .2s}
+.btn:hover{background:#0d2218}
 .sec{max-width:1100px;margin:0 auto;padding:0 32px 80px;display:none}.sec.v{display:block}
-.sh{text-align:center;padding:56px 0 36px}.sh h2{font-family:'DM Serif Display',serif;font-size:1.9rem;margin-bottom:6px}.sh p{color:var(--mu)}
-.gcards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:44px;max-width:720px;margin-left:auto;margin-right:auto}
-.gc{background:var(--card);border:2px solid var(--bo);border-radius:var(--r);padding:18px 14px;text-align:center;opacity:0;transform:translateY(20px);position:relative}.gc.sh2{animation:fu .5s ease forwards}
+.sh{text-align:center;padding:56px 0 36px}.sh h2{font-family:'Playfair Display',serif;font-size:1.9rem;margin-bottom:6px}.sh p{color:var(--mu)}
+.gcards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:44px;max-width:720px;margin-left:auto;margin-right:auto}
+.gc{background:var(--card);border:1.5px solid var(--bo);border-radius:var(--r);padding:18px 14px;text-align:center;opacity:0;transform:translateY(20px);position:relative}.gc.sh2{animation:fu .5s ease forwards}
 .gcx{cursor:pointer;transition:border-color .2s}.gcx:hover{border-color:var(--ac)}.gcx.open{border-color:var(--ac)}
 .gcarr{position:absolute;top:8px;right:8px;color:var(--li);transition:transform .2s;display:flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%}
 .gcx.open .gcarr{transform:rotate(180deg)}
@@ -40,64 +47,58 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 .gcexp-inner .gcbar{height:5px;border-radius:3px;background:var(--bo);margin:8px 0 3px;overflow:hidden}
 .gcexp-inner .gcfill{height:100%;border-radius:3px;transition:width .6s ease}
 .gcexp-inner .gcmeta{display:flex;justify-content:space-between;font-size:.68rem;color:var(--li)}
-.gc .gl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
-.gc .gv{font-family:'DM Serif Display',serif;font-size:1.4rem;line-height:1.2}
-.gc .gs{font-size:.75rem;color:var(--li);margin-top:3px}
-.verd{background:var(--card);border:2px solid var(--bo);border-radius:var(--r);padding:28px 24px;text-align:center;margin-bottom:48px;opacity:0;transform:translateY(20px)}.verd.sh2{animation:fu .5s ease forwards}
-.ve{font-size:2rem;margin-bottom:8px}.vt{font-size:1.02rem;line-height:1.6}.vt strong{color:var(--ac)}
-/* Teaser */
-.tdiv{text-align:center;margin-bottom:28px;position:relative}.tdiv::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:var(--bo)}.tdiv span{background:var(--bg);padding:0 16px;position:relative;font-size:.82rem;font-weight:600;color:var(--li);text-transform:uppercase;letter-spacing:1px}
-.twrap{position:relative;border-radius:16px;border:2px solid var(--bo);overflow:hidden}
+.gc .gl{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px;color:var(--li)}
+.gc .gv{font-family:'Playfair Display',serif;font-size:1.35rem;line-height:1.2}
+.gc .gs{font-size:.74rem;color:var(--li);margin-top:3px}
+.verd{background:var(--card);border:1.5px solid var(--bo);border-radius:var(--r);padding:28px 24px;text-align:center;margin-bottom:48px;opacity:0;transform:translateY(20px)}.verd.sh2{animation:fu .5s ease forwards}
+.ve{font-size:2rem;margin-bottom:8px}.vt{font-size:1rem;line-height:1.6}.vt strong{color:var(--ah)}
+.tdiv{text-align:center;margin-bottom:28px;position:relative}.tdiv::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:var(--bo)}.tdiv span{background:var(--bg);padding:0 16px;position:relative;font-size:.76rem;font-weight:700;color:var(--li);text-transform:uppercase;letter-spacing:1px}
+.twrap{position:relative;border-radius:var(--r);border:1.5px solid var(--bo);overflow:hidden}
 .tblur{filter:blur(6px);opacity:.5;pointer-events:none;user-select:none;padding:28px 24px}
-.tover{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(180deg,rgba(250,250,247,0) 0%,rgba(250,250,247,.92) 30%,rgba(250,250,247,1) 60%);display:flex;flex-direction:column;align-items:center;padding:80px 24px 36px}
-.tover h3{font-family:'DM Serif Display',serif;font-size:1.35rem;margin-bottom:8px;text-align:center;line-height:1.3}
-.tover>p{color:var(--mu);text-align:center;max-width:380px;margin-bottom:20px;font-size:.9rem;line-height:1.5}
-.ubtn{background:var(--ac);color:#fff;border:none;padding:15px 36px;border-radius:10px;font-family:inherit;font-size:1.02rem;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:10px}
-.ubtn:hover{background:var(--ah);transform:translateY(-2px);box-shadow:0 6px 24px rgba(122,194,154,.3)}
-.ubtn .pr{font-size:.85rem;opacity:.8;font-weight:500}
-.tsec-head{font-family:'DM Serif Display',serif;font-size:1.05rem;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.tover{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(180deg,rgba(247,247,244,0) 0%,rgba(247,247,244,.92) 30%,rgba(247,247,244,1) 60%);display:flex;flex-direction:column;align-items:center;padding:80px 24px 36px}
+.tover h3{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:8px;text-align:center;line-height:1.3}
+.tover>p{color:var(--mu);text-align:center;max-width:380px;margin-bottom:20px;font-size:.88rem;line-height:1.5}
+.ubtn{background:var(--ah);color:#fff;border:none;padding:14px 32px;border-radius:var(--r);font-family:inherit;font-size:.97rem;font-weight:800;cursor:pointer;transition:background .2s;display:inline-flex;align-items:center;gap:10px}
+.ubtn:hover{background:#0d2218}
+.ubtn .pr{font-size:.83rem;opacity:.75;font-weight:500}
+.tsec-head{font-family:'Playfair Display',serif;font-size:1.05rem;display:flex;align-items:center;gap:8px;margin-bottom:10px}
 .tsec-head .tn{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#fff;flex-shrink:0}
-/* Wizard */
-.wov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);z-index:200;justify-content:center;align-items:center;padding:20px}.wov.a{display:flex}
-.wiz{background:var(--card);border-radius:20px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:var(--shl)}
-.wizh{padding:24px 28px 0;display:flex;justify-content:space-between;align-items:center}.wizh h3{font-family:'DM Serif Display',serif;font-size:1.25rem}
-.wizx{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--li);width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%}.wizx:hover{background:var(--bg);color:var(--tx)}
-.wprog{margin:16px 28px 0;height:4px;background:var(--bo);border-radius:2px;overflow:hidden}.wbar{height:100%;background:var(--ac);transition:width .3s;border-radius:2px}
-.wsl{padding:8px 28px 0;font-size:.78rem;color:var(--li)}
-.wbody{padding:20px 28px 28px}
-.wq h4{font-size:1.05rem;font-weight:600;margin-bottom:6px}.wq .why{font-size:.82rem;color:var(--li);margin-bottom:16px;font-style:italic}
-.wopts{display:grid;gap:8px}
-.wo{padding:14px 16px;border:2px solid var(--bo);border-radius:10px;cursor:pointer;transition:all .15s;font-size:.92rem;display:flex;align-items:center;gap:10px}
+.wov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);z-index:200;justify-content:center;align-items:center;padding:20px}.wov.a{display:flex}
+.wiz{background:var(--card);border-radius:14px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;border:1.5px solid var(--bo)}
+.wizh{padding:22px 26px 0;display:flex;justify-content:space-between;align-items:center}.wizh h3{font-family:'Playfair Display',serif;font-size:1.2rem}
+.wizx{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--li);width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:50%}.wizx:hover{background:var(--bg);color:var(--tx)}
+.wprog{margin:14px 26px 0;height:3px;background:var(--bo);border-radius:2px;overflow:hidden}.wbar{height:100%;background:var(--ac);transition:width .3s;border-radius:2px}
+.wsl{padding:7px 26px 0;font-size:.75rem;color:var(--li)}
+.wbody{padding:18px 26px 26px}
+.wq h4{font-size:1rem;font-weight:700;margin-bottom:5px}.wq .why{font-size:.79rem;color:var(--li);margin-bottom:14px}
+.wopts{display:grid;gap:7px}
+.wo{padding:12px 14px;border:1.5px solid var(--bo);border-radius:var(--r);cursor:pointer;transition:all .15s;font-size:.9rem;display:flex;align-items:center;gap:10px}
 .wo:hover{border-color:var(--ac);background:var(--al)}.wo.sel{border-color:var(--ac);background:var(--al);font-weight:600}
-.wdot{width:20px;height:20px;border-radius:50%;border:2px solid var(--bo);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
-.wo.sel .wdot{border-color:var(--ac);background:var(--ac)}.wo.sel .wdot::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff}
-.winp{display:flex;gap:10px;align-items:center}.winp input{flex:1;padding:13px 15px;border:2px solid var(--bo);border-radius:10px;font-family:inherit;font-size:1rem;color:var(--tx);background:var(--bg)}.winp input:focus{outline:none;border-color:var(--ac)}.winp span{font-size:.88rem;color:var(--mu);white-space:nowrap}
-.wnav{display:flex;gap:10px;margin-top:24px}
-.wbk{flex:1;padding:13px;background:var(--bg);border:2px solid var(--bo);border-radius:10px;font-family:inherit;font-weight:600;font-size:.92rem;cursor:pointer;color:var(--mu)}
-.wnx{flex:2;padding:13px;background:var(--ac);color:#fff;border:none;border-radius:10px;font-family:inherit;font-weight:700;font-size:.92rem;cursor:pointer;transition:all .2s}.wnx:hover{background:var(--ah)}
-.psum{background:var(--al);padding:16px;border-radius:10px;margin-bottom:20px}.psr{display:flex;justify-content:space-between;font-size:.88rem;padding:4px 0}.psr.tot{font-weight:700;font-size:1rem;border-top:1px solid rgba(122,194,154,.2);padding-top:10px;margin-top:8px}
-/* Full plan */
+.wdot{width:18px;height:18px;border-radius:50%;border:2px solid var(--bo);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.wo.sel .wdot{border-color:var(--ac);background:var(--ac)}.wo.sel .wdot::after{content:'';width:7px;height:7px;border-radius:50%;background:#fff}
+.winp{display:flex;gap:10px;align-items:center}.winp input{flex:1;padding:12px 14px;border:1.5px solid var(--bo);border-radius:var(--r);font-family:inherit;font-size:.97rem;color:var(--tx);background:var(--bg)}.winp input:focus{outline:none;border-color:var(--ac)}.winp span{font-size:.85rem;color:var(--mu);white-space:nowrap}
+.wnav{display:flex;gap:10px;margin-top:22px}
+.wbk{flex:1;padding:12px;background:var(--bg);border:1.5px solid var(--bo);border-radius:var(--r);font-family:inherit;font-weight:600;font-size:.9rem;cursor:pointer;color:var(--mu)}
+.wnx{flex:2;padding:12px;background:var(--ah);color:#fff;border:none;border-radius:var(--r);font-family:inherit;font-weight:700;font-size:.9rem;cursor:pointer;transition:background .2s}.wnx:hover{background:#0d2218}
+.psum{background:var(--al);padding:14px;border-radius:var(--r);margin-bottom:20px}.psr{display:flex;justify-content:space-between;font-size:.86rem;padding:4px 0}.psr.tot{font-weight:700;font-size:.97rem;border-top:1px solid rgba(122,194,154,.2);padding-top:10px;margin-top:8px}
 .fp{display:none;max-width:720px;margin:0 auto;padding:0 24px}.fp.v{display:block}
-.ptbar{position:sticky;top:60px;z-index:90;background:rgba(250,250,247,.98);backdrop-filter:blur(12px);border-bottom:2px solid #e0e0d8;margin:0 -24px 32px;padding:10px 16px;display:flex;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow-x:auto;scrollbar-width:none}
+.ptbar{position:sticky;top:60px;z-index:90;background:rgba(247,247,244,.98);backdrop-filter:blur(12px);border-bottom:1px solid var(--bo);margin:0 -24px 32px;padding:10px 16px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
 .ptbar::-webkit-scrollbar{display:none}
-.ptbar button{flex:1;padding:10px 6px;border-radius:10px;border:2px solid transparent;background:#fff;font-family:inherit;font-size:.75rem;font-weight:600;color:#6B6B63;cursor:pointer;transition:all .2s;position:relative}
-.ptbar button:hover{border-color:var(--ac);color:var(--ac);transform:translateY(-1px)}
-.ptbar button.act{background:linear-gradient(135deg,var(--ac),var(--ah));color:#fff;border-color:transparent;box-shadow:0 4px 12px rgba(122,194,154,.3);transform:translateY(-2px)}
-.pwel{background:linear-gradient(135deg,var(--ac),var(--ah));border-radius:16px;padding:32px 24px;color:#fff;margin-bottom:28px}.pwel h3{font-family:'DM Serif Display',serif;font-size:1.5rem;margin-bottom:10px;color:#fff;line-height:1.3}.pwel .pintro{opacity:.9;font-size:.9rem;line-height:1.65}
-.pwel .pfacts{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}.pwel .pfacts span{background:rgba(255,255,255,.15);padding:5px 12px;border-radius:20px;font-size:.74rem;font-weight:600}
-/* Section dividers */
-.psec{margin-bottom:36px}.psec-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}.psec-n{width:28px;height:28px;border-radius:50%;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78rem;flex-shrink:0}
-.psec-t{font-family:'DM Serif Display',serif;font-size:1.2rem}
-.psec-sub{font-size:.86rem;color:var(--mu);line-height:1.6;margin-bottom:16px;margin-left:38px}
-/* Match cards */
-.mcard{border:2px solid var(--bo);border-radius:var(--r);padding:18px;margin-bottom:10px;transition:all .2s;position:relative}.mcard.msel{border-color:var(--ac);background:var(--al)}
+.ptbar button{flex:1;padding:9px 6px;border-radius:var(--r);border:1.5px solid transparent;background:var(--card);font-family:inherit;font-size:.73rem;font-weight:600;color:var(--mu);cursor:pointer;transition:all .2s}
+.ptbar button:hover{border-color:var(--ac);color:var(--ah)}
+.ptbar button.act{background:var(--ah);color:#fff;border-color:transparent}
+.pwel{background:linear-gradient(140deg,#0F1F0F,#1A3A2A);border-radius:14px;padding:28px 22px;color:#fff;margin-bottom:24px}.pwel h3{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:10px;color:#fff;line-height:1.3}.pwel .pintro{opacity:.85;font-size:.88rem;line-height:1.65}
+.pwel .pfacts{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}.pwel .pfacts span{background:rgba(255,255,255,.1);padding:4px 10px;border-radius:4px;font-size:.72rem;font-weight:600}
+.psec{margin-bottom:36px}.psec-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}.psec-n{width:26px;height:26px;border-radius:50%;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;flex-shrink:0}
+.psec-t{font-family:'Playfair Display',serif;font-size:1.15rem}
+.psec-sub{font-size:.84rem;color:var(--mu);line-height:1.6;margin-bottom:16px;margin-left:36px}
+.mcard{border:1.5px solid var(--bo);border-radius:var(--r);padding:16px;margin-bottom:8px;transition:border-color .2s;position:relative}.mcard.msel{border-color:var(--ac);background:var(--al)}
 .mcard .mtop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
-.mcard .mname{font-weight:700;font-size:1rem}.mcard .mbadge{padding:3px 10px;border-radius:12px;font-size:.7rem;font-weight:700;flex-shrink:0;white-space:nowrap}
-.mcard .mwhy{font-size:.84rem;color:var(--mu);line-height:1.5;margin-bottom:10px}
-.mcard .mstats{display:flex;gap:8px;flex-wrap:wrap}.mcard .mstat{font-size:.74rem;padding:3px 8px;border-radius:5px;background:#f5f5f0}
-/* Action steps */
-.astep{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--bo)}.astep:last-child{border-bottom:none}
-.anum{width:32px;height:32px;border-radius:50%;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;flex-shrink:0}
+.mcard .mname{font-weight:700;font-size:.97rem}.mcard .mbadge{padding:2px 8px;border-radius:4px;font-size:.67rem;font-weight:700;flex-shrink:0;white-space:nowrap}
+.mcard .mwhy{font-size:.82rem;color:var(--mu);line-height:1.5;margin-bottom:10px}
+.mcard .mstats{display:flex;gap:6px;flex-wrap:wrap}.mcard .mstat{font-size:.72rem;padding:2px 7px;border-radius:4px;background:var(--bg)}
+.astep{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--bo)}.astep:last-child{border-bottom:none}
+.anum{width:30px;height:30px;border-radius:50%;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78rem;flex-shrink:0}
 .abody{flex:1}.abody .atit{font-weight:700;font-size:.92rem;margin-bottom:2px}.abody .awhen{font-size:.76rem;color:var(--ac);font-weight:600;margin-bottom:5px}.abody .adesc{font-size:.84rem;color:var(--mu);line-height:1.55}
 /* Checklist */
 .chk{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:8px;border:1.5px solid var(--bo);margin-bottom:6px;cursor:pointer;transition:all .15s;font-size:.88rem;user-select:none}.chk:hover{border-color:var(--ac)}.chk.done{background:var(--al);border-color:var(--ac);color:var(--li)}
@@ -123,20 +124,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 .brl{font-size:.88rem;margin-bottom:4px}.brv{font-size:1.7rem;font-weight:700}.bra{font-size:.82rem;margin-top:8px}
 .behal{padding:18px;border-radius:var(--r);margin-bottom:16px;border:2px solid}.behal h4{font-size:.95rem;margin-bottom:6px;display:flex;align-items:center;gap:8px}.behal p{font-size:.86rem;line-height:1.6}
 .behc{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px}.behc span{padding:4px 12px;border-radius:6px;font-size:.8rem;font-weight:600}
-.amgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.amitem{padding:14px;border-radius:10px}.amitem .aml{font-size:.72rem;font-weight:700;text-transform:uppercase;margin-bottom:4px}.amitem .amv{font-family:'DM Serif Display',serif;font-size:1.2rem}.amitem .ams{font-size:.78rem;margin-top:4px}
+.amgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.amitem{padding:14px;border-radius:10px}.amitem .aml{font-size:.72rem;font-weight:700;text-transform:uppercase;margin-bottom:4px}.amitem .amv{font-family:'Playfair Display',serif;font-size:1.2rem}.amitem .ams{font-size:.78rem;margin-top:4px}
 .ambw{margin-top:12px}.ambl{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:4px}.amb{height:8px;border-radius:4px;background:var(--bo);overflow:hidden}.ambf{height:100%;border-radius:4px;transition:width .8s ease}
 .cgrid{display:grid;gap:10px}.crow{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:14px 16px;border-radius:10px;border:2px solid var(--bo)}.crow:hover{border-color:var(--ac)}
 .cico{display:flex;align-items:center}.cinf .cit{font-weight:600;font-size:.92rem}.cinf .cid{font-size:.78rem;color:var(--mu)}
-.csal{font-family:'DM Serif Display',serif;font-size:1.1rem;text-align:right}.csal .csub{font-size:.7rem;color:var(--li);font-family:'DM Sans'}
+.csal{font-family:'Playfair Display',serif;font-size:1.1rem;text-align:right}.csal .csub{font-size:.7rem;color:var(--li);font-family:'Plus Jakarta Sans'}
 .schi{display:flex;gap:14px;align-items:center;padding:14px 16px;border-radius:10px;border:2px solid var(--bo);margin-bottom:8px}
 .schico{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .schinf{flex:1}.schinf .schn{font-weight:600;font-size:.92rem}.schinf .schm{font-size:.78rem;color:var(--mu)}
 .scht{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px}.scht span{padding:2px 8px;border-radius:4px;font-size:.7rem;font-weight:600;background:var(--al);color:var(--ac)}
 .upsell{background:linear-gradient(135deg,var(--wl),#FFF8EE);border:2px solid var(--wa);border-radius:var(--r);padding:28px;text-align:center;margin-top:32px}
-.upsell h4{font-family:'DM Serif Display',serif;font-size:1.15rem;margin-bottom:8px}.upsell>p{color:var(--mu);font-size:.9rem;margin-bottom:18px;max-width:400px;margin-left:auto;margin-right:auto}
+.upsell h4{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:8px}.upsell>p{color:var(--mu);font-size:.9rem;margin-bottom:18px;max-width:400px;margin-left:auto;margin-right:auto}
 .ubtn2{background:var(--wa);color:#fff;border:none;padding:13px 28px;border-radius:10px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer}.ubtn2:hover{background:#C09540}
 .sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
-.scard{padding:12px 8px;border-radius:var(--r);text-align:center}.scard .sl{font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}.scard .sv{font-family:'DM Serif Display',serif;font-size:1rem}
+.scard{padding:12px 8px;border-radius:var(--r);text-align:center}.scard .sl{font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px}.scard .sv{font-family:'Playfair Display',serif;font-size:1rem}
 .pncont{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;max-width:720px;margin-left:auto;margin-right:auto}
 .pnbox{background:var(--card);border:2px solid var(--bo);border-radius:var(--r);overflow:hidden;opacity:0;transform:translateY(20px)}.pnbox.sh2{animation:fu .5s ease forwards}
 .pnhead{padding:14px 16px;display:flex;align-items:center;gap:8px;font-weight:700;font-size:.88rem}
@@ -322,7 +323,7 @@ body{background:var(--bg);min-height:100vh}
 }
 
 #wTi{
-    font-family:'DM Serif Display',serif;
+    font-family:'Playfair Display',serif;
     font-size:1.15rem;
     color:var(--tx);
     margin-bottom:0;
@@ -580,7 +581,7 @@ function devFillAndShowPlan() {
       fb.style.display='block';
       fb.innerHTML=`<div style="padding:60px 24px;text-align:center;max-width:500px;margin:0 auto">
         <div style="font-size:2.5rem;margin-bottom:16px">⚠️</div>
-        <h3 style="font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:12px;color:#1A1A18">Något gick fel</h3>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:12px;color:#1A1A18">Något gick fel</h3>
         <p style="color:#6c757d;font-size:.9rem;line-height:1.7;margin-bottom:24px">Vi kunde inte bygga din plan. Dina svar är sparade — klicka nedan för att försöka igen.</p>
         <button onclick="location.reload()" style="background:var(--ac);color:#fff;border:none;padding:14px 32px;border-radius:10px;font-family:inherit;font-weight:700;font-size:.95rem;cursor:pointer">Försök igen</button>
         <p style="font-size:.72rem;color:#bbb;margin-top:16px">${error.message||'Okänt fel'}</p>
@@ -724,32 +725,32 @@ function buildSalaryInfo(e){
           <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
           <polyline points="17 6 23 6 23 12"/>
         </svg>
-        <h3 style="font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:6px">Lönespridning för ${e.t.toLowerCase()}</h3>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:6px">Lönespridning för ${e.t.toLowerCase()}</h3>
         <p style="color:var(--mu);font-size:.85rem">Baserat på SCB Lönestrukturstatistik 2024</p>
       </div>
       
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:18px">
         <div style="padding:16px;background:var(--al);border-radius:12px;border:2px solid var(--ac)">
           <div style="font-size:.75rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Startlön</div>
-          <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--ac);margin-bottom:4px">${fmt(e.s0)} kr</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--ac);margin-bottom:4px">${fmt(e.s0)} kr</div>
           <div style="font-size:.8rem;color:var(--mu)">Efter examen</div>
         </div>
         
         <div style="padding:16px;background:#f8f9fa;border-radius:12px;border:2px solid #dee2e6">
           <div style="font-size:.75rem;font-weight:700;color:#495057;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Medellön</div>
-          <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:#212529;margin-bottom:4px">${fmt(avgSalary)} kr</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:#212529;margin-bottom:4px">${fmt(avgSalary)} kr</div>
           <div style="font-size:.8rem;color:var(--mu)">Genomsnitt i yrket</div>
         </div>
         
         <div style="padding:16px;background:#f8f9fa;border-radius:12px;border:2px solid #dee2e6">
           <div style="font-size:.75rem;font-weight:700;color:#495057;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Medianlön</div>
-          <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:#212529;margin-bottom:4px">${fmt(medianSalary)} kr</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:#212529;margin-bottom:4px">${fmt(medianSalary)} kr</div>
           <div style="font-size:.8rem;color:var(--mu)">50% tjänar mer</div>
         </div>
         
         <div style="padding:16px;background:var(--al);border-radius:12px;border:2px solid var(--ac)">
           <div style="font-size:.75rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Erfaren</div>
-          <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--ac);margin-bottom:4px">${fmt(e.s1)} kr</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--ac);margin-bottom:4px">${fmt(e.s1)} kr</div>
           <div style="font-size:.8rem;color:var(--mu)">Efter 10-15 år</div>
         </div>
       </div>
@@ -789,7 +790,7 @@ function buildSalaryInfo(e){
               <div style="font-size:.75rem;color:var(--mu)">${sc.desc}</div>
             </div>
             <div style="text-align:right">
-              <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:${sc.color}">${fmt(sc.salary)} kr</div>
+              <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:${sc.color}">${fmt(sc.salary)} kr</div>
               <div style="font-size:.7rem;color:var(--mu)">+${diffPct}%</div>
             </div>
           </div>
@@ -889,7 +890,7 @@ function buildLifetimeAnalysis(e){
       <div style="font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:${diff>0?'var(--ac)':'var(--re)'};margin-bottom:6px">
         ${diff>0?'Livstidsvinst':'Livstidsförlust'}
       </div>
-      <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:${diff>0?'var(--ac)':'var(--re)'};margin-bottom:6px">
+      <div style="font-family:'Playfair Display',serif;font-size:2rem;color:${diff>0?'var(--ac)':'var(--re)'};margin-bottom:6px">
         ${diff>0?'+':'−'}${diffAbs.toFixed(1)} M kr
       </div>
       <div style="font-size:.85rem;color:${diff>0?'var(--ac)':'var(--re)'};opacity:.85">
@@ -911,7 +912,7 @@ function buildTeaser(){
     document.getElementById('tBl').innerHTML=`
     <div style="margin-bottom:14px">
     <div style="background:linear-gradient(135deg,var(--ac),var(--ah));border-radius:12px;padding:20px;color:#fff">
-    <div style="font-family:'DM Serif Display',serif;font-size:1.15rem;margin-bottom:6px">Du, ${Math.round(sal/1000)}k/mån — ${e.t} om ${e.y} år</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:6px">Du, ${Math.round(sal/1000)}k/mån — ${e.t} om ${e.y} år</div>
     <div style="opacity:.85;font-size:.84rem">Lön idag: ${fmt(sal)} kr → Ingångslön: ${fmt(e.s0)} kr (+${fmt(e.s0-sal)} kr/mån)</div>
     </div></div>
 
@@ -940,9 +941,9 @@ function buildTeaser(){
     ${monthlySave>0?'Du tappar '+fmt(monthlySave)+' kr/mån — men vi visar hur det fungerar':'Din studentinkomst täcker mer än du tror'}
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px">
-    <div style="background:var(--rl);padding:12px;border-radius:8px;text-align:center"><div style="font-size:.65rem;font-weight:700;color:var(--re);text-transform:uppercase">Total skuld</div><div style="font-family:'DM Serif Display';font-size:1rem;color:var(--re)">${fmt(debt)} kr</div></div>
-    <div style="background:var(--wl);padding:12px;border-radius:8px;text-align:center"><div style="font-size:.65rem;font-weight:700;color:#92400e;text-transform:uppercase">Kvar/mån</div><div style="font-family:'DM Serif Display';font-size:1rem;color:#92400e">? kr</div></div>
-    <div style="background:var(--al);padding:12px;border-radius:8px;text-align:center"><div style="font-size:.65rem;font-weight:700;color:var(--ac);text-transform:uppercase">Break-even</div><div style="font-family:'DM Serif Display';font-size:1rem;color:var(--ac)">? år</div></div>
+    <div style="background:var(--rl);padding:12px;border-radius:8px;text-align:center"><div style="font-size:.65rem;font-weight:700;color:var(--re);text-transform:uppercase">Total skuld</div><div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--re)">${fmt(debt)} kr</div></div>
+    <div style="background:var(--wl);padding:12px;border-radius:8px;text-align:center"><div style="font-size:.65rem;font-weight:700;color:#92400e;text-transform:uppercase">Kvar/mån</div><div style="font-family:'Playfair Display',serif;font-size:1rem;color:#92400e">? kr</div></div>
+    <div style="background:var(--al);padding:12px;border-radius:8px;text-align:center"><div style="font-size:.65rem;font-weight:700;color:var(--ac);text-transform:uppercase">Break-even</div><div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--ac)">? år</div></div>
     </div></div>
 
     <div style="margin-bottom:14px;margin-top:8px">
@@ -1256,12 +1257,12 @@ function showBlurredPlan(){
 
     loadEl.innerHTML=`
     <div style="text-align:center;width:100%;max-width:420px">
-        <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:#fff;margin-bottom:8px">${firstName}</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:#fff;margin-bottom:8px">${firstName}</div>
         <div style="font-size:.85rem;color:rgba(255,255,255,.6);margin-bottom:40px">Vi bygger din personliga plan — det tar bara några sekunder</div>
         <div style="background:rgba(255,255,255,.1);border-radius:100px;height:6px;width:100%;margin-bottom:20px;overflow:hidden">
             <div id="planLoadBar" style="background:linear-gradient(90deg,#4CAF82,var(--ac));height:100%;width:0%;border-radius:100px;transition:width .6s ease"></div>
         </div>
-        <div id="planLoadPct" style="font-family:'DM Serif Display',serif;font-size:2.2rem;color:#fff;margin-bottom:8px">0%</div>
+        <div id="planLoadPct" style="font-family:'Playfair Display',serif;font-size:2.2rem;color:#fff;margin-bottom:8px">0%</div>
         <div id="planLoadMsg" style="font-size:.88rem;color:rgba(255,255,255,.7);min-height:24px;transition:opacity .3s"></div>
         <div class="mob-grid-2" style="margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;opacity:.5">
         <div style="padding:12px 8px;background:rgba(255,255,255,.08);border-radius:10px;text-align:center">
@@ -1372,22 +1373,22 @@ function showPaywall(firstName,e,debt,be,sal,full,part,gp,loan,mo,BID){
     <style>
     .pw-body{max-width:480px;margin:0 auto;padding:0 16px 48px;}
     .pw-nav{padding:14px 20px;border-bottom:1px solid var(--bo);display:flex;align-items:center;justify-content:space-between;background:rgba(247,247,244,.97);position:sticky;top:0;z-index:10;backdrop-filter:blur(10px);}
-    .pw-logo{font-family:'DM Serif Display',serif;font-size:1.1rem;}
+    .pw-logo{font-family:'Playfair Display',serif;font-size:1.1rem;}
     .pw-badge{font-size:.7rem;font-weight:700;background:var(--al);color:var(--ah);padding:5px 11px;border-radius:6px;}
     .pw-combo{background:var(--card);border:1.5px solid var(--bo);border-radius:10px;margin-bottom:10px;overflow:hidden;}
     .pw-crow{display:flex;align-items:center;gap:9px;padding:11px 14px;border-bottom:1px solid var(--bo);}
     .pw-crow:last-child{border-bottom:none;}
     .pw-clbl{font-size:.6rem;font-weight:700;color:var(--li);text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;}
-    .pw-cmain{font-family:'DM Serif Display',serif;font-size:.93rem;color:var(--tx);line-height:1.3;}
+    .pw-cmain{font-family:'Playfair Display',serif;font-size:.93rem;color:var(--tx);line-height:1.3;}
     .pw-hero{background:linear-gradient(140deg,#0F1F0F,#1A3A2A);border-radius:16px;padding:20px;margin-bottom:10px;position:relative;overflow:hidden;}
     .pw-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;background:radial-gradient(circle,rgba(122,194,154,.12) 0%,transparent 70%);}
     .pw-eye{font-size:.6rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--ac);margin-bottom:7px;}
-    .pw-title{font-family:'DM Serif Display',serif;font-size:1.35rem;color:#fff;line-height:1.15;margin-bottom:3px;}
+    .pw-title{font-family:'Playfair Display',serif;font-size:1.35rem;color:#fff;line-height:1.15;margin-bottom:3px;}
     .pw-sub{font-size:.74rem;color:rgba(255,255,255,.35);margin-bottom:17px;}
     .pw-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
     .pw-sc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 12px;}
     .pw-scl{font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:rgba(255,255,255,.35);margin-bottom:4px;}
-    .pw-scv{font-family:'DM Serif Display',serif;font-size:1.1rem;color:#fff;line-height:1;margin-bottom:2px;}
+    .pw-scv{font-family:'Playfair Display',serif;font-size:1.1rem;color:#fff;line-height:1;margin-bottom:2px;}
     .pw-scs{font-size:.62rem;color:rgba(255,255,255,.35);}
     .pw-sc.good .pw-scv{color:#7AC29A;}.pw-sc.warn .pw-scv{color:#D4A853;}.pw-sc.neu .pw-scv{color:#6BA3D0;}
     .pw-score-card{background:var(--card);border:1.5px solid var(--bo);border-radius:12px;padding:16px 18px;margin-bottom:10px;position:relative;}
@@ -1818,7 +1819,7 @@ function buildFP(name){
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
     <div>
-    <div style="font-family:'DM Serif Display',serif;font-size:2rem">Din framtid som ${e.t.toLowerCase()}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:2rem">Din framtid som ${e.t.toLowerCase()}</div>
     <div style="opacity:.85;font-size:.95rem">Om 5 år (${futureYear}) — du är ${futureAge} år</div>
     </div>
     </div>
@@ -1826,29 +1827,29 @@ function buildFP(name){
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:24px">
     <div style="background:rgba(255,255,255,.15);padding:20px;border-radius:12px">
     <div style="font-size:.8rem;opacity:.8;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Månadslön</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;margin-bottom:4px">${fmt(futureSalary)} kr</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:4px">${fmt(futureSalary)} kr</div>
     <div style="font-size:.85rem;opacity:.9">↑ ${fmt(salaryIncrease)} kr mer än idag</div>
     </div>
     
     <div style="background:rgba(255,255,255,.15);padding:20px;border-radius:12px">
     <div style="font-size:.8rem;opacity:.8;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Jobbmarknad</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;margin-bottom:4px">${e.dem===5?'Mycket hög':e.dem===4?'Hög':e.dem===3?'Stabil':'God'}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:4px">${e.dem===5?'Mycket hög':e.dem===4?'Hög':e.dem===3?'Stabil':'God'}</div>
     <div style="font-size:.85rem;opacity:.9">${e.dem===5?'Akut brist - garanterat jobb':e.dem===4?'Arbetsgivare söker aktivt':'Balanserad marknad'}</div>
     </div>
     
     ${debt>0?`<div style="background:rgba(255,255,255,.15);padding:20px;border-radius:12px">
     <div style="font-size:.8rem;opacity:.8;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">CSN-skuld</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;margin-bottom:4px">${debtAtFuture>0?fmt(debtAtFuture)+' kr':'Betald!'}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:4px">${debtAtFuture>0?fmt(debtAtFuture)+' kr':'Betald!'}</div>
     <div style="font-size:.85rem;opacity:.9">${debtAtFuture>0?fmt(debt-debtAtFuture)+' kr betalt av '+fmt(debt)+' kr':'Skuldfri!'}</div>
     </div>`:`<div style="background:rgba(255,255,255,.15);padding:20px;border-radius:12px">
     <div style="font-size:.8rem;opacity:.8;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Ekonomisk frihet</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;margin-bottom:4px">Ingen skuld</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:4px">Ingen skuld</div>
     <div style="font-size:.85rem;opacity:.9">Du klarade utan lån!</div>
     </div>`}
     
     <div style="background:rgba(255,255,255,.15);padding:20px;border-radius:12px">
     <div style="font-size:.8rem;opacity:.8;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Karriärstege</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;margin-bottom:4px">${e.sc.sp}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:4px">${e.sc.sp}</div>
     <div style="font-size:.85rem;opacity:.9">Från ${e.sc.st} → ${e.sc.le}</div>
     </div>
     </div>
@@ -1893,7 +1894,7 @@ function buildFP(name){
     h+=`<div style="background:#f8f9fa;border-radius:12px;padding:24px;margin-bottom:32px">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-    <h3 style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--ah);margin:0">Du är inte ensam — och du är inte för gammal</h3>
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--ah);margin:0">Du är inte ensam — och du är inte för gammal</h3>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:20px">
     <div>
@@ -1954,7 +1955,7 @@ function buildFP(name){
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
     <div style="width:32px;height:32px;border-radius:50%;background:${full?'var(--ac)':part?'#d4a853':'#c24b3b'};color:#fff;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0">${full?'✓':part?'!':'?'}</div>
     <div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--ah)">Behörighet till ${e.t}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--ah)">Behörighet till ${e.t}</div>
     <div style="font-size:.78rem;color:#6c757d">Baserat på att du gick ${gp?gp.l:'gymnasiet'}</div>
     </div>
     </div>
@@ -1982,7 +1983,7 @@ function buildFP(name){
     const topSchs=schs.slice(0,3);
     if(topSchs.length>0){
     h+=`<div style="background:#fff;border:2px solid #e0e0d8;border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
-    <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ah);margin-bottom:4px">Antagningspoäng — dina närmaste alternativ</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--ah);margin-bottom:4px">Antagningspoäng — dina närmaste alternativ</div>
     <div style="font-size:.78rem;color:#6c757d;margin-bottom:16px">Lägsta poäng från senaste antagningsomgången</div>
     <div style="display:grid;gap:10px">`;
     topSchs.forEach(s=>{
@@ -2012,7 +2013,7 @@ function buildFP(name){
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
     <div style="width:32px;height:32px;border-radius:50%;background:#084298;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;flex-shrink:0">HP</div>
     <div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ah)">Högskoleprov — alternativ väg in</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--ah)">Högskoleprov — alternativ väg in</div>
     <div style="font-size:.78rem;color:#6c757d">Ca ⅓ av platserna på de flesta program reserveras för HP-antagning</div>
     </div>
     </div>
@@ -2022,19 +2023,19 @@ function buildFP(name){
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:14px">
     <div style="padding:12px;background:#cfe2ff;border-radius:10px;text-align:center">
     <div style="font-size:.68rem;font-weight:700;color:#084298;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Kostnad</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:#084298">450 kr</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#084298">450 kr</div>
     </div>
     <div style="padding:12px;background:#cfe2ff;border-radius:10px;text-align:center">
     <div style="font-size:.68rem;font-weight:700;color:#084298;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Genomförs</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:#084298">Vår & höst</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#084298">Vår & höst</div>
     </div>
     <div style="padding:12px;background:#cfe2ff;border-radius:10px;text-align:center">
     <div style="font-size:.68rem;font-weight:700;color:#084298;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Resultat giltigt</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:#084298">5 provomgångar (~2,5 år)</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#084298">5 provomgångar (~2,5 år)</div>
     </div>
     <div style="padding:12px;background:#cfe2ff;border-radius:10px;text-align:center">
     <div style="font-size:.68rem;font-weight:700;color:#084298;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Max poäng</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:#084298">2,0</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#084298">2,0</div>
     </div>
     </div>
     <div style="padding:10px 14px;background:#f0f4ff;border-radius:8px;font-size:.82rem;color:#084298;line-height:1.5;margin-bottom:12px">
@@ -2051,7 +2052,7 @@ function buildFP(name){
     const missingReqs=reqStatus.filter(r=>!r.found).map(r=>r.req);
     h+=`<div data-komp style="background:#fff;border:2px solid #e0e0d8;border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-    <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ah)">Komplettering — ${missingReqs.length} kurs${missingReqs.length===1?'':'er'} saknas</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--ah)">Komplettering — ${missingReqs.length} kurs${missingReqs.length===1?'':'er'} saknas</div>
     <button onclick="this.closest('[data-komp]').querySelector('[data-komp-detail]').style.display=this.closest('[data-komp]').querySelector('[data-komp-detail]').style.display==='none'?'block':'none';this.textContent=this.textContent==='Visa detaljer ▾'?'Dölj ▴':'Visa detaljer ▾'" style="font-size:.78rem;color:var(--ac);background:none;border:none;cursor:pointer;font-family:inherit;padding:0">Visa detaljer ▾</button>
     </div>
     <div style="font-size:.85rem;color:#495057;margin-bottom:12px">Tar <strong>~${part?'1 termin':'1–2 terminer'}</strong> — båda vägarna är CSN-berättigade (${fmt(BID)} kr/mån i bidrag).</div>
@@ -2100,7 +2101,7 @@ function buildFP(name){
     <div style="background:linear-gradient(135deg,var(--ah),var(--ac));border-radius:16px;padding:28px 24px;margin-bottom:24px">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
     <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-    <div style="color:#fff;font-family:'DM Serif Display',serif;font-size:1.8rem">Din ekonomi under studietiden</div>
+    <div style="color:#fff;font-family:'Playfair Display',serif;font-size:1.8rem">Din ekonomi under studietiden</div>
     </div>
     <div style="color:rgba(255,255,255,.85);font-size:.95rem">${monthDiff>=0?'Baserat på dina svar ser det ut att gå ihop — justera reglagen nedan för att se hur dina val påverkar balansen.':'Du tappar '+fmt(Math.abs(monthDiff))+' kr/mån jämfört med idag — justera lån, hyra och extrajobb nedan för att se vad som funkar för dig.'}</div>
     </div>
@@ -2125,19 +2126,19 @@ function buildFP(name){
 
     <div style="padding:12px 10px;background:${bal>=0?'#D9F0E3':'#f8d7da'};border-radius:13px;text-align:center" id="fBV2wrap">
     <div style="font-size:.6rem;font-weight:700;color:${bal>=0?'var(--ah)':'#721c24'};text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px" id="fBV2lbl">Kvar / mån</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:${bal>=0?'var(--ah)':'#721c24'};line-height:1" id="fBV2">${(bal>=0?'+':'')+fmt(bal)} kr</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.35rem;color:${bal>=0?'var(--ah)':'#721c24'};line-height:1" id="fBV2">${(bal>=0?'+':'')+fmt(bal)} kr</div>
     <div style="font-size:.65rem;color:${bal>=0?'var(--ah)':'#721c24'};opacity:.8;margin-top:4px">som student</div>
     </div>
 
     <div style="padding:12px 10px;background:#fff3cd;border-radius:13px;text-align:center">
     <div style="font-size:.6rem;font-weight:700;color:#856404;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">CSN-skuld</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:#856404;line-height:1" id="fD2s">${fmt(debt)} kr</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.35rem;color:#856404;line-height:1" id="fD2s">${fmt(debt)} kr</div>
     <div style="font-size:.65rem;color:#856404;opacity:.8;margin-top:4px">${fmt(loan)} kr/mån × ${mo} mån</div>
     </div>
 
     <div style="padding:12px 10px;background:${netGain10yr>0?'#D9F0E3':'#fff3cd'};border-radius:13px;text-align:center">
     <div style="font-size:.6rem;font-weight:700;color:${netGain10yr>0?'var(--ah)':'#856404'};text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Vinst år 10</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:${netGain10yr>0?'var(--ah)':'#856404'};line-height:1">${netGain10yr>0?'+':'-'}${fmt(Math.abs(netGain10yr))} kr</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.35rem;color:${netGain10yr>0?'var(--ah)':'#856404'};line-height:1">${netGain10yr>0?'+':'-'}${fmt(Math.abs(netGain10yr))} kr</div>
     <div style="font-size:.65rem;color:${netGain10yr>0?'var(--ah)':'#856404'};opacity:.8;margin-top:4px">netto vs att stanna</div>
     </div>
 
@@ -2146,19 +2147,19 @@ function buildFP(name){
 
     <div style="padding:12px 10px;background:var(--al);border-radius:13px;text-align:center">
     <div style="font-size:.6rem;font-weight:700;color:var(--ah);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Återbetalning</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--ah);line-height:1" id="fPB">${pb>0?fmt(pb)+' kr':'—'}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--ah);line-height:1" id="fPB">${pb>0?fmt(pb)+' kr':'—'}</div>
     <div style="font-size:.65rem;color:var(--ah);opacity:.8;margin-top:4px">per mån efter examen</div>
     </div>
 
     <div style="padding:12px 10px;background:var(--bll);border-radius:13px;text-align:center">
     <div style="font-size:.6rem;font-weight:700;color:var(--bl);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Break-even</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--bl);line-height:1" id="fBE">${be>0&&be<50?'~'+be+' år':'—'}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--bl);line-height:1" id="fBE">${be>0&&be<50?'~'+be+' år':'—'}</div>
     <div style="font-size:.65rem;color:var(--bl);opacity:.8;margin-top:4px">sedan tjänar du mer livet ut</div>
     </div>
 
     <div style="padding:12px 10px;background:#D9F0E3;border-radius:13px;text-align:center">
     <div style="font-size:.6rem;font-weight:700;color:var(--ah);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Toppinkomst</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--ah);line-height:1">${fmt(e.s1)} kr</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--ah);line-height:1">${fmt(e.s1)} kr</div>
     <div style="font-size:.65rem;color:var(--ah);opacity:.8;margin-top:4px">med erfarenhet som ${e.t.toLowerCase()}</div>
     </div>
 
@@ -2168,7 +2169,7 @@ function buildFP(name){
         h+=`<div style="background:linear-gradient(135deg,var(--ah),var(--ac));border-radius:16px;padding:28px 24px;margin:32px 0 24px">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
     <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
-    <div style="color:#fff;font-family:'DM Serif Display',serif;font-size:1.8rem">Din interaktiva budget</div>
+    <div style="color:#fff;font-family:'Playfair Display',serif;font-size:1.8rem">Din interaktiva budget</div>
     </div>
     <div style="color:rgba(255,255,255,.85);font-size:.95rem">Dra i reglagen för att hitta din balans</div>
     </div>
@@ -2278,7 +2279,7 @@ function buildFP(name){
     
     h+=`<div style="background:${bal>=0?'#D9F0E3':'#f8d7da'};border:2px solid ${bal>=0?'var(--ac)':'#c24b3b'};border-radius:12px;padding:20px;margin-top:16px" id="fBx">
     <div style="font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:${bal>=0?'var(--ah)':'#721c24'};margin-bottom:8px" id="fBL">${bal>=0?'Kvar varje månad':'Underskott'}</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:${bal>=0?'var(--ah)':'#721c24'};margin-bottom:8px" id="fBV">${(bal>=0?'+':'')+fmt(bal)} kr</div>
+    <div style="font-family:'Playfair Display',serif;font-size:2rem;color:${bal>=0?'var(--ah)':'#721c24'};margin-bottom:8px" id="fBV">${(bal>=0?'+':'')+fmt(bal)} kr</div>
     <div style="font-size:.88rem;color:${bal>=0?'var(--ah)':'#721c24'};opacity:.9" id="fBA">${bal>=500?'Bra marginal!':bal>=0?'Tight men funkar.':'Öka lån, sänk hyra eller extrajobb.'}</div>
     </div>
     </div></div>`;
@@ -2296,7 +2297,7 @@ function buildFP(name){
     h+=`<div style="background:linear-gradient(135deg,var(--ah),var(--ac));border-radius:16px;padding:28px 24px;margin:32px 0 24px">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
     <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-    <div style="color:#fff;font-family:'DM Serif Display',serif;font-size:1.8rem">Från jobb till studentliv</div>
+    <div style="color:#fff;font-family:'Playfair Display',serif;font-size:1.8rem">Från jobb till studentliv</div>
     </div>
     <div style="color:rgba(255,255,255,.85);font-size:.95rem">Så här förändras din vardag</div>
     </div>`;
@@ -2332,7 +2333,7 @@ function buildFP(name){
         `<div style="background:${bg};border-radius:14px;padding:18px 20px;margin:24px 0 14px;display:flex;align-items:center;gap:12px">
         ${icon}
         <div>
-        <div style="color:#fff;font-family:'DM Serif Display',serif;font-size:1.3rem;line-height:1.2">${title}</div>
+        <div style="color:#fff;font-family:'Playfair Display',serif;font-size:1.3rem;line-height:1.2">${title}</div>
         <div style="color:rgba(255,255,255,.75);font-size:.8rem;margin-top:2px">${sub}</div>
         </div></div>`;
 
@@ -2354,7 +2355,7 @@ function buildFP(name){
     // Viktiga datum-kort
     h+=`<div class="mob-grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
     <div style="padding:14px 10px;background:#fff3cd;border-radius:12px;text-align:center;border:1.5px solid #d4a853">
-    <div style="font-family:'DM Serif Display',serif;font-size:1.4rem;color:#856404;line-height:1">${applyDateAction.getDate()} ${['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec'][applyDateAction.getMonth()]}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.4rem;color:#856404;line-height:1">${applyDateAction.getDate()} ${['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec'][applyDateAction.getMonth()]}</div>
     <div style="font-size:.68rem;color:#856404;font-weight:700;text-transform:uppercase;margin-top:4px">Ansökan stänger</div>
     <div style="font-size:.7rem;color:#856404;margin-top:2px;opacity:.8">${(()=>{
     const ad=studyStart.startsWith('HT')?new Date(startYr+compTime,2,15):new Date(startYr+compTime,9,15);
@@ -2363,12 +2364,12 @@ function buildFP(name){
 })()}</div>
     </div>
     <div style="padding:14px 10px;background:var(--al);border-radius:12px;text-align:center;border:1.5px solid var(--ac)">
-    <div style="font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--ah);line-height:1">${studyStart.startsWith('HT')?'Juli':'Dec'}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--ah);line-height:1">${studyStart.startsWith('HT')?'Juli':'Dec'}</div>
     <div style="font-size:.68rem;color:var(--ah);font-weight:700;text-transform:uppercase;margin-top:4px">Antagningsbesked</div>
     <div style="font-size:.7rem;color:var(--ah);margin-top:2px;opacity:.8">${startYr+compTime}</div>
     </div>
     <div style="padding:14px 10px;background:#D9F0E3;border-radius:12px;text-align:center;border:1.5px solid var(--ac)">
-    <div style="font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--ah);line-height:1">${studyStart.startsWith('HT')?'Aug':'Jan'}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--ah);line-height:1">${studyStart.startsWith('HT')?'Aug':'Jan'}</div>
     <div style="font-size:.68rem;color:var(--ah);font-weight:700;text-transform:uppercase;margin-top:4px">Studiestart</div>
     <div style="font-size:.7rem;color:var(--ah);margin-top:2px;opacity:.8">${startYr+compTime}</div>
     </div>
@@ -2697,7 +2698,7 @@ function buildFP(name){
     <div style="display:flex;align-items:flex-start;gap:12px">
     <div style="width:36px;height:36px;border-radius:50%;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">✦</div>
     <div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ah);margin-bottom:6px">${firstName} — här är din konkreta plan</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--ah);margin-bottom:6px">${firstName} — här är din konkreta plan</div>
     <p style="font-size:.88rem;color:#495057;line-height:1.7;margin-bottom:10px">Du funderar på att bli <strong>${e.t.toLowerCase()}</strong>. Du är ${age} år, tjänar ${fmt(currentSal)} kr/mån idag och vill börja studera ${a.when_start==='asap'?'direkt':a.when_start==='6mo'?'inom 6 månader':a.when_start==='12mo'?'inom 12 månader':a.when_start==='next'?'nästa termin':'när det passar'}. Utbildningen tar <strong>${ry} år</strong> och du tar examen <strong>${gradYear}</strong> — ${gradAge} år gammal.</p>
     ${whyText?`<p style="font-size:.88rem;color:#495057;line-height:1.7;margin-bottom:10px">Du vill ha <strong>${whyText}</strong> — planen nedan är byggd för att ta dig dit.</p>`:''}
     ${concern!=='none'?`<div style="padding:10px 14px;background:#f0f4f1;border-radius:8px;border-left:3px solid var(--ac);font-size:.84rem;color:var(--ah);line-height:1.65">${concernText}</div>`:``}
@@ -2709,26 +2710,26 @@ function buildFP(name){
     h+=`<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:20px">
     <div style="padding:12px;background:${bal>=0?'#D9F0E3':'#f8d7da'};border-radius:10px;text-align:center" id="fBV3wrap">
     <div style="font-size:.65rem;font-weight:700;color:${bal>=0?'var(--ah)':'#721c24'};text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px" id="fBV3lbl">Kvar/mån som student</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:${bal>=0?'var(--ah)':'#721c24'}" id="fBV3">${(bal>=0?'+':'')+fmt(bal)} kr</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:${bal>=0?'var(--ah)':'#721c24'}" id="fBV3">${(bal>=0?'+':'')+fmt(bal)} kr</div>
     </div>
     <div style="padding:12px;background:#fff3cd;border-radius:10px;text-align:center">
     <div style="font-size:.65rem;font-weight:700;color:#856404;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">CSN-skuld</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:#856404" id="fD3">${fmt(debt)} kr</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#856404" id="fD3">${fmt(debt)} kr</div>
     </div>
     <div style="padding:12px;background:var(--bll);border-radius:10px;text-align:center">
     <div style="font-size:.65rem;font-weight:700;color:var(--bl);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Break-even</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--bl)" id="fBE3">${be>0&&be<50?'~'+be+' år':'—'}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--bl)" id="fBE3">${be>0&&be<50?'~'+be+' år':'—'}</div>
     <div style="font-size:.65rem;color:var(--bl);opacity:.8;margin-top:3px">${be>0&&be<50?'från '+( gradYear+be)+' tjänar du mer livet ut':'—'}</div>
     </div>
     <div style="padding:12px;background:#D9F0E3;border-radius:10px;text-align:center">
     <div style="font-size:.65rem;font-weight:700;color:var(--ah);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Examen</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--ah)">${gradYear} (${gradAge} år)</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--ah)">${gradYear} (${gradAge} år)</div>
     </div>
     </div>`;
 
     // Steg-för-steg plan
     h+=`<div style="background:linear-gradient(135deg,var(--ah),var(--ac));border-radius:14px;padding:20px 18px;margin-bottom:16px">
-    <div style="color:#fff;font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:4px">Din plan — steg för steg</div>
+    <div style="color:#fff;font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:4px">Din plan — steg för steg</div>
     <div style="color:rgba(255,255,255,.8);font-size:.82rem">Baserat på dina svar — i kronologisk ordning</div>
     </div>
     <div style="display:grid;gap:10px;margin-bottom:20px">`;
@@ -2759,7 +2760,7 @@ function buildFP(name){
         h+=`<div style="background:#fff;border:2px solid var(--ac);border-radius:16px;padding:22px;margin-bottom:16px;box-shadow:0 4px 16px rgba(122,194,154,.12)">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
         <div style="width:28px;height:28px;border-radius:50%;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;flex-shrink:0">★</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ah)">Vår rekommendation för dig</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--ah)">Vår rekommendation för dig</div>
         </div>
         <div style="padding:16px;background:#f0f4f1;border-radius:12px;margin-bottom:${rec2?'10px':'0'}">
         <div style="font-weight:700;font-size:.95rem;color:var(--ah);margin-bottom:2px">${topSch.school}</div>
@@ -2776,7 +2777,7 @@ function buildFP(name){
     }
 
     h+=`<div style="background:linear-gradient(135deg,var(--ah),var(--ac));border-radius:14px;padding:20px 18px;margin-bottom:14px">
-    <div style="color:#fff;font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:4px">Sök din utbildning</div>
+    <div style="color:#fff;font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:4px">Sök din utbildning</div>
     <div style="color:rgba(255,255,255,.8);font-size:.82rem">Filtrerat baserat på dina svar</div>
     </div>
     <div style="background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:14px">
@@ -2811,7 +2812,7 @@ function buildFP(name){
 
     // ── Avslutande CTA ──
     h+=`<div style="background:linear-gradient(135deg,#1a1a18,#2d2d29);border-radius:16px;padding:32px 28px;margin-top:8px;text-align:center">
-    <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:#fff;margin-bottom:10px;line-height:1.25">${firstName} — nu är det dags att ta nästa steg.</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:#fff;margin-bottom:10px;line-height:1.25">${firstName} — nu är det dags att ta nästa steg.</div>
     <div style="font-size:.9rem;color:rgba(255,255,255,.7);margin-bottom:24px;line-height:1.6;max-width:380px;margin-left:auto;margin-right:auto">Planen är din. Spara den, skriv ut den, dela den. Det enda som saknas är att du faktiskt gör det.</div>
     <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
     <button onclick="printPlan()" style="padding:13px 24px;background:var(--ac);color:#fff;border:none;border-radius:10px;font-family:inherit;font-weight:700;font-size:.9rem;cursor:pointer;display:flex;align-items:center;gap:8px">
@@ -3031,12 +3032,12 @@ function renderDebtBanner(debt, age, ry){
         <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px">
         <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#7d6131" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         <div style="flex:1">
-        <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:#7d6131;margin-bottom:4px">Din investering i framtiden</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:#7d6131;margin-bottom:4px">Din investering i framtiden</div>
         <div style="font-size:.9rem;color:#7d6131;opacity:.85">CSN-lån med låg ränta (~0.55%) — den billigaste låneformen som finns</div>
         </div>
         <div style="text-align:right">
         <div style="font-size:.78rem;text-transform:uppercase;color:#7d6131;opacity:.75;letter-spacing:.5px">Total summa</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:2.2rem;color:#7d6131;font-weight:700" id="fD2">${fmt(debt)} kr</div>
+        <div style="font-family:'Playfair Display',serif;font-size:2.2rem;color:#7d6131;font-weight:700" id="fD2">${fmt(debt)} kr</div>
         </div>
         </div>
         
@@ -3055,18 +3056,18 @@ function renderDebtBanner(debt, age, ry){
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
         <div style="background:#fff;padding:16px;border-radius:10px;text-align:center">
         <div style="font-size:.75rem;color:#6c757d;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px">Skuldfri vid</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ac)" id="fDebtFreeAge">${debtFreeAge} år</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--ac)" id="fDebtFreeAge">${debtFreeAge} år</div>
         </div>
         <div style="background:#fff;padding:16px;border-radius:10px;text-align:center">
         <div style="font-size:.75rem;color:#6c757d;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px">Återbetalningstid</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:var(--ac)" id="fYearsToPayoff">${yearsToPayoff} år</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--ac)" id="fYearsToPayoff">${yearsToPayoff} år</div>
         </div>
         </div>
         </div>`;
     }else{
         banner.innerHTML=`<div style="background:linear-gradient(135deg,#D9F0E3,#a3cfbb);border:2px solid var(--ac);border-radius:16px;padding:32px 28px;margin:32px 0;text-align:center">
         <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="2" style="margin:0 auto 16px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--ah);margin-bottom:8px">Ingen skuld!</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--ah);margin-bottom:8px">Ingen skuld!</div>
         <div style="font-size:1rem;color:var(--ah);opacity:.9">Du klarar studierna utan CSN-lån. Det ger dig ekonomisk frihet direkt efter examen.</div>
         </div>`;
     }
@@ -3115,7 +3116,7 @@ async function saveAndRedirect() {
     const loadMsg = document.createElement('div');
     loadMsg.style.cssText = 'position:fixed;inset:0;background:#0a2e1a;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px';
     loadMsg.innerHTML = `<div style="text-align:center">
-        <div style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:#fff;margin-bottom:8px">Sparar din plan...</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.6rem;color:#fff;margin-bottom:8px">Sparar din plan...</div>
         <div style="font-size:.88rem;color:rgba(255,255,255,.6);margin-bottom:32px">Skickar dig vidare om ett ögonblick</div>
         <div style="background:rgba(255,255,255,.1);border-radius:100px;height:6px;width:200px;overflow:hidden">
             <div style="background:var(--ac);height:100%;width:60%;border-radius:100px;animation:progress 1s ease infinite alternate"></div>
