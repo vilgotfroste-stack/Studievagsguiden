@@ -966,17 +966,39 @@ function buildTeaser(){
 const QS=[
     // Del 1 – Studiepreferenser
     {id:'current_location',t:'Var bor du idag?',w:'Hjälper oss beräkna boendekostnader och matchade skolor.',tp:'opts',opts:[{v:'stockholm',l:'Stockholm'},{v:'goteborg',l:'Göteborg'},{v:'malmo',l:'Malmö'},{v:'uppsala',l:'Uppsala'},{v:'linkoping',l:'Linköping'},{v:'lund',l:'Lund'},{v:'umea',l:'Umeå'},{v:'orebro',l:'Örebro'},{v:'other',l:'Annan ort'}]},
-    {id:'education_type',t:'Vilken utbildningsform söker du?',w:'Välj en eller flera alternativ.',tp:'multi',opts:[{v:'yh',l:'Yrkeshögskola (YH)'},{v:'uni',l:'Högskola / Universitet'},{v:'komvux',l:'Komvux'},{v:'folk',l:'Folkhögskola'},{v:'private',l:'Privat utbildning'},{v:'any',l:'Spelar ingen roll'}]},
+    {id:'education_type',t:'Vilken utbildningsform söker du?',w:'Välj en eller flera alternativ.',tp:'multi',
+      cond:()=>{
+        // Auto-sätt och hoppa om utbildningen är entydigt YH eller uni
+        const YH_ONLY=[4,7,9,11,25,26];
+        const UNI_ONLY=[5,6,8,10,14,15,16,17,18,19,20,21,22,23,24,27,28,29];
+        if(edu&&YH_ONLY.includes(edu.id)){ans.education_type=['yh'];return false;}
+        if(edu&&UNI_ONLY.includes(edu.id)){ans.education_type=['uni'];return false;}
+        return true;
+      },
+      opts:[{v:'yh',l:'Yrkeshögskola (YH)'},{v:'uni',l:'Högskola / Universitet'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'study_pace',t:'Vilken studietakt passar dig?',w:'Avgör om du kan arbeta samtidigt.',tp:'opts',opts:[{v:'fulltime',l:'Heltid'},{v:'parttime',l:'Deltid'},{v:'flexible',l:'Flexibel'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'study_mode',t:'Hur vill du studera?',w:'Påverkar dina studiealternativ.',tp:'opts',opts:[{v:'campus',l:'På plats'},{v:'distance',l:'Distans'},{v:'hybrid',l:'Hybrid'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'willing_to_move',t:'Är du villig att flytta för studier?',w:'Påverkar vilka skolor som passar dig.',tp:'opts',cond:()=>ans.study_mode!=='distance',opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'}]},
     {id:'when_start',t:'När vill du börja studera?',w:'Styr tidslinjen i din plan.',tp:'opts',opts:[{v:'asap',l:'Så snart som möjligt'},{v:'6mo',l:'Inom 6 månader'},{v:'12mo',l:'Inom 12 månader'},{v:'any',l:'Spelar ingen roll'}]},
     {id:'duration',t:'Hur lång utbildning är du beredd att gå?',w:'Filtrerar bort för långa program.',tp:'opts',opts:[{v:'short',l:'Kortare än 6 månader'},{v:'6to12',l:'6–12 månader'},{v:'1to2',l:'1–2 år'},{v:'3plus',l:'3 år eller längre'},{v:'any',l:'Spelar ingen roll'}]},
-    {id:'fee_ok',t:'Är du öppen för avgiftsbelagda utbildningar?',w:'Privata YH och utbildningar kan kosta.',tp:'opts',opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}]},
+    {id:'fee_ok',t:'Är du öppen för avgiftsbelagda utbildningar?',w:'Privata YH och utbildningar kan kosta.',tp:'opts',
+      cond:()=>{
+        const UNI_ONLY=[5,6,8,10,14,15,16,17,18,19,20,21,22,23,24,27,28,29];
+        if(edu&&UNI_ONLY.includes(edu.id)){ans.fee_ok='no';return false;}
+        return true;
+      },
+      opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}]},
 
     // Del 2 – Behörighet
-    {id:'gym',t:'Vilket gymnasieprogram gick du?',w:'Avgör om du har rätt behörighet eller behöver komplettera.',tp:'opts',opts:GYM.map(g=>({v:g.id,l:g.l}))},
-    {id:'has_grades',t:'Har du fullständiga gymnasiebetyg?',w:'Avgör om du kan söka direkt.',tp:'opts',opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}]},
+    {id:'gym',t:'Vilket gymnasieprogram gick du?',w:'Avgör om du har rätt behörighet eller behöver komplettera.',tp:'opts',
+      cond:()=>{
+        const GRUNDL=[4,7,11,13]; // Kräver bara grundläggande behörighet
+        if(edu&&GRUNDL.includes(edu.id)){ans.gym='other';return false;}
+        return true;
+      },
+      opts:GYM.map(g=>({v:g.id,l:g.l}))},
+    {id:'has_grades',t:'Har du en fullständig gymnasieexamen?',w:'Avgör om du kan söka direkt eller behöver komplettera.',tp:'opts',
+      opts:[{v:'yes',l:'Ja'},{v:'no',l:'Nej'},{v:'unsure',l:'Osäker'}]},
 
     // Del 3 – Nuvarande situation
     {id:'age',t:'Hur gammal är du?',w:'Påverkar skuldfri ålder och livstidsberäkning.',tp:'input',ph:'T.ex. 29',inputType:'number',min:18,max:70,su:'år'},
