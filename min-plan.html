@@ -1484,56 +1484,6 @@ function buildFP(name) {
  }
 
 
- // Yrket section
- ov += `<div class="section-label">Om yrket</div>
- <div class="expand-block" id="exp-job">
- <div class="expand-head" onclick="toggle('exp-job')">
- <div class="expand-head-left">
- <div class="expand-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--bl)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x='2' y='7' width='20' height='14' rx='2'/><path d='M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2'/></svg></div>
- <div>
- <div class="expand-title">Vad innebär jobbet?</div>
- <span class="expand-tag">${ec.job_tag}</span>
- </div>
- </div>
- <span class="expand-arrow">▾</span>
- </div>
- <div class="expand-body"><div class="expand-inner">
- <ul class="detail-list">${ec.job_bullets.map(b=>'<li>'+b+'</li>').join('')}</ul>
- </div></div>
- </div>
-
- <div class="expand-block" id="exp-stress">
- <div class="expand-head" onclick="toggle('exp-stress')">
- <div class="expand-head-left">
- <div class="expand-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--wa)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg></div>
- <div>
- <div class="expand-title">Stress &amp; balans</div>
- <span class="expand-tag">${ec.stress_tag}</span>
- </div>
- </div>
- <span class="expand-arrow">▾</span>
- </div>
- <div class="expand-body"><div class="expand-inner">
- <p>${ec.stress_p}</p>
- <ul class="detail-list" style="margin-top:10px">${ec.stress_bullets.map(b=>'<li>'+b+'</li>').join('')}</ul>
- </div></div>
- </div>
-
- <div class="expand-block" id="exp-karriar">
- <div class="expand-head" onclick="toggle('exp-karriar')">
- <div class="expand-head-left">
- <div class="expand-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ah)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points='22 12 18 12 15 21 9 3 6 12 2 12'/></svg></div>
- <div>
- <div class="expand-title">Karriärsteg</div>
- <span class="expand-tag">${fmt(e.s0)} → ${fmt(e.s1)} kr</span>
- </div>
- </div>
- <span class="expand-arrow">▾</span>
- </div>
- <div class="expand-body"><div class="expand-inner">
- <ul class="career-step-list">${ec.career_steps.map(s=>'<li>'+s+'</li>').join('')}</ul>
- </div></div>
- </div>`;
 
 
  // Varför du passar — baserat på why_change, work_status, gym
@@ -1887,6 +1837,51 @@ function buildFP(name) {
    </button>
  </div>
 </div>`;
+ }
+
+ // ── FÖRKUNSKAPSKRAV-LISTA ──────────────────────────────────────────────────
+ if (specificReqs.length > 0) {
+   bh += `<div class="section-label" style="margin-top:12px"><span>Förkunskapskrav</span></div>
+ <div style="background:var(--card);border:1.5px solid var(--bo);border-radius:10px;overflow:hidden;margin-bottom:10px">
+ ${reqStatus.map(r => `<div class="req-row">
+   <span class="req-name">${r.req}</span>
+   <span class="req-check ${r.found ? 'ok' : 'miss'}">${r.found ? 'Uppfylld' : 'Saknas'}</span>
+ </div>`).join('')}
+ </div>`;
+ }
+
+ // ── KOMVUX-PLAN ────────────────────────────────────────────────────────────
+ if (missingReqs.length > 0 && hasExam) {
+   const pace = a.komvux_pace || 'heltid';
+   const paceLabel = {heltid:'Heltid',deltid:'Deltid',sommar:'Distans sommar',okand:'Heltid'}[pace] || 'Heltid';
+   const cityName2 = ({stockholm:'Stockholm',goteborg:'Göteborg',malmo:'Malmö',uppsala:'Uppsala',linkoping:'Linköping',umea:'Umeå',orebro:'Örebro',other:'din ort'})[city] || 'din ort';
+   const komvuxUrls2 = {
+     stockholm:'https://komvux.stockholm.se/vux/vux/courses',
+     goteborg:'https://goteborg.se/wps/portal?uri=gbglnk:2024123135659982',
+     malmo:'https://sjalvservice.malmo.se/oversikt/overview/555',
+     uppsala:'https://open24.ist-asp.com/uppsala/vux/Vux/Start',
+     linkoping:'https://open24.ist-asp.com/linkoping/vux/Vux/Start',
+     umea:'https://www.umea.se/forskolaskolaochutbildning/vuxenutbildning/komvux',
+     orebro:'https://gymnasieskolor.orebro.se/komvux',
+   };
+   const komvuxUrl2 = komvuxUrls2[city] || 'https://studera.nu';
+   bh += `<div class="section-label"><span>Komvux-plan</span></div>
+ <div class="hp-card">
+   <div class="hp-top">
+     <div style="flex:1">
+       <div class="hp-title">Komplettering via Komvux</div>
+       <div class="hp-sub">${missingReqs.join(' · ')} · ${paceLabel}</div>
+     </div>
+     <span style="background:rgba(107,163,208,.18);color:var(--bh);font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:4px">${paceLabel}</span>
+   </div>
+   <div style="display:grid;gap:5px;margin-bottom:10px">
+     ${missingReqs.map(r => `<div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--mu)"><span>${r}</span><span style="font-weight:700;color:var(--bh)">${pace==='heltid'||pace==='okand'?'~5 veckor':pace==='deltid'?'~10 veckor':'~6 veckor'}</span></div>`).join('')}
+   </div>
+   <a href="${komvuxUrl2}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;padding:7px 13px;background:#fff;border:1.5px solid var(--bl);border-radius:6px;color:var(--bl);font-size:.77rem;font-weight:700;text-decoration:none">
+     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+     Hitta Komvux i ${cityName2}
+   </a>
+ </div>`;
  }
 
  // ── CSN HERO ───────────────────────────────────────────────────────────────
