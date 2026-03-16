@@ -2362,71 +2362,68 @@ function calcScore() {
   const a = ans, e = edu;
   if (!a || !e) return { score: 50, factors: [] };
 
-  const hint = (txt, panel) => {
-    const click = panel ? `onclick="const t=document.querySelector('[data-panel='+String.raw\`${panel}\`+']');if(t)t.click();updateScore();" style="cursor:pointer;text-decoration:underline dotted;"` : '';
-    return `<span ${click} style="font-size:.7rem;opacity:.75;font-weight:500"> · ${txt}</span>`;
-  };
+  const hint = (txt) => ` <span style="font-size:.7rem;opacity:.75;font-weight:500">· ${txt}</span>`;
 
   const { bal: balV, lanV, jobbV } = calcBalance();
   const fw = [];
 
   // 1. Livstidsvinst — w:25
   const lg = planState.lifetimeGain;
-  if      (lg === null)  fw.push({s:60, w:25,t:'Livstidsvinst okänd',c:'warn'});
+  if      (lg === null)  fw.push({s:60, w:25,t:'Livstidsvinst okänd',c:'warn',nav:'plan'});
   else if (lg > 1.5e6)   fw.push({s:100,w:25,t:'Stark livstidsvinst',c:'ok'});
-  else if (lg > 0)       fw.push({s:55, w:25,t:'Liten livstidsvinst'+hint('Prova annan utbildning','plan'),c:'warn'});
-  else                   fw.push({s:0,  w:25,t:'Negativ livstidsvinst'+hint('Prova annan utbildning','plan'),c:'bad'});
+  else if (lg > 0)       fw.push({s:55, w:25,t:'Liten livstidsvinst'+hint('Prova annan utbildning'),c:'warn',nav:'edit',ek:'education_type'});
+  else                   fw.push({s:0,  w:25,t:'Negativ livstidsvinst'+hint('Prova annan utbildning'),c:'bad',nav:'edit',ek:'education_type'});
 
   // 2. Budget-marginal — w:25
   if      (balV >= 3000) fw.push({s:100,w:25,t:'Bra ekonomisk marginal',c:'ok'});
-  else if (balV >= 0)    fw.push({s:50, w:25,t:'Tight budget'+hint('Justera ekonomin','ekonomi'),c:'warn'});
-  else                   fw.push({s:0,  w:25,t:'Underskott i budget'+hint('Justera ekonomin','ekonomi'),c:'bad'});
+  else if (balV >= 0)    fw.push({s:50, w:25,t:'Tight budget'+hint('Justera ekonomin'),c:'warn',nav:'ekonomi'});
+  else                   fw.push({s:0,  w:25,t:'Underskott i budget'+hint('Justera ekonomin'),c:'bad',nav:'ekonomi'});
 
   // 3. Behörighet — w:20
   const miss = planState.missingCount;
-  if      (!a.beh_verified) fw.push({s:60, w:20,t:'Behörighet ej verifierad'+hint('Verifiera nu','beh'),c:'warn'});
+  if      (!a.beh_verified) fw.push({s:60, w:20,t:'Behörighet ej verifierad'+hint('Verifiera nu'),c:'warn',nav:'beh'});
   else if (miss === 0)      fw.push({s:100,w:20,t:'Behörig direkt ✓',c:'ok'});
-  else if (miss <= 2)       fw.push({s:50, w:20,t:miss+' komvux-kurs'+(miss>1?'er':'')+hint('Ändra studietakt','plan'),c:'warn'});
-  else                      fw.push({s:0,  w:20,t:miss+' komvux-kurser krävs'+hint('Ändra studietakt','plan'),c:'bad'});
+  else if (miss <= 2)       fw.push({s:50, w:20,t:miss+' komvux-kurs'+(miss>1?'er':'')+hint('Ändra studietakt'),c:'warn',nav:'edit',ek:'study_pace'});
+  else                      fw.push({s:0,  w:20,t:miss+' komvux-kurser krävs'+hint('Ändra studietakt'),c:'bad',nav:'edit',ek:'study_pace'});
 
   // 4. Ålder / tid kvar — w:15
   const age = parseInt(a.age)||30;
   const wYrs = 65 - age - (e.y||3) - miss*0.25;
   if      (wYrs >= 25) fw.push({s:100,w:15,t:'God tid att tjäna igen',c:'ok'});
   else if (wYrs >= 15) fw.push({s:55, w:15,t:'Medellång återbetalningstid',c:'warn'});
-  else                 fw.push({s:0,  w:15,t:'Kort tid kvar till pension'+hint('Välj kortare utbildning','plan'),c:'bad'});
+  else                 fw.push({s:0,  w:15,t:'Kort tid kvar till pension'+hint('Välj kortare utbildning'),c:'bad',nav:'edit',ek:'duration'});
 
   // 5. Buffert — w:10
   const sav = ({'none':0,'under10':5000,'10-50':30000,'50-100':75000,'100+':150000})[a.savings_amount]||0;
   if      (sav >= 30000) fw.push({s:100,w:10,t:'Bra buffert',c:'ok'});
-  else if (sav > 0)      fw.push({s:50, w:10,t:'Liten buffert'+hint('Spara innan start','ekonomi'),c:'warn'});
-  else                   fw.push({s:0,  w:10,t:'Ingen buffert'+hint('Spara innan start','ekonomi'),c:'bad'});
+  else if (sav > 0)      fw.push({s:50, w:10,t:'Liten buffert'+hint('Spara innan start'),c:'warn',nav:'ekonomi'});
+  else                   fw.push({s:0,  w:10,t:'Ingen buffert'+hint('Spara innan start'),c:'bad',nav:'ekonomi'});
 
   // 6. Arbetsmarknad — w:10
   const dem = e.dem || 3;
   if      (dem >= 4) fw.push({s:100,w:10,t:'Hög efterfrågan på yrket',c:'ok'});
   else if (dem === 3) fw.push({s:65, w:10,t:'Normal efterfrågan',c:'ok'});
-  else               fw.push({s:20, w:10,t:'Låg efterfrågan'+hint('Prova annan utbildning','plan'),c:'warn'});
+  else               fw.push({s:20, w:10,t:'Låg efterfrågan'+hint('Prova annan utbildning'),c:'warn',nav:'edit',ek:'education_type'});
 
   // 7. AI-risk — w:5
   const ai = e.ai || 0;
   if      (ai <= 5)  fw.push({s:100,w:5,t:'Låg AI-risk ✓',c:'ok'});
   else if (ai <= 15) fw.push({s:60, w:5,t:'Måttlig AI-risk',c:'warn'});
-  else               fw.push({s:20, w:5,t:'Hög AI-risk'+hint('Prova annan utbildning','plan'),c:'bad'});
+  else               fw.push({s:20, w:5,t:'Hög AI-risk'+hint('Prova annan utbildning'),c:'bad',nav:'edit',ek:'education_type'});
 
   // Optional — only added when triggered
   const pace = a.study_pace;
   if (pace === 'parttime' && jobbV > 0) {
     fw.push({s:100,w:5,t:'Deltid + extrainkomst ✓',c:'ok'});
   } else if (pace === 'fulltime' && jobbV === 0 && balV < 500) {
-    fw.push({s:0,  w:5,t:'Heltid utan inkomst'+hint('Jobba deltid?','plan'),c:'bad'});
+    fw.push({s:0,  w:5,t:'Heltid utan inkomst'+hint('Jobba deltid?'),c:'bad',nav:'edit',ek:'work_during'});
   }
 
   if (a.has_kids === 'yes') {
     if (a.study_mode === 'distance') {
       fw.push({s:100,w:5,t:'Distans passar med barn ✓',c:'ok'});
     } else if (a.study_mode === 'campus' && pace === 'fulltime') {
-      fw.push({s:10, w:5,t:'Campus heltid + barn'+hint('Distans?','plan'),c:'bad'});
+      fw.push({s:10, w:5,t:'Campus heltid + barn'+hint('Distans?'),c:'bad',nav:'edit',ek:'study_mode'});
     }
   } else if (a.study_mode === 'distance') {
     fw.push({s:90, w:3,t:'Flexibel studieform',c:'ok'});
@@ -2436,7 +2433,7 @@ function calcScore() {
     fw.push({s:100,w:5,t:'Ingen inkomst att förlora ✓',c:'ok'});
   }
 
-  if      (lanV > 7000)             fw.push({s:20, w:5,t:'Hög CSN-skuld'+hint('Sänk lånet','ekonomi'),c:'warn'});
+  if      (lanV > 7000)             fw.push({s:20, w:5,t:'Hög CSN-skuld'+hint('Sänk lånet'),c:'warn',nav:'ekonomi'});
   else if (lanV === 0 && balV >= 0) fw.push({s:100,w:5,t:'Lånar minimalt ✓',c:'ok'});
 
   const totalW   = fw.reduce((s,f) => s+f.w, 0);
@@ -2455,7 +2452,7 @@ function updateScore() {
   const { score, factors } = calcScore();
 
   const color = score >= 75 ? '#059669' : score >= 50 ? '#D97706' : '#DC2626';
-  el.textContent = score;
+  el.textContent = score + '%';
   el.style.color = color;
   if (barEl) { barEl.style.width = score + '%'; barEl.style.background = color; }
   if (textEl) {
@@ -2465,9 +2462,34 @@ function updateScore() {
                          'Tufft läge just nu — justera planen nedan.';
   }
   if (facEl) {
-    facEl.innerHTML = factors.map(f =>
-      `<span class="score-factor ${f.c}">${f.t}</span>`
-    ).join('');
+    facEl.innerHTML = factors.map(f => {
+      const clickable = f.nav
+        ? `onclick="goTo('${f.nav}'${f.ek ? `,'${f.ek}'` : ''})" style="cursor:pointer"`
+        : '';
+      return `<span class="score-factor ${f.c}" ${clickable}>${f.t}</span>`;
+    }).join('');
+  }
+}
+
+// Navigation from score badges
+function goTo(dest, editKey) {
+  if (dest === 'ekonomi' || dest === 'beh' || dest === 'plan' || dest === 'overview') {
+    const btns = document.querySelectorAll('.tab-btn');
+    const idx = {overview:0, ekonomi:1, beh:2, plan:3}[dest];
+    if (idx !== undefined) showPlanTab(dest, btns[idx]);
+  } else if (dest === 'edit') {
+    openEditModal();
+    if (editKey) {
+      setTimeout(() => {
+        const el = document.getElementById('eq-' + editKey);
+        if (el) {
+          const body = document.getElementById('eq-body-' + editKey);
+          if (body && !body.classList.contains('open')) toggleEQ(editKey);
+          const scroller = document.querySelector('.edit-modal-scroll');
+          if (scroller) scroller.scrollTop = el.offsetTop - 8;
+        }
+      }, 60);
+    }
   }
 }
 
