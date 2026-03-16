@@ -2474,13 +2474,22 @@ function updateScore() {
 // Navigation from score badges
 function goTo(dest, editKey) {
   if (dest === 'ekonomi' || dest === 'beh' || dest === 'plan' || dest === 'overview') {
-    const btn = [...document.querySelectorAll('.tab-btn')].find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + dest + "'"));
-    if (btn) showPlanTab(dest, btn);
-    if (dest === 'plan' && editKey === 'lt') {
+    // Switch tab directly
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('act'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('act'));
+    const panel = document.getElementById('panel-' + dest);
+    if (panel) panel.classList.add('act');
+    const tabIdx = {overview:0, ekonomi:1, beh:2, plan:3}[dest];
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    if (tabBtns[tabIdx]) tabBtns[tabIdx].classList.add('act');
+    // Scroll target
+    if (editKey === 'lt') {
       setTimeout(() => {
         const el = document.getElementById('lt-block');
         if (el) el.scrollIntoView({ block: 'start' });
-      }, 50);
+      }, 100);
+    } else {
+      window.scrollTo(0, 0);
     }
   } else if (dest === 'edit') {
     openEditModal();
