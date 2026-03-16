@@ -2369,7 +2369,7 @@ function calcScore() {
 
   // 1. Livstidsvinst — w:25
   const lg = planState.lifetimeGain;
-  if      (lg === null)  fw.push({s:60, w:25,t:'Livstidsvinst okänd',c:'warn',nav:'plan'});
+  if      (lg === null)  fw.push({s:60, w:25,t:'Livstidsvinst okänd',c:'warn',nav:'plan',ek:'lt'});
   else if (lg > 1.5e6)   fw.push({s:100,w:25,t:'Stark livstidsvinst',c:'ok'});
   else if (lg > 0)       fw.push({s:55, w:25,t:'Liten livstidsvinst'+hint('Prova annan utbildning'),c:'warn',nav:'edit',ek:'education_type'});
   else                   fw.push({s:0,  w:25,t:'Negativ livstidsvinst'+hint('Prova annan utbildning'),c:'bad',nav:'edit',ek:'education_type'});
@@ -2474,9 +2474,14 @@ function updateScore() {
 // Navigation from score badges
 function goTo(dest, editKey) {
   if (dest === 'ekonomi' || dest === 'beh' || dest === 'plan' || dest === 'overview') {
-    const btns = document.querySelectorAll('.tab-btn');
-    const idx = {overview:0, ekonomi:1, beh:2, plan:3}[dest];
-    if (idx !== undefined) showPlanTab(dest, btns[idx]);
+    const btn = [...document.querySelectorAll('.tab-btn')].find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + dest + "'"));
+    if (btn) showPlanTab(dest, btn);
+    if (dest === 'plan' && editKey === 'lt') {
+      setTimeout(() => {
+        const el = document.getElementById('lt-block');
+        if (el) el.scrollIntoView({ block: 'start' });
+      }, 50);
+    }
   } else if (dest === 'edit') {
     openEditModal();
     if (editKey) {
