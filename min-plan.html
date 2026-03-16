@@ -2259,6 +2259,7 @@ function buildFP(name) {
    const avgNewSal = (e.s0 + e.s1) / 2;
    const switchTotal0 = avgNewSal * 12 * workYears - (e.tc * 12 * Math.ceil(ry));
    const gain0 = switchTotal0 - stayTotal;
+   planState.lifetimeGain = gain0;
    const fmtM = v => { const m = v / 1e6; return (m >= 0 ? '' : '') + Math.abs(m).toFixed(1) + ' M kr'; };
    const fmtMsign = v => (v >= 0 ? '+' : '') + (v / 1e6).toFixed(1) + ' M kr';
    const stayPct = 78;
@@ -2369,46 +2370,47 @@ function calcScore() {
 
   // 1. Livstidsvinst — w:25
   const lg = planState.lifetimeGain;
-  if      (lg === null)  fw.push({s:60, w:25,t:'Livstidsvinst okänd',c:'warn',nav:'plan',ek:'lt'});
-  else if (lg > 1.5e6)   fw.push({s:100,w:25,t:'Stark livstidsvinst',c:'ok'});
-  else if (lg > 0)       fw.push({s:55, w:25,t:'Liten livstidsvinst'+hint('Prova annan utbildning'),c:'warn',nav:'edit',ek:'education_type'});
-  else                   fw.push({s:0,  w:25,t:'Negativ livstidsvinst'+hint('Prova annan utbildning'),c:'bad',nav:'edit',ek:'education_type'});
+  if      (lg === null)   fw.push({s:60, w:25,t:'Livstidsvinst okänd',c:'warn',nav:'plan',ek:'lt'});
+  else if (lg > 1.5e6)    fw.push({s:100,w:25,t:'Stark livstidsvinst ✓',c:'ok'});
+  else if (lg > 5e5)      fw.push({s:70, w:25,t:'Måttlig livstidsvinst',c:'warn',nav:'plan',ek:'lt'});
+  else if (lg > 0)        fw.push({s:40, w:25,t:'Liten livstidsvinst'+hint('Prova annan utbildning'),c:'warn',nav:'edit',ek:'education_type'});
+  else                    fw.push({s:0,  w:25,t:'Negativ livstidsvinst'+hint('Prova annan utbildning'),c:'bad',nav:'edit',ek:'education_type'});
 
   // 2. Budget-marginal — w:25
-  if      (balV >= 3000) fw.push({s:100,w:25,t:'Bra ekonomisk marginal',c:'ok'});
+  if      (balV >= 3000) fw.push({s:100,w:25,t:'Bra ekonomisk marginal ✓',c:'ok'});
   else if (balV >= 0)    fw.push({s:50, w:25,t:'Tight budget'+hint('Justera ekonomin'),c:'warn',nav:'ekonomi'});
   else                   fw.push({s:0,  w:25,t:'Underskott i budget'+hint('Justera ekonomin'),c:'bad',nav:'ekonomi'});
 
   // 3. Behörighet — w:20
   const miss = planState.missingCount;
-  if      (!a.beh_verified) fw.push({s:60, w:20,t:'Behörighet ej verifierad'+hint('Verifiera nu'),c:'warn',nav:'beh'});
+  if      (!a.beh_verified) fw.push({s:75, w:20,t:'Behörighet ej verifierad'+hint('Verifiera nu'),c:'warn',nav:'beh'});
   else if (miss === 0)      fw.push({s:100,w:20,t:'Behörig direkt ✓',c:'ok'});
-  else if (miss <= 2)       fw.push({s:50, w:20,t:miss+' komvux-kurs'+(miss>1?'er':'')+hint('Ändra studietakt'),c:'warn',nav:'edit',ek:'study_pace'});
-  else                      fw.push({s:0,  w:20,t:miss+' komvux-kurser krävs'+hint('Ändra studietakt'),c:'bad',nav:'edit',ek:'study_pace'});
+  else if (miss <= 2)       fw.push({s:50, w:20,t:miss+' komvux-kurs'+(miss>1?'er':'')+ ' saknas'+hint('Se plan'),c:'warn',nav:'beh'});
+  else                      fw.push({s:0,  w:20,t:miss+' komvux-kurser krävs'+hint('Se plan'),c:'bad',nav:'beh'});
 
   // 4. Ålder / tid kvar — w:15
   const age = parseInt(a.age)||30;
   const wYrs = 65 - age - (e.y||3) - miss*0.25;
-  if      (wYrs >= 25) fw.push({s:100,w:15,t:'God tid att tjäna igen',c:'ok'});
+  if      (wYrs >= 25) fw.push({s:100,w:15,t:'God tid att tjäna igen ✓',c:'ok'});
   else if (wYrs >= 15) fw.push({s:55, w:15,t:'Medellång återbetalningstid',c:'warn'});
-  else                 fw.push({s:0,  w:15,t:'Kort tid kvar till pension'+hint('Välj kortare utbildning'),c:'bad',nav:'edit',ek:'duration'});
+  else                 fw.push({s:0,  w:15,t:'Kort tid kvar till pension'+hint('Prova kortare utbildning'),c:'bad',nav:'edit',ek:'education_type'});
 
   // 5. Buffert — w:10
   const sav = ({'none':0,'under10':5000,'10-50':30000,'50-100':75000,'100+':150000})[a.savings_amount]||0;
-  if      (sav >= 30000) fw.push({s:100,w:10,t:'Bra buffert',c:'ok'});
-  else if (sav > 0)      fw.push({s:50, w:10,t:'Liten buffert'+hint('Spara innan start'),c:'warn',nav:'ekonomi'});
-  else                   fw.push({s:0,  w:10,t:'Ingen buffert'+hint('Spara innan start'),c:'bad',nav:'ekonomi'});
+  if      (sav >= 30000) fw.push({s:100,w:10,t:'Bra buffert ✓',c:'ok'});
+  else if (sav > 0)      fw.push({s:50, w:10,t:'Liten buffert',c:'warn'});
+  else                   fw.push({s:0,  w:10,t:'Ingen buffert'+hint('Justera ekonomin'),c:'bad',nav:'ekonomi'});
 
   // 6. Arbetsmarknad — w:10
   const dem = e.dem || 3;
-  if      (dem >= 4) fw.push({s:100,w:10,t:'Hög efterfrågan på yrket',c:'ok'});
+  if      (dem >= 4) fw.push({s:100,w:10,t:'Hög efterfrågan på yrket ✓',c:'ok'});
   else if (dem === 3) fw.push({s:65, w:10,t:'Normal efterfrågan',c:'ok'});
   else               fw.push({s:20, w:10,t:'Låg efterfrågan'+hint('Prova annan utbildning'),c:'warn',nav:'edit',ek:'education_type'});
 
   // 7. AI-risk — w:5
   const ai = e.ai || 0;
   if      (ai <= 5)  fw.push({s:100,w:5,t:'Låg AI-risk ✓',c:'ok'});
-  else if (ai <= 15) fw.push({s:60, w:5,t:'Måttlig AI-risk',c:'warn'});
+  else if (ai <= 15) fw.push({s:60, w:5,t:'Måttlig AI-risk',c:'warn',nav:'edit',ek:'education_type'});
   else               fw.push({s:20, w:5,t:'Hög AI-risk'+hint('Prova annan utbildning'),c:'bad',nav:'edit',ek:'education_type'});
 
   // Optional — only added when triggered
@@ -2416,7 +2418,7 @@ function calcScore() {
   if (pace === 'parttime' && jobbV > 0) {
     fw.push({s:100,w:5,t:'Deltid + extrainkomst ✓',c:'ok'});
   } else if (pace === 'fulltime' && jobbV === 0 && balV < 500) {
-    fw.push({s:0,  w:5,t:'Heltid utan inkomst'+hint('Jobba deltid?'),c:'bad',nav:'edit',ek:'work_during'});
+    fw.push({s:0,  w:5,t:'Heltid utan extrainkomst'+hint('Jobba deltid?'),c:'bad',nav:'edit',ek:'work_during'});
   }
 
   if (a.has_kids === 'yes') {
@@ -2426,11 +2428,7 @@ function calcScore() {
       fw.push({s:10, w:5,t:'Campus heltid + barn'+hint('Distans?'),c:'bad',nav:'edit',ek:'study_mode'});
     }
   } else if (a.study_mode === 'distance') {
-    fw.push({s:90, w:3,t:'Flexibel studieform',c:'ok'});
-  }
-
-  if (a.work_status === 'unemployed') {
-    fw.push({s:100,w:5,t:'Ingen inkomst att förlora ✓',c:'ok'});
+    fw.push({s:90, w:3,t:'Flexibel studieform ✓',c:'ok'});
   }
 
   if      (lanV > 7000)             fw.push({s:20, w:5,t:'Hög CSN-skuld'+hint('Sänk lånet'),c:'warn',nav:'ekonomi'});
