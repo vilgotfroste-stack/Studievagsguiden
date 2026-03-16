@@ -127,27 +127,27 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 
 /* HERO DARK CARD */
 .hero-block {
- background: linear-gradient(140deg, #1d5c80 0%, #1a6647 100%);
+ background: linear-gradient(140deg, #3A98C8 0%, #46B88A 100%);
  border-radius: 16px; padding: 20px; margin-bottom: 12px;
  position: relative; overflow: hidden;
 }
 .hero-block::before {
  content: ''; position: absolute; top: -40px; right: -40px;
  width: 160px; height: 160px;
- background: radial-gradient(circle, rgba(58,152,200,.3) 0%, transparent 70%);
+ background: radial-gradient(circle, rgba(255,255,255,.15) 0%, transparent 70%);
  border-radius: 50%;
 }
-.hero-eyebrow { font-size: .6rem; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--bl); margin-bottom: 8px; }
+.hero-eyebrow { font-size: .6rem; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(255,255,255,.75); margin-bottom: 8px; }
 .hero-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.45rem; font-weight: 800; color: #fff; line-height: 1.15; margin-bottom: 4px; letter-spacing: -.02em; }
-.hero-sub { font-size: .78rem; color: rgba(255,255,255,.35); margin-bottom: 20px; }
+.hero-sub { font-size: .78rem; color: rgba(255,255,255,.65); margin-bottom: 20px; }
 .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-.stat-card { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: 11px 12px; }
-.stat-label { font-size: .57rem; font-weight: 700; text-transform: uppercase; letter-spacing: .9px; color: rgba(255,255,255,.35); margin-bottom: 5px; }
+.stat-card { background: rgba(0,0,0,.15); border: 1px solid rgba(255,255,255,.2); border-radius: 8px; padding: 11px 12px; }
+.stat-label { font-size: .57rem; font-weight: 700; text-transform: uppercase; letter-spacing: .9px; color: rgba(255,255,255,.65); margin-bottom: 5px; }
 .stat-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.2rem; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 3px; letter-spacing: -.02em; }
-.stat-sub { font-size: .64rem; color: rgba(255,255,255,.35); }
-.stat-card.good .stat-value { color: #7AC29A; }
-.stat-card.warn .stat-value { color: #D4A853; }
-.stat-card.neu .stat-value { color: #6BA3D0; }
+.stat-sub { font-size: .64rem; color: rgba(255,255,255,.65); }
+.stat-card.good .stat-value { color: #fff; }
+.stat-card.warn .stat-value { color: #fff; }
+.stat-card.neu .stat-value { color: #fff; }
 
 /* CONCERN CARD — replaced by combo-card but keep for compat */
 .concern-card { background: var(--card); border: 1.5px solid var(--bo); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
