@@ -210,12 +210,12 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .section-label { font-size: .6rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--li); margin: 18px 0 8px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
 
 /* EKONOMI */
-.balance-hero { background: var(--card); border: 1.5px solid var(--bo); border-radius: 14px; padding: 20px; margin-bottom: 12px; text-align: center; }
+.balance-hero { border-radius: 14px; margin-bottom: 12px; overflow: hidden; border: 1.5px solid var(--bo); display: grid; grid-template-rows: auto auto; }
 .balance-label { font-size: .61rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--li); margin-bottom: 8px; }
 .balance-amount { font-size: 2.6rem; font-weight: 800; color: var(--ah); line-height: 1; margin-bottom: 4px; letter-spacing: -.03em; }
 .balance-amount.neg { color: var(--re); }
 .balance-sub { font-size: .75rem; color: var(--mu); }
-.balance-row { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--bo); }
+.balance-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; }
 .balance-row-item { text-align: center; }
 .balance-row-item .val { font-weight: 700; font-size: .92rem; }
 .balance-row-item .lbl { font-size: .61rem; color: var(--li); margin-top: 2px; text-transform: uppercase; letter-spacing: .5px; }
@@ -403,7 +403,7 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 .alone-lbl { font-size: .67rem; color: var(--mu); margin-top: 3px; line-height: 1.4; }
 
 @keyframes fu { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.score-header { background: #fff; border: 1.5px solid var(--bo); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
+.score-header { background: #EAF7F1; background-image: repeating-linear-gradient(135deg, rgba(100,160,130,0.07) 0px, rgba(100,160,130,0.07) 1px, transparent 1px, transparent 12px); border: 1.5px solid rgba(91,168,130,.2); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
 .score-row { display: flex; align-items: center; gap: 16px; }
 .score-num { font-size: 3rem; font-weight: 800; line-height: 1; min-width: 70px; letter-spacing: -.03em; }
 .score-right { flex: 1; }
@@ -1635,26 +1635,26 @@ function buildFP(name) {
 
  let ek = `
  <div class="balance-hero">
- <div style="display:grid;grid-template-columns:1fr 1px 1fr;gap:0;margin-bottom:14px">
-   <div style="text-align:center;padding:0 12px">
+ <div style="display:grid;grid-template-columns:1fr 1px 1fr;gap:0">
+   <div style="text-align:center;padding:18px 12px;background:#EAF7F1">
      <div class="balance-label">Kvar per månad</div>
      <div class="balance-amount${balDisp < 0 ? ' neg' : ''}" id="bal-display">${balDisp >= 0 ? '+' : ''}${fmtKr(balDisp)}</div>
-     <div class="balance-sub" id="bal-sub">${balDisp >= 500 ? 'Bra marginal' : balDisp >= 0 ? 'Tight men det går ihop' : 'Underskott — justera nedan'}</div>
+     <div class="balance-sub" id="bal-sub">${balDisp >= 500 ? 'Bra marginal — du klarar dig komfortabelt.' : balDisp >= 0 ? 'Tight men det går ihop' : 'Underskott — justera nedan'}</div>
    </div>
-   <div style="background:var(--bo);height:100%"></div>
+   <div style="background:var(--bo)"></div>
    ${loan > 0 ? `
-   <div style="text-align:center;padding:0 12px;cursor:pointer" onclick="toggle('exp-skuld')">
+   <div style="text-align:center;padding:18px 12px;background:#FBF5EA;cursor:pointer" onclick="toggle('exp-skuld')">
      <div class="balance-label">Total CSN-skuld</div>
      <div style="font-size:2.6rem;font-weight:800;letter-spacing:-.03em;color:var(--wa);line-height:1" id="skuld-total">~${(()=>{const s=fmt(debt);const sp=s.indexOf(' ');return sp>0?s.slice(0,sp)+'<br>'+s.slice(sp+1)+' kr':s+' kr';})()}</div>
      <div style="font-size:.72rem;color:var(--mu);margin-top:4px">efter examen <span class="expand-arrow" style="font-size:.7rem">▾</span></div>
    </div>` : `
-   <div style="text-align:center;padding:0 12px">
+   <div style="text-align:center;padding:18px 12px;background:#EAF7F1">
      <div class="balance-label">CSN-skuld</div>
      <div style="font-size:2.6rem;font-weight:800;letter-spacing:-.03em;color:var(--ah);line-height:1">0<br>kr</div>
      <div style="font-size:.72rem;color:var(--ah);margin-top:4px">skuldfri student</div>
    </div>`}
  </div>
- <div class="balance-row">
+ <div class="balance-row" style="background:var(--card);border-top:1px solid var(--bo)">
    <div class="balance-row-item"><div class="val" id="disp-in">${fmtKr(totalIn)}</div><div class="lbl">Totalt in</div></div>
    <div style="width:1px;height:30px;background:var(--bo)"></div>
    <div class="balance-row-item"><div class="val" id="disp-ut">${fmtKr(totalOut)}</div><div class="lbl">Totalt ut</div></div>
