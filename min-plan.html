@@ -1284,7 +1284,12 @@ function buildFP(name) {
      if (komvuxWeeks > 40) compTime = 2;
    }
  }
- const startYr = baseYr + compTime;
+ let startYr = baseYr + compTime;
+ // Buggfix: om vtStart=true men ansökningstiden för VT av startYr redan passerat
+ // (antagning.se VT-ansökan öppnar 15 sep föregående år) → flytta till VT nästa år
+ if (vtStart && now > new Date(startYr - 1, 9, 15)) {
+   startYr += 1;
+ }
  const studyYrs = Math.ceil(ry);
  planState.startYr = startYr;
  planState.studyYears = studyYrs;
