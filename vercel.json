@@ -15,6 +15,10 @@
     {
       "source": "/integritetspolicy",
       "destination": "/integritetspolicy.html"
+    },
+    {
+      "source": "/yrkestest",
+      "destination": "/yrkestest.html"
     }
   ]
 }
