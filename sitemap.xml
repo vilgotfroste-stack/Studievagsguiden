@@ -9,6 +9,34 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://www.studievagsguiden.se/lonar-plugga</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.studievagsguiden.se/sabbatsar</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.studievagsguiden.se/framtidsyrken</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.studievagsguiden.se/karriarbyte</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.studievagsguiden.se/efter-gymnasiet</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.studievagsguiden.se/hogsta-lon</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.studievagsguiden.se/yrkestest</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.studievagsguiden.se/integritetspolicy</loc>
     <priority>0.3</priority>
   </url>
