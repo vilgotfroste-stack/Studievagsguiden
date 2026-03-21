@@ -328,7 +328,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 <section class="hero">
   <div class="badge">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-    Baserat på data från SCB, CSN &amp; UKÄ
+    Lönar det sig att plugga? Räkna ut det på 60 sekunder
   </div>
   <h1>Vill du plugga? Hitta infon och vägen dit.</h1>
   <p>Välj en utbildning. Vi bryter ner vägen dit i enkla steg så att du vet exakt vad som krävs — och kan ta beslutet utan att tveka.</p>
@@ -342,6 +342,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
       <select id="inEdu"><option value="" disabled selected>Välj utbildning...</option></select>
     </div>
     <button class="btn" onclick="calcG()">Se om det lönar sig →</button>
+    <p style="font-size:.76rem;color:var(--li);margin-top:14px;line-height:1.6;text-align:center">Baserat på data från SCB, CSN &amp; UKÄ · Karriärbyte · Omskola sig som vuxen · CSN-lån · Yrkeshögskola (YH) · Lönejämförelse · Studiekostnad · Behörighet</p>
   </div>
 </section>
 
@@ -423,6 +424,29 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
   </div>
 </div>
 
+<!-- FAQ-sektion för SEO -->
+<section style="max-width:720px;margin:0 auto;padding:60px 32px 80px">
+  <h2 style="font-family:'DM Serif Display',serif;font-size:1.7rem;text-align:center;margin-bottom:8px;color:var(--tx)">Vanliga frågor om karriärbyte</h2>
+  <p style="text-align:center;color:var(--mu);font-size:.9rem;margin-bottom:36px">Baserat på data från SCB, CSN &amp; UKÄ</p>
+  <div id="faqList" style="display:grid;gap:10px"></div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"Är det för sent att byta karriär i 30-, 40- eller 50-årsåldern?","acceptedAnswer":{"@type":"Answer","text":"Nej. Enligt SCB är genomsnittsåldern för vuxenstuderande på yrkeshögskola (YH) 31 år, och många börjar om i 40-45-årsåldern. Med 20+ år kvar på arbetsmarknaden är en omskolgning ofta lönsam ekonomiskt."}},
+    {"@type":"Question","name":"Vad kostar ett karriärsbyte egentligen?","acceptedAnswer":{"@type":"Answer","text":"Den verkliga kostnaden är förlorad lön under studietiden plus CSN-skulden. För en 3-årig utbildning med en lön på 30 000 kr/mån handlar det om ca 1–1,5 miljoner kr totalt. Studievägsguiden räknar ut exakt vad det kostar för din situation."}},
+    {"@type":"Question","name":"Kan jag få CSN-lån som vuxen och yrkesverksam?","acceptedAnswer":{"@type":"Answer","text":"Ja. Rätt till CSN-lån och bidrag gäller upp till 57 års ålder för högskoleutbildning och 47 år för YH. Du kan studera på halvfart och kombinera med deltidsjobb."}},
+    {"@type":"Question","name":"Vad är skillnaden på att omskola sig via högskola vs yrkeshögskola (YH)?","acceptedAnswer":{"@type":"Answer","text":"YH är kortare (1–3 år), arbetsmarknadsanpassad och har ofta 50% LIA-praktik på riktiga företag. Högskolan ger en akademisk examen och bredare behörighet. YH passar ofta bättre för snabb omstjällning till ett specifikt yrke."}},
+    {"@type":"Question","name":"Behöver jag gymnasiebetyg för att byta karriär som vuxen?","acceptedAnswer":{"@type":"Answer","text":"Inte alltid. Via reell kompetens och Komvux kan du komplettera saknade kurser, ofta gratis. Studievägsguiden visar exakt vilka kurser du behöver för din valda utbildning."}},
+    {"@type":"Question","name":"Hur lång tid tar det innan lönen från det nya yrket täcker studiekostnaderna?","acceptedAnswer":{"@type":"Answer","text":"Det beror på löneskillnaden och utbildningens längd. Kalkylatorn på Studievägsguiden beräknar break-even baserat på din nuvarande lön och ingångslönen i det nya yrket — ofta 5–12 år."}},
+    {"@type":"Question","name":"Vad ingår i den personliga omställningsplanen?","acceptedAnswer":{"@type":"Answer","text":"Planen innehåller behörighetsanalys, CSN-kalkyl med din faktiska ekonomi, skolmatchning, antagningsdatum och en konkret tidslinje — allt anpassat efter din ålder, stad och livssituation."}}
+  ]
+}
+</script>
+
 <script>
 const E=[
 // ── IT & Teknik ──
@@ -465,6 +489,39 @@ const CIT={stockholm:7000,goteborg:5500,malmo:5000,uppsala:5500,linkoping:4500,l
 const HOU={student:.75,shared:.85,rental:1.2,home:0};
 const FIX=5450,BID=4120,WR=150;
 const GYM=[{id:'natur',l:'Naturvetenskap',k:'Naturvetenskap'},{id:'teknik',l:'Teknik',k:'Teknik'},{id:'samhall',l:'Samhäll',k:'Samhäll'},{id:'ekonomi',l:'Ekonomi',k:'Ekonomi'},{id:'estet',l:'Estet',k:'Estet'},{id:'vard',l:'Vård och omsorg',k:'Vård'},{id:'bygg',l:'Bygg och anläggning',k:'Bygg'},{id:'el',l:'El och energi',k:'El och energi'},{id:'industri',l:'Industri',k:'Industri'},{id:'other',l:'Annat / Komvux',k:'other'}];
+
+// SCB-lönedata per utbildning: {p25, med, p75, p90} kr/mån
+const SALD={
+  1: {p25:33000,med:41000,p75:50000,p90:62000}, // Systemutvecklare
+  2: {p25:32000,med:40000,p75:50000,p90:61000}, // Dataanalytiker
+  3: {p25:32000,med:40000,p75:50000,p90:61000}, // IT-säkerhet
+  4: {p25:30000,med:37000,p75:45000,p90:55000}, // UX/UI
+  5: {p25:39000,med:47000,p75:57000,p90:68000}, // Civilingenjör
+  6: {p25:35000,med:41000,p75:48000,p90:56000}, // Högskoleingenjör
+  7: {p25:32000,med:39000,p75:47000,p90:56000}, // DevOps/Cloud
+  8: {p25:31000,med:38000,p75:46000,p90:56000}, // Civilekonom
+  9: {p25:28000,med:34000,p75:41000,p90:49000}, // Redovisningsekonom
+ 10: {p25:31000,med:38000,p75:45000,p90:54000}, // Controller
+ 11: {p25:28000,med:34000,p75:41000,p90:49000}, // Digital marknadsförare
+ 12: {p25:28000,med:34000,p75:41000,p90:49000}, // HR-specialist
+ 13: {p25:31000,med:38000,p75:46000,p90:56000}, // Projektledare
+ 14: {p25:30000,med:36000,p75:42000,p90:49000}, // Sjuksköterska
+ 15: {p25:28000,med:33000,p75:39000,p90:46000}, // Fysioterapeut
+ 16: {p25:27000,med:32000,p75:37000,p90:43000}, // Arbetsterapeut
+ 17: {p25:28000,med:33000,p75:39000,p90:46000}, // Biomedicinsk analytiker
+ 18: {p25:28000,med:33000,p75:39000,p90:46000}, // Tandhygienist
+ 19: {p25:27000,med:32000,p75:38000,p90:44000}, // Socionom
+ 20: {p25:27000,med:33000,p75:39000,p90:45000}, // Grundskollärare
+ 21: {p25:29000,med:35000,p75:41000,p90:47000}, // Gymnasielärare
+ 22: {p25:27000,med:33000,p75:39000,p90:45000}, // SYV
+ 23: {p25:28000,med:34000,p75:41000,p90:49000}, // Personalvetare
+ 24: {p25:31000,med:37000,p75:44000,p90:52000}, // Byggingenjör
+ 25: {p25:31000,med:38000,p75:46000,p90:55000}, // Fastighetsförvaltare
+ 26: {p25:30000,med:36000,p75:43000,p90:51000}, // VVS-ingenjör
+ 27: {p25:30000,med:36000,p75:43000,p90:51000}, // Automationsingenjör
+ 28: {p25:26000,med:31000,p75:37000,p90:44000}, // Kriminolog
+ 29: {p25:26000,med:32000,p75:39000,p90:47000}, // Beteendevetare
+};
 let edu=null,sal=0,ws=0,ans={};
 
 // ═══════════════════════════════════════
@@ -655,6 +712,40 @@ function printPlan(){
 }
 
 // Init
+const FAQ=[
+  {q:'Är det för sent att byta karriär i 30-, 40- eller 50-årsåldern?',a:'Nej. Enligt SCB är genomsnittsåldern för vuxenstuderande på yrkeshögskola 31 år, och många byter karriär i 40-45-årsåldern. Med 20+ år kvar på arbetsmarknaden är en omskolning ofta lönsam ekonomiskt.'},
+  {q:'Vad kostar ett karriärsbyte egentligen?',a:'Den verkliga kostnaden är förlorad lön under studietiden plus CSN-skulden. För en 3-årig utbildning med en lön på 30 000 kr/mån handlar det om ca 1–1,5 miljoner kr totalt. Studievägsguiden räknar ut exakt vad det kostar för din situation.'},
+  {q:'Kan jag få CSN-lån som vuxen och yrkesverksam?',a:'Ja. Rätt till CSN-lån och bidrag gäller upp till 57 års ålder för högskoleutbildning och 47 år för YH. Du kan studera på halvfart och kombinera med deltidsjobb.'},
+  {q:'Vad är skillnaden på att omskola sig via högskola vs yrkeshögskola (YH)?',a:'YH är kortare (1–3 år), arbetsmarknadsanpassad och har ofta 50% LIA-praktik på riktiga företag. Högskolan ger en akademisk examen och bredare behörighet. YH passar ofta bättre för snabb omställning till ett specifikt yrke.'},
+  {q:'Behöver jag gymnasiebetyg för att byta karriär som vuxen?',a:'Inte alltid. Via reell kompetens och Komvux kan du komplettera saknade kurser, ofta gratis. Studievägsguiden visar exakt vilka kurser du behöver för din valda utbildning.'},
+  {q:'Hur lång tid tar det innan lönen täcker studiekostnaderna?',a:'Det beror på löneskillnaden och utbildningens längd. Kalkylatorn beräknar break-even baserat på din nuvarande lön och ingångslönen i det nya yrket — ofta 5–12 år.'},
+  {q:'Vad ingår i den personliga omställningsplanen?',a:'Planen innehåller behörighetsanalys, CSN-kalkyl med din faktiska ekonomi, skolmatchning, antagningsdatum och en konkret tidslinje — allt anpassat efter din ålder, stad och livssituation.'}
+];
+
+function initFAQ(){
+  const el=document.getElementById('faqList');
+  if(!el) return;
+  el.innerHTML=FAQ.map((f,i)=>`
+    <div style="background:#fff;border:1.5px solid #C5D8EB;border-radius:12px;overflow:hidden;transition:border-color .2s">
+      <button onclick="toggleFAQ(${i})" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 20px;background:none;border:none;font-family:inherit;font-size:.95rem;font-weight:600;color:var(--tx);cursor:pointer;text-align:left;gap:16px">
+        <span>${f.q}</span>
+        <svg id="faqarr${i}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7A9DB8" stroke-width="2.5" style="flex-shrink:0;transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div id="faqbody${i}" style="max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(0.4,0,0.2,1)">
+        <div style="padding:0 20px 18px;font-size:.88rem;color:var(--mu);line-height:1.7;border-top:1px solid #E8F0F6">${f.a}</div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleFAQ(i){
+  const body=document.getElementById('faqbody'+i);
+  const arr=document.getElementById('faqarr'+i);
+  const open=body.style.maxHeight!=='0px'&&body.style.maxHeight!=='';
+  document.querySelectorAll('[id^=faqbody]').forEach(b=>b.style.maxHeight='0px');
+  document.querySelectorAll('[id^=faqarr]').forEach(a=>a.style.transform='');
+  if(!open){body.style.maxHeight='300px';arr.style.transform='rotate(180deg)';}
+}
+
 document.addEventListener('DOMContentLoaded',function(){
     const s=document.getElementById('inEdu');
     if(!s){console.error('inEdu element not found');return}
@@ -683,6 +774,7 @@ document.addEventListener('DOMContentLoaded',function(){
         }
     }catch(e){}
     initScrollReveal();
+    initFAQ();
 });
 
 // Step 1
@@ -772,22 +864,15 @@ function toggleGC(el){
 }
 
 const PN={
-// id:1 Systemutvecklare
-1:{pro:['35 000 kr ingångslön med snabb stegring till 55 000+','Remote-arbete standard — de flesta tjänster tillåter hemifrån','Konsultuppdrag kan ge 50–80% högre timpris än fast anställning','Kort utbildning (3 år) relativt lönenivån'],con:['15% AI-automatiseringsrisk — rutinkodning ersätts redan','Kräver ständig vidareutbildning vid teknikskiften','Internationell konkurrens pressar löner i vissa segment','Konsultmarknaden svänger kraftigt med konjunkturen']},
-// id:4 UX/UI-designer
-4:{pro:['32 000 kr ingångslön med potential upp till 48 000+','Kort utbildning (2 år YH) med praktik på riktiga företag','Remote och frilans vanligt — hög geografisk flexibilitet','Tvärfunktionell roll som fungerar i de flesta branscher'],con:['22% AI-risk — designverktyg automatiserar allt mer','Stor konkurrens om juniora tjänster efter examen','Ofta bland de första som sägs upp vid nedskärningar','Svårt att kvantifiera affärsvärde — budgeten skärs lätt ned']},
-// id:5 Civilingenjör
-5:{pro:['Högst ingångslön av alla utbildningar (41 000 kr)','Lönetak på 56 000+ kr, högre i chefsroll','Bred anställningsbarhet — tech, energi, fordon, bygg, försvar','Stark internationell efterfrågan på svensk ingenjörskompetens'],con:['5 års utbildningstid — längst av alla alternativ','Hög studietakt med matematik, fysik och kemi','18% AI-risk — simulering och beräkningsarbete automatiseras','Kräver ofta flytt till storstadsregion för bästa tjänsterna']},
-// id:8 Civilekonom
-8:{pro:['Bred arbetsmarknad — bank, revision, konsult, industri, startup','Lönetak på 54 000+ kr, betydligt högre inom finans','Internationellt gångbar examen med möjlighet till utlandstjänst','Starkt alumninätverk, särskilt från handelshögskolorna'],con:['25% AI-automatiseringsrisk — analys- och rapportarbete ersätts','Hård konkurrens om trainee- och graduate-platser','Långa arbetsdagar norm inom revision och investment banking','Stor variation i lön beroende på bransch och stad']},
-// id:14 Sjuksköterska
-14:{pro:['Nästan 100% anställningsbarhet — akut brist i hela landet','OB-tillägg för kvällar, nätter och helger höjer faktisk lön','Möjlighet att specialisera sig (IVA, ambulans, barnmorska) med lönepåslag','Offentlig anställning med kollektivavtal, tjänstepension och full semester'],con:['Schemaarbete med nätter, helger och röda dagar','Jour och beredskap kan krävas beroende på avdelning','Hög personalomsättning inom vissa specialiteter','Lönetak — begränsad löneutveckling utan chefsroll eller vidareutbildning']},
-// id:19 Socionom
-19:{pro:['Stor efterfrågan — kommuner har svårt att rekrytera socialsekreterare','Bred arbetsmarknad: socialtjänst, kriminalvård, migration, skola','Offentlig anställning med kollektivavtal och tjänstepension','Relativt kort utbildning (3,5 år) med praktik (VFU)'],con:['Högst personalomsättning inom socialtjänsten — snitt 2–3 år','Tunga myndighetsutövningsbeslut (LVU, tvångsomhändertaganden)','Lägst ingångslön av alla högskoleutbildningar i listan (29 000 kr)','Hög sjukfrånvaro i branschen jämfört med andra yrken']},
-// id:20 Grundskollärare
-20:{pro:['13 veckors sammanhängande ledighet (lov) utöver semester','Jobb i alla kommuner — ingen geografisk begränsning','Lönetillägg som förstelärare (+5 000 kr/mån)','Statliga studielånsavskrivningar för lärare i bristämnen'],con:['Hög administrativ börda — dokumentation, åtgärdsprogram, omdömen','Stor lärarbrist leder till högre arbetsbelastning per lärare','Lönetak runt 40 000 kr utan skolledarroll','Begränsad karriärstege — förstelärare eller rektor är i princip enda stegen']},
-// id:21 Gymnasielärare
-21:{pro:['13 veckors sammanhängande ledighet (lov) utöver semester','Jobb i alla kommuner — ingen geografisk begränsning','Lönetillägg som förstelärare (+5 000 kr/mån)','Statliga studielånsavskrivningar för lärare i bristämnen'],con:['Hög administrativ börda — dokumentation, åtgärdsprogram, omdömen','Stor lärarbrist leder till högre arbetsbelastning per lärare','Lönetak runt 43 000 kr utan skolledarroll','Begränsad karriärstege — förstelärare eller rektor är i princip enda stegen']}
+1:{pro:['Nästan 100% anställningsbarhet — akut brist i hela landet','OB-tillägg för kvällar, nätter och helger höjer faktisk lön','Möjlighet att specialisera sig (IVA, ambulans, barnmorska) med lönepåslag','Offentlig anställning med kollektivavtal, tjänstepension och full semester'],con:['Schemaarbete med nätter, helger och röda dagar','Jour och beredskap kan krävas beroende på avdelning','Hög personalomsättning inom vissa specialiteter','Lönetak — begränsad löneutveckling utan chefsroll eller vidareutbildning']},
+2:{pro:['36 000 kr ingångslön med snabb stegring till 55 000+','Remote-arbete standard — de flesta tjänster tillåter hemifrån','Konsultuppdrag kan ge 50–80% högre timpris än fast anställning','Kort utbildning (3 år) relativt lönenivån'],con:['15% AI-automatiseringsrisk — rutinkodning ersätts redan','Kräver ständig vidareutbildning vid teknikskiften','Internationell konkurrens pressar löner i vissa segment','Konsultmarknaden svänger kraftigt med konjunkturen']},
+3:{pro:['13 veckors sammanhängande ledighet (lov) utöver semester','Jobb i alla kommuner — ingen geografisk begränsning','Lönetillägg som förstelärare (+5 000 kr/mån)','Statliga studielånsavskrivningar för lärare i bristämnen'],con:['Hög administrativ börda — dokumentation, åtgärdsprogram, omdömen','Stor lärarbrist leder till högre arbetsbelastning per lärare','Lönetak runt 41 000 kr utan skolledarroll','Begränsad karriärstege — förstelärare eller rektor är i princip enda stegen']},
+4:{pro:['Bred arbetsmarknad — bank, revision, konsult, industri, startup','Lönetak på 52 000+ kr, betydligt högre inom finans','Internationellt gångbar examen med möjlighet till utlandstjänst','Starkt alumninätverk, särskilt från handelshögskolorna'],con:['25% AI-automatiseringsrisk — analys- och rapportarbete ersätts','Hård konkurrens om trainee- och graduate-platser','Långa arbetsdagar norm inom revision och investment banking','Stor variation i lön beroende på bransch och stad']},
+5:{pro:['Högst ingångslön av alla utbildningar (38 000 kr)','Lönetak på 58 000+ kr, högre i chefsroll','Bred anställningsbarhet — tech, energi, fordon, bygg, försvar','Stark internationell efterfrågan på svensk ingenjörskompetens'],con:['5 års utbildningstid — längst av alla alternativ','Hög studietakt med matematik, fysik och kemi','18% AI-risk — simulering och beräkningsarbete automatiseras','Kräver ofta flytt till storstadsregion för bästa tjänsterna']},
+6:{pro:['Stor efterfrågan — kommuner har svårt att rekrytera socialsekreterare','Bred arbetsmarknad: socialtjänst, kriminalvård, migration, skola','Offentlig anställning med kollektivavtal och tjänstepension','Relativt kort utbildning (3,5 år) med praktik (VFU)'],con:['Högst personalomsättning inom socialtjänsten — snitt 2–3 år','Tunga myndighetsutövningsbeslut (LVU, tvångsomhändertaganden)','Lägst ingångslön av alla högskoleutbildningar i listan (30 000 kr)','Hög sjukfrånvaro i branschen jämfört med andra yrken']},
+7:{pro:['Mycket hög efterfrågan — elektrikerbrist i hela landet','Kort utbildning (2 år) med 50% praktik på företag','Snabb löneutveckling med certifikat och behörigheter','Möjlighet till eget företag med relativt låg startkostnad'],con:['Jour och beredskap krävs, även helger och kvällar','Fysiskt krävande med arbete i trånga utrymmen och höjder','Elsäkerhetsrisker — strikt reglerat med personligt ansvar','Konjunkturkänsligt — byggsektorn styr efterfrågan']},
+8:{pro:['32 000 kr ingångslön med potential upp till 48 000+','Kort utbildning (2 år YH) med praktik på riktiga företag','Remote och frilans vanligt — hög geografisk flexibilitet','Tvärfunktionell roll som fungerar i de flesta branscher'],con:['22% AI-risk — designverktyg automatiserar allt mer','Stor konkurrens om juniora tjänster efter examen','Ofta bland de första som sägs upp vid nedskärningar','Svårt att kvantifiera affärsvärde — budgeten skärs lätt ned']},
+51:{pro:['Högst lönepotential i listan — 60 000 kr och uppåt','Kombinerar ingenjörskunskap med företagsledning — bred arbetsmarknad','Ledande positioner inom industri, konsult och tech','Starkt alumninätverk vid Chalmers, LiTH och KTH'],con:['5 års utbildningstid — långt åtagande','Kräver Matte 4 — ofta komplettering via Komvux','Konkurrens om de bästa traineepositionerna är hård','Lön kan variera kraftigt beroende på bransch och region']}
 };
 
 function buildProsAndCons(e){
@@ -818,23 +903,34 @@ function buildProsAndCons(e){
 }
 
 function buildSalaryInfo(e){
-    // Beräkna medellön (genomsnitt av start och max)
-    const avgSalary=Math.round((e.s0+e.s1)/2);
-    // Medianlön (approximativt mitt-lönen efter några års erfarenhet)
-    const medianSalary=Math.round(e.s0+(e.s1-e.s0)*0.4);
-    // Spridning (skillnad mellan min och max)
-    const spread=e.s1-e.s0;
-    const spreadPct=Math.round((spread/e.s0)*100);
-    
+    // SCB-data — fallback om saknas
+    const d = SALD[e.id] || {p25:e.s0, med:Math.round((e.s0+e.s1)/2), p75:Math.round(e.s0+(e.s1-e.s0)*0.6), p90:e.s1};
+
     // Karriärscenarier
     const scenarios=[
-        {label:'Stanna länge',desc:'10-15 år på samma arbetsplats',salary:Math.round(e.s0+(e.s1-e.s0)*0.5),color:'#6c757d'},
-        {label:'Byta ofta',desc:'5-10 byten av arbetsgivare',salary:Math.round(e.s0+(e.s1-e.s0)*0.7),color:'#0dcaf0'},
-        {label:'Specialist',desc:'Expertroll utan chefsansvar',salary:Math.round(e.s1*1.1),color:'#0d6efd'},
-        {label:'Chef',desc:'Ledande position',salary:Math.round(e.s1*1.3),color:'#198754'}
+        {label:'Stanna länge',desc:'10–15 år på samma arbetsplats',salary:Math.round(e.s0+(e.s1-e.s0)*0.5),color:'#6c757d'},
+        {label:'Byta ofta',desc:'5–10 byten av arbetsgivare',salary:Math.round(e.s0+(e.s1-e.s0)*0.7),color:'var(--bl)'},
+        {label:'Specialist',desc:'Expertroll utan chefsansvar',salary:Math.round(e.s1*1.1),color:'var(--bl)'},
+        {label:'Chef',desc:'Ledande position',salary:Math.round(e.s1*1.3),color:'#5BA882'}
     ];
     const maxSalary=Math.max(...scenarios.map(s=>s.salary));
-    
+
+    // Lönespridningsbar — P25→P75 på P25–P90-skalan
+    const scale = d.p90 - d.p25;
+    const barStart = 0;
+    const barP75pct = Math.round((d.p75 - d.p25) / scale * 100);
+    const medPct    = Math.round((d.med  - d.p25) / scale * 100);
+
+    // Inforuta — ingångslön vs median
+    const diff = d.med - e.s0;
+    const yearsToMed = diff > 0 ? Math.round(diff / (e.s0 * 0.04)) : 0;
+    let infoText;
+    if(diff <= 0){
+        infoText = `Ingångslönen på <strong>${fmt(e.s0)} kr</strong> ligger redan <strong>över medianen</strong> — du startar starkt.`;
+    } else {
+        infoText = `Ingångslönen på <strong>${fmt(e.s0)} kr</strong> ligger <strong>${fmt(diff)} kr under medianen</strong>. Med normal löneutveckling når du medianlönen på ungefär <strong>${yearsToMed} år</strong>.`;
+    }
+
     let h=`<div id="salaryInfoHead"></div>
     <div style="max-width:720px;margin:0 auto">
 
@@ -842,31 +938,52 @@ function buildSalaryInfo(e){
     <button class="sec-toggle" id="toggle2" onclick="toggleSec(2)">Visa lönespridning <svg class="sec-toggle-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
     <div class="sec-body" id="body2">
     <div class="verd sh2" style="animation-delay:.7s;text-align:left;padding:24px 20px;margin-top:12px">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px">
-        <div style="padding:16px;background:var(--al);border-radius:12px;border:2px solid var(--ac)">
-          <div style="font-size:.75rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Startlön</div>
-          <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--ac);margin-bottom:4px">${fmt(e.s0)} kr</div>
-          <div style="font-size:.8rem;color:var(--mu)">Efter examen</div>
+
+      <!-- Stor medianlön + badge -->
+      <div style="margin-bottom:20px">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px">
+          <div style="font-family:'DM Serif Display',serif;font-size:2.4rem;color:var(--tx);letter-spacing:-1px">${fmt(d.med)} kr</div>
+          <span style="background:#E8F4EC;color:#3A7A55;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.5px">SCB 2024</span>
         </div>
-        <div style="padding:16px;background:#f8f9fa;border-radius:12px;border:2px solid #dee2e6">
-          <div style="font-size:.75rem;font-weight:700;color:#495057;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Medellön</div>
-          <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:#212529;margin-bottom:4px">${fmt(avgSalary)} kr</div>
-          <div style="font-size:.8rem;color:var(--mu)">Genomsnitt i yrket</div>
+        <div style="font-size:.85rem;color:var(--mu)">Medianlön ${e.t} — hälften tjänar mer, hälften tjänar mindre</div>
+      </div>
+
+      <!-- 3 percentilkort -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px">
+        <div style="padding:16px 12px;background:#FFFBEA;border-radius:12px;border:1.5px solid #E6C94A;text-align:center">
+          <div style="font-family:'DM Serif Display',serif;font-size:1.5rem;color:#92711A;margin-bottom:4px">${fmt(d.p90)} kr</div>
+          <div style="font-size:.75rem;color:#92711A;font-weight:600;line-height:1.4">Topp 10%<br>tjänar hit</div>
         </div>
-        <div style="padding:16px;background:#f8f9fa;border-radius:12px;border:2px solid #dee2e6">
-          <div style="font-size:.75rem;font-weight:700;color:#495057;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Medianlön</div>
-          <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:#212529;margin-bottom:4px">${fmt(medianSalary)} kr</div>
-          <div style="font-size:.8rem;color:var(--mu)">50% tjänar mer</div>
+        <div style="padding:16px 12px;background:#EBF7F0;border-radius:12px;border:1.5px solid #5BA882;text-align:center">
+          <div style="font-family:'DM Serif Display',serif;font-size:1.5rem;color:#2D6B4A;margin-bottom:4px">${fmt(d.p75)} kr</div>
+          <div style="font-size:.75rem;color:#2D6B4A;font-weight:600;line-height:1.4">Topp 25%<br>tjänar hit</div>
         </div>
-        <div style="padding:16px;background:var(--al);border-radius:12px;border:2px solid var(--ac)">
-          <div style="font-size:.75rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Erfaren</div>
-          <div style="font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--ac);margin-bottom:4px">${fmt(e.s1)} kr</div>
-          <div style="font-size:.8rem;color:var(--mu)">Efter 10-15 år</div>
+        <div style="padding:16px 12px;background:#FEF0EB;border-radius:12px;border:1.5px solid #C87A5A;text-align:center">
+          <div style="font-family:'DM Serif Display',serif;font-size:1.5rem;color:#8B3E22;margin-bottom:4px">${fmt(d.p25)} kr</div>
+          <div style="font-size:.75rem;color:#8B3E22;font-weight:600;line-height:1.4">25% tjänar<br>mindre än så</div>
         </div>
       </div>
-      <div style="font-size:.85rem;color:var(--mu);padding:12px;background:var(--bg);border-radius:8px;border-left:3px solid var(--bl)">
-        <strong>Vad påverkar lönen?</strong> Erfarenhet, arbetsgivare, förhandling, specialisering och chefsansvar.
+
+      <!-- Lönespridningsbar -->
+      <div style="margin-bottom:20px">
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mu);margin-bottom:10px">LÖNESPRIDNING</div>
+        <div style="position:relative;height:12px;background:#E0EEE6;border-radius:6px;margin-bottom:24px">
+          <div style="position:absolute;left:0;width:${barP75pct}%;height:100%;background:linear-gradient(90deg,#A8D9BC,#5BA882);border-radius:6px"></div>
+          <!-- Median marker -->
+          <div style="position:absolute;left:${medPct}%;top:-4px;width:2px;height:20px;background:#2D6B4A;border-radius:2px"></div>
+          <div style="position:absolute;left:${medPct}%;top:-22px;transform:translateX(-50%);font-size:.68rem;font-weight:700;color:#2D6B4A;white-space:nowrap">↑ median</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:.75rem;color:var(--mu);margin-top:-16px">
+          <span>${fmt(d.p25)}</span>
+          <span>${fmt(d.p90)}</span>
+        </div>
       </div>
+
+      <!-- Inforuta -->
+      <div style="padding:16px;background:#EBF7F0;border-radius:10px;border:1.5px solid #5BA882;font-size:.88rem;color:var(--tx);line-height:1.6">
+        ${infoText}
+      </div>
+
     </div>
     </div>
 
@@ -878,8 +995,7 @@ function buildSalaryInfo(e){
 
     scenarios.forEach(sc=>{
         const widthPct=(sc.salary/maxSalary)*100;
-        const diff=sc.salary-e.s0;
-        const diffPct=Math.round((diff/e.s0)*100);
+        const diffPct=Math.round(((sc.salary-e.s0)/e.s0)*100);
         h+=`
         <div style="padding:14px;background:#fff;border-radius:10px;border:1px solid var(--bo)">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
@@ -892,18 +1008,16 @@ function buildSalaryInfo(e){
               <div style="font-size:.7rem;color:var(--mu)">+${diffPct}%</div>
             </div>
           </div>
-          <div style="background:#e9ecef;height:28px;border-radius:6px;overflow:hidden;position:relative">
-            <div style="background:${sc.color};height:100%;width:${widthPct}%;transition:width 1s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:8px">
-              <span style="color:#fff;font-weight:600;font-size:.8rem">${Math.round(widthPct)}%</span>
-            </div>
+          <div style="background:#e9ecef;height:10px;border-radius:6px;overflow:hidden">
+            <div style="background:${sc.color};height:100%;width:${widthPct}%;transition:width 1s ease;border-radius:6px"></div>
           </div>
         </div>`;
     });
 
     h+=`
       </div>
-      <div style="margin-top:16px;padding:14px;background:#fff;border-radius:8px;font-size:.8rem;color:var(--mu);border-left:3px solid var(--ac)">
-        <strong style="color:var(--ac)">Tips:</strong> Att byta jobb var 3-5:e år ger ofta högre löneutveckling än att stanna kvar.
+      <div style="margin-top:16px;padding:14px;background:#EBF7F0;border-radius:8px;font-size:.82rem;color:var(--mu);border-left:3px solid #5BA882">
+        <strong style="color:#2D6B4A">Tips:</strong> Att byta jobb var 3–5:e år ger ofta högre löneutveckling än att stanna kvar.
       </div>
     </div>
     </div>
@@ -913,9 +1027,6 @@ function buildSalaryInfo(e){
     <div class="sec-body" id="body4">
     <div class="verd sh2" style="animation-delay:.9s;text-align:left;padding:24px 20px;margin-top:12px">
       <div id="lifetimeChart"></div>
-      <div style="margin-top:14px;padding:12px;background:#fff;border-radius:8px;font-size:.75rem;color:var(--mu);border-left:3px solid var(--ac)">
-        <strong style="color:var(--ac)">OBS:</strong> Förenklad kalkyl utan hänsyn till inflation, löneökningar eller skatter.
-      </div>
     </div>
     </div>
 
@@ -926,76 +1037,114 @@ function buildSalaryInfo(e){
 
 
 function buildLifetimeAnalysis(e){
-    const workYears=40;
-    const studyYears=e.y;
-    
-    // Scenario 1: Fortsätt med nuvarande jobb
-    const currentTotal=(sal*12*workYears)/1000000;
-    
-    // Scenario 2: Plugga först, sedan nytt yrke
-    const lostIncome=sal*12*studyYears;
-    const debt=e.tc*Math.round(studyYears*10);
-    const newJobYears=workYears-studyYears;
-    const newJobIncome=(e.s0*12*newJobYears)/1000000;
-    const studyCost=(lostIncome+debt)/1000000;
-    const newTotal=newJobIncome-studyCost;
-    
-    // Skillnad
-    const diff=newTotal-currentTotal;
-    const diffAbs=Math.abs(diff);
-    
-    // Maxvärde för skalning
-    const maxVal=Math.max(currentTotal,newTotal);
-    const currentPct=(currentTotal/maxVal)*100;
-    const newPct=(newTotal/maxVal)*100;
-    
-    // Färgkodning
-    const betterColor=diff>0?'var(--ac)':'var(--re)';
-    const worseColor=diff>0?'var(--re)':'var(--ac)';
-    
-    let h=`
-    <div style="margin-bottom:28px">
-      <div style="display:grid;gap:20px">
-        <!-- Nuvarande yrke -->
-        <div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-            <div style="font-size:.82rem;font-weight:600;color:var(--mu)">Fortsätt med nuvarande jobb</div>
-            <div style="font-size:1.1rem;font-weight:700;color:${diff<=0?betterColor:worseColor}">${currentTotal.toFixed(1)} M kr</div>
-          </div>
-          <div style="height:36px;background:var(--bo);border-radius:8px;overflow:hidden;position:relative">
-            <div style="height:100%;background:${diff<=0?betterColor:worseColor};width:${currentPct}%;transition:width 1s ease;border-radius:8px"></div>
-          </div>
-          <div style="font-size:.72rem;color:var(--li);margin-top:4px">${sal.toLocaleString('sv-SE')} kr/mån × ${workYears} år</div>
+    const workYears = 40;
+    const studyYears = Math.round(e.y);
+
+    // ── Hjälpfunktion: år-för-år summering ──────────────────────────
+    function sumIncome(startSal, years, growthFn){
+        let total = 0, s = startSal;
+        for(let yr = 1; yr <= years; yr++){
+            total += s * 12;
+            s *= (1 + growthFn(yr));
+        }
+        return total;
+    }
+    function salAtYear(startSal, years, growthFn){
+        let s = startSal;
+        for(let yr = 1; yr <= years; yr++) s *= (1 + growthFn(yr));
+        return Math.round(s);
+    }
+
+    // Nuvarande jobb: +2%/år hela 40 år
+    const currentGrowth = () => 0.02;
+    const currentTotal  = sumIncome(sal, workYears, currentGrowth) / 1e6;
+    const cur10 = salAtYear(sal, 10, currentGrowth);
+    const cur20 = salAtYear(sal, 20, currentGrowth);
+
+    // Nytt yrke: +5% år 1–5, +3% år 6–15, +2% därefter
+    const newGrowth = yr => yr <= 5 ? 0.05 : yr <= 15 ? 0.03 : 0.02;
+    const newJobYears = workYears - studyYears;
+    const newJobIncome = sumIncome(e.s0, newJobYears, newGrowth) / 1e6;
+    const new10 = newJobYears >= 10 ? salAtYear(e.s0, 10, newGrowth) : null;
+    const new20 = newJobYears >= 20 ? salAtYear(e.s0, 20, newGrowth) : null;
+
+    // Studiekostnad: förlorad lön (2%/år) + CSN-skuld
+    const lostIncome = sumIncome(sal, studyYears, currentGrowth);
+    const csnDebt    = e.tc * studyYears * 10;
+    const studyCost  = (lostIncome + csnDebt) / 1e6;
+    const newTotal   = newJobIncome - studyCost;
+
+    const diff    = newTotal - currentTotal;
+    const diffAbs = Math.abs(diff);
+    const maxVal  = Math.max(currentTotal, newTotal, 0.1);
+    const cPct    = (currentTotal / maxVal * 100).toFixed(1);
+    const nPct    = Math.max(0, newTotal / maxVal * 100).toFixed(1);
+
+    const cCol = diff <= 0 ? '#5BA882' : '#B04830';
+    const nCol = diff >  0 ? '#5BA882' : '#B04830';
+
+    const fmt2 = n => Math.round(n/1000)*1000;
+
+    let h = `
+    <div style="display:grid;gap:24px;margin-bottom:28px">
+
+      <!-- Nuvarande jobb -->
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+          <div style="font-size:.88rem;font-weight:700;color:var(--tx)">Fortsätt med nuvarande jobb</div>
+          <div style="font-size:1.1rem;font-weight:700;color:${cCol}">${currentTotal.toFixed(1)} M kr</div>
         </div>
-        
-        <!-- Nytt yrke -->
-        <div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-            <div style="font-size:.82rem;font-weight:600;color:var(--mu)">Plugga till ${e.t.toLowerCase()}</div>
-            <div style="font-size:1.1rem;font-weight:700;color:${diff>0?betterColor:worseColor}">${newTotal.toFixed(1)} M kr</div>
-          </div>
-          <div style="height:36px;background:var(--bo);border-radius:8px;overflow:hidden;position:relative">
-            <div style="height:100%;background:${diff>0?betterColor:worseColor};width:${newPct}%;transition:width 1s ease .3s;border-radius:8px"></div>
-          </div>
-          <div style="font-size:.72rem;color:var(--li);margin-top:4px">${e.s0.toLocaleString('sv-SE')} kr/mån × ${newJobYears} år − studiekostnad (${studyCost.toFixed(1)} M kr)</div>
+        <div style="height:32px;background:var(--bo);border-radius:8px;overflow:hidden">
+          <div style="height:100%;background:${cCol};width:${cPct}%;transition:width 1s ease;border-radius:8px;opacity:.85"></div>
+        </div>
+        <div style="font-size:.74rem;color:var(--mu);margin-top:5px">
+          ${sal.toLocaleString('sv-SE')} kr/mån idag
+          → <strong>~${fmt2(cur10).toLocaleString('sv-SE')} kr</strong> (10 år)
+          → <strong>~${fmt2(cur20).toLocaleString('sv-SE')} kr</strong> (20 år)
+        </div>
+      </div>
+
+      <!-- Nytt yrke -->
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+          <div style="font-size:.88rem;font-weight:700;color:var(--tx)">Plugga till ${e.t.toLowerCase()}</div>
+          <div style="font-size:1.1rem;font-weight:700;color:${nCol}">${newTotal.toFixed(1)} M kr</div>
+        </div>
+        <div style="height:32px;background:var(--bo);border-radius:8px;overflow:hidden">
+          <div style="height:100%;background:${nCol};width:${nPct}%;transition:width 1s ease .3s;border-radius:8px;opacity:.85"></div>
+        </div>
+        <div style="font-size:.74rem;color:var(--mu);margin-top:5px">
+          ${e.s0.toLocaleString('sv-SE')} kr/mån efter examen
+          ${new10 ? `→ <strong>~${fmt2(new10).toLocaleString('sv-SE')} kr</strong> (10 år)` : ''}
+          ${new20 ? `→ <strong>~${fmt2(new20).toLocaleString('sv-SE')} kr</strong> (20 år)` : ''}
+          <span style="color:var(--re)"> − studiekostnad ${studyCost.toFixed(1)} M kr</span>
         </div>
       </div>
     </div>
-    
+
     <!-- Skillnadsruta -->
-    <div style="background:${diff>0?'var(--al)':'var(--rl)'};border:2px solid ${diff>0?'var(--ac)':'var(--re)'};border-radius:12px;padding:20px;text-align:center">
-      <div style="font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:${diff>0?'var(--ac)':'var(--re)'};margin-bottom:6px">
+    <div style="background:${diff>0?'var(--al)':'var(--rl)'};border:2px solid ${diff>0?'#5BA882':'#B04830'};border-radius:12px;padding:20px;text-align:center;margin-bottom:20px">
+      <div style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:${diff>0?'#5BA882':'#B04830'};margin-bottom:6px">
         ${diff>0?'Livstidsvinst':'Livstidsförlust'}
       </div>
-      <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:${diff>0?'var(--ac)':'var(--re)'};margin-bottom:6px">
+      <div style="font-family:'DM Serif Display',serif;font-size:2rem;color:${diff>0?'#5BA882':'#B04830'};margin-bottom:6px">
         ${diff>0?'+':'−'}${diffAbs.toFixed(1)} M kr
       </div>
-      <div style="font-size:.85rem;color:${diff>0?'var(--ac)':'var(--re)'};opacity:.85">
-        ${diff>0?'Att plugga ger dig totalt '+diffAbs.toFixed(1)+' miljoner mer över 40 år':'Med nuvarande lön tjänar du '+diffAbs.toFixed(1)+' miljoner mer över 40 år'}
+      <div style="font-size:.85rem;color:var(--mu)">
+        ${diff>0
+          ? 'Att plugga till '+e.t.toLowerCase()+' ger dig totalt '+diffAbs.toFixed(1)+' miljoner mer över 40 år.'
+          : 'Med nuvarande lön tjänar du '+diffAbs.toFixed(1)+' miljoner mer — men karriärbytet kan ändå vara värt det.'}
       </div>
+    </div>
+
+    <!-- Fotnot -->
+    <div style="padding:14px 16px;background:rgba(255,255,255,.6);border-radius:8px;border-left:3px solid var(--bo);font-size:.74rem;color:var(--mu);line-height:1.65">
+      <strong>Antaganden:</strong> Nuvarande lön växer +2%/år. Nytt yrke: +5%/år de första 5 åren, +3% år 6–15, +2% därefter.
+      Studiekostnaden inkluderar förlorad lön under studietiden (med 2%/år-tillväxt) samt CSN-skuld (${csnDebt.toLocaleString('sv-SE')} kr).
+      Kalkylen exkluderar skatter, pension, inflation och eventuell lön under studier.
     </div>`;
-    
-    document.getElementById('lifetimeChart').innerHTML=h;
+
+    document.getElementById('lifetimeChart').innerHTML = h;
 }
 
 function buildTeaser(){
