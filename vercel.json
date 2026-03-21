@@ -1,24 +1,15 @@
 {
   "rewrites": [
-    {
-      "source": "/skapa-min-plan",
-      "destination": "/skapa-min-plan.html"
-    },
-    {
-      "source": "/din-plan",
-      "destination": "/din-plan.html"
-    },
-    {
-      "source": "/min-plan",
-      "destination": "/min-plan.html"
-    },
-    {
-      "source": "/integritetspolicy",
-      "destination": "/integritetspolicy.html"
-    },
-    {
-      "source": "/yrkestest",
-      "destination": "/yrkestest.html"
-    }
+    { "source": "/skapa-min-plan", "destination": "/skapa-min-plan.html" },
+    { "source": "/din-plan", "destination": "/min-plan.html" },
+    { "source": "/min-plan", "destination": "/min-plan.html" },
+    { "source": "/integritetspolicy", "destination": "/integritetspolicy.html" },
+    { "source": "/yrkestest", "destination": "/haraduplugg.html" },
+    { "source": "/lonar-plugga", "destination": "/lonar-plugga.html" },
+    { "source": "/sabbatsar", "destination": "/sabbatsar.html" },
+    { "source": "/framtidsyrken", "destination": "/framtidsyrken.html" },
+    { "source": "/karriarbyte", "destination": "/karriarbyte.html" },
+    { "source": "/efter-gymnasiet", "destination": "/efter-gymnasiet.html" },
+    { "source": "/hogsta-lon", "destination": "/hogsta-lon.html" }
   ]
 }
