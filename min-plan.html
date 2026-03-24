@@ -367,6 +367,63 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 .lt-opp-val { font-size: 1.3rem; font-weight: 800; letter-spacing: -.02em; color: var(--re); transition: all .3s; }
 .lt-opp-sub { font-size: .68rem; color: var(--li); margin-top: 2px; }
 
+/* YH SCHOOL MATCHING CARDS */
+.yh-match-section { margin-top: 20px; }
+.yh-match-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--li); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.yh-match-label::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--ac); }
+.yh-school-card { background: var(--card); border: 1.5px solid var(--bo); border-radius: 12px; padding: 16px; margin-bottom: 10px; transition: border-color .2s; }
+.yh-school-card:hover { border-color: var(--ac); }
+.yh-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.yh-card-info { flex: 1; }
+.yh-card-program { font-weight: 700; font-size: .97rem; line-height: 1.3; margin-bottom: 3px; }
+.yh-card-school { font-size: .82rem; color: var(--mu); }
+.yh-match-badge { flex-shrink: 0; text-align: center; }
+.yh-match-pct { font-size: 1.3rem; font-weight: 800; line-height: 1; }
+.yh-match-pct.hi { color: var(--ac); }
+.yh-match-pct.mid { color: var(--wa); }
+.yh-match-pct.lo { color: var(--li); }
+.yh-match-sub { font-size: .65rem; color: var(--li); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+.yh-card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+.yh-card-tag { font-size: .68rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; background: var(--bg); color: var(--mu); }
+.yh-card-tag.match { background: var(--al); color: var(--ah); }
+.yh-card-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.yh-btn-site { flex: 1; min-width: 120px; padding: 10px 12px; background: var(--ah); color: #fff; border: none; border-radius: 8px; font-family: inherit; font-size: .82rem; font-weight: 700; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; transition: background .2s; }
+.yh-btn-site:hover { background: #0d2218; }
+.yh-btn-lead { flex: 1; min-width: 120px; padding: 10px 12px; background: var(--al); color: var(--ah); border: 1.5px solid var(--ac); border-radius: 8px; font-family: inherit; font-size: .82rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .2s; }
+.yh-btn-lead:hover { background: var(--ac); color: #fff; }
+.yh-no-schools { padding: 18px; text-align: center; color: var(--mu); font-size: .88rem; background: var(--bg); border-radius: 10px; border: 1.5px dashed var(--bo); }
+
+/* INTRESSEANMÄLAN MODAL */
+.ia-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); backdrop-filter: blur(4px); z-index: 500; align-items: center; justify-content: center; padding: 20px; }
+.ia-overlay.open { display: flex; }
+.ia-modal { background: var(--card); border-radius: 16px; max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto; border: 1.5px solid var(--bo); }
+.ia-head { padding: 22px 24px 16px; border-bottom: 1px solid var(--bo); display: flex; justify-content: space-between; align-items: flex-start; }
+.ia-head-left h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 4px; }
+.ia-head-left p { font-size: .82rem; color: var(--mu); line-height: 1.4; }
+.ia-close { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--li); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; flex-shrink: 0; margin-top: -2px; }
+.ia-close:hover { background: var(--bg); color: var(--tx); }
+.ia-perks { display: flex; flex-direction: column; gap: 6px; padding: 14px 24px; border-bottom: 1px solid var(--bo); background: var(--al); }
+.ia-perk { display: flex; align-items: center; gap: 8px; font-size: .82rem; color: var(--ah); font-weight: 600; }
+.ia-body { padding: 20px 24px 24px; }
+.ia-for { font-size: .84rem; color: var(--mu); margin-bottom: 18px; }
+.ia-for strong { color: var(--tx); }
+.ia-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.ia-field { margin-bottom: 12px; }
+.ia-field label { display: block; font-size: .72rem; font-weight: 700; color: var(--li); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 5px; }
+.ia-field input, .ia-field select, .ia-field textarea { width: 100%; padding: 11px 13px; border: 1.5px solid var(--bo); border-radius: 8px; font-family: inherit; font-size: .92rem; color: var(--tx); background: var(--bg); transition: border-color .2s; }
+.ia-field input:focus, .ia-field select:focus, .ia-field textarea:focus { outline: none; border-color: var(--ac); }
+.ia-field textarea { resize: vertical; min-height: 80px; }
+.ia-gdpr { display: flex; align-items: flex-start; gap: 10px; margin: 16px 0; }
+.ia-gdpr input[type=checkbox] { margin-top: 2px; width: 16px; height: 16px; flex-shrink: 0; accent-color: var(--ac); }
+.ia-gdpr label { font-size: .78rem; color: var(--mu); line-height: 1.5; }
+.ia-submit { width: 100%; padding: 14px; background: var(--ac); color: #fff; border: none; border-radius: 10px; font-family: inherit; font-size: 1rem; font-weight: 800; cursor: pointer; transition: background .2s; }
+.ia-submit:hover { background: #5aaa7a; }
+.ia-submit:disabled { background: var(--li); cursor: not-allowed; }
+.ia-success { text-align: center; padding: 32px 24px; }
+.ia-success .ia-check { font-size: 2.5rem; margin-bottom: 12px; }
+.ia-success h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 8px; }
+.ia-success p { color: var(--mu); font-size: .88rem; line-height: 1.6; }
+
 /* STUDENTUM BUTTON */
 .stu-cta { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 16px 18px; background: var(--ah); border: none; border-radius: 10px; margin-bottom: 12px; cursor: pointer; text-decoration: none; }
 .stu-cta-left { text-align: left; }
@@ -509,12 +566,12 @@ async function saveToSupabase() {
 <!-- Loading state -->
 <div id="loadingState" style="display:none"></div>
 
-<!-- Error: plan ej betald -->
+<!-- Error: ingen plan hittad -->
 <div id="unpaidState" style="display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:24px;text-align:center">
- <div style="font-size:2.5rem"></div>
- <div style="font-family:'Playfair Display',serif;font-size:1.5rem">Planen är inte upplåst</div>
- <div style="color:var(--mu);max-width:360px;line-height:1.6">Du behöver slutföra betalningen för att se din fullständiga plan.</div>
- <a href="/din-plan" style="background:var(--ac);color:#fff;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:700">Gå till betalning →</a>
+ <div style="font-size:2.5rem">📋</div>
+ <div style="font-family:'Playfair Display',serif;font-size:1.5rem">Ingen plan hittad</div>
+ <div style="color:var(--mu);max-width:360px;line-height:1.6">Vi hittade ingen plan kopplad till ditt konto. Skapa din plan för att komma igång.</div>
+ <a href="/skapa-min-plan" style="background:var(--ac);color:#fff;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:700">Skapa min plan →</a>
 </div>
 
 <!-- Plan container — prototype design -->
@@ -2304,17 +2361,25 @@ function buildFP(name) {
    </div>`;
  }
 
- // Studentum CTA
- const stuFilters = [];
- if (showYH) stuFilters.push('YH-utbildning');
- else if (showUni) stuFilters.push('Högskola / Universitet');
- if (a.study_pace === 'parttime') stuFilters.push('Deltid');
- else if (a.study_pace === 'fulltime') stuFilters.push('Heltid');
- if (a.study_mode === 'distance') stuFilters.push('Distans');
- else if (a.study_mode === 'campus') stuFilters.push('På plats');
- if (startTagText) stuFilters.push('Start ' + startTagText);
-
- pl += `<div class="section-label" style="margin-top:20px"><span>Hitta din utbildning</span></div>
+ // Utbildnings-CTA: YH = egna skolkort, UNI = Studentum
+ if (showYH) {
+   // Placeholder — fylls i av loadYHSchools() efter buildFP()
+   pl += `<div class="section-label" style="margin-top:20px"><span>Matchande utbildningar</span></div>
+ <div id="yh-schools-container">
+   <div style="text-align:center;padding:24px;color:var(--mu);font-size:.88rem">
+     <svg style="display:block;margin:0 auto 10px;opacity:.4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+     Hämtar matchande skolor...
+   </div>
+ </div>`;
+ } else {
+   const stuFilters = [];
+   if (showUni) stuFilters.push('Högskola / Universitet');
+   if (a.study_pace === 'parttime') stuFilters.push('Deltid');
+   else if (a.study_pace === 'fulltime') stuFilters.push('Heltid');
+   if (a.study_mode === 'distance') stuFilters.push('Distans');
+   else if (a.study_mode === 'campus') stuFilters.push('På plats');
+   if (startTagText) stuFilters.push('Start ' + startTagText);
+   pl += `<div class="section-label" style="margin-top:20px"><span>Hitta din utbildning</span></div>
  <a href="${studentumUrl}" target="_blank" rel="noopener" class="stu-cta">
    <div class="stu-cta-left">
      <div class="stu-cta-eye">Nästa steg</div>
@@ -2322,8 +2387,8 @@ function buildFP(name) {
      ${stuFilters.length > 0 ? `<div class="stu-cta-tags">${stuFilters.map(t=>`<span class="stu-cta-tag">${t}</span>`).join('')}</div>` : ''}
    </div>
    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
- </a>
- `;
+ </a>`;
+ }
 
 
 
@@ -2756,6 +2821,7 @@ async function fetchPlanByEmail() {
  document.getElementById('loadingState').style.display = 'none';
  buildFP(userName);
  document.getElementById('planContainer').style.display = 'block';
+ if (edu && edu.yh) loadYHSchools(edu, ans);
 
  } catch(e) {
  showAuthMsg('Något gick fel. Försök igen.', true);
@@ -3687,12 +3753,11 @@ async function loadPlanForUser(user) {
  
  if (sb) {
  try {
- // Kolla plans-tabellen (paid plans)
+ // Hämta plan (betalvägg borttagen)
  const { data: planData } = await sb
  .from('plans')
  .select('*')
  .eq('user_id', user.id)
- .eq('paid', true)
  .order('created_at', { ascending: false })
  .limit(1)
  .single();
@@ -3757,9 +3822,12 @@ async function loadPlanForUser(user) {
  // Bygg och visa planen (full, utan blur)
  const userName = planAnswers.user_name || user.email.split('@')[0];
  buildFP(userName);
- 
+
  document.getElementById('loadingState').style.display = 'none';
  document.getElementById('planContainer').style.display = 'block';
+
+ // Ladda YH-skolmatchning om det är en YH-utbildning
+ if (edu && edu.yh) loadYHSchools(edu, ans);
  
  // Spara till plans-tabellen om inte redan sparat (och betalning hanteras separat)
  // TODO: koppla till Stripe webhook
@@ -3877,5 +3945,393 @@ function svgModalClose(val) {
     </div>
   </div>
 </div>
+<!-- ============================================================
+     INTRESSEANMÄLAN MODAL
+     ============================================================ -->
+<div id="iaOverlay" class="ia-overlay" role="dialog" aria-modal="true" aria-labelledby="iaTitle">
+  <div class="ia-modal">
+    <div class="ia-head">
+      <div class="ia-head-left">
+        <h3 id="iaTitle">Gör en intresseanmälan</h3>
+        <p id="iaSubtitle">Lämna dina uppgifter så kontaktar skolan dig med mer info.</p>
+      </div>
+      <button class="ia-close" onclick="closeIA()" aria-label="Stäng">&times;</button>
+    </div>
+    <div class="ia-perks">
+      <div class="ia-perk">📧 Få mer information via mejl</div>
+      <div class="ia-perk">🤝 Inte bindande</div>
+      <div class="ia-perk">💚 Kostnadsfritt</div>
+    </div>
+    <div class="ia-body">
+      <div class="ia-for">Intresseanmälan för: <strong id="iaForProgram">—</strong></div>
+      <form id="iaForm" onsubmit="submitIA(event)">
+        <div class="ia-row">
+          <div class="ia-field">
+            <label>Förnamn *</label>
+            <input type="text" id="iaFirstName" required placeholder="Förnamn" autocomplete="given-name">
+          </div>
+          <div class="ia-field">
+            <label>Efternamn *</label>
+            <input type="text" id="iaLastName" required placeholder="Efternamn" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="ia-row">
+          <div class="ia-field">
+            <label>Email *</label>
+            <input type="email" id="iaEmail" required placeholder="din@email.se" autocomplete="email">
+          </div>
+          <div class="ia-field">
+            <label>Telefon *</label>
+            <input type="tel" id="iaPhone" required placeholder="07XXXXXXXX" autocomplete="tel">
+          </div>
+        </div>
+        <div class="ia-row">
+          <div class="ia-field">
+            <label>Ort *</label>
+            <input type="text" id="iaCity" required placeholder="Din ort" autocomplete="address-level2">
+          </div>
+          <div class="ia-field">
+            <label>Ålder *</label>
+            <select id="iaAge" required>
+              <option value="">— Välj ålder —</option>
+              <option value="under18">Under 18</option>
+              <option value="18-24">18–24</option>
+              <option value="25-29">25–29</option>
+              <option value="30-34">30–34</option>
+              <option value="35-39">35–39</option>
+              <option value="40-49">40–49</option>
+              <option value="50+">50+</option>
+            </select>
+          </div>
+        </div>
+        <div class="ia-field">
+          <label>Önskad studieort</label>
+          <select id="iaStudyCity">
+            <option value="">— Välj studieort —</option>
+            <option value="stockholm">Stockholm</option>
+            <option value="goteborg">Göteborg</option>
+            <option value="malmo">Malmö</option>
+            <option value="linkoping">Linköping</option>
+            <option value="orebro">Örebro</option>
+            <option value="umea">Umeå</option>
+            <option value="distance">Distans</option>
+            <option value="other">Annan ort</option>
+          </select>
+        </div>
+        <div class="ia-field">
+          <label>Frågor eller meddelande</label>
+          <textarea id="iaMessage" placeholder="Här kan du ställa eventuella frågor eller skriva vad det är för typ av information du är intresserad av."></textarea>
+        </div>
+        <div class="ia-gdpr">
+          <input type="checkbox" id="iaGdpr" required>
+          <label for="iaGdpr">Jag accepterar att mina uppgifter lagras och delas med utbildningsanordnaren i syfte att ge mig information om utbildningen. <a href="/integritetspolicy" target="_blank" style="color:var(--ac)">Integritetspolicy</a></label>
+        </div>
+        <button type="submit" class="ia-submit" id="iaSubmitBtn">Skicka intresseanmälan →</button>
+      </form>
+      <div id="iaSuccess" class="ia-success" style="display:none">
+        <div class="ia-check">✅</div>
+        <h4>Intresseanmälan skickad!</h4>
+        <p>Tack! <strong id="iaSuccessSchool"></strong> kommer att kontakta dig med mer information om <strong id="iaSuccessProgram"></strong>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// YH SCHOOL MATCHING — hämtar från Supabase och renderar kort
+// ============================================================
+
+// Normalisera stad för jämförelse
+function normalizeCity(c) {
+  if (!c) return '';
+  const s = c.toLowerCase().trim();
+  if (s.includes('stockholm')) return 'stockholm';
+  if (s.includes('göteborg') || s.includes('goteborg')) return 'goteborg';
+  if (s.includes('malmö') || s.includes('malmo')) return 'malmo';
+  if (s.includes('linköping') || s.includes('linkoping')) return 'linkoping';
+  if (s.includes('örebro') || s.includes('orebro')) return 'orebro';
+  if (s.includes('umeå') || s.includes('umea')) return 'umea';
+  if (s.includes('distans') || s.includes('distance')) return 'distance';
+  return s;
+}
+
+// Beräkna matchningsprocent (0-100) för en skola mot användarens svar
+function calcMatch(school, a) {
+  let score = 0;
+  let maxScore = 0;
+
+  // Stad (tyngst — 40p)
+  const userCity = normalizeCity(a.current_location || '');
+  const schoolCity = normalizeCity(school.city || '');
+  maxScore += 40;
+  if (school.study_mode === 'distance') {
+    score += 40; // Distans passar alltid
+  } else if (userCity && schoolCity && userCity === schoolCity) {
+    score += 40;
+  } else if (a.willing_to_move === 'yes' || a.willing_to_move === 'maybe') {
+    score += 20;
+  }
+
+  // Studieform (25p)
+  maxScore += 25;
+  const userMode = a.study_mode || 'any';
+  if (userMode === 'any') {
+    score += 25;
+  } else if (school.study_mode === 'hybrid') {
+    score += 20; // hybrid passar nästan alla
+  } else if (userMode === school.study_mode) {
+    score += 25;
+  } else if (userMode === 'campus' && school.study_mode === 'hybrid') {
+    score += 15;
+  } else if (userMode === 'distance' && school.study_mode === 'hybrid') {
+    score += 15;
+  }
+
+  // Studietakt (20p)
+  maxScore += 20;
+  const userPace = a.study_pace || 'any';
+  if (userPace === 'any' || userPace === 'flexible') {
+    score += 20;
+  } else if (userPace === school.study_pace) {
+    score += 20;
+  }
+
+  // Avgift (15p)
+  maxScore += 15;
+  const feeOk = a.fee_ok || 'yes';
+  if (school.fee === 0) {
+    score += 15; // Avgiftsfri passar alltid
+  } else if (feeOk === 'yes') {
+    score += 15;
+  }
+
+  return Math.round((score / maxScore) * 100);
+}
+
+// Rendera matchningsprocent-badge
+function matchBadge(pct) {
+  const cls = pct >= 80 ? 'hi' : pct >= 50 ? 'mid' : 'lo';
+  return `<div class="yh-match-badge">
+    <div class="yh-match-pct ${cls}">${pct}%</div>
+    <div class="yh-match-sub">match</div>
+  </div>`;
+}
+
+// Rendera en tagg-rad för skolkortet
+function renderTags(school, a) {
+  const tags = [];
+  const userCity = normalizeCity(a.current_location || '');
+  const schoolCity = normalizeCity(school.city || '');
+
+  // Stad-tagg
+  if (school.study_mode === 'distance') {
+    tags.push({ label: 'Distans', match: a.study_mode === 'distance' || a.study_mode === 'any' });
+  } else {
+    tags.push({ label: school.city || 'Okänd ort', match: userCity === schoolCity });
+  }
+
+  // Studietakt
+  tags.push({ label: school.study_pace === 'fulltime' ? 'Heltid' : 'Deltid',
+    match: a.study_pace === school.study_pace || a.study_pace === 'any' || a.study_pace === 'flexible' });
+
+  // Avgift
+  if (school.fee > 0) {
+    tags.push({ label: 'Avgiftsbelagd', match: a.fee_ok === 'yes' });
+  } else {
+    tags.push({ label: 'Avgiftsfri', match: true });
+  }
+
+  // Startdatum
+  if (school.start_dates && school.start_dates.length > 0) {
+    tags.push({ label: 'Start: ' + school.start_dates[0], match: false });
+  }
+
+  return tags.map(t => `<span class="yh-card-tag${t.match ? ' match' : ''}">${t.label}</span>`).join('');
+}
+
+// Rendera alla skolkort
+function renderSchoolCards(schools, a, container) {
+  if (!schools || schools.length === 0) {
+    container.innerHTML = `<div class="yh-no-schools">
+      Inga matchande utbildningar hittades just nu. Fler utbildningar läggs till löpande.
+      <br><br>
+      <a href="https://www.myh.se/yrkeshogskolan/hitta-yh-utbildning/" target="_blank" rel="noopener" style="color:var(--ac);font-weight:700">Sök på MYH:s hemsida →</a>
+    </div>`;
+    return;
+  }
+
+  const html = schools.map(s => `
+    <div class="yh-school-card">
+      <div class="yh-card-top">
+        <div class="yh-card-info">
+          <div class="yh-card-program">${s.program_name}</div>
+          <div class="yh-card-school">${s.school_name}</div>
+        </div>
+        ${matchBadge(s._matchPct)}
+      </div>
+      <div class="yh-card-tags">${renderTags(s, a)}</div>
+      <div class="yh-card-btns">
+        ${s.website_url
+          ? `<a href="${s.website_url}" target="_blank" rel="noopener" class="yh-btn-site">
+               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+               Utbildningens hemsida
+             </a>`
+          : ''}
+        <button class="yh-btn-lead" onclick="openIA(${JSON.stringify(s).replace(/"/g,'&quot;')})">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Intresseanmälan
+        </button>
+      </div>
+    </div>
+  `).join('');
+
+  container.innerHTML = `<div class="yh-match-section">
+    <div class="yh-match-label">Matchade YH-utbildningar</div>
+    ${html}
+  </div>`;
+}
+
+// Hämta skolor från Supabase och rendera
+async function loadYHSchools(edu, a) {
+  const container = document.getElementById('yh-schools-container');
+  if (!container || !sb) return;
+
+  try {
+    const { data, error } = await sb
+      .from('yh_schools')
+      .select('*')
+      .contains('education_ids', [edu.id])
+      .eq('active', true);
+
+    if (error) throw error;
+
+    const schools = (data || [])
+      .map(s => ({ ...s, _matchPct: calcMatch(s, a) }))
+      .sort((a, b) => b._matchPct - a._matchPct)
+      .slice(0, 3);
+
+    renderSchoolCards(schools, a, container);
+  } catch (err) {
+    console.warn('YH schools fetch error:', err.message);
+    container.innerHTML = `<div class="yh-no-schools">
+      Kunde inte hämta utbildningar just nu. Försök igen senare.
+    </div>`;
+  }
+}
+
+// ============================================================
+// INTRESSEANMÄLAN MODAL
+// ============================================================
+
+let _iaCurrentSchool = null;
+
+function openIA(school) {
+  _iaCurrentSchool = school;
+
+  // Sätt rubrik
+  document.getElementById('iaForProgram').textContent =
+    school.program_name + ' — ' + school.school_name;
+
+  // Prefill från planens svar om tillgängligt
+  if (typeof ans !== 'undefined') {
+    // Namn
+    const fullName = (ans.user_name || '').trim();
+    if (fullName) {
+      const parts = fullName.split(' ');
+      document.getElementById('iaFirstName').value = parts[0] || '';
+      document.getElementById('iaLastName').value = parts.slice(1).join(' ') || '';
+    }
+    // Email
+    if (ans.user_email) document.getElementById('iaEmail').value = ans.user_email;
+    // Telefon
+    if (ans.user_phone) document.getElementById('iaPhone').value = ans.user_phone;
+    // Ort
+    if (ans.current_location) document.getElementById('iaCity').value = ans.current_location;
+    // Studieort
+    const cityMap = { stockholm:'stockholm', goteborg:'goteborg', malmo:'malmo',
+      linkoping:'linkoping', orebro:'orebro', umea:'umea' };
+    const mapped = cityMap[normalizeCity(ans.current_location || '')];
+    if (mapped) document.getElementById('iaStudyCity').value = mapped;
+  }
+
+  // Återställ form-state
+  document.getElementById('iaForm').style.display = 'block';
+  document.getElementById('iaSuccess').style.display = 'none';
+  document.getElementById('iaSubmitBtn').disabled = false;
+  document.getElementById('iaSubmitBtn').textContent = 'Skicka intresseanmälan →';
+
+  document.getElementById('iaOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeIA() {
+  document.getElementById('iaOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Stäng vid klick utanför modalen
+document.getElementById('iaOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeIA();
+});
+
+// Stäng med Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeIA();
+});
+
+async function submitIA(e) {
+  e.preventDefault();
+  const school = _iaCurrentSchool;
+  if (!school) return;
+
+  const btn = document.getElementById('iaSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Skickar...';
+
+  const payload = {
+    school_id:    school.id || null,
+    school_name:  school.school_name,
+    program_name: school.program_name,
+    education_id: (typeof edu !== 'undefined' && edu) ? edu.id : null,
+    plan_id:      null, // kan kopplas till plans.id om det finns
+    first_name:   document.getElementById('iaFirstName').value.trim(),
+    last_name:    document.getElementById('iaLastName').value.trim(),
+    email:        document.getElementById('iaEmail').value.trim().toLowerCase(),
+    phone:        document.getElementById('iaPhone').value.trim(),
+    city:         document.getElementById('iaCity').value.trim(),
+    age:          document.getElementById('iaAge').value || null,
+    study_city:   document.getElementById('iaStudyCity').value || null,
+    message:      document.getElementById('iaMessage').value.trim() || null,
+    gdpr_accepted: document.getElementById('iaGdpr').checked,
+  };
+
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/school_leads', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+
+    // Visa bekräftelse
+    document.getElementById('iaForm').style.display = 'none';
+    document.getElementById('iaSuccessSchool').textContent = school.school_name;
+    document.getElementById('iaSuccessProgram').textContent = school.program_name;
+    document.getElementById('iaSuccess').style.display = 'block';
+
+  } catch (err) {
+    console.error('Lead submit error:', err);
+    btn.disabled = false;
+    btn.textContent = 'Något gick fel — försök igen';
+  }
+}
+</script>
 </body>
 </html>
