@@ -1298,7 +1298,7 @@ function showBlurredPlan(){
                 setTimeout(()=>{
                     loadEl.remove();
                     document.body.style.overflow='';
-                    showPaywall(firstName,e,debt,be,sal,full,part,gp,loan,mo,BID);
+                    window.location.href='/min-plan';(firstName,e,debt,be,sal,full,part,gp,loan,mo,BID);
                 },500);
             },700);
             return;
@@ -1315,7 +1315,7 @@ function showBlurredPlan(){
     setTimeout(tick,300);
 }
 
-function showPaywall(firstName,e,debt,be,sal,full,part,gp,loan,mo,BID){
+function window.location.href='/min-plan';(firstName,e,debt,be,sal,full,part,gp,loan,mo,BID){
     const a=ans;
     const fmt=n=>n.toLocaleString('sv-SE');
     const salDiff=e.s0-sal;
