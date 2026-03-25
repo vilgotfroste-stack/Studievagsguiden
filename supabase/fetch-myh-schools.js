@@ -57,7 +57,7 @@ const EDU_MAP = [
   { ids: [11], label: 'Kommunikatör/PR',
     keywords: ['kommunikatör', 'informatör', 'copywriter', 'innehållsstrateg', 'public relations'] },
   { ids: [12], label: 'HR-specialist',
-    keywords: ['hr-specialist', 'hr-ansvarig', 'personalarbete', 'human resources', 'personalvetare', 'personalutvecklare', 'personaladministratör', 'personalchef', 'personalspecialist', 'pa-konsult', 'löne- och personal', 'personal och lön'] },
+    keywords: ['hr-specialist', 'hr-ansvarig', 'personalarbete', 'human resources', 'personalvetare', 'personalutvecklare', 'personaladministratör', 'personalchef', 'personalspecialist', 'pa-konsult', 'löne- och personal', 'personal och lön', 'personal och organisation', 'personal och ledarskap', 'personalvetenskap', 'lön och personal'] },
   { ids: [13], label: 'Projektledare',
     keywords: ['projektledare', 'projektledning', 'agil', 'scrum', 'projektkoordinator', 'förändringsledning'] },
 
