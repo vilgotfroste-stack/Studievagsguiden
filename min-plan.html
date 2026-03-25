@@ -3089,7 +3089,8 @@ function closeEditModal(e) {
 async function confirmEdits() {
   ans = Object.assign(ans, editDraft);
   // Update edu if changed
-  if (editEduId && (!edu || editEduId !== edu.id)) {
+  const eduChanged = editEduId && (!edu || editEduId !== edu.id);
+  if (eduChanged) {
     edu = E.find(e => e.id === editEduId) || edu;
     // Clear stale verification data when education changes
     ans.verified_missing = undefined;
@@ -3116,6 +3117,10 @@ async function confirmEdits() {
   }
   document.getElementById('editModalOverlay').classList.remove('open');
   document.body.style.overflow = '';
+  if (eduChanged) {
+    location.reload();
+    return;
+  }
   // Re-render plan
   const firstName = (ans.user_name || '').split(' ')[0] || 'du';
   buildFP(firstName);
@@ -3967,9 +3972,9 @@ function svgModalClose(val) {
       <button class="ia-close" onclick="closeIA()" aria-label="Stäng">&times;</button>
     </div>
     <div class="ia-perks">
-      <div class="ia-perk">📧 Få mer information via mejl</div>
-      <div class="ia-perk">🤝 Inte bindande</div>
-      <div class="ia-perk">💚 Kostnadsfritt</div>
+      <div class="ia-perk">Få mer information via mejl</div>
+      <div class="ia-perk">Inte bindande</div>
+      <div class="ia-perk">Kostnadsfritt</div>
     </div>
     <div class="ia-body">
       <div class="ia-for">Intresseanmälan för: <strong id="iaForProgram">—</strong></div>
@@ -4038,7 +4043,7 @@ function svgModalClose(val) {
         <button type="submit" class="ia-submit" id="iaSubmitBtn">Skicka intresseanmälan →</button>
       </form>
       <div id="iaSuccess" class="ia-success" style="display:none">
-        <div class="ia-check">✅</div>
+        <div class="ia-check"></div>
         <h4>Intresseanmälan skickad!</h4>
         <p>Tack! <strong id="iaSuccessSchool"></strong> kommer att kontakta dig med mer information om <strong id="iaSuccessProgram"></strong>.</p>
       </div>
