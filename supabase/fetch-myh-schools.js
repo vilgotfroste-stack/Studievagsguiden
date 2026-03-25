@@ -35,7 +35,7 @@ const EDU_MAP = [
   { ids: [1],  label: 'Systemutvecklare/Webbutvecklare',
     keywords: ['systemutvecklare', 'mjukvaruutvecklare', 'webbutvecklare', 'programmerare', 'fullstack', 'backend', 'frontend', 'applikationsutvecklare', '.net', 'java', 'python'] },
   { ids: [2],  label: 'Dataanalytiker/BI',
-    keywords: ['dataanalytiker', 'data analytics', 'business intelligence', 'bi-utvecklare', 'dataingenjör', 'machine learning', 'ai-ingenjör', 'data science', 'datavetenskap'] },
+    keywords: ['dataanalytiker', 'dataanalys', 'data analytics', 'business intelligence', 'bi-utvecklare', 'dataingenjör', 'machine learning', 'ai-ingenjör', 'data science', 'datavetenskap', 'data och ai', 'ai och data', 'artificiell intelligens', 'business analytics'] },
   { ids: [3],  label: 'IT-säkerhetsspecialist',
     keywords: ['it-säkerhet', 'cybersecurity', 'informationssäkerhet', 'säkerhetsanalytiker', 'nätverkssäkerhet', 'penetrationstest', 'cyber security'] },
   { ids: [4],  label: 'UX/UI-designer',
@@ -55,9 +55,9 @@ const EDU_MAP = [
 
   // Ledarskap & HR
   { ids: [11], label: 'Kommunikatör/PR',
-    keywords: ['kommunikatör', 'pr', 'informatör', 'kommunikation', 'copywriter', 'innehållsstrateg'] },
+    keywords: ['kommunikatör', 'informatör', 'copywriter', 'innehållsstrateg', 'public relations'] },
   { ids: [12], label: 'HR-specialist',
-    keywords: ['hr', 'personalarbete', 'human resources', 'personalvetare', 'personalutvecklare'] },
+    keywords: ['hr-specialist', 'hr-ansvarig', 'personalarbete', 'human resources', 'personalvetare', 'personalutvecklare', 'personaladministratör', 'personalchef'] },
   { ids: [13], label: 'Projektledare',
     keywords: ['projektledare', 'projektledning', 'agil', 'scrum', 'projektkoordinator', 'förändringsledning'] },
 
