@@ -1,37 +1,28 @@
 /**
  * api/myh-proxy.js
  * ================
- * Vercel Serverless Function som proxar anrop till MYH:s officiella API.
- *
- * MYH:s API blockerar server-side-requests utan browser-liknande headers —
- * den här proxyn lägger på rätt headers och vidarebefordrar svaret.
+ * Vercel Serverless Function som proxar anrop till Skolverkets Susa-navet API (v4).
  *
  * Endpoint: GET /api/myh-proxy
  *
  * Query-parametrar:
- *   q            – fritextsökning (MYH: Text)
- *   page         – sidnummer, 0-baserat (MYH: PageIndex)
- *   pageSize     – resultat per sida, max 100 (MYH: PageSize)
- *   municipality – kommunkod, t.ex. "0180" för Stockholm (MYH: MunicipalityCode)
- *   area         – utbildningsområdeskod (MYH: EducationalAreaCode)
+ *   q            – fritextsökning (Skolverket: searchTerm)
+ *   page         – sidnummer, 0-baserat
+ *   pageSize     – resultat per sida, max 100
+ *   municipality – kommunkod/namn (Skolverket: municipality)
+ *   distance     – "true" / "false" för distans/campus
+ *   typeOfSchool – t.ex. "yhprogram" (default: yhprogram)
  *
  * Exempel:
- *   /api/myh-proxy?q=systemutvecklare&pageSize=50
- *   /api/myh-proxy?municipality=0180&page=2
+ *   /api/myh-proxy?q=systemutvecklare&pageSize=20
+ *   /api/myh-proxy?typeOfSchool=yhprogram&municipality=Stockholm
  */
 
-const MYH_API_BASE = 'https://api.myh.se/Education/V1/GetEducations';
+const SKOLVERKET_BASE = 'https://api.skolverket.se/planned-educations/v4/adult-education-events';
 
-// Browser-liknande headers som MYH kräver
-const MYH_HEADERS = {
-  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-  'Referer': 'https://www.myh.se/',
-  'Origin': 'https://www.myh.se',
-  'Accept': 'application/json, text/plain, */*',
-  'Accept-Language': 'sv-SE,sv;q=0.9,en;q=0.8',
-  'Accept-Encoding': 'gzip, deflate, br',
-  'Cache-Control': 'no-cache',
-  'Pragma': 'no-cache',
+const SKOLVERKET_HEADERS = {
+  'Accept': 'application/vnd.skolverket.plannededucations.api.v4.hal+json',
+  'User-Agent': 'Mozilla/5.0 (compatible; StudievagsguidentBot/1.0)',
 };
 
 export default async function handler(req, res) {
@@ -49,37 +40,38 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { q, page, pageSize, municipality, area } = req.query;
+    const { q, page, pageSize, municipality, distance, typeOfSchool } = req.query;
 
-    // Bygg MYH-parametrar
     const params = new URLSearchParams();
 
-    if (q)            params.set('Text', q);
-    if (municipality) params.set('MunicipalityCode', municipality);
-    if (area)         params.set('EducationalAreaCode', area);
+    // Utbildningsform — default: yhprogram
+    params.set('typeOfSchool', typeOfSchool || 'yhprogram');
 
-    // Sidhantering — MYH är 1-baserat, vi tar emot 0-baserat
-    const pageIndex = Math.max(0, parseInt(page || '0', 10));
-    params.set('PageIndex', String(pageIndex + 1));
-    params.set('PageSize', String(Math.min(100, parseInt(pageSize || '50', 10))));
+    if (q)            params.set('searchTerm', q);
+    if (municipality) params.set('municipality', municipality);
+    if (distance)     params.set('distance', distance);
 
-    const myhUrl = `${MYH_API_BASE}?${params.toString()}`;
+    params.set('page',  String(Math.max(0, parseInt(page || '0', 10))));
+    params.set('size',  String(Math.min(100, parseInt(pageSize || '20', 10))));
+    params.set('sort',  'titleSv,asc');
 
-    const myhRes = await fetch(myhUrl, {
-      headers: MYH_HEADERS,
+    const apiUrl = `${SKOLVERKET_BASE}?${params.toString()}`;
+
+    const apiRes = await fetch(apiUrl, {
+      headers: SKOLVERKET_HEADERS,
       signal: AbortSignal.timeout(10_000),
     });
 
-    if (!myhRes.ok) {
-      const body = await myhRes.text();
-      console.error(`MYH API error ${myhRes.status}:`, body.slice(0, 200));
+    if (!apiRes.ok) {
+      const body = await apiRes.text();
+      console.error(`Skolverket API error ${apiRes.status}:`, body.slice(0, 200));
       return res.status(502).json({
-        error: 'MYH API returned an error',
-        status: myhRes.status,
+        error: 'Skolverket API returned an error',
+        status: apiRes.status,
       });
     }
 
-    const data = await myhRes.json();
+    const data = await apiRes.json();
 
     // Cache i 1 timme hos Vercel Edge
     res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400');
