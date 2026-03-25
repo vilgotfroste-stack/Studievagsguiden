@@ -190,28 +190,25 @@ async function fetchSkolverketPage(pageIndex) {
 
 async function fetchAllFromSkolverket() {
   console.log('📡 Hämtar sida 0...');
-  const firstPage = await fetchSkolverketPage(0);
+  const firstRaw = await fetchSkolverketPage(0);
 
-  // Logga strukturen så vi vet fältnamnen
-  const sampleKeys = Object.keys(firstPage);
-  console.log('   Svarstruktur (toppnivå):', sampleKeys.join(', '));
+  // API svarar med { status, message, body: { _embedded: { listedAdultEducationEvents: [...] }, page: {...} } }
+  const firstPage = firstRaw.body || firstRaw;
 
-  // HAL+JSON: data ligger under _embedded
-  const embeddedKey = Object.keys(firstPage._embedded || {}).find(k =>
-    k.includes('event') || k.includes('education') || k.includes('adult')
+  const embedded = firstPage._embedded || {};
+  const embeddedKey = Object.keys(embedded).find(k =>
+    k.includes('event') || k.includes('education') || k.includes('adult') || k.includes('listed')
   );
   if (!embeddedKey) {
-    console.log('   Råsvar (100 tecken):', JSON.stringify(firstPage).slice(0, 500));
+    console.log('   Råsvar:', JSON.stringify(firstRaw).slice(0, 600));
     throw new Error('Kunde inte hitta rätt nyckel i _embedded. Se råsvar ovan.');
   }
-  console.log(`   Embeddat under: "${embeddedKey}"`);
 
-  const items = firstPage._embedded[embeddedKey];
+  const items = embedded[embeddedKey];
   const allItems = [...items];
 
-  // Pagination info
   const pageInfo = firstPage.page || {};
-  const totalElements = pageInfo.totalElements || firstPage.total || items.length;
+  const totalElements = pageInfo.totalElements || items.length;
   const totalPages = pageInfo.totalPages || Math.ceil(totalElements / PAGE_SIZE) || 1;
 
   console.log(`   Totalt: ${totalElements} program, ${totalPages} sidor`);
@@ -221,8 +218,9 @@ async function fetchAllFromSkolverket() {
     process.stdout.write(`   Sida ${p + 1}/${totalPages}... `);
     await new Promise(r => setTimeout(r, 200));
     try {
-      const page = await fetchSkolverketPage(p);
-      const pageItems = page._embedded[embeddedKey] || [];
+      const raw = await fetchSkolverketPage(p);
+      const pageData = raw.body || raw;
+      const pageItems = (pageData._embedded || {})[embeddedKey] || [];
       allItems.push(...pageItems);
       console.log(`${pageItems.length} st`);
     } catch (e) {
