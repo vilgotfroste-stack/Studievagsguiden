@@ -647,9 +647,9 @@ async function saveToSupabase() {
 <script>
 const E=[
 // IT & Teknik 
-{id:1,t:'Systemutvecklare',y:3,s0:35000,s1:54900,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matematik 2','Engelska 6'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Utvecklare på företag',ho:'Konsult / byter bolag',sp:'Arkitekt / specialist',le:'Tech lead / CTO'}},
-{id:2,t:'Dataanalytiker',y:3,s0:33000,s1:54500,dem:4,ai:12,stress:2,future:5,tc:8000,req:['Matematik 3','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Dataanalytiker junior',ho:'Senior analytiker / konsult',sp:'Data scientist / BI-specialist',le:'Analytics manager'}},
-{id:3,yh:true,t:'IT-säkerhetsspecialist',y:3,s0:33000,s1:52600,dem:5,ai:5,stress:3,future:5,tc:8000,req:['Matematik 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Säkerhetsanalytiker',ho:'Konsult / byter organisation',sp:'Cybersecurity specialist',le:'CISO / säkerhetschef'}},
+{id:1,both:true,t:'Systemutvecklare',y:3,s0:35000,s1:54900,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matematik 2','Engelska 6'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Utvecklare på företag',ho:'Konsult / byter bolag',sp:'Arkitekt / specialist',le:'Tech lead / CTO'}},
+{id:2,yh:true,t:'Dataanalytiker',y:3,s0:33000,s1:54500,dem:4,ai:12,stress:2,future:5,tc:8000,req:['Matematik 3','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Dataanalytiker junior',ho:'Senior analytiker / konsult',sp:'Data scientist / BI-specialist',le:'Analytics manager'}},
+{id:3,both:true,t:'IT-säkerhetsspecialist',y:3,s0:33000,s1:52600,dem:5,ai:5,stress:3,future:5,tc:8000,req:['Matematik 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Säkerhetsanalytiker',ho:'Konsult / byter organisation',sp:'Cybersecurity specialist',le:'CISO / säkerhetschef'}},
 {id:4,yh:true,t:'UX/UI-designer',y:2,s0:32000,s1:48000,dem:3,ai:22,stress:2,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik','Estet'],pp:[],sc:{st:'Junior UX-designer',ho:'Byter bolag / konsult',sp:'Lead designer / UX-researcher',le:'Design manager'}},
 {id:5,t:'Civilingenjör',y:5,s0:41000,s1:56200,dem:4,ai:18,stress:2,future:5,tc:8000,req:['Matematik 4','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:[],sc:{st:'Ingenjör på företag',ho:'Konsult / byter bransch',sp:'Teknisk specialist',le:'Engineering manager'}},
 {id:6,t:'Högskoleingenjör',y:3,s0:38800,s1:45600,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matematik 3','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:[],sc:{st:'Ingenjör junior',ho:'Konsult / byter bransch',sp:'Senior ingenjör',le:'Projektledare / teamlead'}},
@@ -659,7 +659,7 @@ const E=[
 {id:9,yh:true,t:'Redovisningsekonom',y:2,s0:30000,s1:44300,dem:4,ai:20,stress:2,future:3,tc:8000,req:['Matematik 2','Engelska 6'],rp:['Ekonomi','Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Redovisningsekonom',ho:'Konsult / byter byrå',sp:'Auktoriserad revisor',le:'Ekonomichef'}},
 {id:10,yh:true,t:'Controller',y:3,s0:33000,s1:48200,dem:4,ai:20,stress:3,future:3,tc:9000,req:['Matematik 3'],rp:['Ekonomi','Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Junior controller',ho:'Byter bransch / konsult',sp:'Senior controller',le:'CFO / ekonomichef'}},
 {id:11,yh:true,t:'Digital marknadsförare',y:2,s0:30000,s1:43000,dem:3,ai:18,stress:3,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Ekonomi','Samhäll','Estet'],pp:['Naturvetenskap','Teknik'],sc:{st:'Digital marknadsförare',ho:'Konsult / byrå',sp:'Specialist SEO/SEM/social',le:'Marknadschef'}},
-{id:12,yh:true,t:'HR-specialist',y:3,s0:30000,s1:42000,dem:3,ai:12,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matematik 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
+{id:12,both:true,t:'HR-specialist',y:3,s0:30000,s1:42000,dem:3,ai:12,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matematik 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
 {id:13,yh:true,t:'Projektledare',y:3,s0:33000,s1:49000,dem:4,ai:10,stress:3,future:4,tc:9000,req:['Grundläggande behörighet'],rp:['Ekonomi','Teknik','Samhäll','Naturvetenskap'],pp:['Estet'],sc:{st:'Projektkoordinator',ho:'Byter bransch / konsult',sp:'Senior projektledare / PMP',le:'Programchef / affärsutvecklare'}},
 // Vård & Hälsa 
 {id:14,t:'Sjuksköterska',y:3,s0:36000,s1:43900,dem:5,ai:5,stress:4,future:5,tc:11000,req:['Matematik 2','Naturkunskap 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Leg. sjuksköterska',ho:'Byter specialitet / region',sp:'Specialistsjuksköterska',le:'Vårdenhetschef'}},
@@ -675,7 +675,7 @@ const E=[
 {id:23,t:'Personalvetare',y:3,s0:29000,s1:42000,dem:3,ai:10,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matematik 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator / personalvetare',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
 // Tekniska / Praktiska 
 {id:24,t:'Byggingenjör',y:3,s0:34000,s1:46000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matematik 3','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Byggingenjör',ho:'Konsult / byter projekt',sp:'Projektingenjör / specialist',le:'Projektchef / platschef'}},
-{id:25,yh:true,t:'Fastighetsförvaltare',y:3,s0:34000,s1:50600,dem:4,ai:8,stress:2,future:4,tc:9000,req:['Matematik 2'],rp:['Ekonomi','Teknik','Samhäll'],pp:['Naturvetenskap'],sc:{st:'Fastighetsförvaltare',ho:'Byter bolag / region',sp:'Teknisk förvaltare / specialist',le:'Förvaltningschef / fastighetschef'}},
+{id:25,both:true,t:'Fastighetsförvaltare',y:3,s0:34000,s1:50600,dem:4,ai:8,stress:2,future:4,tc:9000,req:['Matematik 2'],rp:['Ekonomi','Teknik','Samhäll'],pp:['Naturvetenskap'],sc:{st:'Fastighetsförvaltare',ho:'Byter bolag / region',sp:'Teknisk förvaltare / specialist',le:'Förvaltningschef / fastighetschef'}},
 {id:26,yh:true,t:'VVS-ingenjör',y:2,s0:33000,s1:45000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matematik 2','Fysik 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'VVS-konstruktör / tekniker',ho:'Konsult / byter projekt',sp:'Senior ingenjör / specialist',le:'Projektchef / avdelningschef'}},
 {id:27,yh:true,t:'Automationsingenjör',y:3,s0:34000,s1:48000,dem:5,ai:8,stress:2,future:5,tc:9000,req:['Matematik 3','Fysik 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Automationsingenjör',ho:'Konsult / byter industri',sp:'Senior ingenjör / specialist',le:'Automationschef / projektledare'}},
 // Övriga 
@@ -2830,7 +2830,7 @@ async function fetchPlanByEmail() {
  document.getElementById('loadingState').style.display = 'none';
  buildFP(userName);
  document.getElementById('planContainer').style.display = 'block';
- if (edu && edu.yh) loadYHSchools(edu, ans);
+ if (edu && (edu.yh || edu.both)) loadYHSchools(edu, ans);
 
  } catch(e) {
  showAuthMsg('Något gick fel. Försök igen.', true);
@@ -3836,7 +3836,7 @@ async function loadPlanForUser(user) {
  document.getElementById('planContainer').style.display = 'block';
 
  // Ladda YH-skolmatchning om det är en YH-utbildning
- if (edu && edu.yh) loadYHSchools(edu, ans);
+ if (edu && (edu.yh || edu.both)) loadYHSchools(edu, ans);
  
  // Spara till plans-tabellen om inte redan sparat (och betalning hanteras separat)
  // TODO: koppla till Stripe webhook
