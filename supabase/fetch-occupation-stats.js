@@ -35,44 +35,47 @@ const SCB_CONTENTS = {
 const STAT_YEAR = '2024';
 
 // ---------------------------------------------------------------
-// Mappning: interna occupation_id → SSYK-kod + namn
+// Mappning: interna occupation_id → SSYK-kod (Yrke2012 i SCB API) + namn
 // id 23 (Personalvetare) slås ihop med id 12 (HR-specialist) och ingår inte här.
+//
+// Koder verifierade mot SCB API-metadata (GET LoneSpridSektYrk4AN).
+// Notering: SCB använder variabeln "Yrke2012", inte "Ssyk4".
 // ---------------------------------------------------------------
 const OCCUPATION_MAP = [
   // IT & Teknik
-  { id: 1,  name: 'Systemutvecklare',          ssyk: '2512' },
-  { id: 2,  name: 'Dataanalytiker',            ssyk: '2519' },
-  { id: 3,  name: 'IT-säkerhetsspecialist',    ssyk: '2516' },
-  { id: 4,  name: 'UX/UI-designer',            ssyk: '2166' },
-  { id: 5,  name: 'Civilingenjör',             ssyk: '2141' },
-  { id: 6,  name: 'Högskoleingenjör',          ssyk: '3114' },
-  { id: 7,  name: 'DevOps / Cloud engineer',   ssyk: '2514' },
+  { id: 1,  name: 'Systemutvecklare',           ssyk: '2512' },  // Mjukvaru- och systemutvecklare m.fl.
+  { id: 2,  name: 'Dataanalytiker',             ssyk: '2519' },  // Övriga IT-specialister
+  { id: 3,  name: 'IT-säkerhetsspecialist',     ssyk: '2516' },  // IT-säkerhetsspecialister
+  { id: 4,  name: 'UX/UI-designer',             ssyk: '2172' },  // Grafisk formgivare m.fl. (2166 finns ej i SCB)
+  { id: 5,  name: 'Civilingenjör',              ssyk: '2149' },  // Övriga civilingenjörsyrken (bred kategori)
+  { id: 6,  name: 'Högskoleingenjör',           ssyk: '3114' },  // Ingenjörer och tekniker inom maskinteknik
+  { id: 7,  name: 'DevOps / Cloud engineer',    ssyk: '2515' },  // Systemförvaltare m.fl. (2514=testare, ej DevOps)
   // Ekonomi & Business
-  { id: 8,  name: 'Civilekonom',               ssyk: '2413' },
-  { id: 9,  name: 'Redovisningsekonom',        ssyk: '2411' },
-  { id: 10, name: 'Controller',                ssyk: '2412' },
-  { id: 11, name: 'Digital marknadsförare',    ssyk: '2431' },
-  { id: 12, name: 'HR-specialist',             ssyk: '2423' },
-  { id: 13, name: 'Projektledare',             ssyk: '2421' },
+  { id: 8,  name: 'Civilekonom',                ssyk: '2419' },  // Övriga ekonomer
+  { id: 9,  name: 'Redovisningsekonom',         ssyk: '3312' },  // Redovisningsekonomer
+  { id: 10, name: 'Controller',                 ssyk: '2412' },  // Controller
+  { id: 11, name: 'Digital marknadsförare',     ssyk: '2431' },  // Marknadsanalytiker och marknadsförare m.fl.
+  { id: 12, name: 'HR-specialist',              ssyk: '2423' },  // Personal- och HR-specialister
+  { id: 13, name: 'Projektledare',              ssyk: '2421' },  // Lednings- och organisationsutvecklare
   // Vård & Hälsa
-  { id: 14, name: 'Sjuksköterska',             ssyk: '2221' },
-  { id: 15, name: 'Fysioterapeut',             ssyk: '2264' },
-  { id: 16, name: 'Arbetsterapeut',            ssyk: '2265' },
-  { id: 17, name: 'Biomedicinsk analytiker',   ssyk: '3213' },
-  { id: 18, name: 'Tandhygienist',             ssyk: '3251' },
+  { id: 14, name: 'Sjuksköterska',              ssyk: '2221' },  // Grundutbildade sjuksköterskor
+  { id: 15, name: 'Fysioterapeut',              ssyk: '2271' },  // Sjukgymnaster (= fysioterapeuter, 2264 finns ej)
+  { id: 16, name: 'Arbetsterapeut',             ssyk: '2272' },  // Arbetsterapeuter (2265 finns ej i SCB)
+  { id: 17, name: 'Biomedicinsk analytiker',    ssyk: '3213' },  // Biomedicinska analytiker m.fl.
+  { id: 18, name: 'Tandhygienist',              ssyk: '3250' },  // Tandhygienister (3251 finns ej, 3250 är rätt)
   // Samhälle & Människor
-  { id: 19, name: 'Socionom',                  ssyk: '2635' },
-  { id: 20, name: 'Grundskollärare',           ssyk: '2341' },
-  { id: 21, name: 'Gymnasielärare',            ssyk: '2330' },
-  { id: 22, name: 'Studie- och yrkesvägledare', ssyk: '2635' },  // delar SSYK med Socionom
+  { id: 19, name: 'Socionom',                   ssyk: '2641' },  // Socialsekreterare (2635 finns ej i SCB)
+  { id: 20, name: 'Grundskollärare',            ssyk: '2341' },  // Grundskollärare
+  { id: 21, name: 'Gymnasielärare',             ssyk: '2330' },  // Gymnasielärare
+  { id: 22, name: 'Studie- och yrkesvägledare', ssyk: '2359' },  // Studie- och yrkesvägledare
   // Tekniska / Praktiska
-  { id: 24, name: 'Byggingenjör',              ssyk: '2142' },
-  { id: 25, name: 'Fastighetsförvaltare',      ssyk: '3334' },
-  { id: 26, name: 'VVS-ingenjör',              ssyk: '2143' },
-  { id: 27, name: 'Automationsingenjör',       ssyk: '2151' },
+  { id: 24, name: 'Byggingenjör',               ssyk: '3112' },  // Ingenjörer och tekniker inom bygg och anläggning
+  { id: 25, name: 'Fastighetsförvaltare',       ssyk: '3334' },  // Fastighetsförvaltare
+  { id: 26, name: 'VVS-ingenjör',               ssyk: '3112' },  // Ingenjörer och tekniker inom bygg och anläggning
+  { id: 27, name: 'Automationsingenjör',        ssyk: '2144' },  // Civilingenjörsyrken inom maskinteknik (2151 finns ej)
   // Övriga
-  { id: 28, name: 'Kriminolog',                ssyk: '2632' },
-  { id: 29, name: 'Beteendevetare',            ssyk: '2634' },
+  { id: 28, name: 'Kriminolog',                 ssyk: '2641' },  // Socialsekreterare (2632 finns ej i SCB)
+  { id: 29, name: 'Beteendevetare',             ssyk: '2641' },  // Socialsekreterare (2634 finns ej i SCB)
 ];
 
 // ---------------------------------------------------------------
@@ -127,24 +130,30 @@ async function fetchSCBSalary(ssykCode, variables) {
   // Hitta "samtliga sektorer" — oftast första värdet eller det med lägst kod
   const sektorValue = sektorVar ? sektorVar.values[0] : null;
 
+  const konVar = variables.find(v => v.code === 'Kon');
+
   const query = {
     query: [
       {
-        code: ssykVar.code,
+        code: 'Yrke2012',
         selection: { filter: 'item', values: [ssykCode] },
       },
-      ...(sektorVar && sektorValue ? [{
-        code: sektorVar.code,
-        selection: { filter: 'item', values: [sektorValue] },
+      {
+        code: 'Sektor',
+        selection: { filter: 'item', values: ['0'] },  // samtliga sektorer
+      },
+      ...(konVar ? [{
+        code: 'Kon',
+        selection: { filter: 'item', values: ['1+2'] },  // totalt (ej uppdelat på kön)
       }] : []),
-      ...(contentVar ? [{
-        code: contentVar.code,
+      {
+        code: 'ContentsCode',
         selection: { filter: 'item', values: Object.values(SCB_CONTENTS) },
-      }] : []),
-      ...(tidVar ? [{
-        code: tidVar.code,
+      },
+      {
+        code: 'Tid',
         selection: { filter: 'item', values: [latestYear] },
-      }] : []),
+      },
     ],
     response: { format: 'json' },
   };
