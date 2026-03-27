@@ -646,41 +646,28 @@ async function saveToSupabase() {
 
 <script>
 const E=[
-// IT & Teknik 
-{id:1,both:true,t:'Systemutvecklare',y:3,s0:35000,s1:54900,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matematik 2','Engelska 6'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Utvecklare på företag',ho:'Konsult / byter bolag',sp:'Arkitekt / specialist',le:'Tech lead / CTO'}},
-{id:2,yh:true,t:'Dataanalytiker',y:3,s0:33000,s1:54500,dem:4,ai:12,stress:2,future:5,tc:8000,req:['Matematik 3','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Dataanalytiker junior',ho:'Senior analytiker / konsult',sp:'Data scientist / BI-specialist',le:'Analytics manager'}},
-{id:3,both:true,t:'IT-säkerhetsspecialist',y:3,s0:33000,s1:52600,dem:5,ai:5,stress:3,future:5,tc:8000,req:['Matematik 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Säkerhetsanalytiker',ho:'Konsult / byter organisation',sp:'Cybersecurity specialist',le:'CISO / säkerhetschef'}},
-{id:4,yh:true,t:'UX/UI-designer',y:2,s0:32000,s1:48000,dem:3,ai:22,stress:2,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik','Estet'],pp:[],sc:{st:'Junior UX-designer',ho:'Byter bolag / konsult',sp:'Lead designer / UX-researcher',le:'Design manager'}},
-{id:5,t:'Civilingenjör',y:5,s0:41000,s1:56200,dem:4,ai:18,stress:2,future:5,tc:8000,req:['Matematik 4','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:[],sc:{st:'Ingenjör på företag',ho:'Konsult / byter bransch',sp:'Teknisk specialist',le:'Engineering manager'}},
-{id:6,t:'Högskoleingenjör',y:3,s0:38800,s1:45600,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matematik 3','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:[],sc:{st:'Ingenjör junior',ho:'Konsult / byter bransch',sp:'Senior ingenjör',le:'Projektledare / teamlead'}},
-{id:7,yh:true,t:'DevOps / Cloud engineer',y:2,s0:35000,s1:52000,dem:5,ai:10,stress:2,future:5,tc:8000,req:['Grundläggande behörighet'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'DevOps-ingenjör junior',ho:'Konsult / byter bolag',sp:'Cloud architect / SRE',le:'Platform engineering lead'}},
-// Ekonomi & Business 
-{id:8,t:'Civilekonom',y:4,s0:34000,s1:54000,dem:3,ai:25,stress:3,future:3,tc:9000,req:['Matematik 3'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Controller / ekonom',ho:'Konsult / byter bransch',sp:'Finansanalytiker',le:'CFO / VD'}},
-{id:9,yh:true,t:'Redovisningsekonom',y:2,s0:30000,s1:44300,dem:4,ai:20,stress:2,future:3,tc:8000,req:['Matematik 2','Engelska 6'],rp:['Ekonomi','Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Redovisningsekonom',ho:'Konsult / byter byrå',sp:'Auktoriserad revisor',le:'Ekonomichef'}},
-{id:10,yh:true,t:'Controller',y:3,s0:33000,s1:48200,dem:4,ai:20,stress:3,future:3,tc:9000,req:['Matematik 3'],rp:['Ekonomi','Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Junior controller',ho:'Byter bransch / konsult',sp:'Senior controller',le:'CFO / ekonomichef'}},
-{id:11,yh:true,t:'Digital marknadsförare',y:2,s0:30000,s1:43000,dem:3,ai:18,stress:3,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Ekonomi','Samhäll','Estet'],pp:['Naturvetenskap','Teknik'],sc:{st:'Digital marknadsförare',ho:'Konsult / byrå',sp:'Specialist SEO/SEM/social',le:'Marknadschef'}},
-{id:12,t:'HR-specialist',y:3,s0:30000,s1:42000,dem:3,ai:12,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matematik 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
-{id:13,yh:true,t:'Projektledare',y:3,s0:33000,s1:49000,dem:4,ai:10,stress:3,future:4,tc:9000,req:['Grundläggande behörighet'],rp:['Ekonomi','Teknik','Samhäll','Naturvetenskap'],pp:['Estet'],sc:{st:'Projektkoordinator',ho:'Byter bransch / konsult',sp:'Senior projektledare / PMP',le:'Programchef / affärsutvecklare'}},
-// Vård & Hälsa 
-{id:14,t:'Sjuksköterska',y:3,s0:36000,s1:43900,dem:5,ai:5,stress:4,future:5,tc:11000,req:['Matematik 2','Naturkunskap 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Leg. sjuksköterska',ho:'Byter specialitet / region',sp:'Specialistsjuksköterska',le:'Vårdenhetschef'}},
-{id:15,t:'Fysioterapeut',y:3,s0:30000,s1:39100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Matematik 2','Naturkunskap 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Legitimerad fysioterapeut',ho:'Byter vårdgivare / privat',sp:'Specialist / idrottsfysio',le:'Verksamhetschef'}},
-{id:16,t:'Arbetsterapeut',y:3,s0:29000,s1:38100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Matematik 2','Naturkunskap 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. arbetsterapeut',ho:'Byter region / verksamhet',sp:'Specialist / konsult',le:'Verksamhetschef'}},
-{id:17,t:'Biomedicinsk analytiker',y:3,s0:30000,s1:41200,dem:4,ai:8,stress:2,future:4,tc:10000,req:['Matematik 3','Kemi 2','Biologi 2','Fysik 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Biomedicinsk analytiker',ho:'Byter laboratorium / region',sp:'Cytodiagnostiker / specialist',le:'Laboratoriekemist / chef'}},
-{id:18,t:'Tandhygienist',y:3,s0:30000,s1:40900,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Matematik 2','Naturkunskap 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. tandhygienist',ho:'Byter klinik / region',sp:'Specialist / konsult',le:'Klinikchet / eget företag'}},
-// Samhälle & Människor 
-{id:19,t:'Socionom',y:3.5,s0:29000,s1:40300,dem:4,ai:8,stress:5,future:4,tc:10000,req:['Samhällskunskap 1b','Matematik 2'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik','Vård'],pp:['Estet'],sc:{st:'Socialsekreterare',ho:'Byter kommun / verksamhet',sp:'Familjerätt / missbruk',le:'Enhetschef'}},
-{id:20,t:'Grundskollärare',y:3.5,s0:29000,s1:40200,dem:5,ai:5,stress:4,future:4,tc:10000,req:['Matematik 2','Samhällskunskap 1b','Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Klassrumslärare',ho:'Byter skola / kommun',sp:'Förstelärare',le:'Rektor / skolledare'}},
-{id:21,t:'Gymnasielärare',y:4.5,s0:31000,s1:42700,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Ämneslärare',ho:'Byter skola / ämne',sp:'Förstelärare',le:'Rektor / skolledare'}},
-{id:22,t:'Studie- och yrkesvägledare',y:3,s0:29000,s1:40100,dem:4,ai:5,stress:2,future:4,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Studie- och yrkesvägledare',ho:'Byter skola / sektor',sp:'Senior vägledare / specialist',le:'Verksamhetschef'}},
-{id:23,t:'Personalvetare',y:3,s0:29000,s1:42000,dem:3,ai:10,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matematik 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator / personalvetare',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
-// Tekniska / Praktiska 
-{id:24,t:'Byggingenjör',y:3,s0:34000,s1:46000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matematik 3','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Byggingenjör',ho:'Konsult / byter projekt',sp:'Projektingenjör / specialist',le:'Projektchef / platschef'}},
-{id:25,both:true,t:'Fastighetsförvaltare',y:3,s0:34000,s1:50600,dem:4,ai:8,stress:2,future:4,tc:9000,req:['Matematik 2'],rp:['Ekonomi','Teknik','Samhäll'],pp:['Naturvetenskap'],sc:{st:'Fastighetsförvaltare',ho:'Byter bolag / region',sp:'Teknisk förvaltare / specialist',le:'Förvaltningschef / fastighetschef'}},
-{id:26,yh:true,t:'VVS-ingenjör',y:2,s0:33000,s1:45000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matematik 2','Fysik 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'VVS-konstruktör / tekniker',ho:'Konsult / byter projekt',sp:'Senior ingenjör / specialist',le:'Projektchef / avdelningschef'}},
-{id:27,yh:true,t:'Automationsingenjör',y:3,s0:34000,s1:48000,dem:5,ai:8,stress:2,future:5,tc:9000,req:['Matematik 3','Fysik 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Automationsingenjör',ho:'Konsult / byter industri',sp:'Senior ingenjör / specialist',le:'Automationschef / projektledare'}},
-// Övriga 
-{id:28,t:'Kriminolog',y:3,s0:28000,s1:39500,dem:3,ai:8,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Utredare / handläggare',ho:'Byter myndighet / sektor',sp:'Specialist brottsprevention',le:'Enhetschef / verksamhetschef'}},
-{id:29,t:'Beteendevetare',y:3,s0:28000,s1:58400,dem:3,ai:8,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'Utredare / konsulent',ho:'Byter organisation / sektor',sp:'Specialist beteende / HR',le:'Enhetschef / konsultchef'}}
+// IT & Teknik
+{id:1,both:true,t:'Systemutvecklare',y:3,s0:35000,s1:52500,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matematik 2','Engelska 6'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Utvecklare på företag',ho:'Konsult / byter bolag',sp:'Arkitekt / specialist',le:'Tech lead / CTO'}},
+{id:2,yh:true,t:'Dataanalytiker',y:3,s0:33000,s1:54700,dem:4,ai:12,stress:2,future:5,tc:8000,req:['Matematik 3','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Dataanalytiker junior',ho:'Senior analytiker / konsult',sp:'Data scientist / BI-specialist',le:'Analytics manager'}},
+{id:3,both:true,t:'IT-säkerhetsspecialist',y:3,s0:33000,s1:55000,dem:5,ai:5,stress:3,future:5,tc:8000,req:['Matematik 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Säkerhetsanalytiker',ho:'Konsult / byter organisation',sp:'Cybersecurity specialist',le:'CISO / säkerhetschef'}},
+// Ekonomi & Business
+{id:9,yh:true,t:'Redovisningsekonom',y:2,s0:30000,s1:42300,dem:4,ai:20,stress:2,future:3,tc:8000,req:['Matematik 2','Engelska 6'],rp:['Ekonomi','Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Redovisningsekonom',ho:'Konsult / byter byrå',sp:'Auktoriserad revisor',le:'Ekonomichef'}},
+{id:10,yh:true,t:'Controller',y:3,s0:33000,s1:53100,dem:4,ai:20,stress:3,future:3,tc:9000,req:['Matematik 3'],rp:['Ekonomi','Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Junior controller',ho:'Byter bransch / konsult',sp:'Senior controller',le:'CFO / ekonomichef'}},
+{id:11,yh:true,t:'Digital marknadsförare',y:2,s0:30000,s1:50800,dem:3,ai:18,stress:3,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Ekonomi','Samhäll','Estet'],pp:['Naturvetenskap','Teknik'],sc:{st:'Digital marknadsförare',ho:'Konsult / byrå',sp:'Specialist SEO/SEM/social',le:'Marknadschef'}},
+{id:12,t:'HR-specialist',y:3,s0:30000,s1:47300,dem:3,ai:12,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matematik 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
+// Vård & Hälsa
+{id:14,t:'Sjuksköterska',y:3,s0:36000,s1:42000,dem:5,ai:5,stress:4,future:5,tc:11000,req:['Matematik 2','Naturkunskap 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Leg. sjuksköterska',ho:'Byter specialitet / region',sp:'Specialistsjuksköterska',le:'Vårdenhetschef'}},
+{id:15,t:'Fysioterapeut',y:3,s0:30000,s1:39000,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Matematik 2','Naturkunskap 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Legitimerad fysioterapeut',ho:'Byter vårdgivare / privat',sp:'Specialist / idrottsfysio',le:'Verksamhetschef'}},
+{id:16,t:'Arbetsterapeut',y:3,s0:29000,s1:38500,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Matematik 2','Naturkunskap 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. arbetsterapeut',ho:'Byter region / verksamhet',sp:'Specialist / konsult',le:'Verksamhetschef'}},
+{id:17,t:'Biomedicinsk analytiker',y:3,s0:30000,s1:42900,dem:4,ai:8,stress:2,future:4,tc:10000,req:['Matematik 3','Kemi 2','Biologi 2','Fysik 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Biomedicinsk analytiker',ho:'Byter laboratorium / region',sp:'Cytodiagnostiker / specialist',le:'Laboratoriekemist / chef'}},
+{id:18,t:'Tandhygienist',y:3,s0:30000,s1:40200,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Matematik 2','Naturkunskap 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. tandhygienist',ho:'Byter klinik / region',sp:'Specialist / konsult',le:'Klinikchet / eget företag'}},
+// Samhälle & Människor
+{id:20,t:'Grundskollärare',y:3.5,s0:29000,s1:40800,dem:5,ai:5,stress:4,future:4,tc:10000,req:['Matematik 2','Samhällskunskap 1b','Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Klassrumslärare',ho:'Byter skola / kommun',sp:'Förstelärare',le:'Rektor / skolledare'}},
+{id:21,t:'Gymnasielärare',y:4.5,s0:31000,s1:42600,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Ämneslärare',ho:'Byter skola / ämne',sp:'Förstelärare',le:'Rektor / skolledare'}},
+{id:22,t:'Studie- och yrkesvägledare',y:3,s0:29000,s1:36200,dem:4,ai:5,stress:2,future:4,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Studie- och yrkesvägledare',ho:'Byter skola / sektor',sp:'Senior vägledare / specialist',le:'Verksamhetschef'}},
+// Tekniska / Praktiska
+{id:24,t:'Byggingenjör',y:3,s0:34000,s1:48000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matematik 3','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Byggingenjör',ho:'Konsult / byter projekt',sp:'Projektingenjör / specialist',le:'Projektchef / platschef'}},
+{id:25,both:true,t:'Fastighetsförvaltare',y:3,s0:34000,s1:43200,dem:4,ai:8,stress:2,future:4,tc:9000,req:['Matematik 2'],rp:['Ekonomi','Teknik','Samhäll'],pp:['Naturvetenskap'],sc:{st:'Fastighetsförvaltare',ho:'Byter bolag / region',sp:'Teknisk förvaltare / specialist',le:'Förvaltningschef / fastighetschef'}}
 ];
 const CIT={stockholm:7000,goteborg:5500,malmo:5000,uppsala:5500,linkoping:4500,lund:5500,umea:4000,orebro:4500,other:4500};
 const HOU={student:.75,shared:.85,rental:1.2,home:0};
@@ -853,77 +840,6 @@ const EDU_CONTENT = {
  alone_stats:[{val:'91%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~1 100',label:'börjar IT-säkerhet-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'26 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'41%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
  alone_summary:'IT-säkerhet är ett av de mest framtidssäkra yrkena. AI ökar hotnivån vilket driver efterfrågan ytterligare — din bakgrund inom IT är ett klart plus.'
  },
- 4: { // UX/UI-designer
- icon:'', job_tag:'God efterfrågan · Remote möjlighet',
- job_tag_style:'background:#E3EEF8;color:#2D5F8A',
- job_bullets:['Appdesign, webbdesign, UX-research, design systems','Remote-arbete vanligt — jobba var du vill','Portfolio viktigare än betyg — bygg under utbildningen','YH: 16 veckor LIA-praktik ger direkt branschkontakt'],
- stress_tag:'Låg–medel · Kreativt roligt', stress_tag_style:'background:#E3EEF8;color:#2D5F8A',
- stress_icon:'',
- stress_p:'UX-design är ett kreativt yrke med bra work-life balance. AI förändrar branschen men skapar också mer behov av kvalificerade designers.',
- stress_bullets:['Klientprojekt kan ha snäva deadlines','AI förändrar verktygslådan — höjer värdet på senior UX','Bred kompetens: research, wireframe, prototyp, test'],
- career_steps:['<strong>Junior UX-designer</strong> — 32 000 kr/mån ingång','<strong>UX-designer</strong> (2–4 år) — 38 000–44 000 kr','<strong>Senior / specialist</strong> (5+ år) — 44 000–52 000 kr','<strong>Head of Design</strong> — 52 000–60 000 kr'],
- quote:'"Switchar från marknadsföring. Kursen lärde mig att argumentera med data istället för magkänsla."',
- quote_src:'Flashback, Design & kreativt · 2023',
- alone_stats:[{val:'82%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~1 800',label:'börjar UX/UI-design-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'26 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'44%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
- alone_summary:'UX är ett av de yrken med störst andel karriärbyten. Portfolio och LIA-praktik är nyckeln — betygen spelar liten roll.'
- },
- 5: { // Civilingenjör
- icon:'', job_tag:'Hög efterfrågan · Bred marknad',
- job_tag_style:'background:#E8F5EE;color:var(--ah)',
- job_bullets:['Teknisk problemlösning inom industri, bygg, energi och IT','Bred kompetens — välj bransch efter intresse','Konsultmarknaden är stor — ofta 20–40% löneökning','5 år utbildning men bland de högsta ingångslönerna'],
- stress_tag:'Medel — kräver precision', stress_tag_style:'background:#E3EEF8;color:#2D5F8A',
- stress_icon:'',
- stress_p:'Civilingenjörer har hög autonomi och värderade tekniska kunskaper. Projektbaserat arbete kan innebära perioder av hög belastning, men yrket har generellt god balans.',
- stress_bullets:['Projekttidplaner och leveranskrav','Kräver noggrannhet — tekniska fel är kostsamma','Bred karriär — byt inriktning under karriären'],
- career_steps:['<strong>Ingenjör</strong> — 41 000 kr/mån ingång','<strong>Konsult / specialisering</strong> (2–4 år) — 50 000–58 000 kr','<strong>Senior / teknisk specialist</strong> (5+ år) — 56 000–65 000 kr','<strong>Engineering manager / CTO</strong> — 65 000–80 000 kr'],
- quote:'"Arbetade som tekniker i 8 år. Sökte civilingenjörsprogrammet vid 32. En av de bästa besluten jag tagit."',
- quote_src:'Flashback, Teknik & ingenjör · 2023',
- alone_stats:[{val:'93%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~5 400',label:'börjar civilingenjör-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'22 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'18%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
- alone_summary:'Civilingenjörsexamen öppnar dörrar i nästan alla branscher. Med erfarenhet och specialisering är det en av de mest lönsamma utbildningarna i Sverige.'
- },
- 6: { // Högskoleingenjör
- icon:'', job_tag:'God efterfrågan · Bred marknad',
- job_tag_style:'background:#E3EEF8;color:#2D5F8A',
- job_bullets:['Tekniskt arbete inom produktion, konstruktion och automation','3 år — hälften så lång tid som civilingenjör','Stark arbetsmarknad inom industri och bygg','Möjlighet att komplettera till civilingenjör senare'],
- stress_tag:'Medel — praktiskt fokus', stress_tag_style:'background:#E3EEF8;color:#2D5F8A',
- stress_icon:'',
- stress_p:'Högskoleingenjörer arbetar nära produktionen och tekniska lösningar. Praktiskt orienterat med tydliga mål och leveranser.',
- stress_bullets:['Projekttidplaner och leveranskrav','Nära samarbete med produktion och leverantörer','God balans — mer sällan övertid än civilingenjörer'],
- career_steps:['<strong>Ingenjör</strong> — 38 800 kr/mån ingång','<strong>Konsult / specialisering</strong> (2–3 år) — 42 000–46 000 kr','<strong>Senior ingenjör</strong> (4+ år) — 44 000–50 000 kr','<strong>Teamlead / projektledare</strong> — 48 000–55 000 kr'],
- quote:'"Bytte från lager till högskoleingenjör vid 29. Lönen ökade med 70% och jobbet är mycket mer stimulerande."',
- quote_src:'LinkedIn, karriärbyte · 2023',
- alone_stats:[{val:'90%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~4 100',label:'börjar högskoleingenjör-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'24 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'26%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
- alone_summary:'Högskoleingenjör är den snabbaste vägen till teknisk karriär. Tre år med god lön och stark jobbmarknad direkt efteråt.'
- },
- 7: { // DevOps / Cloud engineer
- icon:'', job_tag:'Akut brist · Högt betalt',
- job_tag_style:'background:#E8F5EE;color:var(--ah)',
- job_bullets:['Bygga och driftsätta molninfrastruktur och CI/CD-pipelines','Akut brist — alla techbolag söker DevOps-kompetens','Remote-arbete är standard i branschen','Lön stiger snabbt — konsultuttag bland de högsta i IT'],
- stress_tag:'Medel — hög beredskap', stress_tag_style:'background:#FDF4E3;color:var(--wa)',
- stress_icon:'',
- stress_p:'DevOps kombinerar utveckling och drift. Incidenthantering kan kräva kvällsarbete, men automation minskar brandsläckning över tid.',
- stress_bullets:['On-call-beredskap förekommer','Kräver ständig uppdatering om molntjänster','Hög efterfrågan ger god förhandlingsposition'],
- career_steps:['<strong>DevOps-ingenjör</strong> — 35 000 kr/mån ingång','<strong>Senior DevOps / konsult</strong> (2–4 år) — 45 000–55 000 kr','<strong>Cloud architect / SRE</strong> (5+ år) — 52 000–65 000 kr','<strong>Platform engineering lead</strong> — 60 000–75 000 kr'],
- quote:'"Var systemadministratör. Läste DevOps på distans på 2 år. Fick jobb på Spotify månaden efter."',
- quote_src:'LinkedIn, IT-karriär · 2024',
- alone_stats:[{val:'90%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~2 200',label:'börjar DevOps/Cloud-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'26 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'42%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
- alone_summary:'DevOps och cloud är de hetaste kompetenerna i IT just nu. Bakgrund inom IT-drift, nätverk eller systemadmin ger ett stort försprång.'
- },
- // Ekonomi & Business 
- 8: { // Civilekonom
- icon:'', job_tag:'Bred marknad · Ledarskapsväg',
- job_tag_style:'background:#E3EEF8;color:#2D5F8A',
- job_bullets:['Ekonomi, finans, marknadsföring eller management','4 år — ett av de bredaste examensprogrammen','Stark varumärke — öppnar dörrar till management','Konsultvägen vanlig: McKinsey, Deloitte, PWC'],
- stress_tag:'Medel — prestationsorienterat', stress_tag_style:'background:#FDF4E3;color:var(--wa)',
- stress_icon:'',
- stress_p:'Civilekonom-utbildningar är krävande med hög ambitionsnivå. Arbetslivet varierar mycket — konsultvägen är intensiv, controlling mer balanserad.',
- stress_bullets:['Konkurrenskraftig studiemiljö','Konsultbranschen har hög arbetsbelastning','Möjligheter till internationell karriär'],
- career_steps:['<strong>Trainee / ekonom</strong> — 34 000 kr/mån ingång','<strong>Senior ekonom / analytiker</strong> (3–5 år) — 44 000–52 000 kr','<strong>Manager / finansanalytiker</strong> (5+ år) — 52 000–62 000 kr','<strong>CFO / VD</strong> — 65 000–100 000 kr'],
- quote:'"Arbetade i detaljhandel i 7 år. Sökte civilekonomprogrammet vid 31. Fick management-trainee på H&M direkt."',
- quote_src:'LinkedIn, karriärbyte · 2023',
- alone_stats:[{val:'91%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~3 400',label:'börjar civilekonom-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'22 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'17%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
- alone_summary:'Civilekonom är en av Sveriges mest respekterade examina. Utbildningen ger hög lön, ledarskapsmöjligheter och en bred arbetsmarknad.'
- },
  9: { // Redovisningsekonom
  icon:'', job_tag:'Stabil marknad · Alltid behövd',
  job_tag_style:'background:#E3EEF8;color:#2D5F8A',
@@ -980,21 +896,7 @@ const EDU_CONTENT = {
  alone_stats:[{val:'88%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~2 100',label:'börjar HR-specialist-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'26 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'40%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
  alone_summary:'HR är ett naturligt karriärval för dig med erfarenhet av människor, service eller ledarskap. Din bakgrund är ett konkret plus i rekryteringssituationer.'
  },
- 13: { // Projektledare
- icon:'', job_tag:'Bred marknad · Ledarskapsroll',
- job_tag_style:'background:#E3EEF8;color:#2D5F8A',
- job_bullets:['Driva projekt inom IT, bygg, industri, offentlig sektor','Alla branscher behöver strukturerade projektledare','PMP-certifiering ger 15–25% lönepåslag','Kombination av planering, kommunikation och ledarskap'],
- stress_tag:'Medel–hög · Ansvarsfyllt', stress_tag_style:'background:#FDF4E3;color:var(--wa)',
- stress_icon:'',
- stress_p:'Projektledning innebär ansvar för budget, tid och leverans. Avvikelser skapar press, men strukturerat arbete och tydlig kommunikation reducerar stress markant.',
- stress_bullets:['Budget- och tidpress är vardagsmat','Kräver förmåga att hantera konflikter och prioriteringar','Hög variation — sällan samma projekt två gånger'],
- career_steps:['<strong>Projektkoordinator</strong> — 33 000 kr/mån ingång','<strong>Projektledare</strong> (2–4 år) — 40 000–48 000 kr','<strong>Senior / PMP-certifierad</strong> (5+ år) — 48 000–56 000 kr','<strong>Programchef / affärsutvecklare</strong> — 55 000–68 000 kr'],
- quote:'"Gick från montör till projektledare via en högskoleutbildning. Min praktiska erfarenhet är guld i rollen."',
- quote_src:'LinkedIn, karriärbyte · 2023',
- alone_stats:[{val:'87%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~2 600',label:'börjar projektledare-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'27 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'43%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
- alone_summary:'Projektledare är en av de mest branschoberoende rollerna. Praktisk erfarenhet kombinerat med en utbildning är en stark kombination.'
- },
- // Vård & Hälsa 
+ // Vård & Hälsa
  14: { // Sjuksköterska
  icon:'', job_tag:'Akut brist · Hög trygghet',
  job_tag_style:'background:#E8F5EE;color:var(--ah)',
@@ -1065,21 +967,7 @@ const EDU_CONTENT = {
  alone_stats:[{val:'97%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~600',label:'börjar tandhygienist-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'25 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'30%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
  alone_summary:'Tandhygienist är ett av de mest stabila vårdyrkena. Kort utbildning, bra arbetstider och möjlighet att driva eget är starka skäl.'
  },
- // Samhälle & Människor 
- 19: { // Socionom
- icon:'', job_tag:'Hög efterfrågan · Meningsfullt',
- job_tag_style:'background:#E8F5EE;color:var(--ah)',
- job_bullets:['Myndighetsutövning, socialt arbete, missbruksvård, familjestöd','Hög efterfrågan i hela Sverige — kommuner söker aktivt','Möjlighet till specialisering inom familjerätt eller socialtjänst','3,5 år med unik möjlighet att göra skillnad'],
- stress_tag:'Hög — emotionellt krävande', stress_tag_style:'background:#FDF4E3;color:var(--wa)',
- stress_icon:'',
- stress_p:'Socionomer möter ofta människor i svåra situationer. Emotionell belastning och hög ärendemängd är vanligt inom socialtjänsten — men meningsfullheten är hög.',
- stress_bullets:['Emotionellt tungt — utsatta barn och familjer','Hög ärendebelastning i kommunerna','Handledning och stöd finns — men varierar'],
- career_steps:['<strong>Socialsekreterare</strong> — 32 000 kr/mån ingång','<strong>Erfaren socionom</strong> (3–5 år) — 35 000–40 000 kr','<strong>Specialist familjerätt / missbruk</strong> — 38 000–44 000 kr','<strong>Enhetschef</strong> — 44 000–54 000 kr'],
- quote:'"Jobbade som barnskötare. Sökte socionomutbildningen vid 29. Nu arbetar jag med familjerättsliga ärenden i Göteborg."',
- quote_src:'Flashback, Socialt arbete · 2023',
- alone_stats:[{val:'94%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~2 700',label:'börjar socionom-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'28 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'42%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
- alone_summary:'Socionom är ett av de mest meningsfulla yrkena — och ett av de mest eftertraktade. Bakgrund i omsorg, pedagogik eller service ger ett klart försprång.'
- },
+ // Samhälle & Människor
  20: { // Grundskollärare
  icon:'', job_tag:'Akut lärarbrist · Hög trygghet',
  job_tag_style:'background:#E8F5EE;color:var(--ah)',
@@ -1122,21 +1010,7 @@ const EDU_CONTENT = {
  alone_stats:[{val:'91%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~1 100',label:'börjar studie- och yrkesvägledning-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'28 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'44%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
  alone_summary:'SYV är ett yrke där din erfarenhet av karriärbyten är din starkaste merit. Du har gjort det själv — nu kan du hjälpa andra.'
  },
- 23: { // Personalvetare
- icon:'', job_tag:'Bred marknad · Organisationsnära',
- job_tag_style:'background:#E3EEF8;color:#2D5F8A',
- job_bullets:['HR, rekrytering, arbetsrätt och organisationsutveckling','Alla medelstora organisationer har personalfunktion','Bred utbildning — välj specialisering efter examen','Kombination av juridik, psykologi och ledarskap'],
- stress_tag:'Medel — relationsintensivt', stress_tag_style:'background:#FDF4E3;color:var(--wa)',
- stress_icon:'',
- stress_p:'Personalvetare arbetar nära organisation och ledning. Konflikter och omorganisationer kan vara stressande, men vardagen är i regel strukturerad.',
- stress_bullets:['Svåra samtal — omorganisationer och varsel','Kräver god förmåga att hålla konfidentialitet','Strategisk roll nära ledning ger synlighet'],
- career_steps:['<strong>HR-koordinator</strong> — 29 000 kr/mån ingång','<strong>HR-specialist</strong> (2–4 år) — 34 000–40 000 kr','<strong>HR Business Partner</strong> (5+ år) — 40 000–46 000 kr','<strong>HR-chef</strong> — 46 000–58 000 kr'],
- quote:'"Jobbade i kundtjänst. Läste personalvetenskap och är nu HR BP på ett globalt bolag."',
- quote_src:'LinkedIn, HR-karriär · 2023',
- alone_stats:[{val:'88%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~1 800',label:'börjar personalvetenskap-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'26 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'40%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
- alone_summary:'Personalvetenskap är en bred utbildning som ger tillträde till HR-rollen i alla typer av organisationer. Din bakgrund i människonära arbete är ett klart plus.'
- },
- // Tekniska / Praktiska 
+ // Tekniska / Praktiska
  24: { // Byggingenjör
  icon:'', job_tag:'Hög efterfrågan · Konkret arbete',
  job_tag_style:'background:#E3EEF8;color:#2D5F8A',
@@ -1165,63 +1039,6 @@ const EDU_CONTENT = {
  alone_stats:[{val:'89%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~1 400',label:'börjar fastighetsförvaltning-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'27 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'38%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
  alone_summary:'Fastighetsförvaltning passar dig som vill kombinera teknik, ekonomi och kundkontakt. Praktisk bakgrund inom bygg, service eller ekonomi ger ett klart försprång.'
  },
- 26: { // VVS-ingenjör
- icon:'', job_tag:'God efterfrågan · Samhällsviktig',
- job_tag_style:'background:#E3EEF8;color:#2D5F8A',
- job_bullets:['Projektera och konstruera värme-, ventilations- och VA-system','Samhällsviktig kompetens — alla byggnader behöver VVS','Möjlighet till konsultbolag med bra lön','Hållbarhetsfokus ökar med energiomställning och klimatkrav'],
- stress_tag:'Medel — projektbaserat', stress_tag_style:'background:#E3EEF8;color:#2D5F8A',
- stress_icon:'',
- stress_p:'VVS-ingenjör är ett strukturerat yrke med tydliga tekniska mål. Projektbaserat arbete ger variation, och kompetensen är samhällskritisk.',
- stress_bullets:['Projekttidplaner och leveranskrav','Kräver teknisk precision — installationer ska fungera länge','Hållbarhetsaspekter driver ständig kompetensutveckling'],
- career_steps:['<strong>VVS-konstruktör</strong> — 33 000 kr/mån ingång','<strong>Konsult / senior</strong> (2–4 år) — 38 000–44 000 kr','<strong>Senior ingenjör / specialist</strong> (5+ år) — 43 000–50 000 kr','<strong>Projektchef / avdelningschef</strong> — 48 000–58 000 kr'],
- quote:'"Var rörinstallatör. Läste VVS-ingenjör och dubblerade lönen. Nu projektleder jag miljonprojekt."',
- quote_src:'VVS Forum, karriärberättelse · 2023',
- alone_stats:[{val:'91%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~900',label:'börjar VVS-ingenjör-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'26 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'35%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
- alone_summary:'VVS-ingenjör passar perfekt för dig med bakgrund inom rörmokeri, installation eller bygg. Din praktiska erfarenhet är direkt värdefull.'
- },
- 27: { // Automationsingenjör
- icon:'', job_tag:'Akut brist · Framtidssäkert',
- job_tag_style:'background:#E8F5EE;color:var(--ah)',
- job_bullets:['Programmera och driftsätta industrirobotar och styrsystem','Akut kompetensbrist i svensk industri','Arbeta med Volvo, SKF, ABB och exportindustrin','En av de mest framtidssäkra ingenjörskompetenserna'],
- stress_tag:'Medel — tekniskt krävande', stress_tag_style:'background:#E3EEF8;color:#2D5F8A',
- stress_icon:'',
- stress_p:'Automationsingenjörer arbetar med avancerade system i industrimiljö. Felsökning och driftsättning kan vara intensivt, men vardagen är strukturerad och analytisk.',
- stress_bullets:['Produktionsstopp kräver snabb felsökning','Nattarbete kan förekomma vid driftsättning','Hög teknisk stimulans — löser komplexa problem'],
- career_steps:['<strong>Automationsingenjör</strong> — 34 000 kr/mån ingång','<strong>Konsult / senior</strong> (2–4 år) — 40 000–48 000 kr','<strong>Senior ingenjör / specialist</strong> (5+ år) — 46 000–54 000 kr','<strong>Automationschef / projektledare</strong> — 52 000–64 000 kr'],
- quote:'"Var CNC-operatör. Läste automation och fick jobb på ABB direkt. Lönen tredubblades på 5 år."',
- quote_src:'Automation Region, karriärberättelse · 2023',
- alone_stats:[{val:'92%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~1 100',label:'börjar automationsteknik-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'25 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'32%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
- alone_summary:'Automationsingenjör är en av de mest eftertraktade kompetenserna i svensk industri. Din praktiska erfarenhet från industri eller teknik är ett enormt plus.'
- },
- // Övriga 
- 28: { // Kriminolog
- icon:'', job_tag:'Meningsfullt · Samhällsorienterat',
- job_tag_style:'background:#E3EEF8;color:#2D5F8A',
- job_bullets:['Brottsprevention, utredning, kriminalvård och forskning','Arbete inom polis, socialtjänst, kriminalvård och akademi','Akademisk utbildning som ger analytisk kompetens','Kombination av juridik, sociologi och psykologi'],
- stress_tag:'Medel — meningsfullt men tungt', stress_tag_style:'background:#FDF4E3;color:var(--wa)',
- stress_icon:'',
- stress_p:'Kriminologer möter samhällets skuggsida — brottslighet och utsatta grupper. Meningsfullt men emotionellt krävande, särskilt inom kriminalvård och socialtjänst.',
- stress_bullets:['Möter utsatta och ibland farliga individer','Administrativt arbete vid myndigheter','Akademisk konkurrens vid forskning och utredning'],
- career_steps:['<strong>Utredare / handläggare</strong> — 28 000 kr/mån ingång','<strong>Senior utredare</strong> (3–5 år) — 33 000–38 000 kr','<strong>Specialist brottsprevention</strong> (5+ år) — 37 000–43 000 kr','<strong>Enhetschef / verksamhetschef</strong> — 42 000–52 000 kr'],
- quote:'"Jobbade inom socialtjänst. Läste kriminologi och arbetar nu med brottsprevention på kommunen."',
- quote_src:'LinkedIn, samhällskarriär · 2024',
- alone_stats:[{val:'83%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~1 600',label:'börjar kriminologi-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'27 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'45%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
- alone_summary:'Kriminologi ger en unik kombination av juridik, sociologi och psykologi. Passar dig med intresse för samhällsproblem och analytiskt tänkande.'
- },
- 29: { // Beteendevetare
- icon:'', job_tag:'Bred kompetens · Mänsklig insikt',
- job_tag_style:'background:#E3EEF8;color:#2D5F8A',
- job_bullets:['Psykologi, sociologi och organisationsbeteende i praktiken','Arbete inom HR, konsultbolag, forskning och offentlig sektor','Bred utbildning öppnar många dörrar','Hög lönepotential i konsult och ledarroller'],
- stress_tag:'Medel — analytiskt och socialt', stress_tag_style:'background:#E3EEF8;color:#2D5F8A',
- stress_icon:'',
- stress_p:'Beteendevetare arbetar med mänskliga faktorer i organisationer och samhälle. Varierat arbete med god balans i de flesta roller.',
- stress_bullets:['Bred utbildning kräver tydlig profilering','Konsultrollen kan vara intensiv','Hög variation — aldrig samma dag två gånger'],
- career_steps:['<strong>Utredare / konsulent</strong> — 28 000 kr/mån ingång','<strong>Specialist / konsult</strong> (3–5 år) — 38 000–50 000 kr','<strong>Senior konsult / HR-specialist</strong> (5+ år) — 50 000–60 000 kr','<strong>Enhetschef / konsultchef</strong> — 55 000–68 000 kr'],
- quote:'"Jobbade i vård. Läste beteendevetenskap och arbetar nu som organisationskonsult med topp-lön."',
- quote_src:'LinkedIn, karriärbyte · 2024',
- alone_stats:[{val:'82%',label:'fick jobb inom 1 år efter examen',bg:'var(--al)',col:'var(--ah)'},{val:'~2 200',label:'börjar beteendevetenskap-utbildning varje år',bg:'var(--al)',col:'var(--ah)'},{val:'26 år',label:'medelålder för nybörjare',bg:'var(--bll)',col:'var(--bl)'},{val:'43%',label:'av nybörjarna är 25–34 år',bg:'var(--bll)',col:'var(--bl)'}],
- alone_summary:'Beteendevetare med rätt profilering kan nå höga löner i konsult- och ledarroller. Din bakgrund i mänskligt arbete är direkt relevant.'
- }
 };
 // Concern card data 
 function getConcernCard(biggest_concern, salDiff, age, eduName) {
@@ -1378,32 +1195,20 @@ function buildFP(name) {
    1:  {slug:'systemutvecklare-utbildning', c:'c3583', cp:'systemutvecklare', city:true},
    2:  {q:'Dataanalytiker'},
    3:  {q:'IT-s%C3%A4kerhetsspecialist'},
-   4:  {q:'UX%2FUI-designer'},
-   5:  {slug:'civilingenjor-utbildningar'},
-   6:  {slug:'hogskoleingenjorsutbildning'},
-   7:  {q:'devops'},
-   8:  {slug:'civilekonomprogrammet'},
    9:  {slug:'utbildning-redovisningsekonom'},
    10: {q:'Controller'},
    11: {q:'Digital+marknadsf%C3%B6rare'},
    12: {q:'HR-specialist'},
-   13: {q:'Projektledare'},
    14: {slug:'sjukskoterskeutbildning', c:'c910', cp:'sjukskoterska', city:true},
    15: {slug:'fysioterapeut'},
    16: {slug:'arbetsterapeututbildning'},
    17: {slug:'biomedicinsk-analytiker-utbildningar'},
    18: {slug:'tandhygienistutbildning'},
-   19: {slug:'socionomutbildningar'},
    20: {q:'Grundskoll%C3%A4rare'},
    21: {q:'Gymnasiel%C3%A4rare'},
    22: {q:'Studie-+och+yrkesv%C3%A4gledare'},
-   23: {slug:'personalvetare-utbildningar'},
    24: {q:'Byggingenj%C3%B6r'},
    25: {slug:'fastighetsforvaltarutbildning'},
-   26: {slug:'vvs-ingenjor'},
-   27: {slug:'automationsingenjor'},
-   28: {q:'Kriminolog'},
-   29: {slug:'beteendevetare/c6713'},
  };
 
  // Stad → slug-del + d-kod (bekräftade kombinationer)
