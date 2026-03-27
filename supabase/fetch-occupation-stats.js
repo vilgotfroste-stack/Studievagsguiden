@@ -84,31 +84,67 @@ function sleep(ms) {
 }
 
 /**
+ * Hämtar metadata från SCB-tabellen för att få korrekta variabelkoder och värden.
+ * Returnerar { ssykVar, ssykValues, sektorVar, sektorValues, tidValues }
+ */
+async function fetchSCBMetadata() {
+  const res = await fetch(SCB_URL, {
+    method: 'GET',
+    headers: { 'Accept': 'application/json' },
+    signal: AbortSignal.timeout(15_000),
+  });
+  if (!res.ok) throw new Error(`Metadata fetch failed: ${res.status}`);
+  const meta = await res.json();
+
+  console.log('SCB-tabellens variabler:');
+  for (const v of meta.variables) {
+    console.log(`  code="${v.code}" text="${v.text}" values=[${v.values.slice(0,5).join(',')}${v.values.length > 5 ? '...' : ''}]`);
+  }
+  console.log('');
+
+  return meta.variables;
+}
+
+/**
  * Hämtar lönedata från SCB för en SSYK-kod.
  * Returnerar { monthly_salary, median_salary, p25_salary, p75_salary } eller null vid fel.
  */
-async function fetchSCBSalary(ssykCode) {
+async function fetchSCBSalary(ssykCode, variables) {
+  // Hitta variabelkoderna dynamiskt från metadata
+  const ssykVar    = variables.find(v => v.values.includes(ssykCode));
+  const tidVar     = variables.find(v => v.code === 'Tid' || v.code === 'tid' || v.text.toLowerCase().includes('år'));
+  const sektorVar  = variables.find(v => v.code.toLowerCase().includes('sektor') || v.text.toLowerCase().includes('sektor'));
+  const contentVar = variables.find(v => v.code === 'ContentsCode');
+
+  if (!ssykVar) {
+    console.error(`  Hittar ingen variabel med värdet ${ssykCode} i metadata`);
+    return null;
+  }
+
+  // Hitta senaste tillgängliga år
+  const latestYear = tidVar ? tidVar.values[tidVar.values.length - 1] : STAT_YEAR;
+
+  // Hitta "samtliga sektorer" — oftast första värdet eller det med lägst kod
+  const sektorValue = sektorVar ? sektorVar.values[0] : null;
+
   const query = {
     query: [
       {
-        code: 'Ssyk4',
+        code: ssykVar.code,
         selection: { filter: 'item', values: [ssykCode] },
       },
-      {
-        code: 'Sektor',
-        selection: { filter: 'item', values: ['0'] },  // 0 = samtliga sektorer
-      },
-      {
-        code: 'ContentsCode',
-        selection: {
-          filter: 'item',
-          values: Object.values(SCB_CONTENTS),
-        },
-      },
-      {
-        code: 'Tid',
-        selection: { filter: 'item', values: [STAT_YEAR] },
-      },
+      ...(sektorVar && sektorValue ? [{
+        code: sektorVar.code,
+        selection: { filter: 'item', values: [sektorValue] },
+      }] : []),
+      ...(contentVar ? [{
+        code: contentVar.code,
+        selection: { filter: 'item', values: Object.values(SCB_CONTENTS) },
+      }] : []),
+      ...(tidVar ? [{
+        code: tidVar.code,
+        selection: { filter: 'item', values: [latestYear] },
+      }] : []),
     ],
     response: { format: 'json' },
   };
@@ -183,6 +219,9 @@ async function main() {
   console.log(`Hämtar lönedata från SCB för ${OCCUPATION_MAP.length} yrken (år ${STAT_YEAR})...`);
   console.log('');
 
+  // Hämta metadata för att få korrekta variabelkoder
+  const variables = await fetchSCBMetadata();
+
   // Samla unika SSYK-koder för att minimera API-anrop
   // (t.ex. id 19 och 22 delar SSYK 2635 — hämtas bara en gång)
   const ssykCache = new Map();
@@ -198,7 +237,7 @@ async function main() {
       salaryData = ssykCache.get(occ.ssyk);
       process.stdout.write('(cache) ');
     } else {
-      salaryData = await fetchSCBSalary(occ.ssyk);
+      salaryData = await fetchSCBSalary(occ.ssyk, variables);
       ssykCache.set(occ.ssyk, salaryData);
       await sleep(300);  // var snäll mot SCB:s API
     }
