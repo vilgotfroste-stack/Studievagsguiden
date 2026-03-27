@@ -185,7 +185,7 @@ async function fetchSCBSalary(ssykCode, variables) {
  * Upsert en rad i occupation_stats via Supabase REST API.
  */
 async function upsertToSupabase(row) {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/occupation_stats`, {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/occupation_stats?on_conflict=occupation_id`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
