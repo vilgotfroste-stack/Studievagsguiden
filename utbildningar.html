@@ -266,7 +266,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 //   sig      'dem'|'stress'|'flex'|'fast'  — kortest ONE signal
 // ══════════════════════════════════════════════════════
 // Slug-mappning
-const SLUGS={1:'systemutvecklare',2:'dataanalytiker',3:'it-sakerhetsspecialist',9:'redovisningsekonom',10:'controller',11:'digital-marknadsforre',12:'hr-specialist',14:'sjukskoterska',15:'fysioterapeut',16:'arbetsterapeut',17:'biomedicinsk-analytiker',18:'tandhygienist',20:'grundskollarare',21:'gymnasielarare',22:'studie-yrkesvagledare',24:'byggingenjor',25:'fastighetsforvaltare'};
+const SLUGS={1:'systemutvecklare',2:'dataanalytiker',3:'it-sakerhetsspecialist',9:'redovisningsekonom',10:'controller',11:'digital-marknadsforre',12:'hr-specialist',14:'sjukskoterska',16:'arbetsterapeut',17:'biomedicinsk-analytiker',18:'tandhygienist',20:'grundskollarare',21:'gymnasielarare',22:'studie-yrkesvagledare',24:'byggingenjor',25:'fastighetsforvaltare'};
 
 const E=[
 {id:1, both:true, t:'Systemutvecklare',          y:3,  s0:35000,s1:52500,dem:4,ai:15,stress:2,future:4,tc:8000, flex:5,people:2,practical:3,sig:'flex',  req:['Matte 2','Engelska 6'],                              rp:['Naturvetenskap','Teknik'],              pp:['Samhäll','Ekonomi'],         sc:{st:'Utvecklare på företag',ho:'Konsult / byter bolag',sp:'Arkitekt / specialist',le:'Tech lead / CTO'}},
@@ -277,7 +277,6 @@ const E=[
 {id:11,yh:true,   t:'Digital marknadsförare',    y:2,  s0:30000,s1:50800,dem:3,ai:18,stress:3,future:3,tc:8000, flex:4,people:3,practical:3,sig:'flex',  req:['Grundläggande behörighet'],                          rp:['Ekonomi','Samhäll','Estet'],            pp:['Naturvetenskap','Teknik'],    sc:{st:'Digital marknadsförare',ho:'Konsult / byrå',sp:'Specialist SEO/SEM/social',le:'Marknadschef'}},
 {id:12,           t:'HR-specialist',             y:3,  s0:30000,s1:47300,dem:3,ai:12,stress:3,future:3,tc:9000, flex:3,people:4,practical:3,sig:'stress',req:['Samhällskunskap 1b','Matte 2'],                      rp:['Samhäll','Ekonomi'],                    pp:['Naturvetenskap','Teknik'],    sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
 {id:14,           t:'Sjuksköterska',             y:3,  s0:32000,s1:42000,dem:5,ai:5, stress:4,future:5,tc:11000,flex:1,people:5,practical:5,sig:'dem',   req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],     rp:['Naturvetenskap','Teknik'],              pp:['Samhäll','Ekonomi'],         sc:{st:'Leg. sjuksköterska',ho:'Byter specialitet / region',sp:'Specialistsjuksköterska',le:'Vårdenhetschef'}},
-{id:15,           t:'Fysioterapeut',             y:3,  s0:30000,s1:39000,dem:4,ai:5, stress:3,future:4,tc:10000,flex:2,people:5,practical:5,sig:'dem',   req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],     rp:['Naturvetenskap','Vård'],                pp:['Teknik','Ekonomi'],           sc:{st:'Legitimerad fysioterapeut',ho:'Byter vårdgivare / privat',sp:'Specialist / idrottsfysio',le:'Verksamhetschef'}},
 {id:16,           t:'Arbetsterapeut',            y:3,  s0:29000,s1:38500,dem:4,ai:5, stress:3,future:4,tc:10000,flex:2,people:5,practical:5,sig:'dem',   req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],     rp:['Naturvetenskap','Vård'],                pp:['Teknik','Ekonomi'],           sc:{st:'Leg. arbetsterapeut',ho:'Byter region / verksamhet',sp:'Specialist / konsult',le:'Verksamhetschef'}},
 {id:17,           t:'Biomedicinsk analytiker',   y:3,  s0:30000,s1:42900,dem:4,ai:8, stress:2,future:4,tc:10000,flex:1,people:2,practical:4,sig:'stress',req:['Naturkunskap 2','Matte 2','Kemi 1'],                 rp:['Naturvetenskap','Teknik'],              pp:['Samhäll','Ekonomi'],         sc:{st:'Biomedicinsk analytiker',ho:'Byter laboratorium / region',sp:'Cytodiagnostiker / specialist',le:'Laboratoriekemist / chef'}},
 {id:18,           t:'Tandhygienist',             y:3,  s0:30000,s1:40200,dem:4,ai:5, stress:3,future:4,tc:10000,flex:2,people:4,practical:5,sig:'dem',   req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],     rp:['Naturvetenskap','Vård'],                pp:['Teknik','Ekonomi'],           sc:{st:'Leg. tandhygienist',ho:'Byter klinik / region',sp:'Specialist / konsult',le:'Klinikchef / eget företag'}},
@@ -289,7 +288,6 @@ const E=[
 ];
 
 // SCB 2024 lönedata (median_salary, p25_salary, p75_salary) — källa: SCB PxWeb via Supabase
-// Fysioterapeut (id15): uppskattning — SCB saknar data för SSYK 2271
 const SALD={
   1:{p25:45200,med:52500,p75:62000},
   2:{p25:45600,med:54700,p75:64700},
@@ -299,7 +297,6 @@ const SALD={
   11:{p25:41800,med:50800,p75:63600},
   12:{p25:41000,med:47300,p75:55000},
   14:{p25:37400,med:42000,p75:47600},
-  15:{p25:33000,med:39000,p75:47000},
   16:{p25:35000,med:38500,p75:42200},
   17:{p25:39700,med:42900,p75:47600},
   18:{p25:36000,med:40200,p75:44900},
