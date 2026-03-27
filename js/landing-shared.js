@@ -7,84 +7,55 @@
 
 const E=[
 // ── IT & Teknik ──
-{id:1,t:'Systemutvecklare',y:3,s0:35000,s1:54900,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matte 2','Engelska 6'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Utvecklare på företag',ho:'Konsult / byter bolag',sp:'Arkitekt / specialist',le:'Tech lead / CTO'}},
-{id:2,t:'Dataanalytiker',y:3,s0:33000,s1:54500,dem:4,ai:12,stress:2,future:5,tc:8000,req:['Matte 3c','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Dataanalytiker junior',ho:'Senior analytiker / konsult',sp:'Data scientist / BI-specialist',le:'Analytics manager'}},
-{id:3,t:'IT-säkerhetsspecialist',y:3,s0:33000,s1:52600,dem:5,ai:5,stress:3,future:5,tc:8000,req:['Matte 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Säkerhetsanalytiker',ho:'Konsult / byter organisation',sp:'Cybersecurity specialist',le:'CISO / säkerhetschef'}},
-{id:4,t:'UX/UI-designer',y:2,s0:32000,s1:48000,dem:3,ai:22,stress:2,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik','Estet'],pp:[],sc:{st:'Junior UX-designer',ho:'Byter bolag / konsult',sp:'Lead designer / UX-researcher',le:'Design manager'}},
-{id:5,t:'Civilingenjör',y:5,s0:41000,s1:56200,dem:4,ai:18,stress:2,future:5,tc:8000,req:['Matte 4','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:[],sc:{st:'Ingenjör på företag',ho:'Konsult / byter bransch',sp:'Teknisk specialist',le:'Engineering manager'}},
-{id:6,t:'Högskoleingenjör',y:3,s0:38800,s1:45600,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matte 3c','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:[],sc:{st:'Ingenjör junior',ho:'Konsult / byter bransch',sp:'Senior ingenjör',le:'Projektledare / teamlead'}},
-{id:7,t:'DevOps / Cloud engineer',y:2,s0:35000,s1:52000,dem:5,ai:10,stress:2,future:5,tc:8000,req:['Grundläggande behörighet'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'DevOps-ingenjör junior',ho:'Konsult / byter bolag',sp:'Cloud architect / SRE',le:'Platform engineering lead'}},
+{id:1,t:'Systemutvecklare',y:3,s0:35000,s1:52500,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matte 2','Engelska 6'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Utvecklare på företag',ho:'Konsult / byter bolag',sp:'Arkitekt / specialist',le:'Tech lead / CTO'}},
+{id:2,t:'Dataanalytiker',y:3,s0:33000,s1:54700,dem:4,ai:12,stress:2,future:5,tc:8000,req:['Matte 3c','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Dataanalytiker junior',ho:'Senior analytiker / konsult',sp:'Data scientist / BI-specialist',le:'Analytics manager'}},
+{id:3,t:'IT-säkerhetsspecialist',y:3,s0:33000,s1:55000,dem:5,ai:5,stress:3,future:5,tc:8000,req:['Matte 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Säkerhetsanalytiker',ho:'Konsult / byter organisation',sp:'Cybersecurity specialist',le:'CISO / säkerhetschef'}},
 // ── Ekonomi & Business ──
-{id:8,t:'Civilekonom',y:4,s0:34000,s1:54000,dem:3,ai:25,stress:3,future:3,tc:9000,req:['Matte 3c','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Controller / ekonom',ho:'Konsult / byter bransch',sp:'Finansanalytiker',le:'CFO / VD'}},
-{id:9,t:'Redovisningsekonom',y:2,s0:30000,s1:44300,dem:4,ai:20,stress:2,future:3,tc:8000,req:['Matte 2','Engelska 6'],rp:['Ekonomi','Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Redovisningsekonom',ho:'Konsult / byter byrå',sp:'Auktoriserad revisor',le:'Ekonomichef'}},
-{id:10,t:'Controller',y:3,s0:33000,s1:48200,dem:4,ai:20,stress:3,future:3,tc:9000,req:['Matte 3c','Engelska 6'],rp:['Ekonomi','Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Junior controller',ho:'Byter bransch / konsult',sp:'Senior controller',le:'CFO / ekonomichef'}},
-{id:11,t:'Digital marknadsförare',y:2,s0:30000,s1:43000,dem:3,ai:18,stress:3,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Ekonomi','Samhäll','Estet'],pp:['Naturvetenskap','Teknik'],sc:{st:'Digital marknadsförare',ho:'Konsult / byrå',sp:'Specialist SEO/SEM/social',le:'Marknadschef'}},
-{id:12,t:'HR-specialist',y:3,s0:30000,s1:42000,dem:3,ai:12,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matte 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
-{id:13,t:'Projektledare',y:3,s0:33000,s1:49000,dem:4,ai:10,stress:3,future:4,tc:9000,req:['Grundläggande behörighet'],rp:['Ekonomi','Teknik','Samhäll','Naturvetenskap'],pp:['Estet'],sc:{st:'Projektkoordinator',ho:'Byter bransch / konsult',sp:'Senior projektledare / PMP',le:'Programchef / affärsutvecklare'}},
+{id:9,t:'Redovisningsekonom',y:2,s0:30000,s1:42300,dem:4,ai:20,stress:2,future:3,tc:8000,req:['Matte 2','Engelska 6'],rp:['Ekonomi','Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Redovisningsekonom',ho:'Konsult / byter byrå',sp:'Auktoriserad revisor',le:'Ekonomichef'}},
+{id:10,t:'Controller',y:3,s0:33000,s1:53100,dem:4,ai:20,stress:3,future:3,tc:9000,req:['Matte 3c','Engelska 6'],rp:['Ekonomi','Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Junior controller',ho:'Byter bransch / konsult',sp:'Senior controller',le:'CFO / ekonomichef'}},
+{id:11,t:'Digital marknadsförare',y:2,s0:30000,s1:50800,dem:3,ai:18,stress:3,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Ekonomi','Samhäll','Estet'],pp:['Naturvetenskap','Teknik'],sc:{st:'Digital marknadsförare',ho:'Konsult / byrå',sp:'Specialist SEO/SEM/social',le:'Marknadschef'}},
+{id:12,t:'HR-specialist',y:3,s0:30000,s1:47300,dem:3,ai:12,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matte 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
 // ── Vård & Hälsa ──
-{id:14,t:'Sjuksköterska',y:3,s0:32000,s1:43900,dem:5,ai:5,stress:4,future:5,tc:11000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Leg. sjuksköterska',ho:'Byter specialitet / region',sp:'Specialistsjuksköterska',le:'Vårdenhetschef'}},
+{id:14,t:'Sjuksköterska',y:3,s0:32000,s1:42000,dem:5,ai:5,stress:4,future:5,tc:11000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Leg. sjuksköterska',ho:'Byter specialitet / region',sp:'Specialistsjuksköterska',le:'Vårdenhetschef'}},
 {id:15,t:'Fysioterapeut',y:3,s0:30000,s1:39100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Legitimerad fysioterapeut',ho:'Byter vårdgivare / privat',sp:'Specialist / idrottsfysio',le:'Verksamhetschef'}},
-{id:16,t:'Arbetsterapeut',y:3,s0:29000,s1:38100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. arbetsterapeut',ho:'Byter region / verksamhet',sp:'Specialist / konsult',le:'Verksamhetschef'}},
-{id:17,t:'Biomedicinsk analytiker',y:3,s0:30000,s1:41200,dem:4,ai:8,stress:2,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Biomedicinsk analytiker',ho:'Byter laboratorium / region',sp:'Cytodiagnostiker / specialist',le:'Laboratoriekemist / chef'}},
-{id:18,t:'Tandhygienist',y:3,s0:30000,s1:40900,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. tandhygienist',ho:'Byter klinik / region',sp:'Specialist / konsult',le:'Klinikchet / eget företag'}},
+{id:16,t:'Arbetsterapeut',y:3,s0:29000,s1:38500,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. arbetsterapeut',ho:'Byter region / verksamhet',sp:'Specialist / konsult',le:'Verksamhetschef'}},
+{id:17,t:'Biomedicinsk analytiker',y:3,s0:30000,s1:42900,dem:4,ai:8,stress:2,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Biomedicinsk analytiker',ho:'Byter laboratorium / region',sp:'Cytodiagnostiker / specialist',le:'Laboratoriekemist / chef'}},
+{id:18,t:'Tandhygienist',y:3,s0:30000,s1:40200,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. tandhygienist',ho:'Byter klinik / region',sp:'Specialist / konsult',le:'Klinikchet / eget företag'}},
 // ── Samhälle & Människor ──
-{id:19,t:'Socionom',y:3.5,s0:29000,s1:40300,dem:4,ai:8,stress:5,future:4,tc:10000,req:['Samhällskunskap 1b'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik','Vård'],pp:['Estet'],sc:{st:'Socialsekreterare',ho:'Byter kommun / verksamhet',sp:'Familjerätt / missbruk',le:'Enhetschef'}},
-{id:20,t:'Grundskollärare',y:3.5,s0:29000,s1:40200,dem:5,ai:5,stress:4,future:4,tc:10000,req:['Matte 2','Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Klassrumslärare',ho:'Byter skola / kommun',sp:'Förstelärare',le:'Rektor / skolledare'}},
-{id:21,t:'Gymnasielärare',y:4.5,s0:31000,s1:42700,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Ämneslärare',ho:'Byter skola / ämne',sp:'Förstelärare',le:'Rektor / skolledare'}},
-{id:22,t:'Studie- och yrkesvägledare',y:3,s0:29000,s1:40100,dem:4,ai:5,stress:2,future:4,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Studie- och yrkesvägledare',ho:'Byter skola / sektor',sp:'Senior vägledare / specialist',le:'Verksamhetschef'}},
-{id:23,t:'Personalvetare',y:3,s0:29000,s1:42000,dem:3,ai:10,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator / personalvetare',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
+{id:20,t:'Grundskollärare',y:3.5,s0:29000,s1:40800,dem:5,ai:5,stress:4,future:4,tc:10000,req:['Matte 2','Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Klassrumslärare',ho:'Byter skola / kommun',sp:'Förstelärare',le:'Rektor / skolledare'}},
+{id:21,t:'Gymnasielärare',y:4.5,s0:31000,s1:42600,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Ämneslärare',ho:'Byter skola / ämne',sp:'Förstelärare',le:'Rektor / skolledare'}},
+{id:22,t:'Studie- och yrkesvägledare',y:3,s0:29000,s1:36200,dem:4,ai:5,stress:2,future:4,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Studie- och yrkesvägledare',ho:'Byter skola / sektor',sp:'Senior vägledare / specialist',le:'Verksamhetschef'}},
 // ── Tekniska / Praktiska ──
-{id:24,t:'Byggingenjör',y:3,s0:34000,s1:46000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matte 3c','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Byggingenjör',ho:'Konsult / byter projekt',sp:'Projektingenjör / specialist',le:'Projektchef / platschef'}},
-{id:25,t:'Fastighetsförvaltare',y:3,s0:34000,s1:50600,dem:4,ai:8,stress:2,future:4,tc:9000,req:['Matte 2'],rp:['Ekonomi','Teknik','Samhäll'],pp:['Naturvetenskap'],sc:{st:'Fastighetsförvaltare',ho:'Byter bolag / region',sp:'Teknisk förvaltare / specialist',le:'Förvaltningschef / fastighetschef'}},
-{id:26,t:'VVS-ingenjör',y:2,s0:33000,s1:45000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matte 2','Fysik 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'VVS-konstruktör / tekniker',ho:'Konsult / byter projekt',sp:'Senior ingenjör / specialist',le:'Projektchef / avdelningschef'}},
-{id:27,t:'Automationsingenjör',y:3,s0:34000,s1:48000,dem:5,ai:8,stress:2,future:5,tc:9000,req:['Matte 3c','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Automationsingenjör',ho:'Konsult / byter industri',sp:'Senior ingenjör / specialist',le:'Automationschef / projektledare'}},
-// ── Övriga ──
-{id:28,t:'Kriminolog',y:3,s0:28000,s1:39500,dem:3,ai:8,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Utredare / handläggare',ho:'Byter myndighet / sektor',sp:'Specialist brottsprevention',le:'Enhetschef / verksamhetschef'}},
-{id:29,t:'Beteendevetare',y:3,s0:28000,s1:58400,dem:3,ai:8,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'Utredare / konsulent',ho:'Byter organisation / sektor',sp:'Specialist beteende / HR',le:'Enhetschef / konsultchef'}}
+{id:24,t:'Byggingenjör',y:3,s0:34000,s1:48000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matte 3c','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Byggingenjör',ho:'Konsult / byter projekt',sp:'Projektingenjör / specialist',le:'Projektchef / platschef'}},
+{id:25,t:'Fastighetsförvaltare',y:3,s0:34000,s1:43200,dem:4,ai:8,stress:2,future:4,tc:9000,req:['Matte 2'],rp:['Ekonomi','Teknik','Samhäll'],pp:['Naturvetenskap'],sc:{st:'Fastighetsförvaltare',ho:'Byter bolag / region',sp:'Teknisk förvaltare / specialist',le:'Förvaltningschef / fastighetschef'}}
 ];
 
-// SCB 2024 lönepercentiler per utbildning (kr/mån)
+// SCB 2024 lönepercentiler per utbildning (kr/mån) — källa: SCB via Supabase
 const SALD={
-  1:{p25:44000,med:53000,p75:67000,p90:83000},
-  2:{p25:40000,med:52000,p75:65000,p90:79000},
-  3:{p25:41000,med:51000,p75:63000,p90:77000},
-  4:{p25:38000,med:46000,p75:58000,p90:70000},
-  5:{p25:46000,med:55000,p75:68000,p90:84000},
-  6:{p25:42000,med:47000,p75:58000,p90:70000},
-  7:{p25:42000,med:51000,p75:65000,p90:80000},
-  8:{p25:38000,med:52000,p75:66000,p90:82000},
-  9:{p25:33000,med:42000,p75:53000,p90:64000},
-  10:{p25:37000,med:47000,p75:59000,p90:72000},
-  11:{p25:33000,med:42000,p75:53000,p90:64000},
-  12:{p25:33000,med:41000,p75:51000,p90:62000},
-  13:{p25:37000,med:48000,p75:60000,p90:73000},
-  14:{p25:36000,med:43000,p75:52000,p90:62000},
-  15:{p25:33000,med:39000,p75:47000,p90:57000},
-  16:{p25:32000,med:38000,p75:45000,p90:54000},
-  17:{p25:33000,med:40000,p75:48000,p90:58000},
-  18:{p25:33000,med:40000,p75:48000,p90:58000},
-  19:{p25:32000,med:39000,p75:47000,p90:57000},
-  20:{p25:32000,med:39000,p75:47000,p90:56000},
-  21:{p25:33000,med:42000,p75:50000,p90:60000},
-  22:{p25:32000,med:39000,p75:46000,p90:55000},
-  23:{p25:31000,med:41000,p75:51000,p90:62000},
-  24:{p25:38000,med:45000,p75:55000,p90:67000},
-  25:{p25:38000,med:49000,p75:60000,p90:73000},
-  26:{p25:37000,med:44000,p75:54000,p90:65000},
-  27:{p25:38000,med:47000,p75:58000,p90:71000},
-  28:{p25:31000,med:38000,p75:46000,p90:55000},
-  29:{p25:31000,med:40000,p75:50000,p90:61000}
+  1:{p25:45200,med:52500,p75:62000},
+  2:{p25:45600,med:54700,p75:64700},
+  3:{p25:44400,med:55000,p75:62000},
+  9:{p25:33900,med:42300,p75:51800},
+  10:{p25:45300,med:53100,p75:63400},
+  11:{p25:41800,med:50800,p75:63600},
+  12:{p25:41000,med:47300,p75:55000},
+  14:{p25:37400,med:42000,p75:47600},
+  15:{p25:33000,med:39000,p75:47000},
+  16:{p25:35000,med:38500,p75:42200},
+  17:{p25:39700,med:42900,p75:47600},
+  18:{p25:36000,med:40200,p75:44900},
+  20:{p25:36500,med:40800,p75:44600},
+  21:{p25:39600,med:42600,p75:46000},
+  22:{p25:31000,med:36200,p75:40100},
+  24:{p25:42500,med:48000,p75:56100},
+  25:{p25:34500,med:43200,p75:55600}
 };
 
 // Pros/Cons per utbildning
 const PN={
-  1:{pro:['35 000 kr ingångslön med snabb stegring till 55 000+','Remote-arbete standard — de flesta tjänster tillåter hemifrån','Konsultuppdrag kan ge 50–80% högre timpris än fast anställning','Kort utbildning (3 år) relativt lönenivån'],con:['15% AI-automatiseringsrisk — rutinkodning ersätts redan','Kräver ständig vidareutbildning vid teknikskiften','Internationell konkurrens pressar löner i vissa segment','Konsultmarknaden svänger kraftigt med konjunkturen']},
-  4:{pro:['32 000 kr ingångslön med potential upp till 48 000+','Kort utbildning (2 år YH) med praktik på riktiga företag','Remote och frilans vanligt — hög geografisk flexibilitet','Tvärfunktionell roll som fungerar i de flesta branscher'],con:['22% AI-risk — designverktyg automatiserar allt mer','Stor konkurrens om juniora tjänster efter examen','Ofta bland de första som sägs upp vid nedskärningar','Svårt att kvantifiera affärsvärde — budgeten skärs lätt ned']},
-  5:{pro:['Högst ingångslön av alla utbildningar (41 000 kr)','Lönetak på 56 000+ kr, högre i chefsroll','Bred anställningsbarhet — tech, energi, fordon, bygg, försvar','Stark internationell efterfrågan på svensk ingenjörskompetens'],con:['5 års utbildningstid — längst av alla alternativ','Hög studietakt med matematik, fysik och kemi','18% AI-risk — simulering och beräkningsarbete automatiseras','Kräver ofta flytt till storstadsregion för bästa tjänsterna']},
-  8:{pro:['Bred arbetsmarknad — bank, revision, konsult, industri, startup','Lönetak på 54 000+ kr, betydligt högre inom finans','Internationellt gångbar examen med möjlighet till utlandstjänst','Starkt alumninätverk, särskilt från handelshögskolorna'],con:['25% AI-automatiseringsrisk — analys- och rapportarbete ersätts','Hård konkurrens om trainee- och graduate-platser','Långa arbetsdagar norm inom revision och investment banking','Stor variation i lön beroende på bransch och stad']},
+  1:{pro:['35 000 kr ingångslön med snabb stegring till 52 500+','Remote-arbete standard — de flesta tjänster tillåter hemifrån','Konsultuppdrag kan ge 50–80% högre timpris än fast anställning','Kort utbildning (3 år) relativt lönenivån'],con:['15% AI-automatiseringsrisk — rutinkodning ersätts redan','Kräver ständig vidareutbildning vid teknikskiften','Internationell konkurrens pressar löner i vissa segment','Konsultmarknaden svänger kraftigt med konjunkturen']},
   14:{pro:['Nästan 100% anställningsbarhet — akut brist i hela landet','OB-tillägg för kvällar, nätter och helger höjer faktisk lön','Möjlighet att specialisera sig (IVA, ambulans, barnmorska) med lönepåslag','Offentlig anställning med kollektivavtal, tjänstepension och full semester'],con:['Schemaarbete med nätter, helger och röda dagar','Jour och beredskap kan krävas beroende på avdelning','Hög personalomsättning inom vissa specialiteter','Lönetak — begränsad löneutveckling utan chefsroll eller vidareutbildning']},
-  19:{pro:['Stor efterfrågan — kommuner har svårt att rekrytera socialsekreterare','Bred arbetsmarknad: socialtjänst, kriminalvård, migration, skola','Offentlig anställning med kollektivavtal och tjänstepension','Relativt kort utbildning (3,5 år) med praktik (VFU)'],con:['Högst personalomsättning inom socialtjänsten — snitt 2–3 år','Tunga myndighetsutövningsbeslut (LVU, tvångsomhändertaganden)','Lägst ingångslön av alla högskoleutbildningar i listan (29 000 kr)','Hög sjukfrånvaro i branschen jämfört med andra yrken']},
-  20:{pro:['13 veckors sammanhängande ledighet (lov) utöver semester','Jobb i alla kommuner — ingen geografisk begränsning','Lönetillägg som förstelärare (+5 000 kr/mån)','Statliga studielånsavskrivningar för lärare i bristämnen'],con:['Hög administrativ börda — dokumentation, åtgärdsprogram, omdömen','Stor lärarbrist leder till högre arbetsbelastning per lärare','Lönetak runt 40 000 kr utan skolledarroll','Begränsad karriärstege — förstelärare eller rektor är i princip enda stegen']},
+  20:{pro:['13 veckors sammanhängande ledighet (lov) utöver semester','Jobb i alla kommuner — ingen geografisk begränsning','Lönetillägg som förstelärare (+5 000 kr/mån)','Statliga studielånsavskrivningar för lärare i bristämnen'],con:['Hög administrativ börda — dokumentation, åtgärdsprogram, omdömen','Stor lärarbrist leder till högre arbetsbelastning per lärare','Lönetak runt 41 000 kr utan skolledarroll','Begränsad karriärstege — förstelärare eller rektor är i princip enda stegen']},
   21:{pro:['13 veckors sammanhängande ledighet (lov) utöver semester','Jobb i alla kommuner — ingen geografisk begränsning','Lönetillägg som förstelärare (+5 000 kr/mån)','Statliga studielånsavskrivningar för lärare i bristämnen'],con:['Hög administrativ börda — dokumentation, åtgärdsprogram, omdömen','Stor lärarbrist leder till högre arbetsbelastning per lärare','Lönetak runt 43 000 kr utan skolledarroll','Begränsad karriärstege — förstelärare eller rektor är i princip enda stegen']}
 };
 
@@ -289,14 +260,13 @@ function buildProsAndCons(e){
 }
 
 function buildSalaryInfo(e){
-  const sd=SALD[e.id]||{p25:Math.round(e.s0*1.1),med:Math.round(e.s0+(e.s1-e.s0)*0.45),p75:Math.round(e.s0+(e.s1-e.s0)*0.8),p90:e.s1};
+  const sd=SALD[e.id]||{p25:Math.round(e.s0*1.1),med:Math.round(e.s0+(e.s1-e.s0)*0.45),p75:Math.round(e.s0+(e.s1-e.s0)*0.8)};
   const gap=sd.med-e.s0;
   const growthPerYear=(e.s1-e.s0)/10;
   const yrsToMed=growthPerYear>0?Math.max(1,Math.round(gap/growthPerYear)):4;
   const yrsLabel=yrsToMed<=2?'1–2 år':yrsToMed<=4?'3–4 år':yrsToMed<=6?'4–6 år':'5–8 år';
-  const scale=sd.p90-sd.p25;
+  const scale=sd.p75-sd.p25;
   const barMedPct=Math.round((sd.med-sd.p25)/scale*100);
-  const barP75Pct=Math.round((sd.p75-sd.p25)/scale*100);
   const scenarios=[
     {label:'Stanna länge',desc:'10–15 år på samma arbetsplats',salary:Math.round(e.s0+(e.s1-e.s0)*0.5),color:'#6c757d'},
     {label:'Byta ofta',desc:'5–10 byten av arbetsgivare',salary:Math.round(e.s0+(e.s1-e.s0)*0.7),color:'#0dcaf0'},
@@ -319,11 +289,7 @@ function buildSalaryInfo(e){
       <div style="font-size:.88rem;color:var(--mu)">Hälften tjänar mer, hälften tjänar mindre som <strong>${e.t.toLowerCase()}</strong></div>
       <div style="margin-top:10px;height:1px;background:var(--bo)"></div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px">
-      <div style="padding:14px 12px;background:var(--wl);border-radius:10px;border:1.5px solid #E8D090">
-        <div style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--wa);line-height:1.1;margin-bottom:5px">${fmt(sd.p90)} kr</div>
-        <div style="font-size:.75rem;color:var(--mu);line-height:1.4">10% tjänar detta<br>eller mer</div>
-      </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:22px">
       <div style="padding:14px 12px;background:var(--al);border-radius:10px;border:1.5px solid #A8D8BC">
         <div style="font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--ac);line-height:1.1;margin-bottom:5px">${fmt(sd.p75)} kr</div>
         <div style="font-size:.75rem;color:var(--mu);line-height:1.4">25% tjänar detta<br>eller mer</div>
@@ -336,16 +302,16 @@ function buildSalaryInfo(e){
     <div style="margin-bottom:22px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
         <span style="font-size:.82rem;font-weight:600;color:var(--tx)">Lönespridning i yrket</span>
-        <span style="font-size:.76rem;color:var(--mu)">${fmt(sd.p90-sd.p25)} kr skillnad P25→P90</span>
+        <span style="font-size:.76rem;color:var(--mu)">${fmt(sd.p75-sd.p25)} kr skillnad P25→P75</span>
       </div>
       <div style="position:relative;height:10px;background:var(--bo);border-radius:5px;overflow:hidden">
-        <div style="position:absolute;left:0;top:0;height:100%;width:${barP75Pct}%;background:linear-gradient(90deg,var(--ac),var(--ah));border-radius:5px"></div>
+        <div style="position:absolute;left:0;top:0;height:100%;width:100%;background:linear-gradient(90deg,var(--ac),var(--ah));border-radius:5px"></div>
         <div style="position:absolute;left:${barMedPct}%;top:-2px;width:3px;height:14px;background:var(--tx);border-radius:2px;transform:translateX(-1px)"></div>
       </div>
       <div style="display:flex;justify-content:space-between;margin-top:5px">
         <span style="font-size:.72rem;color:var(--mu)">${fmt(sd.p25)}</span>
         <span style="font-size:.72rem;font-weight:700;color:var(--tx)">${fmt(sd.med)} kr (median)</span>
-        <span style="font-size:.72rem;color:var(--mu)">${fmt(sd.p90)}</span>
+        <span style="font-size:.72rem;color:var(--mu)">${fmt(sd.p75)}</span>
       </div>
     </div>
     <div style="padding:14px 16px;background:var(--al);border-radius:10px;border:1.5px solid var(--ac);display:flex;gap:12px;align-items:flex-start">

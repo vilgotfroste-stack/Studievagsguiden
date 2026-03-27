@@ -489,40 +489,27 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 <script>
 const E=[
 // ── IT & Teknik ──
-{id:1,t:'Systemutvecklare',y:3,s0:35000,s1:54900,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matte 2','Engelska 6'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Utvecklare på företag',ho:'Konsult / byter bolag',sp:'Arkitekt / specialist',le:'Tech lead / CTO'}},
-{id:2,t:'Dataanalytiker',y:3,s0:33000,s1:54500,dem:4,ai:12,stress:2,future:5,tc:8000,req:['Matte 3c','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Dataanalytiker junior',ho:'Senior analytiker / konsult',sp:'Data scientist / BI-specialist',le:'Analytics manager'}},
-{id:3,t:'IT-säkerhetsspecialist',y:3,s0:33000,s1:52600,dem:5,ai:5,stress:3,future:5,tc:8000,req:['Matte 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Säkerhetsanalytiker',ho:'Konsult / byter organisation',sp:'Cybersecurity specialist',le:'CISO / säkerhetschef'}},
-{id:4,t:'UX/UI-designer',y:2,s0:32000,s1:48000,dem:3,ai:22,stress:2,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik','Estet'],pp:[],sc:{st:'Junior UX-designer',ho:'Byter bolag / konsult',sp:'Lead designer / UX-researcher',le:'Design manager'}},
-{id:5,t:'Civilingenjör',y:5,s0:41000,s1:56200,dem:4,ai:18,stress:2,future:5,tc:8000,req:['Matte 4','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:[],sc:{st:'Ingenjör på företag',ho:'Konsult / byter bransch',sp:'Teknisk specialist',le:'Engineering manager'}},
-{id:6,t:'Högskoleingenjör',y:3,s0:38800,s1:45600,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matte 3c','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:[],sc:{st:'Ingenjör junior',ho:'Konsult / byter bransch',sp:'Senior ingenjör',le:'Projektledare / teamlead'}},
-{id:7,t:'DevOps / Cloud engineer',y:2,s0:35000,s1:52000,dem:5,ai:10,stress:2,future:5,tc:8000,req:['Grundläggande behörighet'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'DevOps-ingenjör junior',ho:'Konsult / byter bolag',sp:'Cloud architect / SRE',le:'Platform engineering lead'}},
+{id:1,t:'Systemutvecklare',y:3,s0:35000,s1:52500,dem:4,ai:15,stress:2,future:4,tc:8000,req:['Matte 2','Engelska 6'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Utvecklare på företag',ho:'Konsult / byter bolag',sp:'Arkitekt / specialist',le:'Tech lead / CTO'}},
+{id:2,t:'Dataanalytiker',y:3,s0:33000,s1:54700,dem:4,ai:12,stress:2,future:5,tc:8000,req:['Matte 3c','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Dataanalytiker junior',ho:'Senior analytiker / konsult',sp:'Data scientist / BI-specialist',le:'Analytics manager'}},
+{id:3,t:'IT-säkerhetsspecialist',y:3,s0:33000,s1:55000,dem:5,ai:5,stress:3,future:5,tc:8000,req:['Matte 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Säkerhetsanalytiker',ho:'Konsult / byter organisation',sp:'Cybersecurity specialist',le:'CISO / säkerhetschef'}},
 // ── Ekonomi & Business ──
-{id:8,t:'Civilekonom',y:4,s0:34000,s1:54000,dem:3,ai:25,stress:3,future:3,tc:9000,req:['Matte 3c','Engelska 6'],rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll'],sc:{st:'Controller / ekonom',ho:'Konsult / byter bransch',sp:'Finansanalytiker',le:'CFO / VD'}},
-{id:9,t:'Redovisningsekonom',y:2,s0:30000,s1:44300,dem:4,ai:20,stress:2,future:3,tc:8000,req:['Matte 2','Engelska 6'],rp:['Ekonomi','Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Redovisningsekonom',ho:'Konsult / byter byrå',sp:'Auktoriserad revisor',le:'Ekonomichef'}},
-{id:10,t:'Controller',y:3,s0:33000,s1:48200,dem:4,ai:20,stress:3,future:3,tc:9000,req:['Matte 3c','Engelska 6'],rp:['Ekonomi','Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Junior controller',ho:'Byter bransch / konsult',sp:'Senior controller',le:'CFO / ekonomichef'}},
-{id:11,t:'Digital marknadsförare',y:2,s0:30000,s1:43000,dem:3,ai:18,stress:3,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Ekonomi','Samhäll','Estet'],pp:['Naturvetenskap','Teknik'],sc:{st:'Digital marknadsförare',ho:'Konsult / byrå',sp:'Specialist SEO/SEM/social',le:'Marknadschef'}},
-{id:12,t:'HR-specialist',y:3,s0:30000,s1:42000,dem:3,ai:12,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matte 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
-{id:13,t:'Projektledare',y:3,s0:33000,s1:49000,dem:4,ai:10,stress:3,future:4,tc:9000,req:['Grundläggande behörighet'],rp:['Ekonomi','Teknik','Samhäll','Naturvetenskap'],pp:['Estet'],sc:{st:'Projektkoordinator',ho:'Byter bransch / konsult',sp:'Senior projektledare / PMP',le:'Programchef / affärsutvecklare'}},
+{id:9,t:'Redovisningsekonom',y:2,s0:30000,s1:42300,dem:4,ai:20,stress:2,future:3,tc:8000,req:['Matte 2','Engelska 6'],rp:['Ekonomi','Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Redovisningsekonom',ho:'Konsult / byter byrå',sp:'Auktoriserad revisor',le:'Ekonomichef'}},
+{id:10,t:'Controller',y:3,s0:33000,s1:53100,dem:4,ai:20,stress:3,future:3,tc:9000,req:['Matte 3c','Engelska 6'],rp:['Ekonomi','Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Junior controller',ho:'Byter bransch / konsult',sp:'Senior controller',le:'CFO / ekonomichef'}},
+{id:11,t:'Digital marknadsförare',y:2,s0:30000,s1:50800,dem:3,ai:18,stress:3,future:3,tc:8000,req:['Grundläggande behörighet'],rp:['Ekonomi','Samhäll','Estet'],pp:['Naturvetenskap','Teknik'],sc:{st:'Digital marknadsförare',ho:'Konsult / byrå',sp:'Specialist SEO/SEM/social',le:'Marknadschef'}},
+{id:12,t:'HR-specialist',y:3,s0:30000,s1:47300,dem:3,ai:12,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b','Matte 2'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
 // ── Vård & Hälsa ──
-{id:14,t:'Sjuksköterska',y:3,s0:32000,s1:43900,dem:5,ai:5,stress:4,future:5,tc:11000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Leg. sjuksköterska',ho:'Byter specialitet / region',sp:'Specialistsjuksköterska',le:'Vårdenhetschef'}},
+{id:14,t:'Sjuksköterska',y:3,s0:32000,s1:42000,dem:5,ai:5,stress:4,future:5,tc:11000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Leg. sjuksköterska',ho:'Byter specialitet / region',sp:'Specialistsjuksköterska',le:'Vårdenhetschef'}},
 {id:15,t:'Fysioterapeut',y:3,s0:30000,s1:39100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Legitimerad fysioterapeut',ho:'Byter vårdgivare / privat',sp:'Specialist / idrottsfysio',le:'Verksamhetschef'}},
-{id:16,t:'Arbetsterapeut',y:3,s0:29000,s1:38100,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. arbetsterapeut',ho:'Byter region / verksamhet',sp:'Specialist / konsult',le:'Verksamhetschef'}},
-{id:17,t:'Biomedicinsk analytiker',y:3,s0:30000,s1:41200,dem:4,ai:8,stress:2,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Biomedicinsk analytiker',ho:'Byter laboratorium / region',sp:'Cytodiagnostiker / specialist',le:'Laboratoriekemist / chef'}},
-{id:18,t:'Tandhygienist',y:3,s0:30000,s1:40900,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. tandhygienist',ho:'Byter klinik / region',sp:'Specialist / konsult',le:'Klinikchet / eget företag'}},
+{id:16,t:'Arbetsterapeut',y:3,s0:29000,s1:38500,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. arbetsterapeut',ho:'Byter region / verksamhet',sp:'Specialist / konsult',le:'Verksamhetschef'}},
+{id:17,t:'Biomedicinsk analytiker',y:3,s0:30000,s1:42900,dem:4,ai:8,stress:2,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],sc:{st:'Biomedicinsk analytiker',ho:'Byter laboratorium / region',sp:'Cytodiagnostiker / specialist',le:'Laboratoriekemist / chef'}},
+{id:18,t:'Tandhygienist',y:3,s0:30000,s1:40200,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Vård'],pp:['Teknik','Ekonomi'],sc:{st:'Leg. tandhygienist',ho:'Byter klinik / region',sp:'Specialist / konsult',le:'Klinikchet / eget företag'}},
 // ── Samhälle & Människor ──
-{id:19,t:'Socionom',y:3.5,s0:29000,s1:40300,dem:4,ai:8,stress:5,future:4,tc:10000,req:['Samhällskunskap 1b'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik','Vård'],pp:['Estet'],sc:{st:'Socialsekreterare',ho:'Byter kommun / verksamhet',sp:'Familjerätt / missbruk',le:'Enhetschef'}},
-{id:20,t:'Grundskollärare',y:3.5,s0:29000,s1:40200,dem:5,ai:5,stress:4,future:4,tc:10000,req:['Matte 2','Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Klassrumslärare',ho:'Byter skola / kommun',sp:'Förstelärare',le:'Rektor / skolledare'}},
-{id:21,t:'Gymnasielärare',y:4.5,s0:31000,s1:42700,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Ämneslärare',ho:'Byter skola / ämne',sp:'Förstelärare',le:'Rektor / skolledare'}},
-{id:22,t:'Studie- och yrkesvägledare',y:3,s0:29000,s1:40100,dem:4,ai:5,stress:2,future:4,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Studie- och yrkesvägledare',ho:'Byter skola / sektor',sp:'Senior vägledare / specialist',le:'Verksamhetschef'}},
-{id:23,t:'Personalvetare',y:3,s0:29000,s1:42000,dem:3,ai:10,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'HR-koordinator / personalvetare',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
+{id:20,t:'Grundskollärare',y:3.5,s0:29000,s1:40800,dem:5,ai:5,stress:4,future:4,tc:10000,req:['Matte 2','Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Klassrumslärare',ho:'Byter skola / kommun',sp:'Förstelärare',le:'Rektor / skolledare'}},
+{id:21,t:'Gymnasielärare',y:4.5,s0:31000,s1:42600,dem:4,ai:5,stress:3,future:4,tc:10000,req:['Engelska 6','Svenska 3'],rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],sc:{st:'Ämneslärare',ho:'Byter skola / ämne',sp:'Förstelärare',le:'Rektor / skolledare'}},
+{id:22,t:'Studie- och yrkesvägledare',y:3,s0:29000,s1:36200,dem:4,ai:5,stress:2,future:4,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Studie- och yrkesvägledare',ho:'Byter skola / sektor',sp:'Senior vägledare / specialist',le:'Verksamhetschef'}},
 // ── Tekniska / Praktiska ──
-{id:24,t:'Byggingenjör',y:3,s0:34000,s1:46000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matte 3c','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Byggingenjör',ho:'Konsult / byter projekt',sp:'Projektingenjör / specialist',le:'Projektchef / platschef'}},
-{id:25,t:'Fastighetsförvaltare',y:3,s0:34000,s1:50600,dem:4,ai:8,stress:2,future:4,tc:9000,req:['Matte 2'],rp:['Ekonomi','Teknik','Samhäll'],pp:['Naturvetenskap'],sc:{st:'Fastighetsförvaltare',ho:'Byter bolag / region',sp:'Teknisk förvaltare / specialist',le:'Förvaltningschef / fastighetschef'}},
-{id:26,t:'VVS-ingenjör',y:2,s0:33000,s1:45000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matte 2','Fysik 2'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'VVS-konstruktör / tekniker',ho:'Konsult / byter projekt',sp:'Senior ingenjör / specialist',le:'Projektchef / avdelningschef'}},
-{id:27,t:'Automationsingenjör',y:3,s0:34000,s1:48000,dem:5,ai:8,stress:2,future:5,tc:9000,req:['Matte 3c','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Automationsingenjör',ho:'Konsult / byter industri',sp:'Senior ingenjör / specialist',le:'Automationschef / projektledare'}},
-// ── Övriga ──
-{id:28,t:'Kriminolog',y:3,s0:28000,s1:39500,dem:3,ai:8,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll'],pp:['Naturvetenskap','Teknik'],sc:{st:'Utredare / handläggare',ho:'Byter myndighet / sektor',sp:'Specialist brottsprevention',le:'Enhetschef / verksamhetschef'}},
-{id:29,t:'Beteendevetare',y:3,s0:28000,s1:58400,dem:3,ai:8,stress:3,future:3,tc:9000,req:['Samhällskunskap 1b'],rp:['Samhäll','Ekonomi'],pp:['Naturvetenskap','Teknik'],sc:{st:'Utredare / konsulent',ho:'Byter organisation / sektor',sp:'Specialist beteende / HR',le:'Enhetschef / konsultchef'}}
+{id:24,t:'Byggingenjör',y:3,s0:34000,s1:48000,dem:4,ai:8,stress:3,future:4,tc:9000,req:['Matte 3c','Fysik 2','Kemi 1'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll'],sc:{st:'Byggingenjör',ho:'Konsult / byter projekt',sp:'Projektingenjör / specialist',le:'Projektchef / platschef'}},
+{id:25,t:'Fastighetsförvaltare',y:3,s0:34000,s1:43200,dem:4,ai:8,stress:2,future:4,tc:9000,req:['Matte 2'],rp:['Ekonomi','Teknik','Samhäll'],pp:['Naturvetenskap'],sc:{st:'Fastighetsförvaltare',ho:'Byter bolag / region',sp:'Teknisk förvaltare / specialist',le:'Förvaltningschef / fastighetschef'}}
 ];
 const CIT={stockholm:7000,goteborg:5500,malmo:5000,uppsala:5500,linkoping:4500,lund:5500,umea:4000,orebro:4500,other:4500};
 const HOU={student:.75,shared:.85,rental:1.2,home:0};
@@ -911,40 +898,29 @@ function buildProsAndCons(e){
 // Lönefördelning per yrke — baserad på SCB lönestrukturstatistik 2024
 // (allaloner.se, SKR partsgemensamt underlag, Sveriges Ingenjörer lönestatistik)
 // p25=25:e percentilen, med=median, p75=75:e percentilen, p90=90:e percentilen
+// SCB 2024 lönepercentiler per utbildning (kr/mån) — källa: SCB via Supabase
 const SALD={
-  1: {p25:45200,med:50500,p75:60000,p90:72500}, // Systemutvecklare — allaloner.se/SCB
-  2: {p25:40000,med:47000,p75:57000,p90:68000}, // Dataanalytiker — SCB SSYK 251
-  3: {p25:40000,med:47500,p75:57000,p90:69000}, // IT-säkerhetsspecialist — SCB SSYK 251
-  4: {p25:36000,med:43000,p75:52000,p90:63000}, // UX/UI-designer — SCB SSYK 217
-  5: {p25:44000,med:53000,p75:67000,p90:83000}, // Civilingenjör — Sveriges Ingenjörer 2024
-  6: {p25:37500,med:44000,p75:53000,p90:63000}, // Högskoleingenjör — Sveriges Ingenjörer 2024
-  7: {p25:43000,med:49500,p75:59000,p90:72000}, // DevOps/Cloud — SCB SSYK 251
-  8: {p25:39000,med:46500,p75:58000,p90:72000}, // Civilekonom — SCB SSYK 241
-  9: {p25:33500,med:39500,p75:47000,p90:57000}, // Redovisningsekonom — SCB SSYK 241
- 10: {p25:37000,med:43500,p75:52000,p90:62000}, // Controller — SCB SSYK 241
- 11: {p25:33000,med:38500,p75:47000,p90:58000}, // Digital marknadsförare — SCB SSYK 243
- 12: {p25:33000,med:38000,p75:46000,p90:56000}, // HR-specialist — SCB SSYK 242
- 13: {p25:37000,med:44000,p75:54000,p90:65000}, // Projektledare — SCB SSYK 242
- 14: {p25:37400,med:41500,p75:47000,p90:55800}, // Sjuksköterska — allaloner.se/SCB + SKR 2025
- 15: {p25:33000,med:38500,p75:44500,p90:52000}, // Fysioterapeut — allaloner.se/SCB 2024
- 16: {p25:32000,med:36500,p75:42000,p90:50000}, // Arbetsterapeut — SCB SSYK 227
- 17: {p25:33000,med:38000,p75:44000,p90:52000}, // Biomedicinsk analytiker — SCB SSYK 228
- 18: {p25:33000,med:38000,p75:44000,p90:53000}, // Tandhygienist — SCB SSYK 228
- 19: {p25:32500,med:38500,p75:44500,p90:53000}, // Socionom — allaloner.se/SCB (medel 40 300)
- 20: {p25:34000,med:38500,p75:43000,p90:49000}, // Grundskollärare — SCB SSYK 234
- 21: {p25:37000,med:44700,p75:48500,p90:51200}, // Gymnasielärare — SKR partsgemensamt 2025
- 22: {p25:32000,med:36500,p75:42000,p90:49000}, // Studie-/yrkesvägledare — SCB SSYK 235
- 23: {p25:32500,med:37500,p75:45000,p90:55000}, // Personalvetare — SCB SSYK 242
- 24: {p25:36500,med:42000,p75:50000,p90:60000}, // Byggingenjör — SCB SSYK 214
- 25: {p25:36500,med:43500,p75:52000,p90:63000}, // Fastighetsförvaltare — SCB SSYK 214
- 26: {p25:36000,med:41000,p75:49000,p90:59000}, // VVS-ingenjör — SCB SSYK 214
- 27: {p25:37000,med:43500,p75:52000,p90:63000}, // Automationsingenjör — SCB SSYK 214
- 28: {p25:31000,med:36000,p75:42000,p90:52000}, // Kriminolog — SCB SSYK 261/242
- 29: {p25:30000,med:35000,p75:46000,p90:62000}, // Beteendevetare — SCB SSYK 242
+  1: {p25:45200,med:52500,p75:62000}, // Systemutvecklare — SCB SSYK 2512
+  2: {p25:45600,med:54700,p75:64700}, // Dataanalytiker — SCB SSYK 2519
+  3: {p25:44400,med:55000,p75:62000}, // IT-säkerhetsspecialist — SCB SSYK 2516
+  9: {p25:33900,med:42300,p75:51800}, // Redovisningsekonom — SCB SSYK 3312
+ 10: {p25:45300,med:53100,p75:63400}, // Controller — SCB SSYK 2412
+ 11: {p25:41800,med:50800,p75:63600}, // Digital marknadsförare — SCB SSYK 2431
+ 12: {p25:41000,med:47300,p75:55000}, // HR-specialist — SCB SSYK 2423
+ 14: {p25:37400,med:42000,p75:47600}, // Sjuksköterska — SCB SSYK 2221
+ 15: {p25:33000,med:39000,p75:47000}, // Fysioterapeut — uppskattning (SCB saknar data)
+ 16: {p25:35000,med:38500,p75:42200}, // Arbetsterapeut — SCB SSYK 2272
+ 17: {p25:39700,med:42900,p75:47600}, // Biomedicinsk analytiker — SCB SSYK 3213
+ 18: {p25:36000,med:40200,p75:44900}, // Tandhygienist — SCB SSYK 3250
+ 20: {p25:36500,med:40800,p75:44600}, // Grundskollärare — SCB SSYK 2341
+ 21: {p25:39600,med:42600,p75:46000}, // Gymnasielärare — SCB SSYK 2330
+ 22: {p25:31000,med:36200,p75:40100}, // Studie- och yrkesvägledare — SCB SSYK 2359
+ 24: {p25:42500,med:48000,p75:56100}, // Byggingenjör — SCB SSYK 3112
+ 25: {p25:34500,med:43200,p75:55600}, // Fastighetsförvaltare — SCB SSYK 3334
 };
 
 function buildSalaryInfo(e){
-    const sd=SALD[e.id]||{p25:Math.round(e.s0*.9),med:Math.round(e.s0+(e.s1-e.s0)*.4),p75:Math.round(e.s0+(e.s1-e.s0)*.7),p90:Math.round(e.s1*1.15)};
+    const sd=SALD[e.id]||{p25:Math.round(e.s0*.9),med:Math.round(e.s0+(e.s1-e.s0)*.4),p75:Math.round(e.s0+(e.s1-e.s0)*.7)};
     
     // Karriärscenarier
     const scenarios=[
@@ -972,11 +948,7 @@ function buildSalaryInfo(e){
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px">
-        <div style="background:#FFFBEB;border-radius:12px;padding:16px 12px">
-          <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:#78350F;margin-bottom:3px">${fmt(sd.p90)} kr</div>
-          <div style="font-size:.72rem;color:#92400E;line-height:1.4">10% tjänar detta<br>eller mer</div>
-        </div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px">
         <div style="background:#F0FDF4;border-radius:12px;padding:16px 12px">
           <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:#14532D;margin-bottom:3px">${fmt(sd.p75)} kr</div>
           <div style="font-size:.72rem;color:#166534;line-height:1.4">25% tjänar detta<br>eller mer</div>
@@ -990,13 +962,13 @@ function buildSalaryInfo(e){
       <div style="background:var(--bg);border-radius:10px;padding:14px 16px;margin-bottom:14px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
           <span style="font-size:.78rem;font-weight:700;color:var(--tx)">Lönespridning i yrket</span>
-          <span style="font-size:.72rem;color:var(--li)">${fmt(sd.p90-sd.p25)} kr skillnad P25→P90</span>
+          <span style="font-size:.72rem;color:var(--li)">${fmt(sd.p75-sd.p25)} kr skillnad P25→P75</span>
         </div>
         <div style="position:relative;height:12px;background:#e5e7eb;border-radius:6px;overflow:hidden">
-          <div style="position:absolute;left:${Math.round((sd.p25/sd.p90)*100)}%;right:${Math.round(100-(sd.p75/sd.p90)*100)}%;height:100%;background:var(--ac);border-radius:6px"></div>
+          <div style="position:absolute;left:0;right:0;height:100%;background:var(--ac);border-radius:6px"></div>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:.68rem;color:var(--li);margin-top:5px">
-          <span>${fmt(sd.p25)}</span><span style="color:var(--tx);font-weight:600">${fmt(sd.med)} kr (median)</span><span>${fmt(sd.p90)}</span>
+          <span>${fmt(sd.p25)}</span><span style="color:var(--tx);font-weight:600">${fmt(sd.med)} kr (median)</span><span>${fmt(sd.p75)}</span>
         </div>
       </div>
 
