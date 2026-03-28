@@ -77,27 +77,33 @@ window.PAGE = {
   <div style="padding:8px 0">
     <a href="/" class="nav-lnk">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      Startsidan
+      <div><div class="nav-lnk-title">Startsidan</div><div class="nav-lnk-sub">Lönar det sig?</div></div>
     </a>
+    <div class="nav-section-lbl">Verktyg</div>
     <a href="/skapa-min-plan" class="nav-lnk">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-      Skapa min plan
+      <div><div class="nav-lnk-title">Skapa min plan</div><div class="nav-lnk-sub">Personlig studieplan</div></div>
+    </a>
+    <a href="/jamfor-utbildningar" class="nav-lnk">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <div><div class="nav-lnk-title">J&#228;mf&#246;r utbildningar</div><div class="nav-lnk-sub">Sida vid sida</div></div>
     </a>
     <a href="/utbildningar" class="nav-lnk">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-      Jämför alla utbildningar
+      <div><div class="nav-lnk-title">Utbildningar &amp; yrken</div><div class="nav-lnk-sub">Bl&#228;ddra bland alla</div></div>
     </a>
-    <a href="/yrkestest" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-      Yrkestest
+    <a href="/csn-guide" class="nav-lnk">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      <div><div class="nav-lnk-title">CSN-guide</div><div class="nav-lnk-sub">Skuld, &#229;terbetalning &amp; mer</div></div>
     </a>
     <div class="nav-sep"></div>
-    <div class="nav-section-lbl">Konton</div>
+    <div class="nav-section-lbl">Konto</div>
     <a href="/min-plan" class="nav-lnk">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      Logga in
+      <div><div class="nav-lnk-title">Logga in</div><div class="nav-lnk-sub">Se din sparade plan</div></div>
     </a>
   </div>
+  <div class="nav-panel-foot"><a href="/integritetspolicy">Integritetspolicy</a></div>
 </div>
 
 <section class="hero">
@@ -117,9 +123,25 @@ window.PAGE = {
       <select id="inEdu"><option value="" disabled selected>Välj utbildning...</option></select>
     </div>
     <button class="btn" onclick="calcG()">Beräkna om det lönar sig →</button>
+    <a href="/yrkestest" style="display:block;text-align:center;margin-top:10px;padding:13px 16px;border:1.5px dashed #C5D8EB;border-radius:10px;color:#5A8FB5;font-size:.88rem;font-weight:600;text-decoration:none;transition:all .2s" onmouseover="this.style.borderColor='#5A8FB5'" onmouseout="this.style.borderColor='#C5D8EB'">Vet inte vad du vill bli? Gör yrkestestet →</a>
     <p style="font-size:.78rem;color:var(--li);margin-top:12px;line-height:1.6">Studievägsguiden räknar ut break-even, livstidsvinst och din ekonomi under studietiden.</p>
   </div>
 </section>
+<div style="max-width:500px;margin:0 auto;padding:0 24px 24px;width:100%;position:relative;z-index:1;margin-top:-24px">
+  <div style="background:#fff;border:2px solid #C5D8EB;border-radius:16px;padding:24px;box-shadow:0 8px 40px rgba(0,0,0,.1);text-align:center">
+    <h3 style="font-family:'DM Serif Display',serif;font-size:1.15rem;margin-bottom:8px;color:#0A0A0A">Hitta rätt utbildning för dig</h3>
+    <p style="font-size:.86rem;color:#3A3A36;margin-bottom:16px;line-height:1.6">Filtrera på lön, efterfrågan, AI-risk och utbildningstid.<br>Jämför yrken sida vid sida.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:18px">
+      <span style="background:#E4F0FB;color:#5A8FB5;padding:5px 14px;border-radius:20px;font-size:.77rem;font-weight:600">Lön</span>
+      <span style="background:#EBF5F0;color:#5BA882;padding:5px 14px;border-radius:20px;font-size:.77rem;font-weight:600">Efterfrågan</span>
+      <span style="background:#FDECEA;color:#B04830;padding:5px 14px;border-radius:20px;font-size:.77rem;font-weight:600">AI-risk</span>
+      <span style="background:#FBF5EA;color:#9A6A00;padding:5px 14px;border-radius:20px;font-size:.77rem;font-weight:600">Utbildningstid</span>
+      <span style="background:#EDE7F5;color:#8A70B5;padding:5px 14px;border-radius:20px;font-size:.77rem;font-weight:600">Framtid</span>
+    </div>
+    <a href="/utbildningar" style="display:block;width:100%;padding:14px;background:#3B6E8C;color:#fff;border-radius:10px;font-family:inherit;font-size:.97rem;font-weight:700;text-decoration:none;transition:background .2s">Se alla utbildningar →</a>
+    <p style="font-size:.7rem;color:#7A7A74;margin-top:12px;line-height:1.5">Data från SCB, CSN &amp; Arbetsförmedlingen. Siffrorna är indikativa — löner och antagningskrav varierar. Inget på sidan utgör garantier.</p>
+  </div>
+</div>
 
 <section class="sec" id="secR" style="position:relative;overflow:visible">
   <div class="sh" id="sh1"><h2>1. Översikt</h2></div>
@@ -179,7 +201,14 @@ window.PAGE = {
 .nav-lnk{display:flex;align-items:center;gap:10px;padding:13px 20px;font-size:.93rem;font-weight:600;color:#0A0A0A;text-decoration:none;transition:background .15s;border-left:3px solid transparent}
 .nav-lnk:hover{background:#EBF5F0;color:#5BA882;border-left-color:#5BA882}
 .nav-lnk.cur{background:#EBF5F0;color:#5BA882;border-left-color:#5BA882}
-.nav-lnk svg{flex-shrink:0;opacity:.7}
+.nav-lnk svg{flex-shrink:0;opacity:.6;margin-top:2px}
+.nav-lnk-title{font-size:.9rem;font-weight:600;line-height:1.2;color:var(--tx,#0A0A0A)}
+.nav-lnk-sub{font-size:.72rem;font-weight:400;color:#7A7A74;margin-top:1px;line-height:1.2}
+.nav-lnk:hover .nav-lnk-title,.nav-lnk.cur .nav-lnk-title{color:#5BA882}
+.nav-lnk:hover .nav-lnk-sub,.nav-lnk.cur .nav-lnk-sub{color:#5BA882}
+.nav-panel-foot{padding:14px 20px;border-top:1px solid #C5D8EB;margin-top:8px}
+.nav-panel-foot a{font-size:.72rem;color:#9A9A94;text-decoration:none}
+.nav-panel-foot a:hover{color:#5BA882}
 .nav-sep{height:1px;background:#C5D8EB;margin:8px 20px}
 .nav-section-lbl{padding:8px 20px 4px;font-size:.68rem;font-weight:700;color:#7A7A74;letter-spacing:.8px;text-transform:uppercase}
 .site-footer{background:#1B3A5C;color:rgba(255,255,255,.75);padding:28px 32px}
