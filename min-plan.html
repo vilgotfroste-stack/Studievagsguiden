@@ -33,7 +33,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
  background: rgba(250,250,247,.97); backdrop-filter: blur(12px);
  padding: 14px 20px 12px; border-bottom: 1px solid var(--bo);
  display: flex; align-items: center; justify-content: space-between;
- position: sticky; top: 60px; z-index: 100;
+ position: sticky; top: 60px; z-index: 99;
 }
 .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; }
 .nav-logo .s1 { color: var(--bl); } .nav-logo .s2 { color: var(--ac); }
@@ -661,7 +661,7 @@ function toggleNavMenu(){
 </div>
 
 <!-- Plan container — prototype design -->
-<div id="planContainer" style="display:none">
+<div id="planContainer" style="display:none;padding-top:60px">
  <div class="plan-wrap">
  <!-- NAV -->
  <div class="plan-nav">
