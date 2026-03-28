@@ -3699,17 +3699,21 @@ async function loadPlanForUser(user) {
 }
 
 function init() {
- // Visa auth-gate direkt
  document.getElementById('loadingState').style.display = 'none';
- document.getElementById('authGate').style.display = 'flex';
 
- // Auto-fyll e-post + lösenord om sparade
+ // Auto-logga in om sparade uppgifter finns
  try {
  const savedEmail = localStorage.getItem('svg_email');
  const savedPwd = localStorage.getItem('svg_password');
- if (savedEmail) document.getElementById('emailInput').value = savedEmail;
- if (savedPwd) document.getElementById('passwordInput').value = savedPwd;
+ if (savedEmail && savedPwd) {
+   document.getElementById('emailInput').value = savedEmail;
+   document.getElementById('passwordInput').value = savedPwd;
+   fetchPlanByEmail();
+   return;
+ }
  } catch(e) {}
+
+ document.getElementById('authGate').style.display = 'flex';
 }
 
 document.addEventListener('DOMContentLoaded', init);
