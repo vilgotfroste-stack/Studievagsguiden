@@ -340,9 +340,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
   <div class="logo" onclick="resetPage()" style="cursor:pointer" title="Börja om">
     <span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">gu<span class="i-dot">ı</span>den</span>
   </div>
-  <button class="nav-ham" id="navHam" onclick="toggleNavMenu()" aria-label="Öppna meny">
-    <span></span><span></span><span></span>
-  </button>
+  <div style="display:flex;align-items:center;gap:10px">
+    <a href="/min-plan" style="font-size:.85rem;font-weight:600;color:var(--ac);text-decoration:none;border:1.5px solid var(--ac);padding:7px 16px;border-radius:8px">Logga in</a>
+    <button class="nav-ham" id="navHam" onclick="toggleNavMenu()" aria-label="Öppna meny">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 <div class="nav-ov" id="navOv" onclick="toggleNavMenu()"></div>
 <div class="nav-panel" id="navPanel">
@@ -771,13 +774,13 @@ function printPlan(){
 
 // Init
 const FAQ=[
-  {q:'Är det för sent att byta karriär i 30-, 40- eller 50-årsåldern?',a:'Nej. Enligt SCB är genomsnittsåldern för vuxenstuderande på yrkeshögskola 31 år, och många byter karriär i 40-45-årsåldern. Med 20+ år kvar på arbetsmarknaden är en omskolning ofta lönsam ekonomiskt.'},
-  {q:'Vad kostar ett karriärsbyte egentligen?',a:'Den verkliga kostnaden är förlorad lön under studietiden plus CSN-skulden. För en 3-årig utbildning med en lön på 30 000 kr/mån handlar det om ca 1–1,5 miljoner kr totalt. Studievägsguiden räknar ut exakt vad det kostar för din situation.'},
-  {q:'Kan jag få CSN-lån som vuxen och yrkesverksam?',a:'Ja. Rätt till CSN-lån och bidrag gäller upp till 57 års ålder för högskoleutbildning och 47 år för YH. Du kan studera på halvfart och kombinera med deltidsjobb.'},
-  {q:'Vad är skillnaden på att omskola sig via högskola vs yrkeshögskola (YH)?',a:'YH är kortare (1–3 år), arbetsmarknadsanpassad och har ofta 50% LIA-praktik på riktiga företag. Högskolan ger en akademisk examen och bredare behörighet. YH passar ofta bättre för snabb omställning till ett specifikt yrke.'},
-  {q:'Behöver jag gymnasiebetyg för att byta karriär som vuxen?',a:'Inte alltid. Via reell kompetens och Komvux kan du komplettera saknade kurser, ofta gratis. Studievägsguiden visar exakt vilka kurser du behöver för din valda utbildning.'},
-  {q:'Hur lång tid tar det innan lönen täcker studiekostnaderna?',a:'Det beror på löneskillnaden och utbildningens längd. Kalkylatorn beräknar break-even baserat på din nuvarande lön och ingångslönen i det nya yrket — ofta 5–12 år.'},
-  {q:'Vad ingår i den personliga omställningsplanen?',a:'Planen innehåller behörighetsanalys, CSN-kalkyl med din faktiska ekonomi, skolmatchning, antagningsdatum och en konkret tidslinje — allt anpassat efter din ålder, stad och livssituation.'}
+  {q:'Vad är skillnaden mellan YH och högskola/universitet?',a:'Yrkeshögskolan (YH) är kortare (1–2 år), starkt praktiskt inriktad och leder direkt ut i ett specifikt yrke. Universitetet ger en bredare akademisk examen (3–5 år) och passar om du vill ha en teoretisk grund eller siktar på yrken som kräver examen. YH har ofta 50% LIA-praktik på riktiga företag.'},
+  {q:'Hur mycket CSN kan jag få som student?',a:'Som heltidsstuderande 2026 får du ca 3 750 kr/mån i bidrag (återbetalas inte) och upp till 7 694 kr/mån i lån — totalt ca 11 444 kr/mån. Rätten till CSN gäller upp till 57 år för högskoleutbildning och 47 år för YH. Kalkylatorn ovan räknar ut exakt vad du får i din situation.'},
+  {q:'Hur räknar jag ut om en utbildning lönar sig ekonomiskt?',a:'Du jämför ingångslönen i det nya yrket med din lön idag och beräknar hur lång tid det tar för löneskillnaden att täcka studieskulden — det kallas break-even. Studievägsguiden gör hela beräkningen automatiskt: fyll i din lön och välj utbildning så ser du svaret direkt.'},
+  {q:'Behöver jag uppfylla behörighetskrav för att söka utbildning?',a:'Ja. Grundläggande behörighet krävs alltid (godkänt i svenska, engelska och matte). Många utbildningar har också specifika krav — t.ex. Matte 3c för teknik eller Naturkunskap 2 för vård. Saknar du ett ämne? Du kan läsa in det gratis via Komvux, ofta på distans.'},
+  {q:'Kan jag studera på deltid eller distans?',a:'Ja. Många utbildningar erbjuds på halvfart eller distans, vilket gör det möjligt att kombinera med arbete. På halvfart fördubblas studietiden men du kan behålla en deltidsinkomst. CSN-stödet anpassas efter studietakten.'},
+  {q:'Vilka utbildningar har högst ingångslön i Sverige?',a:'Enligt SCB 2024 har IT-utbildningar (systemutvecklare, dataanalytiker, IT-säkerhet) och ekonomi (controller, civilekonom) de högsta ingångslönerna — ofta 33 000–38 000 kr/mån. Se alla 16 utbildningar i kalkylatorn ovan med exakta SCB-siffror.'},
+  {q:'Hur lång tid tar det att skapa en personlig studieplan?',a:'Ca 3 minuter. Du svarar på frågor om din nuvarande situation, och vi genererar en komplett plan med behörighetsanalys, CSN-kalkyl, skolmatchning och antagningsdatum — allt anpassat efter dig.'}
 ];
 
 function getFAQForEdu(e){

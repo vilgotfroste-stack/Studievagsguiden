@@ -23,6 +23,17 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5NFR33BFDF"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-5NFR33BFDF');</script>
 <script>
+function toggleNavMenu(){
+  const panel=document.getElementById('navPanel');
+  const ov=document.getElementById('navOv');
+  const ham=document.getElementById('navHam');
+  if(!panel) return;
+  const isOpen=panel.classList.contains('a');
+  panel.classList.toggle('a');
+  ov.classList.toggle('a');
+  if(ham) ham.classList.toggle('open');
+  document.body.style.overflow=isOpen?'':'hidden';
+}
 window.PAGE = {
   badge: 'För dig som precis gått ut gymnasiet',
   h1: 'Vad händer efter gymnasiet, har du en plan?',
@@ -37,13 +48,69 @@ window.PAGE = {
   ]
 };
 </script>
+<style>
+.nav-ham{background:none;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;gap:5px;border-radius:6px;transition:background .15s}
+.nav-ham:hover{background:var(--al)}
+.nav-ham span{display:block;width:22px;height:2px;background:var(--tx);border-radius:2px;transition:all .3s}
+.nav-ham.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.nav-ham.open span:nth-child(2){opacity:0;transform:translateX(-8px)}
+.nav-ham.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.nav-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:150;backdrop-filter:blur(2px)}.nav-ov.a{display:block}
+.nav-panel{position:fixed;top:0;right:-300px;width:280px;height:100%;background:#fff;z-index:200;transition:right .3s cubic-bezier(.4,0,.2,1);box-shadow:-6px 0 24px rgba(0,0,0,.12);overflow-y:auto}
+.nav-panel.a{right:0}
+.nav-ph{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid #C5D8EB}
+.nav-pcls{background:none;border:none;font-size:1.4rem;cursor:pointer;color:#7A7A74;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .15s}
+.nav-pcls:hover{background:#F4F8F5;color:#0A0A0A}
+.nav-lnk{display:flex;align-items:center;gap:10px;padding:13px 20px;font-size:.93rem;font-weight:600;color:#0A0A0A;text-decoration:none;transition:background .15s;border-left:3px solid transparent}
+.nav-lnk:hover{background:#EBF5F0;color:#5BA882;border-left-color:#5BA882}
+.nav-lnk.cur{background:#EBF5F0;color:#5BA882;border-left-color:#5BA882}
+.nav-lnk svg{flex-shrink:0;opacity:.7}
+.nav-sep{height:1px;background:#C5D8EB;margin:8px 20px}
+</style>
 </head>
 <body>
 
 <nav>
-  <div class="logo" onclick="resetPage()" style="cursor:pointer" title="Börja om"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">gu<span class="i-dot">ı</span>den</span></div>
-  <a href="/min-plan" style="font-size:.85rem;font-weight:600;color:var(--ac);text-decoration:none;border:1.5px solid var(--ac);padding:7px 18px;border-radius:8px">Logga in</a>
+  <div class="logo" onclick="resetPage()" style="cursor:pointer" title="Börja om">
+    <span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">gu<span class="i-dot">ı</span>den</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <a href="/min-plan" style="font-size:.85rem;font-weight:600;color:var(--ac);text-decoration:none;border:1.5px solid var(--ac);padding:7px 16px;border-radius:8px">Logga in</a>
+    <button class="nav-ham" id="navHam" onclick="toggleNavMenu()" aria-label="Öppna meny">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
+<div class="nav-ov" id="navOv" onclick="toggleNavMenu()"></div>
+<div class="nav-panel" id="navPanel">
+  <div class="nav-ph">
+    <div class="logo" style="font-size:1.15rem"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span></div>
+    <button class="nav-pcls" onclick="toggleNavMenu()" aria-label="Stäng meny">&#x2715;</button>
+  </div>
+  <div style="padding:8px 0">
+    <a href="/" class="nav-lnk">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Startsida
+    </a>
+    <a href="/utbildningar" class="nav-lnk">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Utbildningar
+    </a>
+    <a href="/hogsta-lon" class="nav-lnk">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Högsta lön
+    </a>
+    <a href="/yrkestest" class="nav-lnk">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      Yrkestest
+    </a>
+    <div class="nav-sep"></div>
+    <a href="/skapa-min-plan" class="nav-lnk" style="color:#5BA882">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Skapa min plan
+    </a>
+  </div>
+</div>
 
 <section class="hero">
   <div class="badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><script>document.write(PAGE.badge)</script></div>
