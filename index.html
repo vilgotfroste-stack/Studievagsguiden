@@ -13,6 +13,25 @@
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background-color:#EAF7F1;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.07) 0px,rgba(100,160,130,0.07) 1px,transparent 1px,transparent 12px);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased;}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+/* Slide-in nav panel */
+.nav-ham{background:none;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;gap:5px;border-radius:6px;transition:background .15s}
+.nav-ham:hover{background:var(--al)}
+.nav-ham span{display:block;width:22px;height:2px;background:var(--tx);border-radius:2px;transition:all .3s}
+.nav-ham.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.nav-ham.open span:nth-child(2){opacity:0;transform:translateX(-8px)}
+.nav-ham.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.nav-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:150;backdrop-filter:blur(2px)}
+.nav-ov.a{display:block}
+.nav-panel{position:fixed;top:0;right:-300px;width:280px;height:100%;background:#fff;z-index:200;transition:right .3s cubic-bezier(.4,0,.2,1);box-shadow:-6px 0 24px rgba(0,0,0,.12);overflow-y:auto}
+.nav-panel.a{right:0}
+.nav-ph{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--bo)}
+.nav-pcls{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--li);width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .15s}
+.nav-pcls:hover{background:var(--bg);color:var(--tx)}
+.nav-lnk{display:flex;align-items:center;gap:10px;padding:13px 20px;font-size:.93rem;font-weight:600;color:var(--tx);text-decoration:none;transition:background .15s;border-left:3px solid transparent}
+.nav-lnk:hover{background:var(--al);color:var(--ac);border-left-color:var(--ac)}
+.nav-lnk.cur{background:var(--al);color:var(--ac);border-left-color:var(--ac)}
+.nav-lnk svg{flex-shrink:0;opacity:.7}
+.nav-sep{height:1px;background:var(--bo);margin:8px 20px}
 .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;letter-spacing:0.01em}
 .logo .i-dot{position:relative;display:inline-block}
 .logo .i-dot::after{content:'';position:absolute;top:0.25em;left:50%;transform:translateX(-50%);width:0.2em;height:0.2em;background:#6BA3D0;border-radius:50%}
@@ -321,9 +340,40 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
   <div class="logo" onclick="resetPage()" style="cursor:pointer" title="Börja om">
     <span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">gu<span class="i-dot">ı</span>den</span>
   </div>
-  </div>
-  <a href="/min-plan" style="font-size:.85rem;font-weight:600;color:var(--ac);text-decoration:none;border:1.5px solid var(--ac);padding:7px 18px;border-radius:8px">Logga in</a>
+  <button class="nav-ham" id="navHam" onclick="toggleNavMenu()" aria-label="Öppna meny">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-ov" id="navOv" onclick="toggleNavMenu()"></div>
+<div class="nav-panel" id="navPanel">
+  <div class="nav-ph">
+    <div class="logo" style="font-size:1.15rem"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span></div>
+    <button class="nav-pcls" onclick="toggleNavMenu()" aria-label="Stäng meny">&#x2715;</button>
+  </div>
+  <div style="padding:8px 0">
+    <a href="/" class="nav-lnk cur">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Startsida
+    </a>
+    <a href="/utbildningar" class="nav-lnk">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Utbildningar
+    </a>
+    <a href="/hogsta-lon" class="nav-lnk">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Högsta lön
+    </a>
+    <a href="/yrkestest" class="nav-lnk">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      Yrkestest
+    </a>
+    <div class="nav-sep"></div>
+    <a href="/skapa-min-plan" class="nav-lnk" style="color:var(--ac)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      Skapa min plan
+    </a>
+  </div>
+</div>
 
 <section class="hero">
   <div class="badge">
@@ -424,6 +474,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
   </div>
 </div>
 
+<!-- En vanlig dag i yrket -->
+<div id="dailySec" style="display:none;padding:0 32px"><div id="dailyCont"></div></div>
+
 <!-- FAQ-sektion för SEO -->
 <section style="max-width:720px;margin:0 auto;padding:60px 32px 80px">
   <h2 style="font-family:'DM Serif Display',serif;font-size:1.7rem;text-align:center;margin-bottom:8px;color:var(--tx)">Vanliga frågor om karriärbyte</h2>
@@ -496,6 +549,26 @@ const SALD={
  25: {p25:34500,med:43200,p75:55600}, // Fastighetsförvaltare
 };
 let edu=null,sal=0,ws=0,ans={};
+
+// ── En vanlig dag i yrket ──────────────────────────────────────────────────
+const DAILY={
+  1:{tasks:['Skriva och granska kod (code review) i team','Lösa buggar och optimera prestanda','Delta i dagliga standups och planering','Designa och dokumentera nya features','Samarbeta med designers och produktägare'],env:'Kontor eller hemifrån. Lugnt, teknikfokuserat. Flexibla arbetstider är standard.'},
+  2:{tasks:['Hämta och rensa data från databaser och API:er','Bygga dashboards och visualiseringar i Excel/Power BI/Tableau','Analysera trender och presentera insikter för ledning','Skriva SQL-queries och Python-skript','Möten med affärsteam för att förstå databehov'],env:'Hybrid eller remote. Analytisk miljö med periodvis intensiva deadlines.'},
+  3:{tasks:['Övervaka säkerhetsloggar och hantera incidenter','Genomföra sårbarhetsscanningar och penetrationstester','Uppdatera säkerhetspolicyer och riktlinjer','Utbilda medarbetare i informationssäkerhet','Samarbeta med IT-team vid säkerhetsuppdateringar'],env:'Kontor eller remote. Högt ansvar. Ibland jour vid säkerhetsincidenter.'},
+  9:{tasks:['Bokföra affärshändelser och stämma av konton','Upprätta månads- och kvartalsbokslut','Hantera leverantörsfakturor och kundreskontra','Sammanställa momsrapporter och skattedeklarationer','Ge ekonomisk rådgivning till kunder eller intern ledning'],env:'Kontor. Tidvis intensivt kring bokslut och deklarationsperioder.'},
+  10:{tasks:['Analysera och följa upp budget och utfall','Bygga ekonomiska prognoser och modeller','Presentera ekonomisk status för ledningsgrupp','Identifiera kostnadsavvikelser och förbättringsåtgärder','Delta i strategimöten och affärsplanering'],env:'Kontor, ibland hybrid. Analytisk roll med nära samarbete med ledning.'},
+  11:{tasks:['Planera och publicera innehåll i sociala medier','Analysera kampanjresultat och optimera annonser','Skriva SEO-optimerade texter och artiklar','Hantera betald annonsering i Google och Meta','Rapportera trafikdata och konverteringar till kund'],env:'Kontor, byrå eller hemifrån. Kreativ och tempofylld miljö.'},
+  12:{tasks:['Hantera rekryteringsprocess från annons till onboarding','Ge råd till chefer i personalfrågor','Administrera lön, förmåner och anställningsavtal','Genomföra medarbetarsamtal och kompetensanalyser','Arbeta med employer branding och arbetsmiljöfrågor'],env:'Kontor, mestadels inomhus. Social och omväxlande roll.'},
+  14:{tasks:['Ta emot och triagera patienter','Administrera läkemedel och övervaka behandlingar','Dokumentera patientstatus i journalsystem','Samarbeta med läkare och annan vårdpersonal','Stötta patienter och anhöriga'],env:'Sjukhus eller vårdcentral. Skiftarbete inklusive nätter och helger. Fysiskt och psykiskt krävande.'},
+  16:{tasks:['Utreda och bedöma patientens aktivitetsförmåga','Planera och genomföra rehabiliteringsprogram','Tillverka eller ordinera hjälpmedel','Dokumentera insatser i journalsystem','Samarbeta med läkare, sjuksköterskor och socialtjänst'],env:'Sjukhus, rehabklinik eller hemsjukvård. Varierande och meningsfull vardag.'},
+  17:{tasks:['Analysera blod-, urin- och vävnadsprover','Använda avancerade laboratorieinstrument','Säkra kvalitetskontroll och metodvalidering','Dokumentera analysresultat i laboratorieinformationssystem','Samarbeta med läkare kring tolkningar'],env:'Laboratorium. Noggrann och strukturerad miljö. Dagtidsarbete i regel.'},
+  18:{tasks:['Undersöka och rensa patienternas tänder','Informera om munhygien och förebyggande vård','Röntga tänder och bedöma oralhälsa','Dokumentera behandling och skriva remisser','Samarbeta med tandläkare och tandtekniker'],env:'Tandklinik. Nära patientkontakt. Relativt regelbundna arbetstider.'},
+  20:{tasks:['Planera och genomföra lektioner','Bedöma elevarbeten och ge återkoppling','Ha mentor- och elevhälsomöten','Kontakta föräldrar vid behov','Delta i arbetslagsmöten och pedagogisk planering'],env:'Klassrum och skola. Intensivt med elever. Ledighet under lov.'},
+  21:{tasks:['Hålla lektioner i ämnesspecialitet','Rätta prov och bedöma nationella prov','Planera kurser och uppdatera kursplaner','Handleda gymnasiearbeten och projektarbeten','Delta i konferenser och kollegialt lärande'],env:'Gymnasieskola. Mer självständig roll än grundskolan. Ledighet under lov.'},
+  22:{tasks:['Genomföra individuella vägledningssamtal med elever','Kartlägga utbildnings- och arbetsmarknadsinformation','Arrangera studiebesök och arbetsplatsträffar','Samarbeta med lärare kring elevers studiesituation','Dokumentera samtal och åtgärder'],env:'Skola eller kommunal verksamhet. Lugn och stödjande atmosfär.'},
+  24:{tasks:['Granska och tolka ritningar och tekniska handlingar','Samordna arbeten på byggarbetsplatsen','Beställa material och koordinera leveranser','Delta i möten med beställare och underentreprenörer','Dokumentera avvikelser och kontrollera kvalitet'],env:'Kontor och byggarbetsplats. Utomhusarbete i alla väder. Fysiskt aktiv roll.'},
+  25:{tasks:['Inspektera fastigheter och planera underhållsåtgärder','Hantera hyresavtal och hyresgästärenden','Koordinera hantverkare och serviceföretag','Budgetera och följa upp driftskostnader','Rapportera till styrelse eller fastighetsägare'],env:'Kontor och ute på fältet. Varierande vardag med både administrativa och praktiska inslag.'}
+};
 
 // ═══════════════════════════════════════
 // DEV FUNCTION - SKIP TO PLAN
@@ -585,6 +658,18 @@ function devFillAndShowPlan() {
 }
 
 const fmt=n=>n.toLocaleString('sv-SE');
+
+function toggleNavMenu(){
+  const panel=document.getElementById('navPanel');
+  const ov=document.getElementById('navOv');
+  const ham=document.getElementById('navHam');
+  if(!panel) return;
+  const isOpen=panel.classList.contains('a');
+  panel.classList.toggle('a');
+  ov.classList.toggle('a');
+  if(ham) ham.classList.toggle('open');
+  document.body.style.overflow=isOpen?'':'hidden';
+}
 
 function initScrollReveal(){
     const style=document.createElement('style');
@@ -695,10 +780,29 @@ const FAQ=[
   {q:'Vad ingår i den personliga omställningsplanen?',a:'Planen innehåller behörighetsanalys, CSN-kalkyl med din faktiska ekonomi, skolmatchning, antagningsdatum och en konkret tidslinje — allt anpassat efter din ålder, stad och livssituation.'}
 ];
 
-function initFAQ(){
+function getFAQForEdu(e){
+  if(!e) return FAQ;
+  const fmt2=n=>n.toLocaleString('sv-SE');
+  const reqStr=e.req.join(', ');
+  return [
+    {q:`Hur lång är utbildningen till ${e.t}?`,a:`Utbildningen tar ${e.y} år på heltid. Med CSN-stöd kan du studera på halvfart och kombinera med deltidsarbete, vilket dubblar studietiden men minskar den ekonomiska påfrestningen.`},
+    {q:`Vad krävs för att komma in på ${e.t.toLowerCase()}utbildningen?`,a:`Grundläggande behörighet krävs alltid. För den här utbildningen behöver du även: ${reqStr}. Saknar du något kan du komplettera via Komvux — ofta gratis.`},
+    {q:`Vad tjänar en ${e.t.toLowerCase()} i ingångslön?`,a:`Ingångslönen ligger vanligtvis på ${fmt2(e.s0)} kr/mån. Med erfarenhet och specialisering kan du nå ${fmt2(e.s1)} kr eller mer. Medianlönen för yrket är ${fmt2((SALD[e.id]||{med:e.s1}).med)} kr/mån enligt SCB 2024.`},
+    {q:`Vilka karriärvägar finns som ${e.t.toLowerCase()}?`,a:`Typisk karriärstege: ${e.sc.st} → ${e.sc.ho} → ${e.sc.sp} → ${e.sc.le}. Att byta arbetsgivare vart 3–5:e år ger ofta snabbare löneutveckling än att stanna kvar.`},
+    {q:`Är det hög efterfrågan på ${e.t.toLowerCase()} i Sverige?`,a:`Efterfrågan bedöms som ${['','mycket låg','låg','medelhög','hög','mycket hög'][e.dem]} enligt Arbetsförmedlingens senaste prognos. Framtidsutsikterna är ${['','mycket svaga','svaga','stabila','goda','mycket goda'][e.future]}.`},
+    ...FAQ.slice(2,5)
+  ];
+}
+
+function initFAQ(e){
   const el=document.getElementById('faqList');
   if(!el) return;
-  el.innerHTML=FAQ.map((f,i)=>`
+  const items=getFAQForEdu(e);
+  // Update FAQ section heading
+  const h2=el.closest('section')?.querySelector('h2');
+  if(h2 && e) h2.textContent='Vanliga frågor om '+e.t.toLowerCase();
+  else if(h2) h2.textContent='Vanliga frågor om karriärbyte';
+  el.innerHTML=items.map((f,i)=>`
     <div style="background:#fff;border:1.5px solid #C5D8EB;border-radius:12px;overflow:hidden;transition:border-color .2s">
       <button onclick="toggleFAQ(${i})" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 20px;background:none;border:none;font-family:inherit;font-size:.95rem;font-weight:600;color:var(--tx);cursor:pointer;text-align:left;gap:16px">
         <span>${f.q}</span>
@@ -747,7 +851,7 @@ document.addEventListener('DOMContentLoaded',function(){
         }
     }catch(e){}
     initScrollReveal();
-    initFAQ();
+    initFAQ(null);
 });
 
 // Step 1
@@ -784,6 +888,8 @@ function calcG(){
     buildProsAndCons(e);
     buildSalaryInfo(e);
     buildLifetimeAnalysis(e);
+    buildDailySection(e);
+    initFAQ(edu);
     // Fada in CTA när den scrollas in i vyn
     const ctaEl=document.getElementById('ctaPlan');
     const ctaObs=new IntersectionObserver((entries)=>{
@@ -1002,6 +1108,32 @@ function buildSalaryInfo(e){
     document.getElementById('salaryInfo').innerHTML=h;
 }
 
+
+function buildDailySection(e){
+    const sec=document.getElementById('dailySec');
+    const cont=document.getElementById('dailyCont');
+    if(!sec||!cont) return;
+    const d=DAILY[e.id];
+    if(!d){sec.style.display='none';return;}
+    sec.style.display='block';
+    cont.innerHTML=`
+    <div style="max-width:720px;margin:0 auto">
+      <div class="sh"><h2>En vanlig dag som ${e.t.toLowerCase()}</h2><p style="color:var(--mu)">Vad händer egentligen på jobbet?</p></div>
+      <div style="background:#fff;border:2px solid var(--bo);border-radius:var(--r);padding:24px;margin-bottom:12px">
+        <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mu);margin-bottom:14px">TYPISKA ARBETSUPPGIFTER</div>
+        <ul style="list-style:none;display:grid;gap:10px">
+          ${d.tasks.map(t=>`<li style="display:flex;align-items:flex-start;gap:10px;font-size:.9rem;color:var(--tx);line-height:1.5">
+            <svg style="flex-shrink:0;margin-top:2px" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5BA882" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>${t}</span>
+          </li>`).join('')}
+        </ul>
+        <div style="margin-top:18px;padding:14px 16px;background:var(--al);border-radius:10px;border-left:3px solid var(--ac)">
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ah);margin-bottom:6px">ARBETSMILJÖ</div>
+          <div style="font-size:.88rem;color:var(--tx);line-height:1.6">${d.env}</div>
+        </div>
+      </div>
+    </div>`;
+}
 
 function buildLifetimeAnalysis(e){
     const workYears = 40;
