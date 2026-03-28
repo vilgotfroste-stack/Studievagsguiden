@@ -431,12 +431,13 @@ body{background:var(--bg);min-height:100vh}
     <span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">gu<span class="i-dot">ı</span>den</span>
   </a>
   <div style="display:flex;align-items:center;gap:12px">
-    <a href="/min-plan" style="font-size:.85rem;font-weight:600;color:#5BA882;text-decoration:none;border:1.5px solid #5BA882;padding:7px 18px;border-radius:8px">Logga in</a>
+    <a id="navLoginBtn" href="/min-plan" style="font-size:.85rem;font-weight:600;color:#5BA882;text-decoration:none;border:1.5px solid #5BA882;padding:7px 18px;border-radius:8px">Logga in</a>
     <button class="nav-ham" id="navHam" onclick="toggleNavMenu()" aria-label="Öppna meny">
     <span></span><span></span><span></span>
   </button>
   </div>
 </nav>
+<script>(function(){try{if(localStorage.getItem("svg_email")&&localStorage.getItem("svg_password")){var b=document.getElementById("navLoginBtn");if(b){b.textContent="Min plan";b.href="/min-plan";}}}catch(e){}})()</script>
 <div class="nav-ov" id="navOv" onclick="toggleNavMenu()"></div>
 <div class="nav-panel" id="navPanel">
   <div class="nav-ph">
