@@ -221,7 +221,14 @@ input[type=range].svq::-moz-range-thumb{width:24px;height:24px;border-radius:50%
 .nav-lnk{display:flex;align-items:center;gap:10px;padding:13px 20px;font-size:.93rem;font-weight:600;color:#0A0A0A;text-decoration:none;transition:background .15s;border-left:3px solid transparent}
 .nav-lnk:hover{background:#EBF5F0;color:#5BA882;border-left-color:#5BA882}
 .nav-lnk.cur{background:#EBF5F0;color:#5BA882;border-left-color:#5BA882}
-.nav-lnk svg{flex-shrink:0;opacity:.7}
+.nav-lnk svg{flex-shrink:0;opacity:.6;margin-top:2px}
+.nav-lnk-title{font-size:.9rem;font-weight:600;line-height:1.2;color:var(--tx,#0A0A0A)}
+.nav-lnk-sub{font-size:.72rem;font-weight:400;color:#7A7A74;margin-top:1px;line-height:1.2}
+.nav-lnk:hover .nav-lnk-title,.nav-lnk.cur .nav-lnk-title{color:#5BA882}
+.nav-lnk:hover .nav-lnk-sub,.nav-lnk.cur .nav-lnk-sub{color:#5BA882}
+.nav-panel-foot{padding:14px 20px;border-top:1px solid #C5D8EB;margin-top:8px}
+.nav-panel-foot a{font-size:.72rem;color:#9A9A94;text-decoration:none}
+.nav-panel-foot a:hover{color:#5BA882}
 .nav-sep{height:1px;background:#C5D8EB;margin:8px 20px}
 .nav-section-lbl{padding:8px 20px 4px;font-size:.68rem;font-weight:700;color:#7A7A74;letter-spacing:.8px;text-transform:uppercase}
 .site-footer{background:#1B3A5C;color:rgba(255,255,255,.75);padding:28px 32px}
@@ -263,27 +270,33 @@ input[type=range].svq::-moz-range-thumb{width:24px;height:24px;border-radius:50%
   <div style="padding:8px 0">
     <a href="/" class="nav-lnk">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      Startsidan
+      <div><div class="nav-lnk-title">Startsidan</div><div class="nav-lnk-sub">Lönar det sig?</div></div>
     </a>
+    <div class="nav-section-lbl">Verktyg</div>
     <a href="/skapa-min-plan" class="nav-lnk">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-      Skapa min plan
+      <div><div class="nav-lnk-title">Skapa min plan</div><div class="nav-lnk-sub">Personlig studieplan</div></div>
+    </a>
+    <a href="/jamfor-utbildningar" class="nav-lnk">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <div><div class="nav-lnk-title">J&#228;mf&#246;r utbildningar</div><div class="nav-lnk-sub">Sida vid sida</div></div>
     </a>
     <a href="/utbildningar" class="nav-lnk">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-      Jämför alla utbildningar
+      <div><div class="nav-lnk-title">Utbildningar &amp; yrken</div><div class="nav-lnk-sub">Bl&#228;ddra bland alla</div></div>
     </a>
-    <a href="/yrkestest" class="nav-lnk cur">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-      Yrkestest
+    <a href="/csn-guide" class="nav-lnk">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      <div><div class="nav-lnk-title">CSN-guide</div><div class="nav-lnk-sub">Skuld, &#229;terbetalning &amp; mer</div></div>
     </a>
     <div class="nav-sep"></div>
-    <div class="nav-section-lbl">Konton</div>
+    <div class="nav-section-lbl">Konto</div>
     <a href="/min-plan" class="nav-lnk">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      Logga in
+      <div><div class="nav-lnk-title">Logga in</div><div class="nav-lnk-sub">Se din sparade plan</div></div>
     </a>
   </div>
+  <div class="nav-panel-foot"><a href="/integritetspolicy">Integritetspolicy</a></div>
 </div>
 
 <!-- Static SEO content — indexed by Google, hidden when quiz starts -->
