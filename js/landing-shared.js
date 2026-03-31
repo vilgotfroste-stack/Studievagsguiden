@@ -49,6 +49,26 @@ const SALD={
   25:{p25:34500,med:43200,p75:55600}
 };
 
+// SCB 2024 månadslön per åldersgrupp — källa: SCB LonYrkeAlder4AN
+const SALA={
+  1:  {a1824:37000,a2534:48300,a3544:56700,a4554:60300,a5564:60400},
+  2:  {a1824:34200,a2534:48100,a3544:58100,a4554:62100,a5564:62700},
+  3:  {a1824:null, a2534:45800,a3544:57200,a4554:66400,a5564:61200},
+  9:  {a1824:29700,a2534:40400,a3544:51900,a4554:57100,a5564:56900},
+  10: {a1824:37300,a2534:49700,a3544:57700,a4554:60500,a5564:57900},
+  11: {a1824:30800,a2534:45400,a3544:56100,a4554:62800,a5564:65700},
+  12: {a1824:32600,a2534:43000,a3544:51200,a4554:54200,a5564:55700},
+  14: {a1824:35200,a2534:39800,a3544:43600,a4554:46700,a5564:48000},
+  16: {a1824:32200,a2534:35300,a3544:39100,a4554:42100,a5564:42900},
+  17: {a1824:null, a2534:43200,a3544:43900,a4554:44700,a5564:45100},
+  18: {a1824:null, a2534:37500,a3544:42500,a4554:42500,a5564:42600},
+  20: {a1824:26300,a2534:37300,a3544:40300,a4554:42500,a5564:42600},
+  21: {a1824:29800,a2534:38100,a3544:42000,a4554:44100,a5564:44400},
+  22: {a1824:24900,a2534:33000,a3544:36100,a4554:37800,a5564:38800},
+  23: {a1824:null, a2534:43000,a3544:57100,a4554:53200,a5564:49800},
+  24: {a1824:33700,a2534:45900,a3544:51800,a4554:51800,a5564:53300},
+};
+
 // Pros/Cons per utbildning
 const PN={
   1:{pro:['35 000 kr ingångslön med snabb stegring till 52 500+','Remote-arbete standard — de flesta tjänster tillåter hemifrån','Konsultuppdrag kan ge 50–80% högre timpris än fast anställning','Kort utbildning (3 år) relativt lönenivån'],con:['15% AI-automatiseringsrisk — rutinkodning ersätts redan','Kräver ständig vidareutbildning vid teknikskiften','Internationell konkurrens pressar löner i vissa segment','Konsultmarknaden svänger kraftigt med konjunkturen']},
@@ -265,7 +285,7 @@ function buildSalaryInfo(e){
   const yrsLabel=yrsToMed<=2?'1–2 år':yrsToMed<=4?'3–4 år':yrsToMed<=6?'4–6 år':'5–8 år';
   const scale=sd.p75-sd.p25;
   const barMedPct=Math.round((sd.med-sd.p25)/scale*100);
-  const sa=SALA[e.id];
+  const sa=(typeof SALA!=='undefined'&&SALA)?SALA[e.id]:null;
   const ageGroups=sa?[
     {label:'18–24 år',val:sa.a1824},
     {label:'25–34 år',val:sa.a2534},
