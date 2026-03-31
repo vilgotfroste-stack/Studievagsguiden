@@ -5,22 +5,22 @@
 
 // EDUCATION DATA
 const E=[
-{id:1, slug:'systemutvecklare', t:'Systemutvecklare', y:3, s0:35000,s1:52500,dem:4,ai:15,stress:2,future:4,tc:8000, flex:5,people:2,practical:3,sig:'flex', req:['Matte 2','Engelska 6'], rp:['Naturvetenskap','Teknik'], pp:['Samhäll','Ekonomi'], sc:{st:'Utvecklare på företag',ho:'Konsult / byter bolag',sp:'Arkitekt / specialist',le:'Tech lead / CTO'}},
-{id:2, slug:'dataanalytiker', t:'Dataanalytiker', y:3, s0:33000,s1:54700,dem:4,ai:12,stress:2,future:5,tc:8000, flex:4,people:2,practical:2,sig:'stress',req:['Matte 3c','Engelska 6'], rp:['Naturvetenskap','Teknik','Ekonomi'], pp:['Samhäll'], sc:{st:'Dataanalytiker junior',ho:'Senior analytiker / konsult',sp:'Data scientist / BI-specialist',le:'Analytics manager'}},
-{id:3, slug:'it-sakerhetsspecialist', t:'IT-säkerhetsspecialist', y:3, s0:33000,s1:55000,dem:5,ai:5, stress:3,future:5,tc:8000, flex:4,people:2,practical:2,sig:'dem', req:['Matte 2'], rp:['Naturvetenskap','Teknik'], pp:['Samhäll','Ekonomi'], sc:{st:'Säkerhetsanalytiker',ho:'Konsult / byter organisation',sp:'Cybersecurity specialist',le:'CISO / säkerhetschef'}},
-{id:9, slug:'redovisningsekonom', t:'Redovisningsekonom', y:2, s0:30000,s1:42300,dem:3,ai:35,stress:2,future:2,tc:8000, flex:3,people:2,practical:2,sig:'stress',req:['Grundläggande behörighet'], rp:['Ekonomi'], pp:['Samhäll'], sc:{st:'Redovisningsekonom',ho:'Byter byrå',sp:'Auktoriserad redovisningskonsult',le:'Ekonomichef'}},
-{id:10, slug:'controller', t:'Controller', y:3, s0:33000,s1:53100,dem:3,ai:28,stress:3,future:3,tc:9000, flex:3,people:3,practical:2,sig:'flex', req:['Matte 3c'], rp:['Ekonomi','Naturvetenskap'], pp:['Samhäll'], sc:{st:'Junior controller',ho:'Byter bolag / bransch',sp:'Business controller',le:'CFO'}},
-{id:11, slug:'digital-marknadsforre', t:'Digital marknadsförare', y:2, s0:30000,s1:50800,dem:3,ai:30,stress:3,future:3,tc:8000, flex:4,people:3,practical:3,sig:'fast', req:['Grundläggande behörighet'], rp:['Ekonomi','Samhäll'], pp:[], sc:{st:'Digital marknadsfförare',ho:'Byter byrå / inhouse',sp:'Performance specialist',le:'Marketing manager'}},
-{id:12, slug:'hr-specialist', t:'HR-specialist', y:2, s0:30000,s1:47300,dem:3,ai:20,stress:3,future:3,tc:8000, flex:3,people:5,practical:3,sig:'flex', req:['Grundläggande behörighet'], rp:['Samhäll','Ekonomi'], pp:[], sc:{st:'HR-generalist',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
-{id:14, slug:'sjukskoterska', t:'Sjuksköterska', y:3, s0:32000,s1:42000,dem:5,ai:8,stress:4,future:5,tc:8000, flex:2,people:5,practical:4,sig:'dem', req:['Matte 2','Naturkunskap 2','Samhällskunskap 1b'], rp:['Naturvetenskap'], pp:['Samhäll'], sc:{st:'Sjuksköterska',ho:'Byter avdelning / region',sp:'Specialistsjuksköterska',le:'Vårdchef'}},
-{id:16, slug:'arbetsterapeut', t:'Arbetsterapeut', y:3, s0:29000,s1:38500,dem:4,ai:5,stress:3,future:4,tc:8000, flex:3,people:5,practical:4,sig:'dem', req:['Matte 2','Samhällskunskap 1b'], rp:['Naturvetenskap','Samhäll'], pp:[], sc:{st:'Arbetsterapeut',ho:'Byter verksamhet',sp:'Specialist',le:'Enhetschef'}},
-{id:17, slug:'biomedicinsk-analytiker', t:'Biomedicinsk analytiker', y:3, s0:30000,s1:42900,dem:4,ai:12,stress:2,future:4,tc:8000, flex:2,people:2,practical:4,sig:'stress', req:['Matte 2','Kemi 1','Biologi 1'], rp:['Naturvetenskap'], pp:[], sc:{st:'BMA',ho:'Byter lab / region',sp:'Specialist (klinisk kemi/mikrobiologi)',le:'Labbchef'}},
-{id:18, slug:'tandhygienist', t:'Tandhygienist', y:2, s0:30000,s1:40200,dem:4,ai:8,stress:2,future:4,tc:8000, flex:3,people:4,practical:5,sig:'fast', req:['Naturkunskap 2'], rp:['Naturvetenskap'], pp:['Samhäll'], sc:{st:'Tandhygienist',ho:'Privat klinik',sp:'Specialist parodontologi',le:'Klinikchef'}},
-{id:20, slug:'grundskollarare', t:'Grundskollärare', y:4, s0:29000,s1:40800,dem:4,ai:10,stress:4,future:4,tc:9000, flex:2,people:5,practical:4,sig:'dem', req:['Se lärosätets krav'], rp:['Alla program'], pp:[], sc:{st:'Lärare',ho:'Byter skola / kommun',sp:'Förstelärare',le:'Rektor'}},
-{id:21, slug:'gymnasielarare', t:'Gymnasielärare', y:5, s0:31000,s1:42600,dem:4,ai:10,stress:3,future:4,tc:9000, flex:2,people:5,practical:3,sig:'dem', req:['Se lärosätets krav'], rp:['Alla program'], pp:[], sc:{st:'Lärare',ho:'Byter skola / huvudman',sp:'Förstelärare / ämnesutvecklare',le:'Rektor'}},
-{id:22, slug:'studie-yrkesvagledare', t:'Studie- och yrkesvägledare', y:3, s0:29000,s1:36200,dem:3,ai:15,stress:2,future:3,tc:9000, flex:3,people:5,practical:3,sig:'stress', req:['Samhällskunskap 1b'], rp:['Samhäll'], pp:['Ekonomi'], sc:{st:'SYV',ho:'Byter skola / arbetsförmedling',sp:'SYV-samordnare',le:'Enhetschef'}},
-{id:23, slug:'fastighetsforvaltare', t:'Fastighetsförvaltare', y:2, s0:34000,s1:43200,dem:3,ai:15,stress:2,future:3,tc:8000, flex:3,people:3,practical:3,sig:'stress', req:['Grundläggande behörighet'], rp:['Ekonomi','Teknik'], pp:['Samhäll'], sc:{st:'Förvaltare',ho:'Byter bolag',sp:'Specialist (kommersiellt/bostäder)',le:'Förvaltningschef'}},
-{id:24, slug:'byggingenjor', t:'Byggingenjör', y:3, s0:34000,s1:48000,dem:4,ai:15,stress:3,future:4,tc:8000, flex:2,people:3,practical:4,sig:'dem', req:['Matte 3c','Fysik 2'], rp:['Naturvetenskap','Teknik'], pp:[], sc:{st:'Byggingenjör',ho:'Byter entreprenör / beställare',sp:'Projektledare',le:'Platschef / VD'}}
+{id:1,  slug:'systemutvecklare',        t:'Systemutvecklare',           y:3, s0:35000,s1:52500,dem:4,ai:15,stress:2,future:4,tc:8000,flex:5,people:2,practical:3,sig:'flex',  req:['Matte 2','Engelska 6'],                              rp:['Naturvetenskap','Teknik'],          pp:['Samhäll','Ekonomi']},
+{id:2,  slug:'dataanalytiker',           t:'Dataanalytiker',             y:3, s0:33000,s1:54700,dem:4,ai:12,stress:2,future:5,tc:8000,flex:4,people:2,practical:2,sig:'stress',req:['Matte 3c','Engelska 6'],                              rp:['Naturvetenskap','Teknik','Ekonomi'],pp:['Samhäll']},
+{id:3,  slug:'it-sakerhetsspecialist',   t:'IT-säkerhetsspecialist',     y:3, s0:33000,s1:55000,dem:5,ai:5, stress:3,future:5,tc:8000,flex:4,people:2,practical:2,sig:'dem',   req:['Matte 2'],                                           rp:['Naturvetenskap','Teknik'],          pp:['Samhäll','Ekonomi']},
+{id:9,  slug:'redovisningsekonom',       t:'Redovisningsekonom',         y:2, s0:30000,s1:42300,dem:3,ai:35,stress:2,future:2,tc:8000,flex:3,people:2,practical:2,sig:'stress',req:['Grundläggande behörighet'],                           rp:['Ekonomi'],                          pp:['Samhäll']},
+{id:10, slug:'controller',               t:'Controller',                 y:3, s0:33000,s1:53100,dem:3,ai:28,stress:3,future:3,tc:9000,flex:3,people:3,practical:2,sig:'flex',  req:['Matte 3c'],                                          rp:['Ekonomi','Naturvetenskap'],         pp:['Samhäll']},
+{id:11, slug:'digital-marknadsforre',    t:'Digital marknadsförare',     y:2, s0:30000,s1:50800,dem:3,ai:30,stress:3,future:3,tc:8000,flex:4,people:3,practical:3,sig:'fast',  req:['Grundläggande behörighet'],                           rp:['Ekonomi','Samhäll'],                pp:[]},
+{id:12, slug:'hr-specialist',            t:'HR-specialist',              y:2, s0:30000,s1:47300,dem:3,ai:20,stress:3,future:3,tc:8000,flex:3,people:5,practical:3,sig:'flex',  req:['Grundläggande behörighet'],                           rp:['Samhäll','Ekonomi'],                pp:[]},
+{id:14, slug:'sjukskoterska',            t:'Sjuksköterska',              y:3, s0:32000,s1:42000,dem:5,ai:8, stress:4,future:5,tc:8000,flex:2,people:5,practical:4,sig:'dem',   req:['Matte 2','Naturkunskap 2','Samhällskunskap 1b'],     rp:['Naturvetenskap'],                   pp:['Samhäll']},
+{id:16, slug:'arbetsterapeut',           t:'Arbetsterapeut',             y:3, s0:29000,s1:38500,dem:4,ai:5, stress:3,future:4,tc:8000,flex:3,people:5,practical:4,sig:'dem',   req:['Matte 2','Samhällskunskap 1b'],                      rp:['Naturvetenskap','Samhäll'],         pp:[]},
+{id:17, slug:'biomedicinsk-analytiker',  t:'Biomedicinsk analytiker',    y:3, s0:30000,s1:42900,dem:4,ai:12,stress:2,future:4,tc:8000,flex:2,people:2,practical:4,sig:'stress',req:['Matte 2','Kemi 1','Biologi 1'],                       rp:['Naturvetenskap'],                   pp:[]},
+{id:18, slug:'tandhygienist',            t:'Tandhygienist',              y:2, s0:30000,s1:40200,dem:4,ai:8, stress:2,future:4,tc:8000,flex:3,people:4,practical:5,sig:'fast',  req:['Naturkunskap 2'],                                    rp:['Naturvetenskap'],                   pp:['Samhäll']},
+{id:20, slug:'grundskollarare',          t:'Grundskollärare',            y:4, s0:29000,s1:40800,dem:4,ai:10,stress:4,future:4,tc:9000,flex:2,people:5,practical:4,sig:'dem',   req:['Se lärosätets krav'],                                rp:['Alla program'],                     pp:[]},
+{id:21, slug:'gymnasielarare',           t:'Gymnasielärare',             y:5, s0:31000,s1:42600,dem:4,ai:10,stress:3,future:4,tc:9000,flex:2,people:5,practical:3,sig:'dem',   req:['Se lärosätets krav'],                                rp:['Alla program'],                     pp:[]},
+{id:22, slug:'studie-yrkesvagledare',    t:'Studie- och yrkesvägledare', y:3, s0:29000,s1:36200,dem:3,ai:15,stress:2,future:3,tc:9000,flex:3,people:5,practical:3,sig:'stress',req:['Samhällskunskap 1b'],                                rp:['Samhäll'],                          pp:['Ekonomi']},
+{id:23, slug:'fastighetsforvaltare',     t:'Fastighetsförvaltare',       y:2, s0:34000,s1:43200,dem:3,ai:15,stress:2,future:3,tc:8000,flex:3,people:3,practical:3,sig:'stress',req:['Grundläggande behörighet'],                           rp:['Ekonomi','Teknik'],                 pp:['Samhäll']},
+{id:24, slug:'byggingenjor',             t:'Byggingenjör',               y:3, s0:34000,s1:48000,dem:4,ai:15,stress:3,future:4,tc:8000,flex:2,people:3,practical:4,sig:'dem',   req:['Matte 3c','Fysik 2'],                                rp:['Naturvetenskap','Teknik'],          pp:[]}
 ];
 
 // SCB 2024 lönepercentiler per utbildning (kr/mån) — källa: SCB via Supabase
@@ -41,6 +41,27 @@ const SALD={
   22:{p25:31000,med:36200,p75:40100},
   23:{p25:34500,med:43200,p75:55600},
   24:{p25:42500,med:48000,p75:56100}
+};
+
+// SCB 2024 månadslön per åldersgrupp (kr/mån) — källa: SCB LonYrkeAlder4AN
+// null = SCB saknar data för den åldersgruppen
+const SALA={
+  1:  {a1824:37000, a2534:48300, a3544:56700, a4554:60300, a5564:60400},  // Systemutvecklare
+  2:  {a1824:34200, a2534:48100, a3544:58100, a4554:62100, a5564:62700},  // Dataanalytiker
+  3:  {a1824:null,  a2534:45800, a3544:57200, a4554:66400, a5564:61200},  // IT-säkerhetsspecialist
+  9:  {a1824:29700, a2534:40400, a3544:51900, a4554:57100, a5564:56900},  // Redovisningsekonom
+  10: {a1824:37300, a2534:49700, a3544:57700, a4554:60500, a5564:57900},  // Controller
+  11: {a1824:30800, a2534:45400, a3544:56100, a4554:62800, a5564:65700},  // Digital marknadsförare
+  12: {a1824:32600, a2534:43000, a3544:51200, a4554:54200, a5564:55700},  // HR-specialist
+  14: {a1824:35200, a2534:39800, a3544:43600, a4554:46700, a5564:48000},  // Sjuksköterska
+  16: {a1824:32200, a2534:35300, a3544:39100, a4554:42100, a5564:42900},  // Arbetsterapeut
+  17: {a1824:null,  a2534:43200, a3544:43900, a4554:44700, a5564:45100},  // Biomedicinsk analytiker
+  18: {a1824:null,  a2534:37500, a3544:42500, a4554:42500, a5564:42600},  // Tandhygienist
+  20: {a1824:26300, a2534:37300, a3544:40300, a4554:42500, a5564:42600},  // Grundskollärare
+  21: {a1824:29800, a2534:38100, a3544:42000, a4554:44100, a5564:44400},  // Gymnasielärare
+  22: {a1824:24900, a2534:33000, a3544:36100, a4554:37800, a5564:38800},  // Studie- och yrkesvägledare
+  24: {a1824:33700, a2534:45900, a3544:51800, a4554:51800, a5564:53300},  // Byggingenjör
+  // id 23 (Fastighetsförvaltare) saknas — SSYK 3334 gav ingen data från SCB
 };
 
 const PN={
@@ -76,6 +97,46 @@ const SIG = {
 // ══════════════════════════════════════════════════════
 // RENDER FUNCTIONS
 // ══════════════════════════════════════════════════════
+
+/**
+ * Renderar löneutveckling per åldersgrupp (SCB 2024).
+ * Returnerar tom sträng om SALA saknar data för detta yrke.
+ */
+function renderAgeSalary(id, name) {
+  const sa = SALA[id];
+  if (!sa) return '';
+
+  const groups = [
+    { label: '18–24 år', val: sa.a1824 },
+    { label: '25–34 år', val: sa.a2534 },
+    { label: '35–44 år', val: sa.a3544 },
+    { label: '45–54 år', val: sa.a4554 },
+    { label: '55–64 år', val: sa.a5564 },
+  ].filter(g => g.val != null);
+
+  if (groups.length === 0) return '';
+
+  const max = Math.max(...groups.map(g => g.val));
+
+  const bars = groups.map(g => {
+    const pct = Math.round((g.val / max) * 100);
+    return `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+      <div style="width:68px;font-size:.75rem;color:var(--mu);flex-shrink:0">${g.label}</div>
+      <div style="flex:1;background:var(--bo);border-radius:4px;height:22px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:#5C7D8F;border-radius:4px;transition:width .4s"></div>
+      </div>
+      <div style="width:72px;text-align:right;font-size:.82rem;font-weight:700;color:var(--tx);flex-shrink:0">${fmt(g.val)} kr</div>
+    </div>`;
+  }).join('');
+
+  return `
+  <div class="block" style="margin-top:12px">
+    <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--li);margin-bottom:12px">Löneutveckling per ålder · ${name} <span style="background:var(--al);color:var(--ac);font-size:.64rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:6px">SCB 2024</span></div>
+    ${bars}
+    <div style="font-size:.72rem;color:var(--mu);margin-top:8px">Genomsnittlig månadslön (före skatt) per åldersgrupp, samtliga sektorer.</div>
+  </div>`;
+}
 
 function renderYrkePage(eduSlug) {
   const e = E.find(x => x.slug === eduSlug);
@@ -178,6 +239,7 @@ function renderYrkePage(eduSlug) {
       <div class="pct-c" style="background:#FFF7ED"><div class="pct-v" style="color:#7C2D12">${fmt(sd.p25)} kr</div><div class="pct-l" style="color:#9A3412">25% tjänar detta eller mindre</div></div>
     </div>
   </div>
+  ${renderAgeSalary(e.id, e.t)}
 
   <div class="sec-h"><div class="sec-n">4</div>Var vill du utbilda dig?</div>
   <div class="city-links">
