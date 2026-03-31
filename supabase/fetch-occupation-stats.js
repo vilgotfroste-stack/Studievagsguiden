@@ -55,7 +55,6 @@ const OCCUPATION_MAP = [
   { id: 12, name: 'HR-specialist',              ssyk: '2423' },  // Personal- och HR-specialister
   // Vård & Hälsa
   { id: 14, name: 'Sjuksköterska',              ssyk: '2221' },  // Grundutbildade sjuksköterskor
-  { id: 15, name: 'Fysioterapeut',              ssyk: '2271' },  // Sjukgymnaster (= fysioterapeuter i SSYK 2012)
   { id: 16, name: 'Arbetsterapeut',             ssyk: '2272' },  // Arbetsterapeuter
   { id: 17, name: 'Biomedicinsk analytiker',    ssyk: '3213' },  // Biomedicinska analytiker m.fl.
   { id: 18, name: 'Tandhygienist',              ssyk: '3250' },  // Tandhygienister
