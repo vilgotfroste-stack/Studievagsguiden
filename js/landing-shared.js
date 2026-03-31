@@ -92,8 +92,8 @@ function toggleSec(n){
   const opening=!body.classList.contains('open');
   body.classList.toggle('open');
   btn.classList.toggle('open');
-  const labels={1:'Visa översikt',2:'Visa lönespridning',3:'Visa karriärscenarier',4:'Visa livstidsanalys'};
-  const labelsClose={1:'Dölj översikt',2:'Dölj lönespridning',3:'Dölj karriärscenarier',4:'Dölj livstidsanalys'};
+  const labels={1:'Visa översikt',2:'Visa lönespridning',3:'Visa löneutveckling per ålder',4:'Visa livstidsanalys'};
+  const labelsClose={1:'Dölj översikt',2:'Dölj lönespridning',3:'Dölj löneutveckling per ålder',4:'Dölj livstidsanalys'};
   btn.childNodes[0].textContent=(opening?labelsClose:labels)[n]+' ';
 }
 
@@ -265,13 +265,15 @@ function buildSalaryInfo(e){
   const yrsLabel=yrsToMed<=2?'1–2 år':yrsToMed<=4?'3–4 år':yrsToMed<=6?'4–6 år':'5–8 år';
   const scale=sd.p75-sd.p25;
   const barMedPct=Math.round((sd.med-sd.p25)/scale*100);
-  const scenarios=[
-    {label:'Stanna länge',desc:'10–15 år på samma arbetsplats',salary:Math.round(e.s0+(e.s1-e.s0)*0.5),color:'#6c757d'},
-    {label:'Byta ofta',desc:'5–10 byten av arbetsgivare',salary:Math.round(e.s0+(e.s1-e.s0)*0.7),color:'#0dcaf0'},
-    {label:'Specialist',desc:'Expertroll utan chefsansvar',salary:Math.round(e.s1*1.1),color:'#0d6efd'},
-    {label:'Chef',desc:'Ledande position',salary:Math.round(e.s1*1.3),color:'#198754'}
-  ];
-  const maxSalary=Math.max(...scenarios.map(s=>s.salary));
+  const sa=SALA[e.id];
+  const ageGroups=sa?[
+    {label:'18–24 år',val:sa.a1824},
+    {label:'25–34 år',val:sa.a2534},
+    {label:'35–44 år',val:sa.a3544},
+    {label:'45–54 år',val:sa.a4554},
+    {label:'55–64 år',val:sa.a5564},
+  ].filter(g=>g.val!=null):[];
+  const maxAgeSal=ageGroups.length?Math.max(...ageGroups.map(g=>g.val)):1;
   
   let h=`<div id="salaryInfoHead"></div><div style="max-width:720px;margin:0 auto">
   <div class="sh" id="sh2"><h2>2. Lön</h2></div>
@@ -319,34 +321,31 @@ function buildSalaryInfo(e){
   </div>
   </div>`;
   
-  h+=`<div class="sh" id="sh3"><h2>3. Karriär</h2></div>
-  <button class="sec-toggle" id="toggle3" onclick="toggleSec(3)">Visa karriärscenarier <svg class="sec-toggle-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+  h+=`<div class="sh" id="sh3"><h2>3. Löneutveckling per ålder</h2></div>
+  <button class="sec-toggle" id="toggle3" onclick="toggleSec(3)">Visa löneutveckling per ålder <svg class="sec-toggle-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
   <div class="sec-body" id="body3">
-  <div class="verd sh2" style="animation-delay:.8s;text-align:left;padding:24px 20px;margin-top:12px">
-    <div style="display:grid;gap:12px">`;
-  
-  scenarios.forEach(sc=>{
-    const widthPct=(sc.salary/maxSalary)*100;
-    const diff=sc.salary-e.s0;
-    const diffPct=Math.round((diff/e.s0)*100);
-    h+=`<div style="padding:14px;background:#fff;border-radius:10px;border:1px solid var(--bo)">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <div><div style="font-weight:700;font-size:.9rem">${sc.label}</div><div style="font-size:.75rem;color:var(--mu)">${sc.desc}</div></div>
-        <div style="text-align:right"><div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:${sc.color}">${fmt(sc.salary)} kr</div><div style="font-size:.7rem;color:var(--mu)">+${diffPct}%</div></div>
-      </div>
-      <div style="background:#e9ecef;height:28px;border-radius:6px;overflow:hidden;position:relative">
-        <div style="background:${sc.color};height:100%;width:${widthPct}%;transition:width 1s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:8px">
-          <span style="color:#fff;font-weight:600;font-size:.8rem">${Math.round(widthPct)}%</span>
+  <div class="verd sh2" style="animation-delay:.8s;text-align:left;padding:24px 20px;margin-top:12px">`;
+
+  if(ageGroups.length){
+    h+=`<div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--mu);margin-bottom:14px">Genomsnittlig månadslön per åldersgrupp <span style="background:var(--al);color:var(--ac);font-size:.64rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:4px">SCB 2024</span></div>
+    <div style="display:grid;gap:10px">`;
+    ageGroups.forEach(g=>{
+      const pct=Math.round((g.val/maxAgeSal)*100);
+      h+=`<div style="display:flex;align-items:center;gap:10px">
+        <div style="width:72px;font-size:.78rem;color:var(--mu);flex-shrink:0">${g.label}</div>
+        <div style="flex:1;background:var(--bo);border-radius:4px;height:24px;overflow:hidden">
+          <div style="width:${pct}%;height:100%;background:var(--ac);border-radius:4px;transition:width .6s ease"></div>
         </div>
-      </div>
-    </div>`;
-  });
-  
+        <div style="width:76px;text-align:right;font-size:.85rem;font-weight:700;color:var(--tx);flex-shrink:0">${fmt(g.val)} kr</div>
+      </div>`;
+    });
+    h+=`</div>
+    <div style="margin-top:14px;font-size:.75rem;color:var(--mu)">Källa: SCB, samtliga sektorer, totalt kön. Genomsnittlig månadslön (före skatt).</div>`;
+  } else {
+    h+=`<div style="padding:20px;text-align:center;color:var(--mu);font-size:.88rem">Åldersuppdelad data saknas för detta yrke.</div>`;
+  }
+
   h+=`</div>
-    <div style="margin-top:16px;padding:14px;background:#fff;border-radius:8px;font-size:.8rem;color:var(--mu);border-left:3px solid var(--ac)">
-      <strong style="color:var(--ac)">Tips:</strong> Ingångslönen är bara starten — de flesta yrken har tydlig löneutveckling de första 5 åren.
-    </div>
-  </div>
   </div>
   <div class="sh" id="sh4"><h2>4. Livstidsanalys</h2></div>
   <button class="sec-toggle" id="toggle4" onclick="toggleSec(4)">Visa livstidsanalys <svg class="sec-toggle-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
