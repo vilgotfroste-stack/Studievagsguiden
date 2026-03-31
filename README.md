@@ -93,9 +93,9 @@ node supabase/fetch-occupation-stats.js; node supabase/fetch-age-salary.js
 | 21 | Gymnasielärare              | 2330 |
 | 22 | Studie- och yrkesvägledare  | 2359 |
 | 24 | Byggingenjör                | 3112 |
-| 23 | Fastighetsförvaltare        | 3334 |
+| 23 | Fastighetsförvaltare        | 3335 |
 
-> **OBS:** Fastighetsförvaltare (SSYK 3334) returnerar ingen åldersdata från SCB — kan behöva verifieras mot rätt SSYK-kod.
+> **OBS:** Fastighetsförvaltare använder SSYK 3335. SSYK 3334 är Fastighetsmäklare (fel kod).
 
 ---
 

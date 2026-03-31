@@ -61,7 +61,7 @@ const SALA={
   21: {a1824:29800, a2534:38100, a3544:42000, a4554:44100, a5564:44400},  // Gymnasielärare
   22: {a1824:24900, a2534:33000, a3544:36100, a4554:37800, a5564:38800},  // Studie- och yrkesvägledare
   24: {a1824:33700, a2534:45900, a3544:51800, a4554:51800, a5564:53300},  // Byggingenjör
-  // id 23 (Fastighetsförvaltare) saknas — SSYK 3334 gav ingen data från SCB
+  23: {a1824:null,  a2534:43000, a3544:57100, a4554:53200, a5564:49800},  // Fastighetsförvaltare
 };
 
 const PN={

@@ -64,7 +64,7 @@ const OCCUPATION_MAP = [
   { id: 22, name: 'Studie- och yrkesvägledare', ssyk: '2359' },  // Studie- och yrkesvägledare
   // Bygg & Fastighet
   { id: 24, name: 'Byggingenjör',               ssyk: '3112' },  // Ingenjörer och tekniker inom bygg och anläggning
-  { id: 25, name: 'Fastighetsförvaltare',       ssyk: '3334' },  // Fastighetsförvaltare
+  { id: 25, name: 'Fastighetsförvaltare',       ssyk: '3335' },  // Fastighetsförvaltare
 ];
 
 // ---------------------------------------------------------------
