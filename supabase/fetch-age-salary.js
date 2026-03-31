@@ -46,7 +46,7 @@ const OCCUPATION_MAP = [
   { id: 22, name: 'Studie- och yrkesvägledare', ssyk: '2359' },
   // Bygg & Fastighet
   { id: 24, name: 'Byggingenjör',               ssyk: '3112' },
-  { id: 25, name: 'Fastighetsförvaltare',       ssyk: '3334' },
+  { id: 25, name: 'Fastighetsförvaltare',       ssyk: '3335' },
 ];
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
