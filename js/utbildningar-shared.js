@@ -43,12 +43,25 @@ const SALD={
   24:{p25:42500,med:48000,p75:56100}
 };
 
-// SCB 2024 månadslön per åldersgrupp (kr/mån) — källa: SCB LonYrkeAlder4AN via Supabase
-// Fylls i efter att fetch-age-salary.js körts. Format: {a1824, a2534, a3544, a4554, a5564}
+// SCB 2024 månadslön per åldersgrupp (kr/mån) — källa: SCB LonYrkeAlder4AN
 // null = SCB saknar data för den åldersgruppen
 const SALA={
-  1: {a1824:37000,a2534:48300,a3544:56700,a4554:60300,a5564:60400},
-  // Övriga fylls i efter fetch — lägg till här efter att du kört fetch-age-salary.js
+  1:  {a1824:37000, a2534:48300, a3544:56700, a4554:60300, a5564:60400},  // Systemutvecklare
+  2:  {a1824:34200, a2534:48100, a3544:58100, a4554:62100, a5564:62700},  // Dataanalytiker
+  3:  {a1824:null,  a2534:45800, a3544:57200, a4554:66400, a5564:61200},  // IT-säkerhetsspecialist
+  9:  {a1824:29700, a2534:40400, a3544:51900, a4554:57100, a5564:56900},  // Redovisningsekonom
+  10: {a1824:37300, a2534:49700, a3544:57700, a4554:60500, a5564:57900},  // Controller
+  11: {a1824:30800, a2534:45400, a3544:56100, a4554:62800, a5564:65700},  // Digital marknadsförare
+  12: {a1824:32600, a2534:43000, a3544:51200, a4554:54200, a5564:55700},  // HR-specialist
+  14: {a1824:35200, a2534:39800, a3544:43600, a4554:46700, a5564:48000},  // Sjuksköterska
+  16: {a1824:32200, a2534:35300, a3544:39100, a4554:42100, a5564:42900},  // Arbetsterapeut
+  17: {a1824:null,  a2534:43200, a3544:43900, a4554:44700, a5564:45100},  // Biomedicinsk analytiker
+  18: {a1824:null,  a2534:37500, a3544:42500, a4554:42500, a5564:42600},  // Tandhygienist
+  20: {a1824:26300, a2534:37300, a3544:40300, a4554:42500, a5564:42600},  // Grundskollärare
+  21: {a1824:29800, a2534:38100, a3544:42000, a4554:44100, a5564:44400},  // Gymnasielärare
+  22: {a1824:24900, a2534:33000, a3544:36100, a4554:37800, a5564:38800},  // Studie- och yrkesvägledare
+  24: {a1824:33700, a2534:45900, a3544:51800, a4554:51800, a5564:53300},  // Byggingenjör
+  // id 23 (Fastighetsförvaltare) saknas — SSYK 3334 gav ingen data från SCB
 };
 
 const PN={
