@@ -353,7 +353,7 @@ function buildSalaryInfo(e){
     for(let v=yMax;v>=0;v-=10000) ticks.push(v);
 
     h+=`<div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mu);margin-bottom:12px">MÅNADSLÖN (KR) <span style="background:var(--al);color:var(--ac);font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:4px">SCB 2024</span></div>`;
-    h+=`<div style="display:flex;align-items:flex-start">`;
+    h+=`<div style="display:flex;align-items:flex-start;max-width:500px">`;
     // Y-axis labels
     h+=`<div style="width:48px;height:${chartH}px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;padding-right:6px;flex-shrink:0;box-sizing:border-box">`;
     ticks.forEach(v=>{
@@ -372,7 +372,7 @@ function buildSalaryInfo(e){
     ageGroups.forEach(g=>{
       const hPct=(g.val/yMax)*100;
       h+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%">
-        <div style="font-size:.62rem;font-weight:700;color:var(--tx);margin-bottom:2px;white-space:nowrap">${Math.round(g.val/1000)} t</div>
+        <div style="font-size:.62rem;font-weight:700;color:var(--tx);margin-bottom:2px;white-space:nowrap">${fmt(g.val)}</div>
         <div style="width:72%;height:${hPct}%;background:var(--ac);border-radius:3px 3px 0 0;min-height:2px;transition:height .6s ease"></div>
       </div>`;
     });
