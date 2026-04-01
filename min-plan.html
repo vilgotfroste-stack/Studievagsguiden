@@ -531,7 +531,7 @@ async function saveToSupabase() {
         'Content-Type': 'application/json',
         'Prefer': 'return=minimal'
       },
-      body: JSON.stringify({ data: ans })
+      body: JSON.stringify({ plan_data: ans })
     });
     try { localStorage.setItem('svg_answers', JSON.stringify(ans)); } catch(e) {}
   } catch(e) { console.warn('Auto-save failed:', e); }
@@ -2666,7 +2666,7 @@ async function fetchPlanByEmail() {
  }
 
  const row = rows[0];
- ans = row.data || {};
+ ans = row.plan_data || {};
  sal = row.salary || ans.current_salary || 0;
  edu = E.find(e => e.id === row.education_id);
  if (!edu) edu = E[0];
@@ -2962,7 +2962,7 @@ async function confirmEdits() {
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal'
         },
-        body: JSON.stringify({ data: ans, education_id: edu ? edu.id : undefined })
+        body: JSON.stringify({ plan_data: ans, education_id: edu ? edu.id : undefined })
       });
     } catch(e) { console.warn('Supabase update failed:', e); }
   }
@@ -3554,7 +3554,7 @@ async function confirmVerify() {
       await fetch(SUPABASE_URL + '/rest/v1/plans?email=eq.' + encodeURIComponent(email), {
         method: 'PATCH',
         headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-        body: JSON.stringify({ data: ans })
+        body: JSON.stringify({ plan_data: ans })
       });
     } catch(e) { console.warn('Supabase update failed:', e); }
   }

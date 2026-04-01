@@ -1,71 +1,16 @@
 -- ============================================================
--- Plans table + verify_login RPC
--- Kör detta i Supabase SQL Editor för att sätta upp plans-tabellen
--- och inloggningsfunktionen.
+-- Plans table – saknade kolumner + verify_login RPC
+--
+-- Tabellen finns redan i Supabase. Kör detta i SQL Editor för att:
+-- 1. Lägga till kolumner som saknas (password, salary)
+-- 2. Skapa verify_login-funktionen
 -- ============================================================
 
--- 1. Skapa plans-tabellen
-CREATE TABLE IF NOT EXISTS plans (
-  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  email        TEXT NOT NULL,
-  password     TEXT NOT NULL,
-  session_id   TEXT,
-  education_id INTEGER,
-  salary       INTEGER,
-  data         JSONB,
-  created_at   TIMESTAMPTZ DEFAULT now(),
-  updated_at   TIMESTAMPTZ DEFAULT now()
-);
+-- 1. Lägg till saknade kolumner om de inte redan finns
+ALTER TABLE plans ADD COLUMN IF NOT EXISTS password TEXT;
+ALTER TABLE plans ADD COLUMN IF NOT EXISTS salary INTEGER;
 
--- Index för snabb lookup på email
-CREATE INDEX IF NOT EXISTS idx_plans_email ON plans (email);
-
--- 2. Uppdatera updated_at automatiskt vid PATCH
-CREATE OR REPLACE FUNCTION set_updated_at()
-RETURNS TRIGGER AS $$
-BEGIN
-  NEW.updated_at = now();
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS plans_updated_at ON plans;
-CREATE TRIGGER plans_updated_at
-  BEFORE UPDATE ON plans
-  FOR EACH ROW EXECUTE FUNCTION set_updated_at();
-
--- 3. RLS – aktivera och tillåt anonym läs/skriv via anon-nyckel
-ALTER TABLE plans ENABLE ROW LEVEL SECURITY;
-
--- Tillåt INSERT (skapa ny plan)
-DROP POLICY IF EXISTS "allow_anon_insert" ON plans;
-CREATE POLICY "allow_anon_insert"
-  ON plans FOR INSERT
-  TO anon
-  WITH CHECK (true);
-
--- Tillåt SELECT via verify_login (funktionen kör som SECURITY DEFINER)
-DROP POLICY IF EXISTS "allow_anon_select_own" ON plans;
-CREATE POLICY "allow_anon_select_own"
-  ON plans FOR SELECT
-  TO anon
-  USING (true);
-
--- Tillåt UPDATE (auto-save av planändringar)
-DROP POLICY IF EXISTS "allow_anon_update_own" ON plans;
-CREATE POLICY "allow_anon_update_own"
-  ON plans FOR UPDATE
-  TO anon
-  USING (true);
-
--- Tillåt DELETE (kontoradering)
-DROP POLICY IF EXISTS "allow_anon_delete_own" ON plans;
-CREATE POLICY "allow_anon_delete_own"
-  ON plans FOR DELETE
-  TO anon
-  USING (true);
-
--- 4. verify_login RPC – returnerar planraden om email+lösenord stämmer
+-- 2. verify_login RPC – returnerar planraden om email+lösenord stämmer
 CREATE OR REPLACE FUNCTION verify_login(input_email TEXT, input_password TEXT)
 RETURNS SETOF plans
 LANGUAGE sql
@@ -81,3 +26,29 @@ $$;
 
 -- Ge anon-rollen rätt att anropa funktionen
 GRANT EXECUTE ON FUNCTION verify_login(TEXT, TEXT) TO anon;
+
+-- 3. RLS – se till att anon kan INSERT/SELECT/UPDATE/DELETE
+--    (Kontrollera att dessa policies finns, skapa om de saknas)
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies WHERE tablename='plans' AND policyname='allow_anon_insert'
+  ) THEN
+    CREATE POLICY "allow_anon_insert" ON plans FOR INSERT TO anon WITH CHECK (true);
+  END IF;
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies WHERE tablename='plans' AND policyname='allow_anon_select'
+  ) THEN
+    CREATE POLICY "allow_anon_select" ON plans FOR SELECT TO anon USING (true);
+  END IF;
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies WHERE tablename='plans' AND policyname='allow_anon_update'
+  ) THEN
+    CREATE POLICY "allow_anon_update" ON plans FOR UPDATE TO anon USING (true);
+  END IF;
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies WHERE tablename='plans' AND policyname='allow_anon_delete'
+  ) THEN
+    CREATE POLICY "allow_anon_delete" ON plans FOR DELETE TO anon USING (true);
+  END IF;
+END $$;
