@@ -613,6 +613,24 @@ const SALD={
  24: {p25:42500,med:48000,p75:56100}, // Byggingenjör
  25: {p25:34500,med:43200,p75:55600}, // Fastighetsförvaltare
 };
+const SALA={
+  1:  {a1824:37000,a2534:48300,a3544:56700,a4554:60300,a5564:60400},
+  2:  {a1824:34200,a2534:48100,a3544:58100,a4554:62100,a5564:62700},
+  3:  {a1824:null, a2534:45800,a3544:57200,a4554:66400,a5564:61200},
+  9:  {a1824:29700,a2534:40400,a3544:51900,a4554:57100,a5564:56900},
+  10: {a1824:37300,a2534:49700,a3544:57700,a4554:60500,a5564:57900},
+  11: {a1824:30800,a2534:45400,a3544:56100,a4554:62800,a5564:65700},
+  12: {a1824:32600,a2534:43000,a3544:51200,a4554:54200,a5564:55700},
+  14: {a1824:35200,a2534:39800,a3544:43600,a4554:46700,a5564:48000},
+  16: {a1824:32200,a2534:35300,a3544:39100,a4554:42100,a5564:42900},
+  17: {a1824:null, a2534:43200,a3544:43900,a4554:44700,a5564:45100},
+  18: {a1824:null, a2534:37500,a3544:42500,a4554:42500,a5564:42600},
+  20: {a1824:26300,a2534:37300,a3544:40300,a4554:42500,a5564:42600},
+  21: {a1824:29800,a2534:38100,a3544:42000,a4554:44100,a5564:44400},
+  22: {a1824:24900,a2534:33000,a3544:36100,a4554:37800,a5564:38800},
+  23: {a1824:null, a2534:43000,a3544:57100,a4554:53200,a5564:49800},
+  24: {a1824:33700,a2534:45900,a3544:51800,a4554:51800,a5564:53300},
+};
 let edu=null,sal=0,ws=0,ans={};
 
 // ── En vanlig dag i yrket ──────────────────────────────────────────────────
@@ -817,8 +835,8 @@ function toggleSec(n){
     const opening=!body.classList.contains('open');
     body.classList.toggle('open');
     btn.classList.toggle('open');
-    const labels={1:'Visa översikt',2:'Visa lönespridning',3:'Visa karriärscenarier',4:'Visa livstidsanalys'};
-    const labelsClose={1:'Dölj översikt',2:'Dölj lönespridning',3:'Dölj karriärscenarier',4:'Dölj livstidsanalys'};
+    const labels={1:'Visa översikt',2:'Visa lönespridning',3:'Visa lön och ålder',4:'Visa livstidsanalys'};
+    const labelsClose={1:'Dölj översikt',2:'Dölj lönespridning',3:'Dölj lön och ålder',4:'Dölj livstidsanalys'};
     btn.childNodes[0].textContent=(opening?labelsClose:labels)[n]+' ';
 }
 
@@ -1050,14 +1068,16 @@ function buildSalaryInfo(e){
     // SCB-data — fallback om saknas
     const d = SALD[e.id] || {p25:e.s0, med:Math.round((e.s0+e.s1)/2), p75:Math.round(e.s0+(e.s1-e.s0)*0.6)};
 
-    // Karriärscenarier
-    const scenarios=[
-        {label:'Stanna länge',desc:'10–15 år på samma arbetsplats',salary:Math.round(e.s0+(e.s1-e.s0)*0.5),color:'#6c757d'},
-        {label:'Byta ofta',desc:'5–10 byten av arbetsgivare',salary:Math.round(e.s0+(e.s1-e.s0)*0.7),color:'var(--bl)'},
-        {label:'Specialist',desc:'Expertroll utan chefsansvar',salary:Math.round(e.s1*1.1),color:'var(--bl)'},
-        {label:'Chef',desc:'Ledande position',salary:Math.round(e.s1*1.3),color:'#5BA882'}
-    ];
-    const maxSalary=Math.max(...scenarios.map(s=>s.salary));
+    // Åldersbaserad lönedata
+    const sa=SALA[e.id]||null;
+    const ageGroups=sa?[
+        {label:'18–24 år',val:sa.a1824},
+        {label:'25–34 år',val:sa.a2534},
+        {label:'35–44 år',val:sa.a3544},
+        {label:'45–54 år',val:sa.a4554},
+        {label:'55–64 år',val:sa.a5564},
+    ].filter(g=>g.val!=null):[];
+    const maxAgeSal=ageGroups.length?Math.max(...ageGroups.map(g=>g.val)):1;
 
     // Lönespridningsbar — P25→P75
     const scale = d.p75 - d.p25;
@@ -1125,38 +1145,31 @@ function buildSalaryInfo(e){
     </div>
     </div>
 
-    <div class="sh" id="sh3"><h2>3. Karriär</h2></div>
-    <button class="sec-toggle" id="toggle3" onclick="toggleSec(3)">Visa karriärscenarier <svg class="sec-toggle-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+    <div class="sh" id="sh3"><h2>3. Lön och ålder</h2></div>
+    <button class="sec-toggle" id="toggle3" onclick="toggleSec(3)">Visa lön och ålder <svg class="sec-toggle-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
     <div class="sec-body" id="body3">
-    <div class="verd sh2" style="animation-delay:.8s;text-align:left;padding:24px 20px;margin-top:12px">
-      <div style="display:grid;gap:12px">`;
+    <div class="verd sh2" style="animation-delay:.8s;text-align:left;padding:24px 20px;margin-top:12px">`;
 
-    scenarios.forEach(sc=>{
-        const widthPct=(sc.salary/maxSalary)*100;
-        const diffPct=Math.round(((sc.salary-e.s0)/e.s0)*100);
-        h+=`
-        <div style="padding:14px;background:#fff;border-radius:10px;border:1px solid var(--bo)">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-            <div>
-              <div style="font-weight:700;font-size:.9rem">${sc.label}</div>
-              <div style="font-size:.75rem;color:var(--mu)">${sc.desc}</div>
-            </div>
-            <div style="text-align:right">
-              <div style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:${sc.color}">${fmt(sc.salary)} kr</div>
-              <div style="font-size:.7rem;color:var(--mu)">+${diffPct}%</div>
-            </div>
+    if(ageGroups.length){
+      h+=`<div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--mu);margin-bottom:14px">Genomsnittlig månadslön per åldersgrupp <span style="background:#E8F4EC;color:#3A7A55;font-size:.64rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:4px">SCB 2024</span></div>
+      <div style="display:grid;gap:10px">`;
+      ageGroups.forEach(g=>{
+        const pct=Math.round((g.val/maxAgeSal)*100);
+        h+=`<div style="display:flex;align-items:center;gap:10px">
+          <div style="width:72px;font-size:.78rem;color:var(--mu);flex-shrink:0">${g.label}</div>
+          <div style="flex:1;background:#E0EEE6;border-radius:4px;height:24px;overflow:hidden">
+            <div style="width:${pct}%;height:100%;background:#5BA882;border-radius:4px;transition:width .6s ease"></div>
           </div>
-          <div style="background:#e9ecef;height:10px;border-radius:6px;overflow:hidden">
-            <div style="background:${sc.color};height:100%;width:${widthPct}%;transition:width 1s ease;border-radius:6px"></div>
-          </div>
+          <div style="width:76px;text-align:right;font-size:.85rem;font-weight:700;color:var(--tx);flex-shrink:0">${fmt(g.val)} kr</div>
         </div>`;
-    });
+      });
+      h+=`</div>
+      <div style="margin-top:14px;font-size:.75rem;color:var(--mu)">Källa: SCB, samtliga sektorer, totalt kön. Genomsnittlig månadslön (före skatt).</div>`;
+    } else {
+      h+=`<div style="padding:20px;text-align:center;color:var(--mu);font-size:.88rem">Åldersuppdelad data saknas för detta yrke.</div>`;
+    }
 
     h+=`
-      </div>
-      <div style="margin-top:16px;padding:14px;background:#EBF7F0;border-radius:8px;font-size:.82rem;color:var(--mu);border-left:3px solid #5BA882">
-        <strong style="color:#2D6B4A">Tips:</strong> Att byta jobb var 3–5:e år ger ofta högre löneutveckling än att stanna kvar.
-      </div>
     </div>
     </div>
 

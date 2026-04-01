@@ -112,8 +112,8 @@ function toggleSec(n){
   const opening=!body.classList.contains('open');
   body.classList.toggle('open');
   btn.classList.toggle('open');
-  const labels={1:'Visa översikt',2:'Visa lönespridning',3:'Visa löneutveckling per ålder',4:'Visa livstidsanalys'};
-  const labelsClose={1:'Dölj översikt',2:'Dölj lönespridning',3:'Dölj löneutveckling per ålder',4:'Dölj livstidsanalys'};
+  const labels={1:'Visa översikt',2:'Visa lönespridning',3:'Visa lön och ålder',4:'Visa livstidsanalys'};
+  const labelsClose={1:'Dölj översikt',2:'Dölj lönespridning',3:'Dölj lön och ålder',4:'Dölj livstidsanalys'};
   btn.childNodes[0].textContent=(opening?labelsClose:labels)[n]+' ';
 }
 
@@ -341,8 +341,8 @@ function buildSalaryInfo(e){
   </div>
   </div>`;
   
-  h+=`<div class="sh" id="sh3"><h2>3. Löneutveckling per ålder</h2></div>
-  <button class="sec-toggle" id="toggle3" onclick="toggleSec(3)">Visa löneutveckling per ålder <svg class="sec-toggle-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+  h+=`<div class="sh" id="sh3"><h2>3. Lön och ålder</h2></div>
+  <button class="sec-toggle" id="toggle3" onclick="toggleSec(3)">Visa lön och ålder <svg class="sec-toggle-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
   <div class="sec-body" id="body3">
   <div class="verd sh2" style="animation-delay:.8s;text-align:left;padding:24px 20px;margin-top:12px">`;
 
