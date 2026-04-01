@@ -347,20 +347,45 @@ function buildSalaryInfo(e){
   <div class="verd sh2" style="animation-delay:.8s;text-align:left;padding:24px 20px;margin-top:12px">`;
 
   if(ageGroups.length){
-    h+=`<div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--mu);margin-bottom:14px">Genomsnittlig månadslön per åldersgrupp <span style="background:var(--al);color:var(--ac);font-size:.64rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:4px">SCB 2024</span></div>
-    <div style="display:grid;gap:10px">`;
+    const yMax=Math.ceil(maxAgeSal/10000)*10000;
+    const chartH=180;
+    const ticks=[];
+    for(let v=yMax;v>=0;v-=10000) ticks.push(v);
+
+    h+=`<div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mu);margin-bottom:12px">MÅNADSLÖN (KR) <span style="background:var(--al);color:var(--ac);font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:4px">SCB 2024</span></div>`;
+    h+=`<div style="display:flex;align-items:flex-start">`;
+    // Y-axis labels
+    h+=`<div style="width:48px;height:${chartH}px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;padding-right:6px;flex-shrink:0;box-sizing:border-box">`;
+    ticks.forEach(v=>{
+      h+=`<div style="font-size:.6rem;color:var(--mu);line-height:1;white-space:nowrap">${v===0?'0':(v/1000)+'\u00a0000'}</div>`;
+    });
+    h+=`</div>`;
+    // Chart area
+    h+=`<div style="flex:1;position:relative">`;
+    h+=`<div style="height:${chartH}px;border-left:1.5px solid #bbb;border-bottom:1.5px solid #bbb;position:relative">`;
+    // Grid lines
+    ticks.filter(v=>v>0).forEach(v=>{
+      h+=`<div style="position:absolute;left:0;right:0;bottom:${(v/yMax)*100}%;height:1px;background:#e8e8e8"></div>`;
+    });
+    // Bars
+    h+=`<div style="display:flex;align-items:flex-end;height:100%;padding:0 6px;gap:5px;position:relative;z-index:1">`;
     ageGroups.forEach(g=>{
-      const pct=Math.round((g.val/maxAgeSal)*100);
-      h+=`<div style="display:flex;align-items:center;gap:10px">
-        <div style="width:72px;font-size:.78rem;color:var(--mu);flex-shrink:0">${g.label}</div>
-        <div style="flex:1;background:var(--bo);border-radius:4px;height:24px;overflow:hidden">
-          <div style="width:${pct}%;height:100%;background:var(--ac);border-radius:4px;transition:width .6s ease"></div>
-        </div>
-        <div style="width:76px;text-align:right;font-size:.85rem;font-weight:700;color:var(--tx);flex-shrink:0">${fmt(g.val)} kr</div>
+      const hPct=(g.val/yMax)*100;
+      h+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%">
+        <div style="font-size:.62rem;font-weight:700;color:var(--tx);margin-bottom:2px;white-space:nowrap">${Math.round(g.val/1000)} t</div>
+        <div style="width:72%;height:${hPct}%;background:var(--ac);border-radius:3px 3px 0 0;min-height:2px;transition:height .6s ease"></div>
       </div>`;
     });
-    h+=`</div>
-    <div style="margin-top:14px;font-size:.75rem;color:var(--mu)">Källa: SCB, samtliga sektorer, totalt kön. Genomsnittlig månadslön (före skatt).</div>`;
+    h+=`</div>`;
+    h+=`</div>`;
+    // X-axis labels
+    h+=`<div style="display:flex;padding:5px 6px 0;gap:5px">`;
+    ageGroups.forEach(g=>{
+      h+=`<div style="flex:1;text-align:center;font-size:.62rem;color:var(--mu);line-height:1.3">${g.label}</div>`;
+    });
+    h+=`</div>`;
+    h+=`</div></div>`;
+    h+=`<div style="margin-top:10px;font-size:.72rem;color:var(--mu)">Källa: SCB, samtliga sektorer, totalt kön. Genomsnittlig månadslön (före skatt).</div>`;
   } else {
     h+=`<div style="padding:20px;text-align:center;color:var(--mu);font-size:.88rem">Åldersuppdelad data saknas för detta yrke.</div>`;
   }
