@@ -3228,7 +3228,7 @@ async function saveAndRedirect() {
                 session_id: sid,
                 education_id: edu ? edu.id : null,
                 salary: sal || null,
-                plan_data: saveData
+                data: saveData
             })
         });
         if (planRes && !planRes.ok) console.warn('Plans insert fel:', planRes.status);
