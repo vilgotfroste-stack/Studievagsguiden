@@ -122,8 +122,8 @@ function parseJobbmojligheter(text) {
   if (!text) return null;
   const t = text.toLowerCase().trim();
   if (t.includes('mycket stora') || t.includes('mycket goda'))  return 5;
+  if (t.includes('medelstora') || t.includes('varierande') || t.includes('viss')) return 3;
   if (t.includes('stora') || t.includes('goda'))                return 4;
-  if (t.includes('varierande') || t.includes('viss'))           return 3;
   if (t.includes('mycket sm') || t.includes('mycket begr') || t.includes('mycket lägre')) return 1;
   if (t.includes('sm') || t.includes('begr') || t.includes('lägre'))                      return 2;
   return null;
@@ -132,6 +132,8 @@ function parseJobbmojligheter(text) {
 function parseRekryteringssituation(text) {
   if (!text) return null;
   const t = text.toLowerCase().trim();
+  // "paradox" = AF:s specialvärde när rekryteringsläget är motstridigt — sparas som null
+  if (t.includes('paradox'))         return null;
   if (t.includes('stor brist'))      return 1;
   if (t.includes('brist'))           return 2;
   if (t.includes('balans'))          return 3;
