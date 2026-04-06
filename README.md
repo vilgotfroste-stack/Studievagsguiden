@@ -99,6 +99,70 @@ node supabase/fetch-occupation-stats.js; node supabase/fetch-age-salary.js
 
 ---
 
+---
+
+## Yrkesprognoser — Arbetsförmedlingens Yrkesbarometer
+
+Arbetsförmedlingen publicerar Yrkesbarometern **2 gånger per år** (Vår och Höst).
+Från våren 2026 publiceras den i **juni och december** istället för mars/september.
+
+Data hämtas som en bulk-JSON-fil — inget API-nyckel krävs.
+
+---
+
+### Script 3 — Yrkesprognoser (Arbetsförmedlingen)
+
+**Källa:** `https://data.arbetsformedlingen.se/prognoser/yrkesbarometer.json`
+**Uppdaterar:** tabellen `occupation_forecasts` i Supabase
+**Hårdkodat i:** ej ännu — sparas bara i Supabase (framtida remake)
+
+```powershell
+node supabase/fetch-occupation-forecasts.js
+```
+
+**Flaggor:**
+```powershell
+# Testa utan att spara (rekommenderas första gången)
+node supabase/fetch-occupation-forecasts.js --dry-run
+
+# Visa råstrukturen på JSON-filen (felsökning om fältnamn ändrats)
+node supabase/fetch-occupation-forecasts.js --explore --dry-run
+
+# Spara även länsdata (inte bara nationell nivå)
+node supabase/fetch-occupation-forecasts.js --all-regions
+```
+
+**OBS:** Kör `schema_occupation_forecasts.sql` i Supabase SQL Editor **innan** du kör scriptet.
+
+---
+
+### Supabase-tabell: `occupation_forecasts`
+
+| Kolumn                      | Beskrivning                                          |
+|-----------------------------|------------------------------------------------------|
+| `occupation_id`             | Internt ID (matchar E[]-arrayen)                     |
+| `ssyk_code`                 | SSYK-kod 2012                                        |
+| `region_id`                 | Regionkod (0 = Riket/nationell)                      |
+| `region_name`               | Regionnamn (t.ex. "Riket" eller "Stockholms län")    |
+| `forecast_year`             | Publiceringsår (t.ex. 2025)                          |
+| `forecast_term`             | Vår eller Höst                                       |
+| `job_opportunities`         | Möjlighet att få jobb (1–5)                          |
+| `recruitment_situation`     | Rekryteringsläge för arbetsgivare (1–5)              |
+| `five_year_forecast`        | 5-årsprognos för efterfrågan (1–5)                   |
+| `raw_data`                  | Rådata från Arbetsförmedlingen (JSONB)               |
+
+**Skalförklaring (1–5):**
+- 1 = Stor brist (hög efterfrågan på arbetstagare)
+- 2 = Brist
+- 3 = Balans
+- 4 = Överskott
+- 5 = Stor överskott
+
+**OBS:** I frontend-koden (`dem` och `future` i E[]-arrayen) är skalan **inverterad** —
+där är 5 = högst efterfrågan. Mapping görs när datan integreras i framtida remake.
+
+---
+
 ### Supabase-tabell: `occupation_stats`
 
 | Kolumn          | Beskrivning                        |
