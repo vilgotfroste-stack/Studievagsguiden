@@ -116,6 +116,11 @@ Data hämtas som en bulk-JSON-fil — inget API-nyckel krävs.
 **Uppdaterar:** tabellen `occupation_forecasts` i Supabase
 **Hårdkodat i:** ej ännu — sparas bara i Supabase (framtida remake)
 
+**När ska du köra det?**
+Arbetsförmedlingen uppdaterar Yrkesbarometern **2 gånger per år**:
+- **Juni** → kör scriptet och välj "Vår"-omgången
+- **December** → kör scriptet och välj "Höst"-omgången
+
 ```powershell
 node supabase/fetch-occupation-forecasts.js
 ```
@@ -132,34 +137,62 @@ node supabase/fetch-occupation-forecasts.js --explore --dry-run
 node supabase/fetch-occupation-forecasts.js --all-regions
 ```
 
-**OBS:** Kör `schema_occupation_forecasts.sql` i Supabase SQL Editor **innan** du kör scriptet.
+**OBS:** Kör `schema_occupation_forecasts.sql` i Supabase SQL Editor **innan** du kör scriptet första gången.
 
 ---
 
 ### Supabase-tabell: `occupation_forecasts`
 
-| Kolumn                      | Beskrivning                                          |
-|-----------------------------|------------------------------------------------------|
-| `occupation_id`             | Internt ID (matchar E[]-arrayen)                     |
-| `ssyk_code`                 | SSYK-kod 2012                                        |
-| `region_id`                 | Regionkod (0 = Riket/nationell)                      |
-| `region_name`               | Regionnamn (t.ex. "Riket" eller "Stockholms län")    |
-| `forecast_year`             | Publiceringsår (t.ex. 2025)                          |
-| `forecast_term`             | Vår eller Höst                                       |
-| `job_opportunities`         | Möjlighet att få jobb (1–5)                          |
-| `recruitment_situation`     | Rekryteringsläge för arbetsgivare (1–5)              |
-| `five_year_forecast`        | 5-årsprognos för efterfrågan (1–5)                   |
-| `raw_data`                  | Rådata från Arbetsförmedlingen (JSONB)               |
+| Kolumn                        | Beskrivning                                                         |
+|-------------------------------|---------------------------------------------------------------------|
+| `occupation_id`               | Internt ID (matchar E[]-arrayen)                                    |
+| `ssyk_code`                   | SSYK-kod 2012                                                       |
+| `region_id`                   | Regionkod — `"00"` = hela Sverige, annars länsnummer (t.ex. `"01"` = Stockholm) |
+| `region_name`                 | Regionnamn i text (t.ex. `"Riket"` eller `"Stockholms län"`)        |
+| `forecast_year`               | Året prognosen publicerades (t.ex. `2025`)                          |
+| `forecast_term`               | Publiceringsomgång — `"Vår"` (juni) eller `"Höst"` (december)      |
+| `job_opportunities`           | Hur lätt det är att **få jobb** som arbetssökande just nu (1–5, se skala nedan) |
+| `job_opportunities_text`      | AF:s originaltext, t.ex. `"stora"` eller `"medelstora"`            |
+| `recruitment_situation`       | Hur lätt det är för **arbetsgivare att rekrytera** just nu (1–5, se skala nedan) |
+| `recruitment_situation_text`  | AF:s originaltext, t.ex. `"brist"` eller `"balans"`                |
+| `five_year_forecast`          | Hur efterfrågan **förväntas förändras de nästa 5 åren** (1–5, se skala nedan) |
+| `five_year_forecast_text`     | AF:s originaltext, t.ex. `"öka"` eller `"vara oförändrad"`         |
+| `raw_data`                    | Hela originalposten från AF:s JSON (JSONB) — för framtida bruk     |
 
-**Skalförklaring (1–5):**
-- 1 = Stor brist (hög efterfrågan på arbetstagare)
-- 2 = Brist
-- 3 = Balans
-- 4 = Överskott
-- 5 = Stor överskott
+#### Skalförklaring
 
-**OBS:** I frontend-koden (`dem` och `future` i E[]-arrayen) är skalan **inverterad** —
-där är 5 = högst efterfrågan. Mapping görs när datan integreras i framtida remake.
+**job_opportunities** — ur jobsökarperspektiv:
+| Värde | Betydelse |
+|-------|-----------|
+| 5 | Mycket goda chanser att få jobb |
+| 4 | Stora / goda chanser |
+| 3 | Medelstora chanser |
+| 2 | Små chanser |
+| 1 | Mycket små chanser |
+
+**recruitment_situation** — ur arbetsgivarperspektiv (brist = svårt att hitta folk → bra för dig i yrket):
+| Värde | Betydelse |
+|-------|-----------|
+| 1 | Stor brist — arbetsgivare hittar knappt personal |
+| 2 | Brist |
+| 3 | Balans |
+| 4 | Överskott |
+| 5 | Stort överskott — många söker få jobb |
+
+**five_year_forecast** — hur efterfrågan på yrket förväntas förändras:
+| Värde | Betydelse |
+|-------|-----------|
+| 5 | Öka kraftigt |
+| 4 | Öka |
+| 3 | Vara oförändrad |
+| 2 | Minska |
+| 1 | Minska kraftigt |
+
+> **OBS:** I frontend-koden (`dem` och `future` i E[]-arrayen) är skalan **inverterad** —
+> där är 5 = högst efterfrågan. Mapping görs när datan integreras i framtida remake.
+>
+> **OBS 2:** `"paradox"` i `recruitment_situation_text` är AF:s specialvärde för när
+> rekryteringsläget är motstridigt. Siffran sparas då som `null`.
 
 ---
 
