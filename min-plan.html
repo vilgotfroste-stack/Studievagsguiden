@@ -2658,7 +2658,8 @@ async function fetchPlanByEmail() {
  );
  const rows = await res.json();
 
- if (!rows || rows.length === 0) {
+ if (!rows || !Array.isArray(rows) || rows.length === 0) {
+ document.getElementById('authGate').style.display = 'flex';
  showAuthMsg('Fel e-post eller lösenord. Försök igen.', true);
  btn.textContent = 'Hämta min plan →';
  btn.disabled = false;
@@ -2684,6 +2685,7 @@ async function fetchPlanByEmail() {
  if (edu && (edu.yh || edu.both)) loadYHSchools(edu, ans);
 
  } catch(e) {
+ document.getElementById('authGate').style.display = 'flex';
  showAuthMsg('Något gick fel. Försök igen.', true);
  btn.textContent = 'Hämta min plan →';
  btn.disabled = false;
