@@ -1342,14 +1342,14 @@ function showBlurredPlan(){
 
     function tick(){
         if(si>=steps.length){
-            // Klar — visa paywall
+            // Klar — spara och redirect
             setTimeout(()=>{
                 loadEl.style.transition='opacity .5s';
                 loadEl.style.opacity='0';
                 setTimeout(()=>{
                     loadEl.remove();
                     document.body.style.overflow='';
-                    window.location.href='/min-plan';
+                    saveAndRedirect();
                 },500);
             },700);
             return;
@@ -3209,11 +3209,8 @@ async function saveAndRedirect() {
 
     // Spara plan via create_plan RPC (hanterar DELETE+INSERT med bcrypt-hashning)
     const planEmail = emailRaw.toLowerCase();
-    alert('DEBUG steg 1: anropar create_plan för ' + planEmail);
-    let planStatus = '(ej körd)';
-    let planBody = '';
     try {
-        const planRes = await fetch(SUPABASE_URL + '/rest/v1/rpc/create_plan', {
+        const planRes = await fetchWithRetry(SUPABASE_URL + '/rest/v1/rpc/create_plan', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -3229,13 +3226,12 @@ async function saveAndRedirect() {
                 p_data: saveData
             })
         });
-        planStatus = planRes.status;
-        planBody = await planRes.text();
-        alert('DEBUG steg 2: status=' + planStatus + ' body=' + planBody.substring(0, 200));
-        if (!planRes.ok) return; // stoppa om fel
+        if (planRes && !planRes.ok) {
+            const errText = await planRes.text().catch(() => '');
+            console.error('create_plan fel:', planRes.status, errText);
+        }
     } catch(e) {
-        alert('DEBUG undantag: ' + e.message);
-        return;
+        console.warn('Plans save failed, fortsätter med localStorage:', e.message);
     }
 
     window.location.href = '/min-plan';
