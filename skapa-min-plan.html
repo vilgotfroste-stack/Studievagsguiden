@@ -3209,8 +3209,11 @@ async function saveAndRedirect() {
 
     // Spara plan via create_plan RPC (hanterar DELETE+INSERT med bcrypt-hashning)
     const planEmail = emailRaw.toLowerCase();
+    alert('DEBUG steg 1: anropar create_plan för ' + planEmail);
+    let planStatus = '(ej körd)';
+    let planBody = '';
     try {
-        const planRes = await fetchWithRetry(SUPABASE_URL + '/rest/v1/rpc/create_plan', {
+        const planRes = await fetch(SUPABASE_URL + '/rest/v1/rpc/create_plan', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -3226,17 +3229,12 @@ async function saveAndRedirect() {
                 p_data: saveData
             })
         });
-        if (planRes && !planRes.ok) {
-            const errText = await planRes.text().catch(() => '');
-            console.error('create_plan fel:', planRes.status, errText);
-            loadMsg.remove();
-            await svgAlert('FEL ' + planRes.status + ': ' + errText.substring(0, 300), '🔧');
-            return; // Stoppa — redirecta inte förrän vi vet vad felet är
-        }
+        planStatus = planRes.status;
+        planBody = await planRes.text();
+        alert('DEBUG steg 2: status=' + planStatus + ' body=' + planBody.substring(0, 200));
+        if (!planRes.ok) return; // stoppa om fel
     } catch(e) {
-        console.error('Plans save exception:', e.message);
-        loadMsg.remove();
-        await svgAlert('Undantag: ' + e.message, '🔧');
+        alert('DEBUG undantag: ' + e.message);
         return;
     }
 
