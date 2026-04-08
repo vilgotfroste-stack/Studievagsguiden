@@ -3229,12 +3229,17 @@ async function saveAndRedirect() {
         if (planRes && !planRes.ok) {
             const errText = await planRes.text().catch(() => '');
             console.error('create_plan fel:', planRes.status, errText);
+            loadMsg.remove();
+            await svgAlert('FEL ' + planRes.status + ': ' + errText.substring(0, 300), '🔧');
+            return; // Stoppa — redirecta inte förrän vi vet vad felet är
         }
     } catch(e) {
-        console.warn('Plans save failed, fortsätter med localStorage:', e.message);
+        console.error('Plans save exception:', e.message);
+        loadMsg.remove();
+        await svgAlert('Undantag: ' + e.message, '🔧');
+        return;
     }
 
-    // Redirecta alltid — localStorage är backup om Supabase misslyckas
     window.location.href = '/min-plan';
 }
 
