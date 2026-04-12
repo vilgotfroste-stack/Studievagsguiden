@@ -1,5 +1,12 @@
 {
   "rewrites": [
+    { "source": "/komvux", "destination": "/komvux.html" },
+    { "source": "/jamfor-utbildningar", "destination": "/jamfor-utbildningar.html" },
+    { "source": "/yrken", "destination": "/yrken.html" },
+    { "source": "/studieform", "destination": "/studieform.html" },
+    { "source": "/foreldre-som-studerar", "destination": "/foreldre-som-studerar.html" },
+    { "source": "/csn-guide", "destination": "/csn-guide.html" },
+    { "source": "/din-studieplan", "destination": "/din-studieplan.html" },
     { "source": "/skapa-min-plan", "destination": "/skapa-min-plan.html" },
     { "source": "/din-plan", "destination": "/min-plan.html" },
     { "source": "/min-plan", "destination": "/min-plan.html" },
