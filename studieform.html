@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hur ska jag studera? Hitta din studieform | Studievägsguiden</title>
+<meta name="description" content="Distans eller campus? Heltid eller deltid? Förstå skillnaderna och ta reda på vilken studieform som faktiskt passar din livssituation.">
+<link rel="canonical" href="https://studievagsguiden.se/studieform">
+<link rel="icon" type="image/png" href="/favicon.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NFR33BFDF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-5NFR33BFDF');</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F8F5;--card:#fff;--tx:#0A0A0A;--mu:#3A3A36;--li:#7A7A74;
+  --ac:#5BA882;--al:#EBF5F0;--ah:#2D6B4A;
+  --bl:#5A8FB5;--bll:#E4F0FB;--bh:#2A4F6E;
+  --re:#B04830;--rl:#FDECEA;
+  --wa:#9A6A00;--wl:#FBF5EA;
+  --bo:#C5D8EB;--r:12px;
+  --shl:0 8px 40px rgba(0,0,0,.1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#EAF7F1;color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;text-decoration:none;color:inherit}
+.logo .i-dot{position:relative;display:inline-block}
+.logo .i-dot::after{content:'';position:absolute;top:.25em;left:50%;transform:translateX(-50%);width:.2em;height:.2em;background:#6BA3D0;border-radius:50%}
+.nav-back{font-size:.85rem;font-weight:600;color:var(--mu);text-decoration:none;display:flex;align-items:center;gap:6px;opacity:.7;transition:opacity .2s}
+.nav-back:hover{opacity:1}
+
+/* SCREENS */
+.screen{display:none}
+.screen.active{display:block}
+
+/* ════════════════════════════════════
+   LANDING PAGE
+════════════════════════════════════ */
+#landing{background:#EAF7F1}
+
+/* HERO */
+.hero{min-height:90vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 24px 60px;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.06) 0px,rgba(100,160,130,0.06) 1px,transparent 1px,transparent 14px)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:#E4F0FB;color:#5A8FB5;padding:8px 18px;border-radius:20px;font-size:.82rem;font-weight:600;margin-bottom:28px;animation:fu .8s ease forwards}
+.hero h1{font-family:'Inter',sans-serif;font-size:clamp(2.6rem,6vw,5rem);line-height:1.05;letter-spacing:-2px;max-width:760px;margin-bottom:22px;animation:fu .8s ease forwards .15s;opacity:0;font-weight:600}
+.hero h1 em{font-style:italic;color:#5A8FB5;font-weight:300}
+.hero-sub{font-size:1.05rem;color:var(--mu);max-width:480px;line-height:1.75;margin-bottom:44px;animation:fu .8s ease forwards .3s;opacity:0}
+.hero-cta{background:#5A8FB5;color:#fff;padding:17px 48px;border-radius:12px;font-family:inherit;font-size:1rem;font-weight:700;border:none;cursor:pointer;transition:all .2s;animation:fu .8s ease forwards .45s;opacity:0;text-decoration:none;display:inline-block}
+.hero-cta:hover{background:#2A4F6E;transform:translateY(-2px);box-shadow:0 6px 24px rgba(91,168,130,.3)}
+
+/* FORMAT CARDS */
+.formats-section{background:#fff;padding:80px 24px}
+.section-head{text-align:center;max-width:640px;margin:0 auto 56px}
+.section-label{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--li);margin-bottom:12px}
+.section-h{font-family:'Inter',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.15;letter-spacing:-.5px;margin-bottom:14px;font-weight:600}
+.section-sub{font-size:.95rem;color:var(--mu);line-height:1.7}
+
+.formats-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto}
+.format-card{border-radius:18px;padding:32px 28px;border:2px solid var(--bo);background:#fafaf8;transition:all .2s;position:relative;overflow:hidden}
+.format-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.format-card.campus-full::before{background:#5A8FB5}
+.format-card.campus-half::before{background:var(--bl)}
+.format-card.dist-full::before{background:var(--wa)}
+.format-card.dist-half::before{background:var(--re)}
+.format-card:hover{border-color:var(--bo);box-shadow:var(--shl);transform:translateY(-2px)}
+.format-icon{font-size:2rem;margin-bottom:14px;display:block}
+.format-name{font-family:'Inter',sans-serif;font-size:1.4rem;margin-bottom:8px;font-weight:600}
+.format-tagline{font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
+.format-card.campus-full .format-tagline{color:#5A8FB5}
+.format-card.campus-half .format-tagline{color:var(--bl)}
+.format-card.dist-full .format-tagline{color:var(--wa)}
+.format-card.dist-half .format-tagline{color:var(--re)}
+.format-desc{font-size:.88rem;color:var(--mu);line-height:1.7;margin-bottom:20px}
+.format-suits{border-top:1px solid var(--bo);padding-top:16px}
+.format-suits-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--li);margin-bottom:10px}
+.format-suit-item{display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--mu);margin-bottom:7px;line-height:1.45}
+.format-suit-item svg{flex-shrink:0;margin-top:2px}
+
+/* COMPARISON TABLE */
+.compare-section{background:var(--bg);padding:80px 24px;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.05) 0px,rgba(100,160,130,0.05) 1px,transparent 1px,transparent 14px)}
+.compare-wrap{max-width:900px;margin:0 auto}
+.compare-table{background:#fff;border-radius:16px;border:2px solid var(--bo);overflow:hidden;margin-top:40px}
+.compare-row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;border-bottom:1px solid var(--bo)}
+.compare-row:last-child{border-bottom:none}
+.compare-row.header{background:var(--tx)}
+.compare-cell{padding:14px 16px;font-size:.84rem}
+.compare-row.header .compare-cell{color:#fff;font-weight:700;font-size:.76rem;text-transform:uppercase;letter-spacing:.5px}
+.compare-cell:first-child{color:var(--mu);font-weight:600}
+.compare-row:not(.header):hover{background:#fafaf8}
+.chip{display:inline-block;padding:3px 9px;border-radius:6px;font-size:.72rem;font-weight:700}
+.chip.green{background:#E4F0FB;color:#2A4F6E}
+.chip.blue{background:var(--bll);color:var(--bh)}
+.chip.yellow{background:var(--wl);color:var(--wa)}
+.chip.red{background:var(--rl);color:var(--re)}
+.chip.gray{background:#f0f0ec;color:var(--li)}
+
+/* QUIZ SECTION */
+.quiz-section{background:#fff;padding:40px 24px 80px}
+.quiz-wrap{max-width:640px;margin:0 auto}
+
+.q-block{background:var(--bg);border:2px solid var(--bo);border-radius:14px;padding:24px 26px;margin-bottom:14px;transition:border-color .2s}
+.q-block.answered{border-color:#5A8FB5}
+.q-block-label{font-size:.68rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--li);margin-bottom:8px}
+.q-block-q{font-family:'Inter',sans-serif;font-size:1.1rem;line-height:1.3;margin-bottom:16px;color:var(--tx);font-weight:600}
+.q-block-hint{font-size:.78rem;color:var(--li);margin-top:-10px;margin-bottom:14px;line-height:1.5}
+
+.opts{display:grid;gap:8px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opt-btn{padding:12px 16px;border:2px solid var(--bo);border-radius:10px;cursor:pointer;font-family:inherit;font-size:.88rem;font-weight:500;color:var(--mu);background:#fff;transition:all .15s;text-align:left;line-height:1.4;display:flex;align-items:center;gap:10px}
+.opt-btn:hover{border-color:#5A8FB5;background:#E4F0FB;color:var(--tx)}
+.opt-btn.sel{border-color:#5A8FB5;background:#E4F0FB;color:#2A4F6E;font-weight:600}
+.opt-btn.two-col{justify-content:center;padding:16px}
+.opt-check{width:18px;height:18px;border-radius:50%;border:2px solid var(--bo);flex-shrink:0;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.opt-btn.sel .opt-check{background:#5A8FB5;border-color:#5A8FB5}
+.opt-btn.sel .opt-check::after{content:'';width:8px;height:8px;display:block;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 8'%3E%3Cpolyline points='1,4 3.5,6.5 9,1' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+
+.slider-wrap{padding:4px 0 8px}
+.slider-poles{display:flex;justify-content:space-between;margin-bottom:14px}
+.slider-pole{font-size:.8rem;color:var(--mu);font-weight:600}
+input[type=range].sfq{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;outline:none;cursor:pointer;background:linear-gradient(to right,#5A8FB5 37.5%,var(--bo) 37.5%)}
+input[type=range].sfq::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;border:3px solid #5A8FB5;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+input[type=range].sfq::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid #5A8FB5;cursor:pointer}
+.slider-val{text-align:center;font-size:.8rem;color:var(--li);margin-top:10px;font-weight:600}
+
+.submit-wrap{margin-top:8px}
+.submit-btn{width:100%;padding:18px;background:#5A8FB5;color:#fff;border:none;border-radius:12px;font-family:inherit;font-size:1.05rem;font-weight:700;cursor:pointer;transition:all .2s}
+.submit-btn:hover{background:#2A4F6E;transform:translateY(-1px);box-shadow:0 6px 24px rgba(91,168,130,.3)}
+.submit-btn:disabled{opacity:.35;pointer-events:none;transform:none}
+.progress-bar{height:3px;background:var(--bo);border-radius:2px;margin-bottom:28px;overflow:hidden}
+.progress-fill{height:100%;background:#5A8FB5;border-radius:2px;transition:width .4s ease;width:0%}
+
+/* ════════════════════════════════════
+   RESULT PAGE
+════════════════════════════════════ */
+#result{background:#EAF7F1;min-height:100vh;padding-top:60px;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.06) 0px,rgba(100,160,130,0.06) 1px,transparent 1px,transparent 14px)}
+.result-wrap{max-width:680px;margin:0 auto;padding:48px 24px 80px}
+
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:.84rem;color:var(--li);cursor:pointer;margin-bottom:36px;border:none;background:none;font-family:inherit;padding:0;transition:color .15s}
+.back-btn:hover{color:var(--tx)}
+
+.res-hero{text-align:center;margin-bottom:44px}
+.res-eyebrow{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--li);margin-bottom:14px}
+.res-name{font-family:'Inter',sans-serif;font-size:clamp(3rem,7vw,5.5rem);line-height:1;letter-spacing:-2px;margin-bottom:14px;font-weight:600}
+.res-tagline{font-size:1rem;color:var(--mu);max-width:480px;margin:0 auto;line-height:1.7}
+
+.res-why{background:#fff;border:2px solid var(--bo);border-radius:16px;padding:28px 28px;margin-bottom:20px}
+.res-why-label{font-size:.7rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--li);margin-bottom:14px}
+.res-why-items{display:grid;gap:10px}
+.res-why-item{display:flex;gap:12px;align-items:flex-start;font-size:.9rem;color:var(--mu);line-height:1.6}
+.res-why-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.82rem}
+
+.alt-section{margin-bottom:32px}
+.alt-label{font-size:.7rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--li);margin-bottom:14px}
+.alt-card{background:#fff;border:2px solid var(--bo);border-radius:14px;padding:20px 22px;margin-bottom:10px;display:flex;gap:16px;align-items:flex-start}
+.alt-card.avoid{opacity:.6}
+.alt-card-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:6px}
+.alt-card-name{font-weight:700;font-size:.9rem;margin-bottom:4px}
+.alt-card-why{font-size:.82rem;color:var(--mu);line-height:1.55}
+
+/* Edu picker */
+.edu-section{margin-bottom:32px}
+.edu-label{font-size:.7rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--li);margin-bottom:6px}
+.edu-intro{font-family:'Inter',sans-serif;font-size:1.4rem;margin-bottom:8px;font-weight:600}
+.edu-sub{font-size:.88rem;color:var(--mu);margin-bottom:18px;line-height:1.6}
+.edu-list{display:grid;gap:8px;margin-bottom:20px}
+.edu-item{display:flex;align-items:center;gap:14px;padding:15px 18px;border:2px solid var(--bo);border-radius:12px;cursor:pointer;transition:all .15s;background:#fff}
+.edu-item:hover{border-color:#5A8FB5;background:#E4F0FB}
+.edu-item.sel{border-color:#5A8FB5;background:#E4F0FB}
+.edu-dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--bo);flex-shrink:0;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.edu-item.sel .edu-dot{background:#5A8FB5;border-color:#5A8FB5}
+.edu-item.sel .edu-dot::after{content:'';width:8px;height:8px;display:block;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 8'%3E%3Cpolyline points='1,4 3.5,6.5 9,1' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+.edu-info{flex:1}
+.edu-name{font-weight:600;font-size:.9rem}
+.edu-meta{font-size:.74rem;color:var(--li);margin-top:2px}
+.edu-years{font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:6px;background:#E4F0FB;color:#5A8FB5;flex-shrink:0}
+
+.go-btn{width:100%;padding:18px;background:#5A8FB5;color:#fff;border:none;border-radius:12px;font-family:inherit;font-size:1.05rem;font-weight:700;cursor:pointer;transition:all .2s}
+.go-btn:hover{background:#2A4F6E;transform:translateY(-1px);box-shadow:0 6px 24px rgba(91,168,130,.3)}
+.go-btn:disabled{opacity:.35;pointer-events:none;transform:none}
+
+/* Result cards */
+.res-card{background:#fff;border:2px solid var(--bo);border-radius:16px;padding:24px 26px;margin-bottom:16px}
+.res-card-label{font-size:.7rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--li);margin-bottom:16px}
+.res-why-item{display:flex;gap:12px;align-items:flex-start;font-size:.9rem;color:var(--mu);line-height:1.65;margin-bottom:12px}
+.res-why-item:last-child{margin-bottom:0}
+.res-why-dot{width:22px;height:22px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.72rem;margin-top:1px}
+.hard-item{display:flex;gap:12px;align-items:flex-start;font-size:.9rem;color:var(--mu);line-height:1.65;margin-bottom:12px}
+.hard-item:last-child{margin-bottom:0}
+.hard-dot{width:22px;height:22px;border-radius:7px;background:#FFF0ED;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.72rem;margin-top:1px}
+
+/* Ekonomi rows */
+.ek-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:9px;margin-bottom:6px;font-size:.88rem}
+.ek-row:last-child{margin-bottom:0}
+.ek-row.total{font-weight:700;font-size:.95rem;margin-top:10px}
+.ek-label{color:var(--mu)}
+.ek-val{font-weight:700}
+
+/* Tidslinje */
+.tl-wrap{display:grid;gap:0}
+.tl-item{display:flex;gap:16px;align-items:flex-start;padding-bottom:20px;position:relative}
+.tl-item:last-child{padding-bottom:0}
+.tl-item::before{content:'';position:absolute;left:11px;top:24px;bottom:0;width:2px;background:var(--bo)}
+.tl-item:last-child::before{display:none}
+.tl-dot{width:24px;height:24px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#fff;position:relative;z-index:1}
+.tl-body .tl-when{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.tl-body .tl-text{font-size:.86rem;color:var(--mu);line-height:1.6}
+
+/* Förberedelseteg */
+.step-item{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--bo)}
+.step-item:last-child{border-bottom:none}
+.step-num{width:26px;height:26px;border-radius:50%;background:#5A8FB5;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:700;flex-shrink:0;margin-top:1px}
+.step-body .step-title{font-weight:700;font-size:.9rem;margin-bottom:3px}
+.step-body .step-desc{font-size:.84rem;color:var(--mu);line-height:1.6}
+
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.anim{opacity:0;animation:fu .5s ease forwards}
+
+/* Sticky section nav */
+.ptbar{position:fixed;top:60px;left:0;right:0;z-index:90;background:rgba(255,255,255,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:0 24px;overflow-x:auto;scrollbar-width:none;white-space:nowrap;transform:translateY(-100%);opacity:0;pointer-events:none;transition:transform .3s ease,opacity .3s ease}
+.ptbar.visible{transform:translateY(0);opacity:1;pointer-events:auto}
+.ptbar::-webkit-scrollbar{display:none}
+.ptbar-inner{display:inline-flex;gap:0;min-width:100%}
+.ptbar a{font-size:.82rem;font-weight:600;color:var(--mu);text-decoration:none;padding:12px 18px;border-bottom:2px solid transparent;transition:all .18s;letter-spacing:.2px;flex-shrink:0;display:inline-block;cursor:pointer;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit}
+.ptbar a:hover{color:var(--tx);border-bottom-color:#5A8FB5}
+.ptbar a.act{color:#5A8FB5;border-bottom-color:#5A8FB5}
+
+@media(max-width:680px){
+  .formats-grid{grid-template-columns:1fr}
+  .compare-table{display:none}
+  .hero h1{letter-spacing:-1px}
+  .result-wrap,.quiz-wrap{padding-left:16px;padding-right:16px}
+  .res-name{letter-spacing:-1px}
+  .format-card{padding:24px 20px}
+  .compare-section{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Nav overlay -->
+<div id="navOverlay" onclick="toggleNavMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:150;backdrop-filter:blur(2px)"></div>
+
+<!-- Slide-in panel -->
+<div id="navPanel" style="position:fixed;top:0;right:0;bottom:0;width:300px;background:#fff;z-index:160;transform:translateX(100%);transition:transform .3s cubic-bezier(0.4,0,0.2,1);box-shadow:-8px 0 32px rgba(0,0,0,.12);display:flex;flex-direction:column">
+  <div style="padding:20px 24px;border-bottom:1.5px solid var(--bo);display:flex;justify-content:space-between;align-items:center">
+    <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span></div>
+    <button onclick="toggleNavMenu()" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--mu);width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px">&#x2715;</button>
+  </div>
+  <div style="padding:8px 0;flex:1;overflow-y:auto">
+    <a href="/" style="display:block;padding:13px 24px;text-decoration:none;color:var(--tx);font-weight:700;font-size:.92rem;border-left:3px solid transparent">Startsidan</a>
+    <div style="padding:8px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Planering</div>
+    <a href="/din-studieplan" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">Skapa min plan</div></a>
+    <a href="/min-plan" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">Min plan</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Hitta rätt yrke</div>
+    <a href="/yrkestest" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">Yrkestest</div></a>
+    <a href="/studieform" style="display:block;padding:13px 24px;text-decoration:none;color:var(--tx);font-weight:700;font-size:.92rem;border-left:3px solid var(--ac);background:#F0FAF4">Hur ska jag studera?</a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Utbildningar</div>
+    <a href="/utbildningar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">Utbildningar &amp; yrken</div></a>
+    <a href="/jamfor-utbildningar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">Jämför utbildningar</div></a>
+    <a href="/komvux" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">Komvux</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Ekonomi</div>
+    <a href="/csn-guide" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">CSN-guide</div></a>
+    <a href="/foreldre-som-studerar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">Föräldrar som studerar</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Livsval</div>
+  </div>
+  <div style="padding:16px 24px;border-top:1.5px solid var(--bo)">
+    <a href="/integritetspolicy" style="font-size:.76rem;color:var(--li);text-decoration:none">Integritetspolicy</a>
+  </div>
+</div>
+
+<nav>
+  <a href="/" class="logo"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">gu<span class="i-dot">ı</span>den</span></a>
+  <div style="display:flex;align-items:center;gap:12px">
+    <a href="/min-plan" style="font-size:.83rem;font-weight:600;color:var(--ah);text-decoration:none;background:#fff;border:1.5px solid var(--bo);padding:7px 18px;border-radius:20px;transition:all .18s">Logga in</a>
+    <button onclick="toggleNavMenu()" style="background:none;border:1.5px solid var(--bo);border-radius:8px;padding:8px 10px;cursor:pointer;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center" aria-label="Meny">
+      <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
+      <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
+      <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════
+     LANDING
+══════════════════════════════════ -->
+
+<!-- Sticky section nav -->
+<nav class="ptbar" id="ptbar">
+  <div class="ptbar-inner">
+    <a data-target="format" onclick="navScroll(event,'format')">De fyra alternativen</a>
+    <a data-target="jamfor" onclick="navScroll(event,'jamfor')">Jämförelse</a>
+    <a data-target="misstag" onclick="navScroll(event,'misstag')">Vanliga misstag</a>
+    <a data-target="quiz" onclick="navScroll(event,'quiz')">Ta testet</a>
+    <a href="/din-studieplan">Skapa min plan</a>
+  </div>
+</nav>
+
+<div class="screen active" id="landing">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Hur ska jag studera?</div>
+    <h1>Hur ska du egentligen studera?</h1>
+    <p class="hero-sub">Campus eller distans. Heltid eller deltid. Det rätta svaret beror inte på vad du vill — det beror på hur ditt liv ser ut just nu.</p>
+    <button onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})" class="hero-cta">Ta reda på det →</button>
+    <p style="margin-top:14px;font-size:.84rem;color:var(--li);animation:fu .8s ease forwards .6s;opacity:0">Vet du inte vilken utbildning du siktar på? <a href="/yrkestest" style="color:#5A8FB5;font-weight:600;text-decoration:none">Ta yrkestestet först →</a></p>
+  </section>
+
+  <!-- STEG FÖR STEG MED ANKARE -->
+  <div style="background:#fff;border-bottom:1px solid var(--bo)">
+    <div style="max-width:860px;margin:0 auto;padding:32px 28px">
+      <p style="font-size:.7rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--li);margin-bottom:20px">Så här använder du guiden</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+        <a onclick="navScroll(event,'format')" href="#format" style="text-decoration:none;background:#fff;border:1.5px solid var(--bo);border-radius:14px;padding:20px 20px 20px 20px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:border-color .18s" onmouseover="this.style.borderColor='var(--bl)'" onmouseout="this.style.borderColor='var(--bo)'">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--bll);border:2px solid var(--bl);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;color:var(--bl)">1</div>
+          <div style="font-size:.95rem;font-weight:700;color:var(--tx);line-height:1.3">De fyra alternativen</div>
+          <div style="font-size:.82rem;color:var(--mu);line-height:1.55">Vad varje studieform faktiskt innebär för din vardag</div>
+        </a>
+        <a onclick="navScroll(event,'jamfor')" href="#jamfor" style="text-decoration:none;background:#fff;border:1.5px solid var(--bo);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:border-color .18s" onmouseover="this.style.borderColor='var(--bl)'" onmouseout="this.style.borderColor='var(--bo)'">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--bll);border:2px solid var(--bl);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;color:var(--bl)">2</div>
+          <div style="font-size:.95rem;font-weight:700;color:var(--tx);line-height:1.3">Jämför snabbt</div>
+          <div style="font-size:.82rem;color:var(--mu);line-height:1.55">Se skillnaderna mellan campus, distans, heltid och deltid på en rad</div>
+        </a>
+        <a onclick="navScroll(event,'quiz')" href="#quiz" style="text-decoration:none;background:#fff;border:1.5px solid var(--bo);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:border-color .18s" onmouseover="this.style.borderColor='var(--bl)'" onmouseout="this.style.borderColor='var(--bo)'">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--bll);border:2px solid var(--bl);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;color:var(--bl)">3</div>
+          <div style="font-size:.95rem;font-weight:700;color:var(--tx);line-height:1.3">Ta testet</div>
+          <div style="font-size:.82rem;color:var(--mu);line-height:1.55">8 frågor — ett tydligt, personligt svar</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMAT CARDS -->
+  <section class="formats-section" id="format">
+    <div class="section-head">
+      <div class="section-label">De fyra alternativen</div>
+      <h2 class="section-h">Vad innebär egentligen varje studieform?</h2>
+      <p class="section-sub">Ingen studieform är bättre än en annan. Men en av dem är bättre för dig — baserat på var du befinner dig i livet just nu.</p>
+    </div>
+    <div class="formats-grid">
+
+      <div class="format-card campus-full">
+        <div class="format-name">Campus heltid</div>
+        <div class="format-tagline">Snabbaste vägen till examen</div>
+        <div class="format-desc">Du studerar på plats, fem dagar i veckan, som student på riktigt. Hög struktur, social miljö och lärare du kan ställa frågor till direkt. Kräver att du kan leva på CSN och har möjlighet att flytta eller pendla.</div>
+        <div class="format-suits">
+          <div class="format-suits-label">Passar om du</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A8FB5" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Inte jobbar, eller kan sluta/ta tjänstledigt</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A8FB5" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Klarar dig ekonomiskt på CSN</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A8FB5" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Vill bli klar så snabbt som möjligt</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A8FB5" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Trivs med tydlig struktur och social studiemiljö</div>
+        </div>
+      </div>
+
+      <div class="format-card campus-half">
+        <div class="format-name">Campus deltid</div>
+        <div class="format-tagline">Campus men med andrum</div>
+        <div class="format-desc">Du studerar på plats men på halvfart — typiskt 2–3 dagar i veckan. Tar dubbelt så lång tid men du kan jobba parallellt och behålla en inkomst. Vanligast på kvällskurser och yrkesutbildningar.</div>
+        <div class="format-suits">
+          <div class="format-suits-label">Passar om du</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--bl)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Jobbar deltid och vill behålla inkomsten</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--bl)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Bor nära ett lärosäte</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--bl)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Vill ha social studiemiljö men flexiblare tempo</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--bl)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Har tid 4–5 timmar per studiedag</div>
+        </div>
+      </div>
+
+      <div class="format-card dist-full">
+        <div class="format-name">Distans heltid</div>
+        <div class="format-tagline">Friheten med full fart</div>
+        <div class="format-desc">Du studerar hemifrån, full fart. Lika snabbt som campus men utan geografisk begränsning. Kräver stark självdisciplin, en bra studiemiljö hemma och förmågan att hantera frihet utan att fastna.</div>
+        <div class="format-suits">
+          <div class="format-suits-label">Passar om du</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--wa)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Inte bor nära ett lärosäte och inte vill flytta</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--wa)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Har hög självdisciplin — levererar utan påminnelser</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--wa)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Har ett lugnt hem som fungerar som studieplatsen</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--wa)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Klarar CSN ekonomiskt</div>
+        </div>
+      </div>
+
+      <div class="format-card dist-half">
+        <div class="format-name">Distans deltid</div>
+        <div class="format-tagline">Maximal flexibilitet</div>
+        <div class="format-desc">Det mest flexibla alternativet. Du studerar hemifrån i ditt eget tempo och kan jobba parallellt. Tar längst tid men kräver minst av din livssituation. Vanligast bland föräldrar och heltidsarbetande.</div>
+        <div class="format-suits">
+          <div class="format-suits-label">Passar om du</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--re)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Jobbar heltid och behöver behålla inkomsten</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--re)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Har barn eller andra familjeåtaganden</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--re)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Inte bor nära ett lärosäte</div>
+          <div class="format-suit-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--re)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Kan lägga 2–4 timmar per dag på studier</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON TABLE -->
+  <section class="compare-section" id="jamfor">
+    <div class="compare-wrap">
+      <div class="section-head">
+        <div class="section-label">Jämförelse</div>
+        <h2 class="section-h">Snabbkoll: vad skiljer dem åt?</h2>
+      </div>
+      <div class="compare-table">
+        <div class="compare-row header">
+          <div class="compare-cell"></div>
+          <div class="compare-cell">Campus heltid</div>
+          <div class="compare-cell">Campus deltid</div>
+          <div class="compare-cell">Distans heltid</div>
+          <div class="compare-cell">Distans deltid</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell">Studietid</div>
+          <div class="compare-cell"><span class="chip green">Normalt</span></div>
+          <div class="compare-cell"><span class="chip yellow">2× längre</span></div>
+          <div class="compare-cell"><span class="chip green">Normalt</span></div>
+          <div class="compare-cell"><span class="chip red">2× längre</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell">Kan jobba parallellt</div>
+          <div class="compare-cell"><span class="chip red">Svårt</span></div>
+          <div class="compare-cell"><span class="chip green">Ja</span></div>
+          <div class="compare-cell"><span class="chip red">Svårt</span></div>
+          <div class="compare-cell"><span class="chip green">Ja</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell">Kräver flytt/pendling</div>
+          <div class="compare-cell"><span class="chip yellow">Ofta</span></div>
+          <div class="compare-cell"><span class="chip yellow">Ofta</span></div>
+          <div class="compare-cell"><span class="chip green">Nej</span></div>
+          <div class="compare-cell"><span class="chip green">Nej</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell">Kräver självdisciplin</div>
+          <div class="compare-cell"><span class="chip green">Måttligt</span></div>
+          <div class="compare-cell"><span class="chip green">Måttligt</span></div>
+          <div class="compare-cell"><span class="chip red">Högt</span></div>
+          <div class="compare-cell"><span class="chip yellow">Medel</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell">Social studiemiljö</div>
+          <div class="compare-cell"><span class="chip green">Ja</span></div>
+          <div class="compare-cell"><span class="chip green">Ja</span></div>
+          <div class="compare-cell"><span class="chip gray">Begränsat</span></div>
+          <div class="compare-cell"><span class="chip gray">Begränsat</span></div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell">Passar barnfamilj</div>
+          <div class="compare-cell"><span class="chip red">Svårt</span></div>
+          <div class="compare-cell"><span class="chip yellow">Går</span></div>
+          <div class="compare-cell"><span class="chip yellow">Går</span></div>
+          <div class="compare-cell"><span class="chip green">Bra</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VANLIGA MISSTAG -->
+  <section style="background:#fff;padding:80px 24px 40px;border-top:1px solid var(--bo)" id="misstag">
+    <div style="max-width:900px;margin:0 auto">
+      <div class="section-head">
+        <div class="section-label">Vanliga misstag</div>
+        <h2 class="section-h">Varför folk väljer fel studieform</h2>
+        <p class="section-sub">De flesta väljer studieform baserat på vad de hoppas att livet ska se ut — inte hur det faktiskt ser ut.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px">
+        <div style="background:#FFF5F5;border:1.5px solid #FDDDD9;border-radius:14px;padding:24px 22px">
+          <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--re);margin-bottom:12px">Misstag 1</div>
+          <div style="font-weight:700;font-size:.95rem;margin-bottom:8px">Väljer campus heltid utan ekonomisk buffert</div>
+          <div style="font-size:.84rem;color:var(--mu);line-height:1.65">CSN tar 4–6 veckor. Många börjar utan sparade pengar och hamnar i kläm direkt under första terminen. Studierna lider när ekonomin stresar.</div>
+        </div>
+        <div style="background:#FFF5F5;border:1.5px solid #FDDDD9;border-radius:14px;padding:24px 22px">
+          <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--re);margin-bottom:12px">Misstag 2</div>
+          <div style="font-weight:700;font-size:.95rem;margin-bottom:8px">Underskattar vad distansstudier kräver</div>
+          <div style="font-size:.84rem;color:var(--mu);line-height:1.65">Distans ger frihet — men tar inte bort kraven. Du måste leverera exakt lika mycket, utan den struktur ett klassrum ger. De flesta avhoppen sker i just den studieformen.</div>
+        </div>
+        <div style="background:#FFF5F5;border:1.5px solid #FDDDD9;border-radius:14px;padding:24px 22px">
+          <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--re);margin-bottom:12px">Misstag 3</div>
+          <div style="font-weight:700;font-size:.95rem;margin-bottom:8px">Väljer deltid utan att räkna på tidsperspektivet</div>
+          <div style="font-size:.84rem;color:var(--mu);line-height:1.65">En 3-årig utbildning på deltid tar 6 år. Det låter rimligt i teorin, men i praktiken sliter det att ha studier som en permanent stress i bakgrunden under lång tid.</div>
+        </div>
+        <div style="background:#FFF5F5;border:1.5px solid #FDDDD9;border-radius:14px;padding:24px 22px">
+          <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--re);margin-bottom:12px">Misstag 4</div>
+          <div style="font-weight:700;font-size:.95rem;margin-bottom:8px">Tror att studieformen kan ändras enkelt</div>
+          <div style="font-size:.84rem;color:var(--mu);line-height:1.65">Många börjar heltid med planen att byta till deltid om det inte funkar. Men att byta studietakt kräver ny ansökan, ny antagning och tappad plats — det är inte alltid möjligt.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="quiz-section" id="quiz">
+    <div class="quiz-wrap">
+      <div class="section-head" style="margin-bottom:36px">
+        <div class="section-label">Hitta din studieform</div>
+        <h2 class="section-h">8 frågor. Ett tydligt svar.</h2>
+        <p class="section-sub">Ingen fråga om vad du drömmer om — bara hur ditt liv ser ut just nu. Det är det som avgör.</p>
+      </div>
+
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div id="qNum" style="font-size:.78rem;font-weight:700;color:var(--li);letter-spacing:.5px;margin-bottom:18px;text-align:right">Fråga 1 av 8</div>
+
+      <div id="qCard" class="q-block"></div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px">
+        <button id="backQBtn" onclick="prevQ()" style="background:none;border:none;cursor:pointer;font-family:inherit;font-size:.84rem;color:var(--li);display:flex;align-items:center;gap:5px;padding:8px 0;transition:color .15s" onmouseover="this.style.color='var(--tx)'" onmouseout="this.style.color='var(--li)'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          Tillbaka
+        </button>
+        <button id="nextQBtn" onclick="nextQ()" disabled style="background:#5A8FB5;color:#fff;border:none;padding:14px 36px;border-radius:10px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;opacity:.35;pointer-events:none">
+          Nästa fråga →
+        </button>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /landing -->
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+(function(){
+  const faqs=[
+    {q:'Vad är skillnaden mellan distans och campus?',a:'Campus innebär att du är fysiskt på plats på lärosätet — föreläsningar, seminarier och labbar sker på schemalagda tider i ett klassrum. Distans innebär att undervisningen sker online, ofta med inspelade föreläsningar och digitala möten. Campus ger mer struktur och social miljö; distans ger mer geografisk frihet men kräver högre självdisciplin.'},
+    {q:'Kan man plugga på distans och jobba heltid samtidigt?',a:'Det beror på studietakten. Distans på deltid (50%) är det alternativ som fungerar bäst kombinerat med heltidsjobb — du läser ungefär 20 timmar i veckan, vilket är hanterbart om du planerar ordentligt. Distans på heltid är däremot lika tidskrävande som ett heltidsjobb och fungerar sällan kombinerat med annat heltidsarbete.'},
+    {q:'Vad innebär deltidsstudier i praktiken?',a:'Deltidsstudier (50%) innebär att du läser halva den normala studietakten. En 3-årig utbildning tar 6 år på deltid. Du får CSN även på deltid, men lägre belopp. Fördelen är att du kan behålla jobbet och inkomsten, och att stressen minskar. Nackdelen är att det tar längre tid att bli klar.'},
+    {q:'Hur mycket CSN får man vid deltidsstudier?',a:'Vid 50% studietakt får du ungefär hälften av heltidsbeloppet i studiestöd. 2026 är maxbeloppet för heltid drygt 13 000 kr/mån (bidrag + lån) — vid halvfart är det alltså runt 6 500 kr/mån. Du kan kombinera CSN med arbete utan att CSN automatiskt minskar, men inkomster över fribeloppet kan påverka bidraget.'},
+    {q:'Är distansstudier svårare än campusstudier?',a:'Inte nödvändigtvis innehållsmässigt — kursen är densamma. Men distansstudier kräver mer av dig som student. Du måste skapa din egen struktur, hålla deadlines utan påminnelser och motivera dig utan den sociala energin från ett klassrum. Studenter med hög självdisciplin klarar distans lika bra som campus. De som behöver yttre struktur mår bättre av campus.'},
+    {q:'Vilken studieform passar om man har barn?',a:'Distans deltid är det mest familjevänliga alternativet. Du studerar hemifrån och kan i stor utsträckning lägga studierna på tider som passar runt barnens schema — tidiga mornar, kvällar eller när barnen sover. Distans heltid är möjligt men krävande. Campus med yngre barn kräver noggrann planering av barnomsorg.'},
+    {q:'Kan man börja studera utan att veta exakt vilket yrke man siktar på?',a:'Ja. Det vanligaste rådet är att välja en utbildning med bred arbetsmarknad och ett yrke du är tillräckligt intresserad av, snarare än att vänta på full visshet. Använd Studievägsguidens yrkestest för att hitta en personlighetsprofil och matchande utbildningar — och räkna sedan på ekonomin för att se vilken studieform som fungerar för just din situation.'}
+  ];
+  const container=document.getElementById('sfFaq');
+  faqs.forEach((f,i)=>{
+    const wrap=document.createElement('div');
+    wrap.style.borderTop='1px solid var(--bo)';
+    const btn=document.createElement('button');
+    btn.style.cssText='width:100%;background:none;border:none;padding:20px 0;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:inherit;font-size:.95rem;font-weight:600;color:var(--tx);transition:color .15s';
+    btn.innerHTML=`<span>${f.q}</span><svg style="flex-shrink:0;transition:transform .25s" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>`;
+    const body=document.createElement('div');
+    body.style.cssText='max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1)';
+    body.innerHTML=`<p style="padding:0 0 20px;font-size:.9rem;color:var(--mu);line-height:1.75">${f.a}</p>`;
+    btn.addEventListener('click',()=>{
+      const open=body.style.maxHeight!=='0px'&&body.style.maxHeight!=='';
+      document.querySelectorAll('#sfFaq div[data-faq]').forEach(w=>{
+        const d=w.querySelector('div');if(d)d.style.maxHeight='0';
+        w.style.borderLeft='none';
+        const sv=w.querySelector('svg');if(sv)sv.style.transform='';
+        const b=w.querySelector('button');if(b)b.style.color='var(--tx)';
+      });
+      if(!open){
+        body.style.maxHeight=body.scrollHeight+'px';
+        wrap.style.borderLeft='3px solid #5A8FB5';
+        btn.style.color='#5A8FB5';
+        btn.querySelector('svg').style.transform='rotate(180deg)';
+      }
+    });
+    wrap.setAttribute('data-faq',i);
+    wrap.appendChild(btn);
+    wrap.appendChild(body);
+    container.appendChild(wrap);
+  });
+})();
+});
+</script>
+
+<!-- ══════════════════════════════════
+     RESULT
+══════════════════════════════════ -->
+<div class="screen" id="result">
+  <div class="result-wrap">
+
+    <button class="back-btn" onclick="goBack()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Ändra mina svar
+    </button>
+
+    <!-- HERO -->
+    <div class="anim" id="resHeroBanner" style="border-radius:16px;padding:36px 28px;margin-bottom:20px;position:relative;overflow:hidden">
+      <div style="position:relative;z-index:1">
+        <div class="res-eyebrow" id="resEyebrow" style="color:rgba(255,255,255,.7);margin-bottom:10px">Din rekommenderade studieform</div>
+        <div class="res-name" id="resName" style="color:#fff"></div>
+        <div class="res-tagline" id="resTagline" style="color:rgba(255,255,255,.88);margin-bottom:0"></div>
+      </div>
+    </div>
+
+    <!-- VARFÖR -->
+    <div class="res-card anim" style="animation-delay:.1s">
+      <div class="res-card-label">Därför passar det dig</div>
+      <div id="resWhyItems"></div>
+    </div>
+
+    <!-- VAD SOM BLIR SVÅRT -->
+    <div class="res-card anim" style="animation-delay:.18s">
+      <div class="res-card-label">Det här kommer vara svårt</div>
+      <div id="resHardItems"></div>
+    </div>
+
+    <!-- FÖRBERED DIG -->
+    <div class="res-card anim" style="animation-delay:.42s">
+      <div class="res-card-label">Tre saker att ordna innan du börjar</div>
+      <div id="resSteps"></div>
+    </div>
+
+    <!-- ÖVRIGA ALTERNATIV -->
+    <div class="anim" style="animation-delay:.5s;margin-bottom:32px">
+      <div class="res-card-label" style="margin-bottom:14px">Övriga alternativ</div>
+      <div id="altCards"></div>
+    </div>
+
+    <!-- UTBILDNINGSVÄLJARE -->
+    <div class="edu-section anim" style="animation-delay:.56s">
+      <div style="background:#fff;border:2px solid var(--bo);border-radius:16px;padding:28px 26px">
+        <div class="edu-label">Nästa steg</div>
+        <div class="edu-intro" style="margin-bottom:6px">Vilken utbildning är du intresserad av?</div>
+        <div class="edu-sub">Sök på ett yrke eller utbildning. Vi skapar din studieplan med studieformen redan inbakad.</div>
+
+        <!-- Sök -->
+        <div style="position:relative;margin-bottom:0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--li)" stroke-width="2" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="eduSearch" placeholder="Sök utbildning, t.ex. sjuksköterska..." oninput="handleSearch(this.value)"
+            style="width:100%;padding:14px 14px 14px 42px;border:2px solid var(--bo);border-radius:10px;font-family:inherit;font-size:.95rem;color:var(--tx);background:var(--bg);outline:none;transition:border-color .2s"
+            onfocus="this.style.borderColor='#5A8FB5';showEduList()" onblur="setTimeout(()=>this.style.borderColor='var(--bo)',150)">
+        </div>
+
+        <!-- Lista — dold tills sökning -->
+        <div class="edu-list" id="eduList" style="display:none;margin-top:8px;max-height:320px;overflow-y:auto"></div>
+
+        <!-- Vald utbildning visas här -->
+        <div id="selectedBanner" style="display:none;margin-top:14px;background:#EBF5F0;border:2px solid #5A8FB5;border-radius:12px;padding:16px 18px">
+          <div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#5A8FB5;margin-bottom:5px">Vald utbildning</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <div>
+              <div id="selectedName" style="font-weight:700;font-size:1rem;color:var(--tx)"></div>
+              <div id="selectedMeta" style="font-size:.8rem;color:var(--li);margin-top:2px"></div>
+            </div>
+            <button onclick="clearEdu()" style="background:none;border:none;cursor:pointer;font-size:.78rem;color:var(--li);text-decoration:underline;font-family:inherit;white-space:nowrap">Byt</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA — stark, utanför kortet -->
+      <button class="go-btn" id="goBtn" onclick="goToPlan()" disabled
+        style="margin-top:12px;padding:20px;font-size:1.1rem;border-radius:14px;opacity:.35;pointer-events:none">
+        Skapa min studieplan →
+      </button>
+      <p style="text-align:center;font-size:.8rem;color:var(--li);margin-top:10px">Gratis · Tar 3 minuter · Inga konto krävs</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const ans = {hours: 4};
+let selectedEdu = null;
+const REQUIRED = ['work','kids','city','economy','discipline','homeenv','priority'];
+
+const EDUS = [
+  {id:1,  name:'Systemutvecklare',           y:3,   s0:35000},
+  {id:2,  name:'Dataanalytiker',             y:3,   s0:33000},
+  {id:3,  name:'IT-säkerhetsspecialist',     y:3,   s0:33000},
+  {id:4,  name:'UX-designer (YH)',           y:2,   s0:32000},
+  {id:5,  name:'Civilingenjör',              y:5,   s0:38000},
+  {id:6,  name:'Högskoleingenjör',           y:3,   s0:38800},
+  {id:7,  name:'DevOps / Cloud engineer',    y:2,   s0:35000},
+  {id:8,  name:'Civilekonom',                y:4,   s0:34000},
+  {id:9,  name:'Redovisningsekonom',         y:2,   s0:30000},
+  {id:10, name:'Controller',                 y:3,   s0:33000},
+  {id:11, name:'Digital marknadsförare',     y:2,   s0:30000},
+  {id:12, name:'HR-specialist',              y:3,   s0:30000},
+  {id:13, name:'Projektledare',              y:3,   s0:33000},
+  {id:14, name:'Sjuksköterska',              y:3,   s0:32000},
+  {id:15, name:'Fysioterapeut',              y:3,   s0:30000},
+  {id:16, name:'Arbetsterapeut',             y:3,   s0:29000},
+  {id:17, name:'Biomedicinsk analytiker',    y:3,   s0:30000},
+  {id:18, name:'Tandhygienist',              y:3,   s0:30000},
+  {id:19, name:'Socionom',                   y:3.5, s0:29000},
+  {id:20, name:'Grundlärare',                y:3.5, s0:29000}
+];
+
+const FORMATS = {
+  'campus-full':{name:'Campus heltid',    color:'#2D6B4A', pace:'fulltime', mode:'campus'},
+  'campus-half':{name:'Campus deltid',    color:'#2A4F6E', pace:'parttime', mode:'campus'},
+  'dist-full':  {name:'Distans heltid',   color:'#7A5200', pace:'fulltime', mode:'distance'},
+  'dist-half':  {name:'Distans deltid',   color:'#8A3020', pace:'parttime', mode:'distance'}
+};
+
+/* ── QUESTIONS DATA ── */
+const QUESTIONS = [
+  {
+    key:'work', label:'Din situation',
+    q:'Hur ser ditt arbetsliv ut idag?',
+    type:'choice',
+    opts:[
+      {v:'fulltime', t:'Heltid — 40h/vecka eller mer'},
+      {v:'parttime', t:'Deltid — jobbar men inte heltid'},
+      {v:'hourly',   t:'Timanställd — varierar vecka till vecka'},
+      {v:'unemployed',t:'Jobbar inte just nu'}
+    ]
+  },
+  {
+    key:'kids',
+    q:'Har du barn under 12 år som du är ansvarig för?',
+    type:'two',
+    opts:[{v:'yes',t:'Ja'},{v:'no',t:'Nej'}]
+  },
+  {
+    key:'city',
+    q:'Bor du i eller nära en stad med ett lärosäte?',
+    hint:'Stockholm, Göteborg, Malmö, Uppsala, Linköping, Umeå, Örebro, Lund m.fl.',
+    type:'choice',
+    opts:[
+      {v:'yes',   t:'Ja, i eller nära en universitetsstad'},
+      {v:'maybe', t:'Nej men jag kan tänka mig att flytta'},
+      {v:'no',    t:'Nej och jag vill inte flytta'}
+    ]
+  },
+  {
+    key:'economy',
+    q:'Hur klarar du dig ekonomiskt om du tappar 40% av inkomsten under studietiden?',
+    type:'choice',
+    opts:[
+      {v:'fine',  t:'Klarar det utan problem'},
+      {v:'tight', t:'Tight men fungerar med lite planering'},
+      {v:'hard',  t:'Svårt — jag behöver hålla en inkomst'}
+    ]
+  },
+  {
+    key:'discipline', label:'Hur du fungerar',
+    q:'Du har en inlämning om tre veckor och ingen har påmint dig. Vad händer?',
+    type:'choice',
+    opts:[
+      {v:'high',   t:'Du börjar direkt och jobbar i jämn takt'},
+      {v:'medium', t:'Du börjar med god marginal men lite ojämnt'},
+      {v:'low',    t:'Du börjar sista veckan — men klarar det'}
+    ]
+  },
+  {
+    key:'homeenv',
+    q:'Hur ser din hemmiljö ut som studieplats?',
+    type:'choice',
+    opts:[
+      {v:'good', t:'Eget rum eller lugnt hem — fungerar bra'},
+      {v:'ok',   t:'Delar utrymme men kan hitta lugna stunder'},
+      {v:'bad',  t:'Svårt att studera hemma — för mycket störningar'}
+    ]
+  },
+  {
+    key:'hours',
+    q:'Hur många timmar per dag kan du realistiskt lägga på studier just nu?',
+    type:'slider'
+  },
+  {
+    key:'priority', label:'Vad väger tyngst',
+    q:'Vad är viktigast för dig under studietiden?',
+    type:'choice',
+    opts:[
+      {v:'fast',    t:'Bli klar så snabbt som möjligt'},
+      {v:'balance', t:'Ha ett hållbart tempo med liv vid sidan om'},
+      {v:'income',  t:'Behålla en inkomst under studietiden'},
+      {v:'social',  t:'Ha en social studiemiljö och träffa folk'}
+    ]
+  }
+];
+
+let curQ = 0;
+
+function renderQ(){
+  const q = QUESTIONS[curQ];
+  const isLast = curQ === QUESTIONS.length - 1;
+  const card = document.getElementById('qCard');
+  const nextBtn = document.getElementById('nextQBtn');
+  const backBtn = document.getElementById('backQBtn');
+
+  document.getElementById('qNum').textContent = `Fråga ${curQ+1} av ${QUESTIONS.length}`;
+  document.getElementById('progressFill').style.width = `${(curQ/QUESTIONS.length)*100}%`;
+  backBtn.style.visibility = curQ === 0 ? 'hidden' : 'visible';
+
+  let html = '';
+  if(q.label) html += `<div class="q-block-label">${q.label}</div>`;
+  html += `<div class="q-block-q">${q.q}</div>`;
+  if(q.hint) html += `<div class="q-block-hint">${q.hint}</div>`;
+
+  if(q.type === 'slider'){
+    const val = ans.hours || 4;
+    html += `<div class="slider-wrap">
+      <div class="slider-poles"><span class="slider-pole">1 timme</span><span class="slider-pole">8 timmar</span></div>
+      <input type="range" class="sfq" id="hoursSlider" min="1" max="8" value="${val}" step="0.5"
+        oninput="ans.hours=+this.value;document.getElementById('hoursVal').textContent=Math.round(this.value)+' timmar/dag';updateGrad(this)">
+      <div class="slider-val" id="hoursVal">${Math.round(val)} timmar/dag</div>
+    </div>`;
+    card.innerHTML = html;
+    const sl = document.getElementById('hoursSlider');
+    if(sl) updateGrad(sl);
+    enableNext();
+    return;
+  }
+
+  const isTwO = q.type === 'two';
+  html += `<div class="opts${isTwO?' two':''}">`;
+  q.opts.forEach(o => {
+    const sel = ans[q.key] === o.v ? ' sel' : '';
+    if(isTwO){
+      html += `<button class="opt-btn two-col${sel}" onclick="pickQ('${q.key}','${o.v}',this)">${o.t}</button>`;
+    } else {
+      html += `<button class="opt-btn${sel}" onclick="pickQ('${q.key}','${o.v}',this)"><div class="opt-check${sel?' sel':''}"></div>${o.t}</button>`;
+    }
+  });
+  html += '</div>';
+  card.innerHTML = html;
+
+  // Restore next button state
+  if(ans[q.key]) enableNext();
+  else disableNext();
+
+  nextBtn.textContent = isLast ? 'Se mitt svar →' : 'Nästa fråga →';
+}
+
+function pickQ(key, val, btn){
+  ans[key] = val;
+  document.querySelectorAll('.opt-btn').forEach(b=>{
+    b.classList.remove('sel');
+    const dot = b.querySelector('.opt-check');
+    if(dot) dot.classList.remove('sel');
+  });
+  btn.classList.add('sel');
+  const dot = btn.querySelector('.opt-check');
+  if(dot) dot.classList.add('sel');
+  enableNext();
+}
+
+function enableNext(){
+  const btn = document.getElementById('nextQBtn');
+  btn.style.opacity='1';
+  btn.style.pointerEvents='auto';
+  btn.disabled=false;
+}
+function disableNext(){
+  const btn = document.getElementById('nextQBtn');
+  btn.style.opacity='.35';
+  btn.style.pointerEvents='none';
+  btn.disabled=true;
+}
+
+function nextQ(){
+  const isLast = curQ === QUESTIONS.length - 1;
+  if(isLast){ showResult(); return; }
+  curQ++;
+  animateCard('fwd');
+}
+function prevQ(){
+  if(curQ === 0) return;
+  curQ--;
+  animateCard('back');
+}
+function animateCard(dir){
+  const card = document.getElementById('qCard');
+  card.style.transition='opacity .2s ease,transform .2s ease';
+  card.style.opacity='0';
+  card.style.transform=dir==='fwd'?'translateX(-16px)':'translateX(16px)';
+  setTimeout(()=>{
+    card.style.transition='';card.style.opacity='';card.style.transform='';
+    renderQ();
+  },200);
+}
+
+function updateGrad(el){
+  const v=(el.value-el.min)/(el.max-el.min)*100;
+  el.style.background=`linear-gradient(to right,#5A8FB5 0%,#5A8FB5 ${v}%,var(--bo) ${v}%,var(--bo) 100%)`;
+}
+
+// Init
+document.addEventListener('DOMContentLoaded', renderQ);
+
+function calcScores(){
+  const s={'campus-full':0,'campus-half':0,'dist-full':0,'dist-half':0};
+  const w=ans.work,k=ans.kids,c=ans.city,e=ans.economy,d=ans.discipline,h=ans.homeenv,hr=+(ans.hours||4),p=ans.priority;
+
+  if(w==='fulltime'){s['dist-half']+=3;s['campus-half']+=1;}
+  else if(w==='parttime'){s['dist-half']+=2;s['campus-half']+=2;s['dist-full']+=1;}
+  else if(w==='hourly'){s['dist-half']+=2;s['campus-half']+=1;s['dist-full']+=1;}
+  else{s['campus-full']+=3;s['dist-full']+=2;s['campus-half']+=1;}
+
+  if(k==='yes'){s['dist-half']+=3;s['dist-full']+=1;}
+  else{s['campus-full']+=1;s['campus-half']+=1;}
+
+  if(c==='yes'){s['campus-full']+=2;s['campus-half']+=2;}
+  else if(c==='maybe'){s['campus-full']+=1;s['dist-full']+=2;s['dist-half']+=2;}
+  else{s['dist-full']+=3;s['dist-half']+=3;}
+
+  if(e==='fine'){s['campus-full']+=2;s['dist-full']+=1;}
+  else if(e==='tight'){s['campus-half']+=2;s['dist-half']+=2;}
+  else{s['dist-half']+=3;s['campus-half']+=1;}
+
+  if(d==='high'){s['dist-full']+=2;s['dist-half']+=1;}
+  else if(d==='medium'){s['campus-half']+=1;}
+  else{s['campus-full']+=2;s['campus-half']+=2;}
+
+  if(h==='good'){s['dist-full']+=2;s['dist-half']+=1;}
+  else if(h==='ok'){s['dist-half']+=1;}
+  else{s['campus-full']+=2;s['campus-half']+=2;}
+
+  if(hr>=6){s['campus-full']+=2;s['dist-full']+=2;}
+  else if(hr>=4){s['campus-half']+=1;s['dist-half']+=1;}
+  else{s['dist-half']+=3;s['campus-half']+=2;}
+
+  if(p==='fast'){s['campus-full']+=3;s['dist-full']+=2;}
+  else if(p==='balance'){s['campus-half']+=2;s['dist-half']+=2;}
+  else if(p==='income'){s['dist-half']+=3;s['campus-half']+=2;}
+  else{s['campus-full']+=3;s['campus-half']+=2;}
+
+  return Object.entries(s).sort((a,b)=>b[1]-a[1]);
+}
+
+function whyPoints(key){
+  const w=ans.work,k=ans.kids,c=ans.city,e=ans.economy,d=ans.discipline,h=ans.homeenv,p=ans.priority;
+  const all={
+    'campus-full':[
+      w==='unemployed'?{text:'Du jobbar inte just nu — du kan satsa fullt på studierna'}:null,
+      e==='fine'?{text:'Din ekonomi klarar ett inkomstbortfall under studietiden'}:null,
+      d==='high'?{text:'Du har hög disciplin och trivs med ett högt tempo'}:null,
+      p==='fast'?{text:'Du vill bli klar så snabbt som möjligt — campus heltid är snabbast'}:null,
+      c==='yes'?{text:'Du bor redan nära ett lärosäte — inga flyttproblem'}:null,
+      p==='social'?{text:'Du vill ha en social studiemiljö — campus ger dig det'}:null,
+      k==='no'?{text:'Inga familjeåtaganden som begränsar schemat'}:null
+    ],
+    'campus-half':[
+      w==='parttime'||w==='hourly'?{text:'Du kan behålla jobbet och inkomsten vid sidan av studierna'}:null,
+      c==='yes'?{text:'Du bor nära ett lärosäte'}:null,
+      p==='balance'?{text:'Du söker ett hållbart tempo — deltid ger dig utrymme'}:null,
+      e==='tight'?{text:'Din ekonomi är tight — att kunna jobba parallellt hjälper'}:null,
+      p==='social'?{text:'Du vill ha social miljö — campus deltid ger dig det med mer andrum'}:null
+    ],
+    'dist-full':[
+      c==='no'?{text:'Du bor inte nära ett lärosäte och vill inte flytta — distans löser det'}:null,
+      d==='high'?{text:'Du har den disciplin som distansstudier kräver'}:null,
+      h==='good'?{text:'Du har en bra studiemiljö hemma'}:null,
+      e==='fine'?{text:'Din ekonomi klarar CSN'}:null,
+      p==='fast'?{text:'Du vill bli klar snabbt — distans heltid är lika snabbt som campus'}:null
+    ],
+    'dist-half':[
+      w==='fulltime'?{text:'Du jobbar heltid och behöver den flexibilitet distans deltid ger'}:null,
+      k==='yes'?{text:'Du har barn — det här är den form som passar bäst runt en familj'}:null,
+      e==='hard'?{text:'Du behöver behålla inkomsten — du kan jobba parallellt'}:null,
+      c==='no'?{text:'Du bor inte nära ett lärosäte'}:null,
+      p==='income'?{text:'Inkomst är prioritet — distans deltid ger dig den kombinationen'}:null,
+      p==='balance'?{text:'Du vill ha ett hållbart tempo och detta är det mest flexibla'}:null
+    ]
+  };
+  return (all[key]||[]).filter(Boolean).slice(0,4);
+}
+
+function avoidReason(key){
+  const w=ans.work,k=ans.kids,c=ans.city,e=ans.economy,d=ans.discipline,h=ans.homeenv,p=ans.priority;
+  const reasons={
+    'campus-full':w==='fulltime'?'Du jobbar heltid — svårt att kombinera med 40h/v campus.':k==='yes'?'Med barn är heltid på campus schemalogistiskt svårt.':e==='hard'?'Din ekonomi klarar inte inkomstbortfallet.':'Passar dig sämst utifrån dina svar.',
+    'campus-half':c==='no'&&c!=='maybe'?'Du bor inte nära ett lärosäte — campus kräver pendling.':'Passar dig sämst utifrån dina svar.',
+    'dist-full':h==='bad'?'Din hemmiljö fungerar inte som studieplats — kräver att du kan jobba ostört.':d==='low'?'Distans heltid kräver hög självdisciplin utan yttre struktur.':'Passar dig sämst utifrån dina svar.',
+    'dist-half':p==='fast'?'Du vill bli klar snabbt — deltid fördubblar studietiden.':'Passar dig sämst utifrån dina svar.'
+  };
+  return reasons[key]||'Passar dig sämst utifrån dina svar.';
+}
+
+const taglines={
+  'campus-full':'Du har förutsättningarna att vara student på riktigt — fullt fokus, snabbast väg till examen.',
+  'campus-half':'Du kan studera på campus men behöver utrymme för livet runt om. Deltid ger dig det.',
+  'dist-full':'Distans heltid passar din situation — du slipper flytta och är klar lika snabbt som campus.',
+  'dist-half':'Din livssituation är tätpackad. Distans deltid gör det faktiskt genomförbart — utan att allt annat rasar.'
+};
+
+function showResult(){
+  const ranked=calcScores();
+  const best=ranked[0][0];
+  const f=FORMATS[best];
+  const isParttime=f.pace==='parttime';
+  const w=ans.work,k=ans.kids,c=ans.city,e=ans.economy,d=ans.discipline,h=ans.homeenv,hr=+(ans.hours||4),p=ans.priority;
+
+  // Hero banner med bakgrundsbild
+  const banner=document.getElementById('resHeroBanner');
+  const bgImages={
+    'campus-full':'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1200&q=80&fit=crop', // campus föreläsningssal
+    'campus-half':'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80&fit=crop', // bibliotek
+    'dist-full':'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=1200&q=80&fit=crop',   // hemmakontor laptop
+    'dist-half':'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&q=80&fit=crop'    // laptop vid köksbordet
+  };
+  banner.style.backgroundImage=`linear-gradient(135deg,${f.color}ee,${f.color}bb),url('${bgImages[best]}')`;
+  banner.style.backgroundSize='cover';
+  banner.style.backgroundPosition='center';
+  banner.style.color='#fff';
+  document.getElementById('resName').textContent=f.name;
+  document.getElementById('resTagline').textContent=taglines[best];
+
+  // VARFÖR — utökad
+  const pts=whyPoints(best);
+  document.getElementById('resWhyItems').innerHTML=pts.map(pt=>`
+    <div class="res-why-item">
+      <div class="res-why-dot" style="background:${f.color}22;color:${f.color}">✓</div>
+      <div>${pt.text}</div>
+    </div>`).join('');
+
+  // VAD SOM BLIR SVÅRT
+  const hardMap={
+    'campus-full':[
+      'Ekonomin är det första som straffar sig. CSN är inte en hög lön — planera buffert för de första 6 veckorna innan pengarna kommit.',
+      'Du förlorar strukturen av att ha ett jobb. Utan schemalagda krav utanför studierna behöver du sätta din egen disciplin aktivt.',
+      w!=='unemployed'?'Övergången från jobb till heltidsstudier är tuffare psykologiskt än de flesta tror — ge dig själv en månad att landa.':null,
+      k==='yes'?'Barnomsorgslogistiken kräver planering. Kolla med din kommun om du har förtur som studerande förälder.':null
+    ],
+    'campus-half':[
+      'Deltid tar dubbelt så lång tid. Det är lätt att underskatta hur tröttande det är att ha studier som en permanent bakgrundsstress i 4–6 år.',
+      c!=='yes'?'Du bor inte nära ett lärosäte — pendling tar energi och tid som adderas ovanpå studierna.':null,
+      'Risken är att jobbet alltid vinner. När det krockar är det studierna som prioriteras ned — det kräver aktiv hantering.',
+      d==='low'?'Med låg inre disciplin är deltid svårt. Det finns ingen tydlig deadline-press förrän det är för sent.':null
+    ],
+    'dist-full':[
+      'Ensamheten är det vanligaste skälet till avhopp. Utan klassrum och studiekamrater riskerar du att tappa motivationen under långa perioder.',
+      d!=='high'?'Din självskattade disciplin är inte på toppnivå — distans heltid förlåter inte prokrastinering. Schemalägg studietid som fasta block i kalendern.':null,
+      h==='bad'||h==='ok'?'Din hemmiljö är inte idealisk. Du behöver hitta ett alternativ — bibliotek, café, studiecentrum — och göra det till en vana.':null,
+      'Tekniska problem, dålig internetuppkoppling och sämre stöd från lärare är verkliga hinder du behöver vara beredd på.'
+    ],
+    'dist-half':[
+      'Det tar lång tid. En 3-årig utbildning tar 6 år. Det är svårt att bibehålla motivation och fokus under så lång period.',
+      w==='fulltime'?'Jobbet och studierna konkurrerar om samma energi. De flesta underskattar hur utmattande det är att aldrig ha en riktig "ledig" period.':null,
+      'Distans deltid är lätt att nedprioritera. När livet blir intensivt är det studierna som får stryka på foten — och det märks i resultaten.',
+      k==='yes'?'Barn plus jobb plus studier är en krävande ekvation. Var ärlig mot dig själv om vad som är realistiskt under perioder av hög belastning.':null
+    ]
+  };
+  const hardItems=(hardMap[best]||[]).filter(Boolean).slice(0,4);
+  document.getElementById('resHardItems').innerHTML=hardItems.map(t=>`
+    <div class="hard-item">
+      <div class="hard-dot">⚠</div>
+      <div>${t}</div>
+    </div>`).join('');
+
+  // FÖRBERED DIG
+  const stepsMap={
+    'campus-full':[
+      {t:'Ansök om tjänstledighet eller säg upp dig',d:`Du har rätt till tjänstledighet för studier (Studieledighetslagen). Kolla ditt anställningsavtal och prata med arbetsgivaren ${w!=='unemployed'?'så snart du vet vilken utbildning du söker':'i god tid'}.`},
+      {t:'Ordna boende nära lärosätet',d:c==='yes'?'Du bor redan nära — men kolla ändå om studieorten har bättre tillgång till studentboende än din nuvarande adress.':'Kö för studentboende kan ta 1–2 år. Börja söka direkt. Alternativt: andrahandsboende de första terminerna.'},
+      {t:'Bygg en startbuffert på minst 20 000 kr',d:'CSN tar 4–6 veckor innan första utbetalning. Utan buffert är du i kläm direkt från dag ett.'}
+    ],
+    'campus-half':[
+      {t:'Stäm av med arbetsgivaren om schema',d:'Kolla om du kan gå ner i tjänst eller justera schemat. Många arbetsgivare är mer flexibla än du tror — men du måste fråga i god tid.'},
+      {t:'Kartlägg pendlingstiden',d:'Lägg ihop pendlingstid + studietid + jobbtid. Om summan överstiger 12 timmar per dag är det inte hållbart i längden.'},
+      {t:'Skapa ett fast studieschema',d:'Utan ett inbokat schema är risken hög att studierna alltid hamnar sist. Boka in studietid i kalendern redan nu.'}
+    ],
+    'dist-full':[
+      {t:'Skapa din studieplats',d:h==='bad'?'Din hemmiljö fungerar inte — hitta ett fast alternativ utanför hemmet som du kan använda dagligen.':'Stäng av sociala medier under studietid. Verktyg som Focus eller Cold Turkey hjälper om du behöver.'},
+      {t:'Undersök om utbildningen faktiskt erbjuds på distans',d:'Inte alla program erbjuds på distans. Kolla specifikt vilka skolor som har distansupplägg och vilka krav de ställer på närvaro (t.ex. obligatoriska träffar).'},
+      {t:'Bygg en startbuffert',d:'CSN tar 4–6 veckor. Se till att ha minst en månads levnadskostnader i buffert innan du börjar.'}
+    ],
+    'dist-half':[
+      {t:'Prata med din arbetsgivare om flexibelt schema',d:'Distans deltid fungerar bäst om du kan lägga studietid på morgnar, kvällar eller specifika dagar. Stäm av möjligheterna tidigt.'},
+      {t:'Sätt upp en realistisk veckoplan',d:`Du har ${hr} timmar/dag tillgängligt. Med ${isParttime?'deltid':'heltid'} studier behöver du avsätta minst 20 timmar/vecka för studier. Räkna på det mot ditt faktiska schema.`},
+      {t:'Förbered dig mentalt på den långa resan',d:'Distans deltid tar dubbelt så lång tid. Sätt delmål — terminsmål, kursmål — som ger dig en känsla av progress längs vägen.'}
+    ]
+  };
+  document.getElementById('resSteps').innerHTML=(stepsMap[best]||[]).map((s,i)=>`
+    <div class="step-item">
+      <div class="step-num">${i+1}</div>
+      <div class="step-body"><div class="step-title">${s.t}</div><div class="step-desc">${s.d}</div></div>
+    </div>`).join('');
+
+  // ALTERNATIV
+  const altEl=document.getElementById('altCards');
+  altEl.innerHTML='';
+  const sec=ranked[1][0];
+  const secF=FORMATS[sec];
+  altEl.innerHTML+=`<div class="alt-card"><div class="alt-card-dot" style="background:${secF.color}"></div><div><div class="alt-card-name">${secF.name}</div><div class="alt-card-why">${whyPoints(sec)[0]?.text||'Fungerar också för din situation.'}</div></div></div>`;
+  const worst=ranked[ranked.length-1][0];
+  const worstF=FORMATS[worst];
+  altEl.innerHTML+=`<div class="alt-card avoid"><div class="alt-card-dot" style="background:var(--li)"></div><div><div class="alt-card-name" style="color:var(--li)">${worstF.name} — undvik just nu</div><div class="alt-card-why">${avoidReason(worst)}</div></div></div>`;
+
+  buildEduList();
+
+  document.getElementById('landing').classList.remove('active');
+  document.getElementById('result').classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+  window.dispatchEvent(new Event('resultShown'));
+}
+
+
+
+function buildEduList(){
+  const ranked=calcScores();
+  const best=ranked[0][0];
+  const isDistance=FORMATS[best].mode==='distance';
+  const campusHeavy=[5,14,15,16,17,18,20];
+
+  const list=document.getElementById('eduList');
+  list.innerHTML='';
+
+  const sorted=[...EDUS].sort((a,b)=>{
+    if(isDistance){
+      return (campusHeavy.includes(a.id)?1:0)-(campusHeavy.includes(b.id)?1:0);
+    }
+    return 0;
+  });
+
+  sorted.forEach(edu=>{
+    const hard=isDistance&&campusHeavy.includes(edu.id);
+    const item=document.createElement('div');
+    item.className='edu-item';
+    item.dataset.name=edu.name.toLowerCase();
+    item.dataset.id=edu.id;
+    item.innerHTML=`
+      <div class="edu-info">
+        <div class="edu-name">${edu.name}</div>
+        <div class="edu-meta">Ingångslön ${edu.s0.toLocaleString('sv-SE')} kr/mån · ${edu.y} år${hard?' &nbsp;·&nbsp; <span style="color:var(--wa);font-weight:600">Sällan på distans</span>':''}</div>
+      </div>`;
+    item.onclick=()=>selectEdu(edu);
+    list.appendChild(item);
+  });
+}
+
+function showEduList(){
+  const list=document.getElementById('eduList');
+  list.style.display='grid';
+}
+
+function handleSearch(val){
+  showEduList();
+  const term=val.toLowerCase().trim();
+  document.querySelectorAll('.edu-item').forEach(item=>{
+    item.style.display=!term||item.dataset.name.includes(term)?'flex':'none';
+  });
+}
+
+function selectEdu(edu){
+  selectedEdu=edu;
+  // Hide list, show banner
+  document.getElementById('eduList').style.display='none';
+  document.getElementById('eduSearch').value='';
+  document.getElementById('selectedBanner').style.display='block';
+  document.getElementById('selectedName').textContent=edu.name;
+  document.getElementById('selectedMeta').textContent=`${edu.y} år · Ingångslön ${edu.s0.toLocaleString('sv-SE')} kr/mån`;
+  // Enable CTA
+  const btn=document.getElementById('goBtn');
+  btn.style.opacity='1';
+  btn.style.pointerEvents='auto';
+  btn.disabled=false;
+  btn.textContent=`Skapa min plan för ${edu.name} →`;
+}
+
+function clearEdu(){
+  selectedEdu=null;
+  document.getElementById('selectedBanner').style.display='none';
+  document.getElementById('eduSearch').value='';
+  document.getElementById('eduList').style.display='none';
+  const btn=document.getElementById('goBtn');
+  btn.style.opacity='.35';
+  btn.style.pointerEvents='none';
+  btn.disabled=true;
+  btn.textContent='Skapa min studieplan →';
+}
+
+function filterEdus(q){
+  handleSearch(q);
+}
+
+function goToPlan(){
+  if(!selectedEdu)return;
+  const ranked=calcScores();
+  const best=ranked[0][0];
+  const f=FORMATS[best];
+  try{
+    localStorage.setItem('svg_edu',selectedEdu.id);
+    localStorage.setItem('svg_answers',JSON.stringify({
+      study_mode:f.mode, study_pace:f.pace,
+      work_status:ans.work, willing_to_move:ans.city==='maybe'?'yes':'no',
+      has_kids:ans.kids
+    }));
+    localStorage.setItem('svg_prefilled','1');
+  }catch(e){}
+  window.location.href='/skapa-min-plan';
+}
+
+function goBack(){
+  document.getElementById('result').classList.remove('active');
+  document.getElementById('landing').classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+  window.dispatchEvent(new Event('resultHidden'));
+}
+
+// Init slider
+setTimeout(()=>{
+  const sl=document.getElementById('hoursSlider');
+  if(sl){ans.hours=4;updateGrad(sl);}
+},50);
+
+function toggleNavMenu(){
+  const panel=document.getElementById('navPanel');
+  const overlay=document.getElementById('navOverlay');
+  const open=panel.style.transform==='translateX(0px)'||panel.style.transform==='translateX(0%)';
+  panel.style.transform=open?'translateX(100%)':'translateX(0%)';
+  overlay.style.display=open?'none':'block';
+  document.body.style.overflow=open?'':'hidden';
+}
+
+function navScroll(e,id){
+  if(e)e.preventDefault();
+  const el=document.getElementById(id);
+  if(!el)return;
+  const target=el.getBoundingClientRect().top+window.scrollY-130;
+  const start=window.scrollY;
+  const dist=target-start;
+  const dur=620;
+  let t0=null;
+  const ease=t=>t<.5?2*t*t:-1+(4-2*t)*t;
+  function step(ts){
+    if(!t0)t0=ts;
+    const p=Math.min((ts-t0)/dur,1);
+    window.scrollTo(0,start+dist*ease(p));
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  (function(){
+    const bar=document.getElementById('bottomBar');
+    if(!bar)return;
+    let shown=false;
+    let isResult=false;
+
+    const ptbar=document.getElementById('ptbar');
+    const navLinks=document.querySelectorAll('.ptbar-inner a[data-target]');
+    const sections=['format','jamfor','misstag','quiz'];
+
+    function onScroll(){
+      const scrollY=window.scrollY;
+      const shouldShow=scrollY>600;
+      if(shouldShow!==shown){shown=shouldShow;bar.classList.toggle('visible',shown);}
+      if(ptbar){
+        if(isResult){ptbar.classList.remove('visible');}
+        else{ptbar.classList.toggle('visible',scrollY>400);}
+      }
+      let current=null;
+      sections.forEach(id=>{
+        const el=document.getElementById(id);
+        if(el&&el.getBoundingClientRect().top<=140)current=id;
+      });
+      navLinks.forEach(a=>a.classList.toggle('act',a.dataset.target===current));
+    }
+
+    window.addEventListener('scroll',onScroll,{passive:true});
+    window.addEventListener('resultShown',function(){isResult=true;if(ptbar)ptbar.classList.remove('visible');});
+    window.addEventListener('resultHidden',function(){isResult=false;window.dispatchEvent(new Event('scroll'));});
+    onScroll();
+  })();
+});
+</script>
+
+<!-- NASTA STEG BANNER -->
+<div style="background:#2A4F6E;padding:80px 24px">
+  <div style="max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
+    <div>
+      <div style="font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:12px">Nästa steg</div>
+      <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.5px;margin-bottom:18px">Skapa din personliga studieplan</h2>
+      <p style="font-size:.97rem;color:rgba(255,255,255,.75);line-height:1.8;margin-bottom:32px;max-width:420px">Du vet nu vilken studieform som passar. Nästa steg är att ta reda på om det faktiskt lönar sig — och få en konkret plan.</p>
+      <a href="/skapa-min-plan" style="display:inline-block;background:#fff;color:#2A4F6E;font-size:.97rem;font-weight:700;padding:15px 28px;border-radius:10px;text-decoration:none;transition:transform .15s,box-shadow .15s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(0,0,0,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">Skapa min studieplan →</a>
+      <div style="display:flex;gap:18px;margin-top:18px;flex-wrap:wrap">
+        <span style="font-size:.82rem;color:rgba(255,255,255,.55);font-weight:500">✓ Gratis</span>
+        <span style="font-size:.82rem;color:rgba(255,255,255,.55);font-weight:500">✓ Tar 3 minuter</span>
+        <span style="font-size:.82rem;color:rgba(255,255,255,.55);font-weight:500">✓ Exakt skolmatchning</span>
+      </div>
+    </div>
+    <div class="plan-glass">
+      <div class="plan-glass-header">
+        <div class="plan-glass-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        </div>
+        <div>
+          <div class="plan-glass-supertitle">Din studieplan</div>
+          <div class="plan-glass-title">Studieform → Ekonomi → Plan</div>
+        </div>
+      </div>
+      <div class="plan-glass-rows">
+        <div class="plan-glass-row">
+          <div class="plan-glass-row-icon" style="background:rgba(91,168,130,.22)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7AC29A" stroke-width="2"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+          </div>
+          <div>
+            <div class="plan-glass-row-title">Studieform</div>
+            <div class="plan-glass-row-blur">Distans deltid · Anpassad för dig</div>
+          </div>
+        </div>
+        <div class="plan-glass-row">
+          <div class="plan-glass-row-icon" style="background:rgba(90,143,181,.22)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6BA3D0" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+          <div>
+            <div class="plan-glass-row-title">Ekonomisk analys</div>
+            <div class="plan-glass-row-blur">+8 400 kr/mån · Break-even 4,2 år</div>
+          </div>
+        </div>
+        <div class="plan-glass-row">
+          <div class="plan-glass-row-icon" style="background:rgba(176,72,48,.22)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D07060" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div>
+            <div class="plan-glass-row-title">Tidslinje</div>
+            <div class="plan-glass-row-blur">Start HT 2026 · Klar 2029</div>
+          </div>
+        </div>
+      </div>
+      <div class="plan-glass-footer">Din plan visas efter 3 minuters frågor</div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section style="background:#fff;padding:72px 24px">
+  <div style="max-width:720px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:44px">
+      <div style="font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--li);margin-bottom:12px">Vanliga frågor</div>
+      <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;line-height:1.2;letter-spacing:-.3px;margin-bottom:12px">Allt du undrar om studieformer</h2>
+    </div>
+    <div id="sfFaq"></div>
+  </div>
+</section>
+
+<footer style="background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0">
+  <div style="max-width:960px;margin:0 auto">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding-bottom:40px;border-bottom:1px solid var(--bo)">
+      <a href="/" style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;text-decoration:none;color:inherit;margin-bottom:10px;display:inline-block"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span></a>
+      <p style="font-size:.83rem;color:var(--li);max-width:400px;line-height:1.7">En gratis guide för dig som funderar på att studera.<br>Baserat på data från SCB, CSN och Arbetsförmedlingen.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:32px 16px;padding:36px 0 40px">
+      <div>
+        <div style="font-size:.62rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--li);margin-bottom:12px">Planering</div>
+        <a href="/skapa-min-plan" style="display:block;font-size:.83rem;color:var(--mu);text-decoration:none;font-weight:500;margin-bottom:10px">Skapa min plan</a>
+        <a href="/min-plan" style="display:block;font-size:.83rem;color:var(--mu);text-decoration:none;font-weight:500;margin-bottom:10px">Min plan</a>
+      </div>
+      <div>
+        <div style="font-size:.62rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--li);margin-bottom:12px">Hitta rätt yrke</div>
+        <a href="/yrkestest" style="display:block;font-size:.83rem;color:var(--mu);text-decoration:none;font-weight:500;margin-bottom:10px">Yrkestest</a>
+        <a href="/studieform" style="display:block;font-size:.83rem;color:var(--mu);text-decoration:none;font-weight:500;margin-bottom:10px">Hur ska jag studera?</a>
+      </div>
+      <div>
+        <div style="font-size:.62rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--li);margin-bottom:12px">Utbildningar</div>
+        <a href="/utbildningar" style="display:block;font-size:.83rem;color:var(--mu);text-decoration:none;font-weight:500;margin-bottom:10px">Utbildningar &amp; yrken</a>
+        <a href="/jamfor-utbildningar" style="display:block;font-size:.83rem;color:var(--mu);text-decoration:none;font-weight:500;margin-bottom:10px">Jämför utbildningar</a>
+        <a href="/komvux" style="display:block;font-size:.83rem;color:var(--mu);text-decoration:none;font-weight:500;margin-bottom:10px">Komvux</a>
+      </div>
+      <div>
+        <div style="font-size:.62rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--li);margin-bottom:12px">Ekonomi</div>
+        <a href="/csn-guide" style="display:block;font-size:.83rem;color:var(--mu);text-decoration:none;font-weight:500;margin-bottom:10px">CSN-guide</a>
+        <a href="/foreldre-som-studerar" style="display:block;font-size:.83rem;color:var(--mu);text-decoration:none;font-weight:500;margin-bottom:10px">Föräldrar som studerar</a>
+      </div>
+      <div>
+        <div style="font-size:.62rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--li);margin-bottom:12px">Livsval</div>
+        
+        <a href="/integritetspolicy" style="display:block;font-size:.83rem;color:var(--mu);text-decoration:none;font-weight:500;margin-bottom:10px">Integritetspolicy</a>
+      </div>
+    </div>
+    <div style="border-top:1px solid var(--bo);padding:16px 0;text-align:center">
+      <span style="font-size:.76rem;color:var(--li)">© 2026 Studievägsguiden · Byggt i Sverige</span>
+    </div>
+  </div>
+</footer>
+
+<div style="background:#EAF2ED;border-top:1px solid var(--bo);padding:20px 24px;font-size:.74rem;color:var(--li);line-height:2;text-align:center">
+  Om att välja studieform i Sverige · Att välja rätt studieform är ett av de viktigaste besluten inför en utbildning. Skillnaden mellan distansstudier och campusstudier handlar inte bara om var du befinner dig fysiskt — det handlar om hur din vardag ser ut, vad du kan offra ekonomiskt och hur du lär dig bäst. Distansstudier på heltid kräver minst lika mycket tid som campusstudier. Distansstudier på deltid är det vanligaste valet bland yrkesarbetande vuxna och föräldrar. Campusstudier på heltid är det snabbaste alternativet. Campusstudier på deltid kombinerar närvaro med möjligheten att jobba. ·
+  hur ska jag studera · distans eller campus · plugga deltid · plugga heltid · plugga hemifrån · CSN deltid · yrkeshögskola distans · kombinera jobb och studier · utbildning vuxen Sverige · plugga med barn · studieform test · distans heltid universitet · flexibla studier · studera som vuxen · vilket program passar mig · utbilda sig på distans · halvfart studier · byta karriär utbildning · kan man plugga och jobba
+</div>
+
+<!-- STICKY BOTTOM BAR -->
+<div id="bottomBar" style="position:fixed;bottom:0;left:0;right:0;z-index:150;background:#2A4F6E;border-top:1px solid rgba(255,255,255,.12);box-shadow:0 -4px 24px rgba(0,0,0,.35);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;transform:translateY(100%);opacity:0;transition:transform .35s ease,opacity .35s ease">
+  <span style="font-size:.9rem;color:rgba(255,255,255,.8);font-weight:500">Skapa din personliga studieplan gratis →</span>
+  <a href="/skapa-min-plan" style="background:#fff;color:#2A4F6E;font-size:.88rem;font-weight:700;padding:10px 22px;border-radius:8px;text-decoration:none;white-space:nowrap;flex-shrink:0">Skapa min plan →</a>
+</div>
+<style>
+/* Plan glass card */
+.plan-glass{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:20px;overflow:hidden}
+.plan-glass-header{background:rgba(255,255,255,.09);border-bottom:1px solid rgba(255,255,255,.1);padding:16px 20px;display:flex;align-items:center;gap:12px}
+.plan-glass-icon{width:36px;height:36px;background:rgba(255,255,255,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.plan-glass-supertitle{font-size:.62rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:2px}
+.plan-glass-title{font-size:1rem;font-weight:700;color:#fff}
+.plan-glass-rows{padding:4px 0}
+.plan-glass-row{display:flex;align-items:flex-start;gap:12px;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.07)}
+.plan-glass-row:last-of-type{border-bottom:none}
+.plan-glass-row-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.plan-glass-row-title{font-size:.85rem;font-weight:700;color:#fff;margin-bottom:4px}
+.plan-glass-row-blur{font-size:.8rem;color:rgba(255,255,255,.6);line-height:1.5;filter:blur(4px);user-select:none}
+.plan-glass-footer{text-align:center;padding:12px 20px;font-size:.78rem;color:rgba(255,255,255,.35);border-top:1px solid rgba(255,255,255,.07)}
+#bottomBar.visible{transform:translateY(0)!important;opacity:1!important}
+@media(max-width:520px){#bottomBar span{display:none}}
+@media(max-width:720px){.plan-glass{display:none}}
+</style>
+
+</body>
+</html>
