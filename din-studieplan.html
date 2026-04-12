@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Din personliga studieplan — Gratis på 3 minuter | Studievägsguiden</title>
+<meta name="description" content="Se exakt vad din personliga studieplan innehåller: CSN-ekonomi, behörighet, tidslinje och skolmatchning — baserat på just din situation och utbildning.">
+<link rel="canonical" href="https://studievagsguiden.se/din-studieplan">
+<link rel="icon" type="image/png" href="/favicon.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NFR33BFDF"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-5NFR33BFDF');</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F8F5;--card:#fff;--tx:#0A0A0A;--mu:#3A3A36;--li:#7A7A74;
+  --ac:#5BA882;--al:#EBF5F0;--ah:#2D6B4A;
+  --bl:#5A8FB5;--bll:#E4F0FB;--bh:#2A4F6E;
+  --re:#B04830;--rl:#FDECEA;--wa:#9A6A00;--wl:#FBF5EA;
+  --bo:#C5D8EB;--r:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#EAF7F1;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.06) 0px,rgba(100,160,130,0.06) 1px,transparent 1px,transparent 14px);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;text-decoration:none;color:inherit}
+.logo .i-dot{position:relative;display:inline-block}
+.logo .i-dot::after{content:'';position:absolute;top:.25em;left:50%;transform:translateX(-50%);width:.2em;height:.2em;background:#6BA3D0;border-radius:50%}
+
+/* HERO */
+.hero{padding:120px 24px 80px;position:relative;background:#E8F4F0;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.04) 0px,rgba(100,160,130,0.04) 1px,transparent 1px,transparent 12px)}
+.hero>*{position:relative;z-index:1}
+.hero-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr;gap:64px;align-items:center}
+.hero-left{max-width:640px}
+.hero-right{display:flex;justify-content:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(45,107,74,.12);color:var(--ah);border:1px solid rgba(45,107,74,.2);padding:7px 18px;border-radius:20px;font-size:.78rem;font-weight:700;margin-bottom:24px;letter-spacing:.4px;text-transform:uppercase}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800;line-height:1.1;letter-spacing:-1px;margin:0 0 18px;color:var(--tx);text-align:left}
+.hero-sub{font-size:1rem;color:var(--mu);margin:0 0 40px;line-height:1.8;text-align:left}
+.hero-chips{display:flex;gap:20px;flex-wrap:wrap}
+.hero-chip{font-size:.82rem;color:var(--mu);display:flex;align-items:center;gap:6px}
+.hero-chip::before{content:'✓';color:var(--ac);font-weight:700}
+
+/* MOBILE MOCKUP */
+.mobile-mockup{width:280px;height:540px;background:linear-gradient(145deg,#1a1a1a,#000);border-radius:32px;padding:4px;position:relative;box-shadow:0 12px 48px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.3),inset 0 1px 2px rgba(255,255,255,.1)}
+.mobile-screen{width:100%;height:100%;background:#fff;border-radius:28px;overflow:hidden;position:relative;box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
+.mobile-notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:100px;height:24px;background:#000;border-radius:0 0 14px 14px;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.mobile-nav{padding:36px 16px 8px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;justify-content:space-between}
+.mobile-logo{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700}
+.mobile-menu{width:24px;height:18px;display:flex;flex-direction:column;justify-content:space-between}
+.mobile-menu span{height:2px;background:#374151;border-radius:1px}
+.mobile-login{font-size:.72rem;font-weight:600;color:var(--ac);border:1px solid var(--ac);padding:4px 12px;border-radius:6px;text-decoration:none}
+.mobile-header{padding:12px 16px;background:#F9FAFB}
+.mobile-title{font-size:.82rem;font-weight:600;color:#374151}
+.mobile-tabs{display:flex;border-bottom:1px solid #E5E7EB}
+.mobile-tab{flex:1;text-align:center;font-size:.7rem;font-weight:600;color:#6B7280;padding:8px 4px;border-bottom:2px solid transparent;text-decoration:none}
+.mobile-tab.active{color:var(--ac);border-bottom-color:var(--ac)}
+.mobile-content{padding:8px 16px;flex:1}
+.genomfor-card{background:var(--al);border:1px solid #A7F3D0;border-radius:12px;padding:10px 14px;margin-bottom:8px;position:relative;overflow:hidden}
+.genomfor-card::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.15) 0,rgba(255,255,255,.15) 1px,transparent 1px,transparent 8px)}
+.genomfor-label{font-size:.58rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#059669;margin-bottom:2px}
+.genomfor-percent{font-size:1.6rem;font-weight:800;color:#065F46;line-height:.9;margin-bottom:2px}
+.genomfor-text{font-size:.7rem;font-weight:600;color:#065F46;margin-bottom:6px}
+.genomfor-items{display:flex;flex-wrap:wrap;gap:4px;font-size:.56rem}
+.genomfor-item{display:flex;align-items:center;gap:3px}
+.genomfor-item.good{color:#065F46}
+.genomfor-item.ok{color:#D97706}
+.genomfor-item.warn{color:#DC2626}
+.genomfor-item::before{content:'✓';font-size:.5rem}
+.genomfor-item.ok::before{content:'⚠'}
+.genomfor-item.warn::before{content:'⚠'}
+.mobile-timeline{display:flex;gap:4px;margin-bottom:8px}
+.timeline-btn{padding:5px 6px;border-radius:6px;font-size:.6rem;font-weight:600;border:1px solid #D1D5DB;background:#fff;color:#374151;text-align:center;line-height:1.2;flex:1}
+.timeline-btn.primary{background:#F59E0B;color:#fff;border-color:#F59E0B}
+.timeline-btn.secondary{background:#3B82F6;color:#fff;border-color:#3B82F6}
+.behorig-card{background:#F0FDF4;border:1px solid #BBF7D0;border-radius:8px;padding:8px 10px;margin-bottom:6px}
+.behorig-icon{width:24px;height:24px;background:var(--ac);border-radius:6px;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.behorig-title{font-size:.75rem;font-weight:700;color:#14532D;margin-bottom:4px}
+.behorig-text{font-size:.65rem;color:#166534;margin-bottom:6px}
+.behorig-btn{background:transparent;border:1px solid #BBF7D0;color:#14532D;padding:4px 10px;border-radius:6px;font-size:.64rem;font-weight:600}
+.forkrav-card{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:8px;padding:8px 12px}
+.forkrav-label{font-size:.58rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#6B7280;margin-bottom:6px}
+.forkrav-row{display:flex;justify-content:space-between;align-items:center;font-size:.7rem}
+.forkrav-subject{font-weight:600;color:#374151}
+.forkrav-status{font-size:.62rem;font-weight:600;color:#6B7280}
+
+/* SECTIONS */
+.white-section{background:#fff;padding:72px 24px}
+.bg-section{background:var(--bg);padding:72px 24px}
+.inner{max-width:860px;margin:0 auto}
+.section-label{font-size:.68rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--li);margin-bottom:10px}
+.section-h{font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:800;line-height:1.2;letter-spacing:-.5px;margin-bottom:14px}
+.section-sub{font-size:.95rem;color:var(--mu);line-height:1.75;margin-bottom:36px;max-width:620px}
+
+/* STEPS */
+.steps-row{display:flex;gap:0;margin-bottom:48px}
+.step{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;padding:0 12px}
+.step:not(:last-child)::after{content:'';position:absolute;top:18px;left:calc(50% + 24px);right:calc(-50% + 24px);height:2px;background:var(--bo)}
+.step-num{width:38px;height:38px;border-radius:50%;background:var(--bl);color:#fff;font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;flex-shrink:0;position:relative;z-index:1}
+.step-title{font-weight:700;font-size:.9rem;margin-bottom:4px}
+.step-desc{font-size:.8rem;color:var(--mu);line-height:1.6}
+
+/* PLAN FEATURE CARDS */
+.feature-section{padding:0 24px 80px}
+.feature-inner{max-width:860px;margin:0 auto}
+.feature-block{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-bottom:72px;padding-bottom:72px;border-bottom:1px solid var(--bo)}
+.feature-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.feature-block.reverse .feature-text{order:2}
+.feature-block.reverse .feature-visual{order:1}
+.feature-eyebrow{font-size:.65rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:10px}
+.feature-h{font-size:1.5rem;font-weight:800;line-height:1.2;letter-spacing:-.3px;margin-bottom:14px}
+.feature-p{font-size:.92rem;color:var(--mu);line-height:1.8;margin-bottom:20px}
+.feature-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.feature-list li{display:flex;align-items:flex-start;gap:10px;font-size:.88rem;color:var(--mu);line-height:1.55}
+.feature-list li::before{content:'';width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.feature-list.green li::before{background:var(--ac)}
+.feature-list.blue li::before{background:var(--bl)}
+.feature-list.orange li::before{background:#E08A30}
+.feature-list.red li::before{background:var(--re)}
+
+/* VISUAL MOCK CARDS */
+.mock-card{background:#fff;border:1.5px solid var(--bo);border-radius:18px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.07)}
+.mock-header{padding:16px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--bo)}
+.mock-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mock-title{font-weight:800;font-size:.95rem}
+.mock-subtitle{font-size:.73rem;color:var(--li)}
+.mock-body{padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+.mock-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:10px;background:var(--bg)}
+.mock-row-label{font-size:.8rem;color:var(--mu);font-weight:600}
+.mock-row-val{font-size:.88rem;font-weight:700}
+.mock-row-val.green{color:var(--ah)}
+.mock-row-val.blue{color:var(--bh)}
+.mock-total{border-top:1.5px solid var(--bo);margin-top:4px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;background:var(--al);border-radius:0 0 10px 10px}
+.mock-total-label{font-size:.82rem;font-weight:700;color:var(--mu)}
+.mock-total-val{font-size:1.15rem;font-weight:800;color:var(--ah)}
+
+/* Behörighet mock */
+.beh-bar{height:10px;border-radius:6px;margin:6px 0;overflow:hidden;background:var(--bo)}
+.beh-bar-fill{height:100%;border-radius:6px;transition:width .3s}
+.beh-subject{display:flex;justify-content:space-between;font-size:.78rem;color:var(--mu);margin-bottom:4px}
+.beh-ok{color:var(--ah);font-weight:700}
+.beh-warn{color:#9A6A00;font-weight:700}
+
+/* Tidslinje mock */
+.tl-item{display:flex;gap:14px;align-items:flex-start;position:relative}
+.tl-item:not(:last-child)::after{content:'';position:absolute;left:13px;top:28px;bottom:-12px;width:2px;background:var(--bo)}
+.tl-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;font-weight:800;color:#fff}
+.tl-body-title{font-size:.83rem;font-weight:700;margin-bottom:2px}
+.tl-body-desc{font-size:.76rem;color:var(--li)}
+
+/* Skolmatchning mock */
+.school-row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:var(--bg);margin-bottom:8px}
+.school-logo{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:#fff;flex-shrink:0}
+.school-name{font-size:.82rem;font-weight:700;flex:1}
+.school-tag{font-size:.7rem;padding:3px 8px;border-radius:5px;font-weight:600}
+
+/* EDUCATION PICKER */
+.picker-section{background:#2A4F6E;padding:80px 24px}
+.picker-inner{max-width:900px;margin:0 auto}
+.picker-label{font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:12px;text-align:center}
+.picker-h{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;color:#fff;line-height:1.15;letter-spacing:-.5px;margin-bottom:12px;text-align:center}
+.picker-sub{font-size:.92rem;color:rgba(255,255,255,.65);text-align:center;margin-bottom:36px}
+.picker-search{width:100%;max-width:460px;display:block;margin:0 auto 24px;padding:13px 18px;border-radius:10px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-family:inherit;font-size:.93rem;outline:none;transition:border .2s}
+.picker-search::placeholder{color:rgba(255,255,255,.4)}
+.picker-search:focus{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.15)}
+.picker-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:28px}
+.picker-item{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.12);border-radius:10px;padding:12px 16px;cursor:pointer;transition:all .15s;text-align:left}
+.picker-item:hover{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.25)}
+.picker-item.selected{background:rgba(91,168,130,.25);border-color:var(--ac)}
+.picker-item-name{font-size:.88rem;font-weight:600;color:#fff;line-height:1.3}
+.picker-item-meta{font-size:.73rem;color:rgba(255,255,255,.45);margin-top:2px}
+.picker-item.hidden{display:none}
+
+/* CATEGORY FILTERS */
+.category-filters{display:flex;gap:6px;margin:0 auto 20px;flex-wrap:wrap;justify-content:center;max-width:600px}
+.category-btn{padding:7px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px}
+.category-btn:hover{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.3)}
+.category-btn.active{background:var(--ac);border-color:var(--ac);color:#fff}
+.category-btn-count{font-size:.68rem;opacity:.8;background:rgba(255,255,255,.15);padding:2px 6px;border-radius:8px;margin-left:2px}
+.category-btn.active .category-btn-count{background:rgba(255,255,255,.2)}
+
+/* NÄSTA STEG */
+.nasta-steg{background:#1e3c52;padding:80px 24px}
+.nasta-steg-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.nasta-steg-label{font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:12px}
+.nasta-steg-h{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.5px;margin-bottom:18px}
+.nasta-steg-p{font-size:.97rem;color:rgba(255,255,255,.72);line-height:1.8;margin-bottom:32px;max-width:420px}
+.nasta-steg-btn{display:inline-block;background:#fff;color:#2A4F6E;font-size:.97rem;font-weight:700;padding:15px 28px;border-radius:10px;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.nasta-steg-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.18)}
+.nasta-steg-chips{display:flex;gap:18px;margin-top:18px;flex-wrap:wrap}
+.nasta-steg-chip{font-size:.82rem;color:rgba(255,255,255,.5);font-weight:500;display:flex;align-items:center;gap:5px}
+.nasta-steg-chip::before{content:'\2713';color:rgba(255,255,255,.4);font-size:.8rem}
+.plan-glass{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:20px;overflow:hidden}
+.plan-glass-header{background:rgba(255,255,255,.09);border-bottom:1px solid rgba(255,255,255,.1);padding:16px 20px;display:flex;align-items:center;gap:12px}
+.plan-glass-icon{width:36px;height:36px;background:rgba(255,255,255,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.plan-glass-supertitle{font-size:.62rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:2px}
+.plan-glass-title{font-size:1rem;font-weight:700;color:#fff}
+.plan-glass-rows{padding:4px 0}
+.plan-glass-row{display:flex;align-items:flex-start;gap:12px;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.07)}
+.plan-glass-row:last-of-type{border-bottom:none}
+.plan-glass-row-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.plan-glass-row-title{font-size:.85rem;font-weight:700;color:#fff;margin-bottom:4px}
+.plan-glass-row-blur{font-size:.8rem;color:rgba(255,255,255,.6);line-height:1.5;filter:blur(4px);user-select:none}
+.plan-glass-footer{text-align:center;padding:12px 20px;font-size:.78rem;color:rgba(255,255,255,.35);border-top:1px solid rgba(255,255,255,.07)}
+
+/* FOOTER */
+footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
+.footer-inner{max-width:960px;margin:0 auto}
+.footer-top{display:flex;flex-direction:column;align-items:center;text-align:center;padding-bottom:40px;border-bottom:1px solid var(--bo)}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;text-decoration:none;color:inherit;margin-bottom:10px;display:inline-block}
+.footer-tagline{font-size:.83rem;color:var(--li);max-width:400px;line-height:1.7}
+.footer-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:32px 16px;padding:36px 0 40px}
+.footer-col-label{font-size:.62rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--li);margin-bottom:12px}
+.footer-col a{display:block;font-size:.83rem;color:var(--mu);text-decoration:none;font-weight:700;line-height:1;margin-bottom:10px;transition:color .15s}
+.footer-col a:hover{color:var(--tx)}
+.footer-bottom{border-top:1px solid var(--bo);padding:16px 0;text-align:center}
+.footer-copy{font-size:.76rem;color:var(--li)}
+.footer-seo{background:var(--bg);border-top:1px solid var(--bo);padding:20px 24px;text-align:center;font-size:.74rem;color:var(--li);line-height:2}
+.footer-seo a{color:var(--li);text-decoration:none}
+
+
+
+/* RESPONSIVE */
+@media(max-width:720px){
+  .feature-block{grid-template-columns:1fr;gap:28px}
+  .feature-block.reverse .feature-text{order:1}
+  .feature-block.reverse .feature-visual{order:2}
+  .nasta-steg-inner{grid-template-columns:1fr;gap:40px}
+  .plan-glass{display:none}
+  .picker-grid{grid-template-columns:1fr 1fr}
+  .steps-row{flex-direction:column;gap:20px}
+  .step:not(:last-child)::after{display:none}
+  .footer-grid{grid-template-columns:repeat(2,1fr);gap:24px 16px}
+  .footer-grid .footer-col:last-child{grid-column:1/-1}
+  .hero-content{grid-template-columns:1fr;gap:32px;text-align:center}
+  .hero h1{text-align:center}
+  .hero-sub{text-align:center}
+  .hero-chips{justify-content:center}
+  .mobile-mockup{display:none}
+}
+@media(max-width:480px){
+  .picker-grid{grid-template-columns:1fr}
+}
+[id]{scroll-margin-top:80px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">gu<span class="i-dot">ı</span>den</span></a>
+  <div style="display:flex;align-items:center;gap:12px">
+    <a href="/min-plan" style="font-size:.85rem;font-weight:600;color:var(--ac);text-decoration:none;border:1.5px solid var(--ac);padding:7px 18px;border-radius:8px">Logga in</a>
+    <button onclick="toggleNavMenu()" id="navMenuBtn" style="background:none;border:1.5px solid var(--bo);border-radius:8px;padding:8px 10px;cursor:pointer;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center" aria-label="Meny">
+      <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
+      <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
+      <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Nav overlay -->
+<div id="navOverlay" onclick="toggleNavMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:150;backdrop-filter:blur(2px)"></div>
+
+<!-- Slide-in panel -->
+<div id="navPanel" style="position:fixed;top:0;right:0;bottom:0;width:300px;background:#fff;z-index:160;transform:translateX(100%);transition:transform .3s cubic-bezier(0.4,0,0.2,1);box-shadow:-8px 0 32px rgba(0,0,0,.12);display:flex;flex-direction:column">
+  <div style="padding:20px 24px;border-bottom:1.5px solid var(--bo);display:flex;justify-content:space-between;align-items:center">
+    <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span></div>
+    <button onclick="toggleNavMenu()" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--mu);width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px">✕</button>
+  </div>
+  <div style="padding:8px 0;flex:1;overflow-y:auto">
+    <a href="/" style="display:block;padding:13px 24px;text-decoration:none;color:var(--tx);font-weight:700;font-size:.92rem;border-left:3px solid transparent;transition:background .15s" onmouseover="this.style.background='#F4F8F5'" onmouseout="this.style.background=''">Startsidan</a>
+    <div style="padding:8px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Planering</div>
+    <a href="/skapa-min-plan" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Skapa min plan</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/din-studieplan" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid var(--ac);background:#F0FAF4"><div style="font-weight:600">Din studieplan — vad ingår?</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/min-plan" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Min plan</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Hitta rätt yrke</div>
+    <a href="/yrkestest" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Yrkestest</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/studieform" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Hur ska jag studera?</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Utbildningar</div>
+    <a href="/utbildningar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Utbildningar &amp; yrken</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/jamfor-utbildningar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Jämför utbildningar</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/komvux" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Komvux</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Ekonomi</div>
+    <a href="/csn-guide" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">CSN-guide</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/foreldre-som-studerar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Föräldrar som studerar</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Livsval</div>
+    <a href="/sabbatsar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Sabbatsår</div></a>
+  </div>
+  <div style="padding:16px 24px;border-top:1.5px solid var(--bo)">
+    <a href="/integritetspolicy" style="font-size:.76rem;color:var(--li);text-decoration:none">Integritetspolicy</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Din studieplan
+      </div>
+      <h1>En plan byggd för dig<br>i din specifika situation</h1>
+      <p class="hero-sub">Det är inte informationen du saknar — det är en plan. Vi skapar en utifrån vad du svarar och matchar varje steg just för dig.</p>
+      <div class="hero-chips">
+        <span class="hero-chip">Ekonomisk påverkan — gratis</span>
+        <span class="hero-chip">Behörighet &amp; betyg — gratis</span>
+        <span class="hero-chip">Tidslinje steg för steg — gratis</span>
+        <span class="hero-chip">Exakt skolmatchning — gratis</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="mobile-mockup">
+        <div class="mobile-notch"></div>
+        <div class="mobile-screen">
+          <div class="mobile-nav">
+            <div class="mobile-logo"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span></div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <a href="#" class="mobile-login">Min plan</a>
+              <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+          <div class="mobile-header">
+            <div class="mobile-title">Vägval · Studie- och yrkesvägledare</div>
+          </div>
+          <div class="mobile-tabs">
+            <a href="#" class="mobile-tab">Översikt</a>
+            <a href="#" class="mobile-tab">Ekonomi</a>
+            <a href="#" class="mobile-tab">Behörighet</a>
+            <a href="#" class="mobile-tab active">Din plan</a>
+          </div>
+          <div class="mobile-content">
+            <div class="genomfor-card">
+              <div class="genomfor-label">Genomförbarhetsindex</div>
+              <div class="genomfor-percent">84%</div>
+              <div class="genomfor-text">Starka förutsättningar — dags att agera.</div>
+              <div class="genomfor-items">
+                <div class="genomfor-item good">Stark livstidsvinst</div>
+                <div class="genomfor-item ok">Tight budget</div>
+                <div class="genomfor-item ok">Justera ekonomin</div>
+                <div class="genomfor-item good">Behörig direkt</div>
+                <div class="genomfor-item good">God tid att tjäna igen</div>
+                <div class="genomfor-item warn">Liten buffert</div>
+                <div class="genomfor-item good">Hög efterfrågan på yrket</div>
+                <div class="genomfor-item good">Låg AI-risk</div>
+              </div>
+            </div>
+            <div class="mobile-timeline">
+              <div class="timeline-btn primary">Stänger 15 april</div>
+              <div class="timeline-btn secondary">Juni–juli<br><span style="font-size:.56rem;opacity:.8">BESKED</span></div>
+              <div class="timeline-btn">Aug 2026<br><span style="font-size:.56rem;opacity:.8">STUDIESTART</span></div>
+            </div>
+            <div class="behorig-card">
+              <div class="behorig-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="behorig-title">Behörig — du kan söka direkt</div>
+              <div class="behorig-text">Du uppfyller alla kurskrav för Studie- och yrkesvägledare.</div>
+              <button class="behorig-btn">✓ Ändra verifiering</button>
+            </div>
+            <div class="forkrav-card">
+              <div class="forkrav-label">Förkunskapskrav</div>
+              <div class="forkrav-row">
+                <span class="forkrav-subject">Samhällskunskap 1b</span>
+                <span class="forkrav-status">Uppfylld</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SÅ FUNKAR DET -->
+<div style="background:#fff;padding:56px 24px 0;border-bottom:1px solid var(--bo)">
+  <div class="inner">
+    <div style="text-align:center;margin-bottom:36px">
+      <div class="section-label">Tre steg</div>
+      <h2 class="section-h" style="margin-bottom:4px">Från nyfiken till klar</h2>
+      <p style="font-size:.9rem;color:var(--li)">Det tar under tre minuter.</p>
+    </div>
+    <div class="steps-row">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Välj utbildning</div>
+        <div class="step-desc">Välj det yrke du är intresserad av. Allt baseras på din specifika utbildning.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Besvara frågor</div>
+        <div class="step-desc">Din ålder, nuvarande inkomst, bostadssituation och start­tidpunkt.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Få din plan</div>
+        <div class="step-desc">En komplett plan med ekonomi, behörighet, tidslinje och skolmatchning.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURE SECTIONS -->
+<div class="white-section feature-section" id="vad-ingar" style="padding-top:72px">
+  <div class="feature-inner">
+
+    <!-- 1. CSN & EKONOMI -->
+    <div class="feature-block" id="ekonomi">
+      <div class="feature-text">
+        <div class="feature-eyebrow" style="color:var(--ac)">Del 1 av 4</div>
+        <h2 class="feature-h">CSN &amp; ekonomi — vad du faktiskt får i handen</h2>
+        <p class="feature-p">Den vanligaste frågan är: <em>Har jag råd?</em> Din plan räknar ut exakt vad du får ut av CSN varje månad, vad ditt lev&shy;nads&shy;kostnads&shy;gap är och hur länge du behöver låna — baserat på din nuvarande inkomst och din nya ingångslön.</p>
+        <ul class="feature-list green">
+          <li>Månadsbelopp: bidrag + lån anpassat till din studietakt</li>
+          <li>Levnadskostnadsgap — vad du saknar varje månad jämfört med idag</li>
+          <li>Total skuld vid examen och uppskattad återbetalningstid</li>
+          <li>Fribeloppsgräns — hur mycket du kan jobba parallellt utan att tappa bidrag</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="mock-card">
+          <div class="mock-header">
+            <div class="mock-icon" style="background:#EBF5F0">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3A8A5E" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            </div>
+            <div>
+              <div class="mock-title">CSN &amp; ekonomi</div>
+              <div class="mock-subtitle">Heltidsstudier · Sjuksköterska</div>
+            </div>
+          </div>
+          <div class="mock-body">
+            <div class="mock-row">
+              <span class="mock-row-label">CSN bidrag</span>
+              <span class="mock-row-val green">3 368 kr/mån</span>
+            </div>
+            <div class="mock-row">
+              <span class="mock-row-label">CSN lån</span>
+              <span class="mock-row-val blue">9 484 kr/mån</span>
+            </div>
+            <div class="mock-row">
+              <span class="mock-row-label">Boende (uppskattning)</span>
+              <span class="mock-row-val" style="color:var(--re)">−6 500 kr/mån</span>
+            </div>
+            <div class="mock-row">
+              <span class="mock-row-label">Övriga levnadskostnader</span>
+              <span class="mock-row-val" style="color:var(--re)">−5 450 kr/mån</span>
+            </div>
+            <div class="mock-row">
+              <span class="mock-row-label">Total skuld vid examen</span>
+              <span class="mock-row-val" style="color:#9A6A00">284 520 kr</span>
+            </div>
+            <div class="mock-total">
+              <span class="mock-total-label">Kvar per månad</span>
+              <span class="mock-total-val">+902 kr</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. BEHÖRIGHET -->
+    <div class="feature-block reverse" id="behorighet">
+      <div class="feature-text">
+        <div class="feature-eyebrow" style="color:var(--bl)">Del 2 av 4</div>
+        <h2 class="feature-h">Behörighet — vad du behöver och hur du tar dig dit</h2>
+        <p class="feature-p">Många tror att de inte är behöriga — och ger upp i onödan. Din plan visar exakt vilka kurser din utbildning kräver, vilka du redan har och om komvux kan lösa resten innan din önskade starttermin.</p>
+        <ul class="feature-list blue">
+          <li>Grundläggande och särskild behörighet per utbildning</li>
+          <li>Vilka betyg du troligen redan uppfyller</li>
+          <li>Vilka kurser som saknas — och om komvux hinner före start</li>
+          <li>Alternativa vägar: folkhögskola, högskoleprov, 25:4-regeln</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="mock-card">
+          <div class="mock-header">
+            <div class="mock-icon" style="background:#E4F0FB">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2A5F8A" stroke-width="2" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            </div>
+            <div>
+              <div class="mock-title">Behörighet</div>
+              <div class="mock-subtitle">Sjuksköterska · 3,5 år · Heltid</div>
+            </div>
+          </div>
+          <div class="mock-body">
+            <div style="font-size:.75rem;font-weight:700;color:var(--li);margin-bottom:4px;text-transform:uppercase;letter-spacing:.8px">Kurskrav</div>
+            <div style="margin-bottom:4px">
+              <div class="beh-subject"><span>Matematik 2</span><span class="beh-ok">✓ Uppfyllt</span></div>
+              <div class="beh-bar"><div class="beh-bar-fill" style="width:100%;background:var(--ac)"></div></div>
+            </div>
+            <div style="margin-bottom:4px">
+              <div class="beh-subject"><span>Naturkunskap 2</span><span class="beh-ok">✓ Uppfyllt</span></div>
+              <div class="beh-bar"><div class="beh-bar-fill" style="width:100%;background:var(--ac)"></div></div>
+            </div>
+            <div>
+              <div class="beh-subject"><span>Kemi 1</span><span class="beh-warn">⚠ Saknas</span></div>
+              <div class="beh-bar"><div class="beh-bar-fill" style="width:30%;background:#E08A30"></div></div>
+            </div>
+            <div style="background:#FBF5EA;border:1.5px solid #E0C97A;border-radius:9px;padding:10px 12px;margin-top:8px;font-size:.78rem;color:#7A5C00;line-height:1.6">
+              Kemi 1 via komvux hinner klart till HT 2025 — om du anmäler dig nu.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. TIDSLINJE -->
+    <div class="feature-block" id="tidslinje">
+      <div class="feature-text">
+        <div class="feature-eyebrow" style="color:#E08A30">Del 3 av 4</div>
+        <h2 class="feature-h">Tidslinje — steg för steg från idag till examen</h2>
+        <p class="feature-p">En utbildning är inte ett datum — det är ett förlopp. Din plan visar hela resan: ansökan, studiestart, eventuell komvux-period, examen och när du kan förvänta dig att nå din nya lön.</p>
+        <ul class="feature-list orange">
+          <li>Datum för ansökan till hösttermin och vårtermin</li>
+          <li>Komvux-period om behörighet saknas</li>
+          <li>Beräknad examen baserat på studietakt</li>
+          <li>Månad du börjar tjäna din nya lön</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="mock-card">
+          <div class="mock-header">
+            <div class="mock-icon" style="background:#FFF4E8">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C07020" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <div class="mock-title">Tidslinje</div>
+              <div class="mock-subtitle">Sjuksköterska · Start HT 2025</div>
+            </div>
+          </div>
+          <div class="mock-body" style="gap:18px">
+            <div class="tl-item">
+              <div class="tl-dot" style="background:var(--ac)">1</div>
+              <div>
+                <div class="tl-body-title">Ansökan öppnar</div>
+                <div class="tl-body-desc">15 mars 2025 · via antagning.se</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:var(--bl)">2</div>
+              <div>
+                <div class="tl-body-title">Studiestart</div>
+                <div class="tl-body-desc">Sep 2025 · Heltid 3 år</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:#E08A30">3</div>
+              <div>
+                <div class="tl-body-title">VFU-praktik</div>
+                <div class="tl-body-desc">År 2–3 · Verksamhetsförlagd utbildning</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot" style="background:#7A4AAA">4</div>
+              <div>
+                <div class="tl-body-title">Examen &amp; ny lön</div>
+                <div class="tl-body-desc">Jun 2028 · Ingångslön ~35 000 kr/mån</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. SKOLMATCHNING -->
+    <div class="feature-block reverse" id="skolmatchning">
+      <div class="feature-text">
+        <div class="feature-eyebrow" style="color:var(--re)">Del 4 av 4</div>
+        <h2 class="feature-h">Skolmatchning — utifrån dina svar hittar vi rätt studieform</h2>
+        <p class="feature-p">Baserat på vad du svarar i wizarden — var du bor, om du kan studera heltid eller behöver deltid, och vilken livssituation du har — matchar vi dig automatiskt mot skolor och studieformer som passar just dig.</p>
+        <ul class="feature-list red">
+          <li>Skolor nära din hemort eller i din region</li>
+          <li>Campus, distans eller hybridlösningar baserat på dina svar</li>
+          <li>Heltid eller deltid — anpassat till din livssituation</li>
+          <li>Direktlänkar till ansökan och skolans information</li>
+        </ul>
+      </div>
+      <div class="feature-visual">
+        <div class="mock-card">
+          <div class="mock-header">
+            <div class="mock-icon" style="background:#FDECEA">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B04830" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="mock-title">Skolmatchning</div>
+              <div class="mock-subtitle">Sjuksköterska · Stockholmsregionen</div>
+            </div>
+          </div>
+          <div class="mock-body">
+            <div class="school-row">
+              <div class="school-logo" style="background:#005B8E">KI</div>
+              <div>
+                <div class="school-name">Karolinska institutet</div>
+                <div style="font-size:.73rem;color:var(--li)">Stockholm · Campus</div>
+              </div>
+              <span class="school-tag" style="background:#FDECEA;color:#B04830">Hög konk.</span>
+            </div>
+            <div class="school-row">
+              <div class="school-logo" style="background:#3A6E5A">SÖ</div>
+              <div>
+                <div class="school-name">Sophiahemmet</div>
+                <div style="font-size:.73rem;color:var(--li)">Stockholm · Campus</div>
+              </div>
+              <span class="school-tag" style="background:#EBF5F0;color:#2D6B4A">Ledig plats</span>
+            </div>
+            <div class="school-row">
+              <div class="school-logo" style="background:#4A5E8A">MDH</div>
+              <div>
+                <div class="school-name">Mälardalens univers.</div>
+                <div style="font-size:.73rem;color:var(--li)">Distans · Deltid möjligt</div>
+              </div>
+              <span class="school-tag" style="background:#E4F0FB;color:#2A4F6E">Distans</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- EDUCATION PICKER -->
+<section class="picker-section" id="valj-utbildning">
+  <div class="picker-inner">
+    <div class="picker-label">Nästa steg</div>
+    <h2 class="picker-h">Vilken utbildning siktar du på?</h2>
+    <p class="picker-sub">Välj nedan så byggs din plan kring just den utbildningen och din situation.</p>
+
+    <div class="category-filters" id="categoryFilters">
+      <!-- JS fills this -->
+    </div>
+
+    <input class="picker-search" type="text" id="pickerSearch" placeholder="Sök utbildning…" autocomplete="off" aria-label="Sök utbildning">
+
+    <div class="picker-grid" id="pickerGrid">
+      <!-- JS fills this -->
+    </div>
+
+
+  </div>
+</section>
+
+<!-- NÄSTA STEG / CTA -->
+<section class="nasta-steg">
+  <div class="nasta-steg-inner">
+    <div class="nasta-steg-left">
+      <div class="nasta-steg-label">Nästa steg</div>
+      <h2 class="nasta-steg-h">Din situation är unik.<br>Din plan borde vara det också.</h2>
+      <p class="nasta-steg-p">Att du har information om utbildningen är bra. Nu behöver du en plan.</p>
+      <a href="#valj-utbildning" onclick="return goToPlan(event)" class="nasta-steg-btn" id="ctaBtn">Skapa min plan — gratis →</a>
+      <div class="nasta-steg-chips">
+        <span class="nasta-steg-chip">Ekonomisk påverkan</span>
+        <span class="nasta-steg-chip">Behörighet</span>
+        <span class="nasta-steg-chip">Exakt skolmatchning</span>
+      </div>
+    </div>
+    <div class="plan-glass">
+      <div class="plan-glass-header">
+        <div class="plan-glass-icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div>
+          <div class="plan-glass-supertitle">Din studieplan</div>
+          <div class="plan-glass-title" id="glassTitle">Välj din utbildning ovan</div>
+        </div>
+      </div>
+      <div class="plan-glass-rows">
+        <div class="plan-glass-row">
+          <div class="plan-glass-row-icon" style="background:rgba(91,168,130,.25)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#7AC29A" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <div class="plan-glass-row-title">Behörighet</div>
+            <div class="plan-glass-row-blur">Matematik 2 · Naturkunskap 2 · Antagningspoäng</div>
+          </div>
+        </div>
+        <div class="plan-glass-row">
+          <div class="plan-glass-row-icon" style="background:rgba(90,143,181,.25)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6BA3D0" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          </div>
+          <div>
+            <div class="plan-glass-row-title">CSN &amp; ekonomi</div>
+            <div class="plan-glass-row-blur">12 852 kr/mån · Skuld 284k · Återbet. 9 år</div>
+          </div>
+        </div>
+        <div class="plan-glass-row">
+          <div class="plan-glass-row-icon" style="background:rgba(224,138,48,.22)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#E0A060" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="plan-glass-row-title">Tidslinje</div>
+            <div class="plan-glass-row-blur">Start HT 2025 · Examen Jun 2028 · Deltid möjligt</div>
+          </div>
+        </div>
+        <div class="plan-glass-row">
+          <div class="plan-glass-row-icon" style="background:rgba(176,72,48,.22)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#D07060" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="plan-glass-row-title">Skolmatchning</div>
+            <div class="plan-glass-row-blur">3 skolor nära dig · Distans tillgängligt</div>
+          </div>
+        </div>
+      </div>
+      <div class="plan-glass-footer">Välj en utbildning ovan för att se din plan</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <a href="/" class="footer-logo"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span></a>
+      <p class="footer-tagline">En gratis guide för dig som funderar på att studera.<br>Baserat på data från SCB, CSN och Arbetsförmedlingen.</p>
+    </div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-col-label">Planering</div>
+        <a href="/skapa-min-plan">Skapa min plan</a>
+        <a href="/din-studieplan">Din studieplan</a>
+        <a href="/min-plan">Min plan</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Hitta rätt yrke</div>
+        <a href="/yrkestest">Yrkestest</a>
+        <a href="/studieform">Hur ska jag studera?</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Utbildningar</div>
+        <a href="/utbildningar">Utbildningar &amp; yrken</a>
+        <a href="/jamfor-utbildningar">Jämför utbildningar</a>
+        <a href="/komvux">Komvux</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Ekonomi</div>
+        <a href="/csn-guide">CSN-guide</a>
+        <a href="/foreldre-som-studerar">Föräldrar som studerar</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-label">Livsval</div>
+        <a href="/sabbatsar">Sabbatsår</a>
+        <a href="/integritetspolicy">Integritetspolicy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Studievägsguiden · Byggt i Sverige</span>
+    </div>
+  </div>
+</footer>
+<div class="footer-seo">
+  Baserat på data från SCB, CSN &amp; UKÄ · Karriärbyte · Omskola sig som vuxen · CSN-lån · Yrkeshögskola YH · Lönejämförelse · Studiekostnad · Behörighet · Lönar det sig att plugga · Byta karriär · Komvux · Studera som vuxen · Ingångslön · Medianlön · Löneutveckling · Studieskuld · Återbetalningstid CSN · Utbildning Sverige · Högskoleutbildning · YH-utbildning · Antagningspoäng · Arbetsmarknad · Studieplan personlig
+</div>
+
+
+
+<script>
+// ── Education data (16 from screenshot) ─────────────────────────────────────
+const EDUCATIONS = [
+  {name:'Controller',              slug:'controller',                 meta:'3 år · Högskoleutb.', category:'ekonomi-hr'},
+  {name:'HR-specialist',           slug:'hr-specialist',              meta:'2 år · YH', category:'ekonomi-hr'},
+  {name:'Gymnasielärare',          slug:'gymnasielarare',             meta:'4,5 år · Högskoleutb.', category:'utbildning'},
+  {name:'Grundskollärare',         slug:'grundskollarare',            meta:'4 år · Högskoleutb.', category:'utbildning'},
+  {name:'Redovisningsekonom',      slug:'redovisningsekonom',         meta:'2 år · YH', category:'ekonomi-hr'},
+  {name:'Biomedicinsk analytiker', slug:'biomedicinsk-analytiker',    meta:'3 år · Högskoleutb.', category:'vard-omsorg'},
+  {name:'Studie- och yrkesvägledare', slug:'studie-och-yrkesvagledare', meta:'3 år · Högskoleutb.', category:'utbildning'},
+  {name:'Byggingenjör',            slug:'byggingenjor',               meta:'3 år · Högskoleutb.', category:'teknik-bygg'},
+  {name:'Digital marknadsförare',  slug:'digital-marknadsforare',     meta:'2 år · YH', category:'it-tech'},
+  {name:'IT-säkerhetsspecialist',  slug:'it-sakerhetsspecialist',     meta:'2 år · YH', category:'it-tech'},
+  {name:'Sjuksköterska',           slug:'sjukskoterska',              meta:'3 år · Högskoleutb.', category:'vard-omsorg'},
+  {name:'Arbetsterapeut',          slug:'arbetsterapeut',             meta:'3 år · Högskoleutb.', category:'vard-omsorg'},
+  {name:'Tandhygienist',           slug:'tandhygienist',              meta:'3 år · Högskoleutb.', category:'vard-omsorg'},
+  {name:'Dataanalytiker',          slug:'dataanalytiker',             meta:'2 år · YH', category:'it-tech'},
+  {name:'Systemutvecklare',        slug:'systemutvecklare',           meta:'3 år · Högskoleutb.', category:'it-tech'},
+  {name:'Fastighetsförvaltare',    slug:'fastighetsforvaltare',       meta:'2 år · YH', category:'ekonomi-hr'},
+];
+
+const CATEGORIES = [
+  {id:'alla', name:'Alla', count:16},
+  {id:'it-tech', name:'IT & Tech', count:4},
+  {id:'vard-omsorg', name:'Vård & omsorg', count:4},
+  {id:'ekonomi-hr', name:'Ekonomi & HR', count:4},
+  {id:'teknik-bygg', name:'Teknik & bygg', count:1},
+  {id:'utbildning', name:'Utbildning & samhälle', count:3},
+];
+
+// ── State ────────────────────────────────────────────────────────────────────
+let selectedSlug = null;
+let selectedName = null;
+let activeCategory = 'alla';
+
+// Pre-select from URL
+(function(){
+  const params = new URLSearchParams(location.search);
+  const pre = params.get('utbildning');
+  const match = EDUCATIONS.find(e => e.slug === pre);
+  if(match){ selectedSlug = match.slug; selectedName = match.name; }
+})();
+
+// ── Elements ─────────────────────────────────────────────────────────────────
+const grid           = document.getElementById('pickerGrid');
+const glassTitle      = document.getElementById('glassTitle');
+const categoryFilters = document.getElementById('categoryFilters');
+
+// ── Render category filters ──────────────────────────────────────────────────
+function renderCategoryFilters(){
+  categoryFilters.innerHTML = '';
+  CATEGORIES.forEach(function(cat){
+    const btn = document.createElement('div');
+    btn.className = 'category-btn' + (cat.id === activeCategory ? ' active' : '');
+    btn.innerHTML = cat.name + '<span class="category-btn-count">' + cat.count + '</span>';
+    btn.addEventListener('click', function(){
+      activeCategory = cat.id;
+      renderCategoryFilters();
+      renderGrid(document.getElementById('pickerSearch').value);
+    });
+    categoryFilters.appendChild(btn);
+  });
+}
+
+// ── Render picker grid ───────────────────────────────────────────────────────
+function renderGrid(filter){
+  grid.innerHTML = '';
+  const q = (filter || '').toLowerCase();
+  EDUCATIONS.forEach(function(edu){
+    const matchesCategory = activeCategory === 'alla' || edu.category === activeCategory;
+    const matchesSearch = !q || edu.name.toLowerCase().includes(q);
+    const show = matchesCategory && matchesSearch;
+    
+    const div = document.createElement('div');
+    div.className = 'picker-item' + (edu.slug === selectedSlug ? ' selected' : '') + (show ? '' : ' hidden');
+    div.innerHTML = '<div class="picker-item-name">'+edu.name+'</div><div class="picker-item-meta">'+edu.meta+'</div>';
+    div.addEventListener('click', function(){
+      selectedSlug = edu.slug;
+      selectedName = edu.name;
+      document.querySelectorAll('.picker-item').forEach(function(el){ el.classList.remove('selected'); });
+      div.classList.add('selected');
+      updateGlass();
+      gtag('event','select_education',{education:edu.name});
+      
+      // Scroll to CTA banner
+      setTimeout(function(){
+        document.querySelector('.nasta-steg').scrollIntoView({behavior:'smooth'});
+      }, 100);
+    });
+    grid.appendChild(div);
+  });
+}
+
+// ── Update plan-glass card title ─────────────────────────────────────────────
+function updateGlass(){
+  glassTitle.textContent = selectedName ? selectedName : 'Välj din utbildning ovan';
+}
+
+// ── CTA validation ───────────────────────────────────────────────────────────
+function goToPlan(e){
+  if(!selectedSlug){
+    e.preventDefault();
+    // Scroll to picker and flash it
+    document.getElementById('valj-utbildning').scrollIntoView({behavior:'smooth'});
+    const section = document.querySelector('.picker-section');
+    section.style.outline = '3px solid #fff';
+    section.style.outlineOffset = '-6px';
+    const msg = document.createElement('div');
+    msg.style.cssText = 'text-align:center;color:#fff;font-weight:700;font-size:.92rem;margin-top:16px;animation:fadeIn .3s ease';
+    msg.textContent = '👆 Välj en utbildning ovan innan du fortsätter';
+    const inner = document.querySelector('.picker-inner');
+    const existing = inner.querySelector('.picker-validation-msg');
+    if(existing) existing.remove();
+    msg.className = 'picker-validation-msg';
+    inner.appendChild(msg);
+    setTimeout(function(){ section.style.outline = ''; section.style.outlineOffset = ''; }, 1800);
+    return false;
+  }
+  window.location.href = '/skapa-min-plan?utbildning=' + selectedSlug;
+  return false;
+}
+
+renderCategoryFilters();
+renderGrid('');
+updateGlass();
+
+// ── Search ───────────────────────────────────────────────────────────────────
+document.getElementById('pickerSearch').addEventListener('input', function(){
+  renderGrid(this.value);
+});
+
+// ── Nav menu ─────────────────────────────────────────────────────────────────
+function toggleNavMenu(){
+  const panel   = document.getElementById('navPanel');
+  const overlay = document.getElementById('navOverlay');
+  const open    = panel.style.transform === 'translateX(0px)' || panel.style.transform === 'translateX(0%)';
+  panel.style.transform   = open ? 'translateX(100%)' : 'translateX(0%)';
+  overlay.style.display   = open ? 'none' : 'block';
+  document.body.style.overflow = open ? '' : 'hidden';
+}
+</script>
+</body>
+</html>
