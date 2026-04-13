@@ -1,9 +1,7 @@
 {
-  "redirects": [
-    { "source": "/jamfor-utbildningar", "destination": "/utbildningar", "permanent": true }
-  ],
   "rewrites": [
     { "source": "/komvux", "destination": "/komvux.html" },
+    { "source": "/jamfor-utbildningar", "destination": "/jamfor-utbildningar.html" },
     { "source": "/yrken", "destination": "/yrken.html" },
     { "source": "/studieform", "destination": "/studieform.html" },
     { "source": "/foreldre-som-studerar", "destination": "/foreldre-som-studerar.html" },
