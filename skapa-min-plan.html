@@ -17,7 +17,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,247,244,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,247,244,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);box-shadow:0 1px 8px rgba(0,0,0,.08);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;letter-spacing:0.01em}
 .logo .i-dot{position:relative;display:inline-block}
 .logo .i-dot::after{content:'';position:absolute;top:0.25em;left:50%;transform:translateX(-50%);width:0.2em;height:0.2em;background:var(--bl);border-radius:50%}
@@ -456,68 +456,71 @@ body{background:var(--bg);min-height:100vh}
     <span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">gu<span class="i-dot">ı</span>den</span>
   </a>
   <div style="display:flex;align-items:center;gap:12px">
-    <a id="navLoginBtn" href="/min-plan" style="font-size:.85rem;font-weight:600;color:#5BA882;text-decoration:none;border:1.5px solid #5BA882;padding:7px 18px;border-radius:8px">Logga in</a>
-    <button class="nav-ham" id="navHam" onclick="toggleNavMenu()" aria-label="Öppna meny">
-    <span></span><span></span><span></span>
-  </button>
+    <a id="navLoginBtn" href="/min-plan" style="font-size:.85rem;font-weight:600;color:var(--ac);text-decoration:none;border:1.5px solid var(--ac);padding:7px 18px;border-radius:8px">Logga in</a>
+    <button onclick="toggleNavMenu()" id="navHam" style="background:none;border:1.5px solid var(--bo);border-radius:8px;padding:8px 10px;cursor:pointer;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center" aria-label="Meny">
+      <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
+      <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
+      <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
+    </button>
   </div>
 </nav>
 <script>(function(){try{if(localStorage.getItem("svg_email")&&localStorage.getItem("svg_password")){var b=document.getElementById("navLoginBtn");if(b){b.textContent="Min plan";b.href="/min-plan";}}}catch(e){}})()</script>
-<div class="nav-ov" id="navOv" onclick="toggleNavMenu()"></div>
-<div class="nav-panel" id="navPanel">
-  <div class="nav-ph">
-    <div class="logo" style="font-size:1.15rem"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span></div>
-    <button class="nav-pcls" onclick="toggleNavMenu()" aria-label="Stäng meny">&#x2715;</button>
+
+<!-- Nav overlay -->
+<div id="navOverlay" onclick="toggleNavMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:150;backdrop-filter:blur(2px)"></div>
+
+<!-- Slide-in panel -->
+<div id="navPanel" style="position:fixed;top:0;right:0;bottom:0;width:300px;background:#fff;z-index:160;transform:translateX(100%);transition:transform .3s cubic-bezier(0.4,0,0.2,1);box-shadow:-8px 0 32px rgba(0,0,0,.12);display:flex;flex-direction:column">
+  <div style="padding:20px 24px;border-bottom:1.5px solid var(--bo);display:flex;justify-content:space-between;align-items:center">
+    <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span></div>
+    <button onclick="toggleNavMenu()" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--mu);width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px">✕</button>
   </div>
-  <div style="padding:8px 0">
-    <a href="/" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <div><div class="nav-lnk-title">Startsidan</div><div class="nav-lnk-sub">Lönar det sig?</div></div>
+  <div style="padding:8px 0;flex:1;overflow-y:auto">
+    <a href="/" style="display:block;padding:13px 24px;text-decoration:none;color:var(--tx);font-weight:700;font-size:.92rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'">Startsidan</a>
+
+    <div style="padding:8px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Planering</div>
+    <a href="/skapa-min-plan" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid var(--ac);background:#F0FAF4;transition:background .15s,border-color .15s">
+      <div style="font-weight:600">Skapa min plan</div>
     </a>
-    <div class="nav-section-lbl">Planering</div>
-    <a href="/skapa-min-plan" class="nav-lnk cur">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      <div><div class="nav-lnk-title">Skapa min plan</div><div class="nav-lnk-sub">Personlig studieplan</div></div>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/min-plan" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'">
+      <div style="font-weight:600">Min plan</div>
     </a>
-    <div class="nav-section-lbl">Hitta rätt</div>
-    <a href="/yrkestest" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      <div><div class="nav-lnk-title">Yrkestest</div><div class="nav-lnk-sub">Vad passar dig?</div></div>
+
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Hitta rätt</div>
+    <a href="/yrkestest" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'">
+      <div style="font-weight:600">Yrkestest</div>
     </a>
-    <a href="/studieform" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-      <div><div class="nav-lnk-title">Hur ska jag studera?</div><div class="nav-lnk-sub">Hitta din studieform</div></div>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/studieform" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'">
+      <div style="font-weight:600">Hur ska jag studera?</div>
     </a>
-    <div class="nav-section-lbl">Utbildningar</div>
-    <a href="/utbildningar" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-      <div><div class="nav-lnk-title">Utbildningar &amp; yrken</div><div class="nav-lnk-sub">Bläddra bland alla</div></div>
+
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Utbildningar</div>
+    <a href="/utbildningar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'">
+      <div style="font-weight:600">Utbildningar &amp; yrken</div>
     </a>
-    <a href="/jamfor-utbildningar" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      <div><div class="nav-lnk-title">Jämför utbildningar</div><div class="nav-lnk-sub">Sida vid sida</div></div>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/jamfor-utbildningar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'">
+      <div style="font-weight:600">Jämför utbildningar</div>
     </a>
-    <a href="/komvux" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <div><div class="nav-lnk-title">Komvux</div><div class="nav-lnk-sub">Allt du behöver veta</div></div>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/komvux" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'">
+      <div style="font-weight:600">Komvux</div>
     </a>
-    <div class="nav-section-lbl">Ekonomi</div>
-    <a href="/csn-guide" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-      <div><div class="nav-lnk-title">CSN-guide</div><div class="nav-lnk-sub">Skuld, återbetalning &amp; mer</div></div>
+
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Ekonomi</div>
+    <a href="/csn-guide" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'">
+      <div style="font-weight:600">CSN-guide</div>
     </a>
-    <a href="/foreldre-som-studerar" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <div><div class="nav-lnk-title">Föräldrar som studerar</div><div class="nav-lnk-sub">Plugga med barn</div></div>
-    </a>
-    <div class="nav-sep"></div>
-    <div class="nav-section-lbl">Konto</div>
-    <a href="/min-plan" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      <div><div class="nav-lnk-title">Min plan</div><div class="nav-lnk-sub">Din sparade plan</div></div>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/foreldre-som-studerar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'">
+      <div style="font-weight:600">Föräldrar som studerar</div>
     </a>
   </div>
-  <div class="nav-panel-foot"><a href="/integritetspolicy">Integritetspolicy</a></div>
+  <div style="padding:16px 24px;border-top:1.5px solid var(--bo)">
+    <a href="/integritetspolicy" style="font-size:.76rem;color:var(--li);text-decoration:none">Integritetspolicy</a>
+  </div>
 </div>
 
 
@@ -1356,14 +1359,12 @@ const SUPABASE_KEY = 'sb_publishable_Vfm1BArZN_RAWrwTOzVGXA_WWvIk77V';
 <script>
 function toggleNavMenu(){
   const panel=document.getElementById('navPanel');
-  const ov=document.getElementById('navOv');
-  const ham=document.getElementById('navHam');
+  const overlay=document.getElementById('navOverlay');
   if(!panel) return;
-  const isOpen=panel.classList.contains('a');
-  panel.classList.toggle('a');
-  ov.classList.toggle('a');
-  if(ham) ham.classList.toggle('open');
-  document.body.style.overflow=isOpen?'':'hidden';
+  const open=panel.style.transform==='translateX(0px)'||panel.style.transform==='translateX(0%)';
+  panel.style.transform=open?'translateX(100%)':'translateX(0%)';
+  overlay.style.display=open?'none':'block';
+  document.body.style.overflow=open?'':'hidden';
 }
 const E=[
 {id:14,t:'Sjuksköterska',y:3,s0:34000,s1:42000,dem:5,ai:8,stress:4,future:5,tc:11000,req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],rp:['Naturvetenskap','Teknik'],pp:['Samhäll','Ekonomi'],
