@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Skapa din plan — Studievägsguiden</title>
 <meta name="description" content="Besvara 26 frågor och få din personliga studievägsplan med ekonomisk kalkyl, behörighetskontroll och tidslinje.">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#F7F7F4;--card:#FFF;--tx:#141414;--mu:#5C5C58;--li:#9A9A94;
@@ -16,7 +16,7 @@
   --bo:#DEDED8;--r:10px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,247,244,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;letter-spacing:0.01em}
 .logo .i-dot{position:relative;display:inline-block}
@@ -291,6 +291,31 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,247,244,
     body{background:#fff!important}
     @page{margin:1.5cm;size:A4}
 }
+.nav-ham{background:none;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;gap:5px;border-radius:6px;transition:background .15s}
+.nav-ham:hover{background:var(--al)}
+.nav-ham span{display:block;width:22px;height:2px;background:var(--tx);border-radius:2px;transition:all .3s}
+.nav-ham.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.nav-ham.open span:nth-child(2){opacity:0;transform:translateX(-8px)}
+.nav-ham.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.nav-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:150;backdrop-filter:blur(2px)}.nav-ov.a{display:block}
+.nav-panel{position:fixed;top:0;right:-300px;width:280px;height:100%;background:#fff;z-index:200;transition:right .3s cubic-bezier(.4,0,.2,1);box-shadow:-6px 0 24px rgba(0,0,0,.12);overflow-y:auto}
+.nav-panel.a{right:0}
+.nav-ph{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid #C5D8EB}
+.nav-pcls{background:none;border:none;font-size:1.4rem;cursor:pointer;color:#7A7A74;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .15s}
+.nav-pcls:hover{background:#F4F8F5;color:#0A0A0A}
+.nav-lnk{display:flex;align-items:center;gap:10px;padding:13px 20px;font-size:.93rem;font-weight:600;color:#0A0A0A;text-decoration:none;transition:background .15s;border-left:3px solid transparent}
+.nav-lnk:hover{background:#EBF5F0;color:#5BA882;border-left-color:#5BA882}
+.nav-lnk.cur{background:#EBF5F0;color:#5BA882;border-left-color:#5BA882}
+.nav-lnk svg{flex-shrink:0;opacity:.6;margin-top:2px}
+.nav-lnk-title{font-size:.9rem;font-weight:600;line-height:1.2;color:var(--tx,#0A0A0A)}
+.nav-lnk-sub{font-size:.72rem;font-weight:400;color:#7A7A74;margin-top:1px;line-height:1.2}
+.nav-lnk:hover .nav-lnk-title,.nav-lnk.cur .nav-lnk-title{color:#5BA882}
+.nav-lnk:hover .nav-lnk-sub,.nav-lnk.cur .nav-lnk-sub{color:#5BA882}
+.nav-panel-foot{padding:14px 20px;border-top:1px solid #C5D8EB;margin-top:8px}
+.nav-panel-foot a{font-size:.72rem;color:#9A9A94;text-decoration:none}
+.nav-panel-foot a:hover{color:#5BA882}
+.nav-sep{height:1px;background:#C5D8EB;margin:8px 20px}
+.nav-section-lbl{padding:8px 20px 4px;font-size:.68rem;font-weight:700;color:#7A7A74;letter-spacing:.8px;text-transform:uppercase}
 </style>
 <style>
 /* ── Standalone wizard page ── */
@@ -501,7 +526,7 @@ body{background:var(--bg);min-height:100vh}
 
 
 
-#din-intro {font-family:'Inter',sans-serif;background:#EAF7F1;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.06) 0px,rgba(100,160,130,0.06) 1px,transparent 1px,transparent 14px);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+#din-intro {font-family:'DM Sans',sans-serif;background:#EAF7F1;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.06) 0px,rgba(100,160,130,0.06) 1px,transparent 1px,transparent 14px);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
 
 /* NAV */
 
