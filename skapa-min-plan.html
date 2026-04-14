@@ -1338,7 +1338,21 @@ document.getElementById('pickerSearch').addEventListener('input', function(){
 });
 </script>
 </div>
-
+<nav class="idx-subnav" id="idxStickyNav">
+    <div class="idx-nav-container">
+        <a href="/" class="idx-logo">studievägsguiden</a>
+        <div class="idx-nav-right">
+            <a href="/logga-in" class="idx-login-link">Logga in</a>
+            <button class="idx-menu-btn" onclick="toggleNavMenu()" aria-label="Meny">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>
 <div class="wiz-page" id="wizard-section">
   <div class="wiz-header">
     <div class="wiz-brand">Steg för steg</div>
