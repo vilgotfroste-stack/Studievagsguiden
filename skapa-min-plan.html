@@ -17,7 +17,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
-nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:#fff;border-bottom:2px solid var(--bo);box-shadow:0 2px 12px rgba(0,0,0,.1);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+body>nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;letter-spacing:0.01em}
 .logo .i-dot{position:relative;display:inline-block}
 .logo .i-dot::after{content:'';position:absolute;top:0.25em;left:50%;transform:translateX(-50%);width:0.2em;height:0.2em;background:var(--bl);border-radius:50%}
@@ -165,7 +165,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:#fff;border-bott
   .cbox{padding:18px 16px}
 
   /* Nav */
-  nav{padding:0 16px}
+  body>nav{padding:0 16px}
 
   /* Snabbkalkyl cards */
   .gcards{grid-template-columns:1fr 1fr!important}
@@ -291,167 +291,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:#fff;border-bott
     body{background:#fff!important}
     @page{margin:1.5cm;size:A4}
 }
-.nav-ham{background:none;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;gap:5px;border-radius:6px;transition:background .15s}
-.nav-ham:hover{background:var(--al)}
-.nav-ham span{display:block;width:22px;height:2px;background:var(--tx);border-radius:2px;transition:all .3s}
-.nav-ham.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
-.nav-ham.open span:nth-child(2){opacity:0;transform:translateX(-8px)}
-.nav-ham.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
-.nav-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:150;backdrop-filter:blur(2px)}.nav-ov.a{display:block}
-.nav-panel{position:fixed;top:0;right:-300px;width:280px;height:100%;background:#fff;z-index:200;transition:right .3s cubic-bezier(.4,0,.2,1);box-shadow:-6px 0 24px rgba(0,0,0,.12);overflow-y:auto}
-.nav-panel.a{right:0}
-.nav-ph{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid #C5D8EB}
-.nav-pcls{background:none;border:none;font-size:1.4rem;cursor:pointer;color:#7A7A74;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .15s}
-.nav-pcls:hover{background:#F4F8F5;color:#0A0A0A}
-.nav-lnk{display:flex;align-items:center;gap:10px;padding:13px 20px;font-size:.93rem;font-weight:600;color:#0A0A0A;text-decoration:none;transition:background .15s;border-left:3px solid transparent}
-.nav-lnk:hover{background:#EBF5F0;color:#5BA882;border-left-color:#5BA882}
-.nav-lnk.cur{background:#EBF5F0;color:#5BA882;border-left-color:#5BA882}
-.nav-lnk svg{flex-shrink:0;opacity:.6;margin-top:2px}
-.nav-lnk-title{font-size:.9rem;font-weight:600;line-height:1.2;color:var(--tx,#0A0A0A)}
-.nav-lnk-sub{font-size:.72rem;font-weight:400;color:#7A7A74;margin-top:1px;line-height:1.2}
-.nav-lnk:hover .nav-lnk-title,.nav-lnk.cur .nav-lnk-title{color:#5BA882}
-.nav-lnk:hover .nav-lnk-sub,.nav-lnk.cur .nav-lnk-sub{color:#5BA882}
-.nav-panel-foot{padding:14px 20px;border-top:1px solid #C5D8EB;margin-top:8px}
-.nav-panel-foot a{font-size:.72rem;color:#9A9A94;text-decoration:none}
-.nav-panel-foot a:hover{color:#5BA882}
-.nav-sep{height:1px;background:#C5D8EB;margin:8px 20px}
-.nav-section-lbl{padding:8px 20px 4px;font-size:.68rem;font-weight:700;color:#7A7A74;letter-spacing:.8px;text-transform:uppercase}
-#fixedSubNav {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  height: 65px !important;
-  background: #ffffff !important;
-  border-bottom: 2px solid #DEDED8 !important;
-  z-index: 9999999 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 0 20px !important;
-}
-.nav-inner-container {
-  width: 100%;
-  max-width: 1100px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.nav-logo-text {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  font-size: 1.2rem;
-  color: #141414;
-  text-decoration: none;
-}
-.nav-back-button {
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-  color: #5C5C58;
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  background: #F7F7F4;
-}
-body {
-  padding-top: 65px !important;
-}
-  /* KOMPLETT DESIGN FÖR NAVIGERING */
-/* --- FULLSTÄNDIG NAVIGERING (STILAD SOM STARTSIDAN) --- */
-#fixedSubNav {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  height: 70px !important;
-  background: #ffffff !important;
-  border-bottom: 1px solid #DEDED8 !important;
-  z-index: 9999999 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.nav-inner {
-  width: 100%;
-  max-width: 1200px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 24px;
-}
-
-.nav-logo {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  font-size: 22px;
-  color: #141414;
-  text-decoration: none;
-}
-
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-/* Logga in-knappen */
-.btn-login {
-  padding: 10px 20px;
-  background: #141414;
-  color: #fff !important;
-  border-radius: 8px;
-  text-decoration: none;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-/* Hamburgermenyn (de tre strecken) */
-.menu-trigger {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  cursor: pointer;
-  padding: 8px;
-}
-.menu-trigger span {
-  width: 20px;
-  height: 2px;
-  background: #141414;
-  display: block;
-}
-
-/* Dropdown-menyn (Bild 3) */
-#navDropdown {
-  display: none;
-  position: fixed;
-  top: 70px;
-  right: calc(50% - 600px + 24px); /* Justerat för att ligga under menyn */
-  width: 240px;
-  background: #fff;
-  border: 1px solid #DEDED8;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  padding: 12px;
-  z-index: 10000000;
-}
-#navDropdown.active { display: block; }
-#navDropdown a {
-  display: block;
-  padding: 12px 16px;
-  color: #5C5C58;
-  text-decoration: none;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  border-radius: 8px;
-}
-#navDropdown a:hover { background: #F7F7F4; color: #141414; }
-
-@media (max-width: 1200px) {
-  #navDropdown { right: 24px; }
-}
 </style>
 <style>
 /* ── Standalone wizard page ── */
@@ -532,31 +371,6 @@ body{background:var(--bg);min-height:100vh}
 
 @keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .wiz-page{animation:fu .5s ease forwards}
-.nav-ham{background:none;border:none;cursor:pointer;padding:6px;display:flex;flex-direction:column;gap:5px;border-radius:6px;transition:background .15s}
-.nav-ham:hover{background:var(--al)}
-.nav-ham span{display:block;width:22px;height:2px;background:var(--tx);border-radius:2px;transition:all .3s}
-.nav-ham.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
-.nav-ham.open span:nth-child(2){opacity:0;transform:translateX(-8px)}
-.nav-ham.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
-.nav-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:150;backdrop-filter:blur(2px)}.nav-ov.a{display:block}
-.nav-panel{position:fixed;top:0;right:-300px;width:280px;height:100%;background:#fff;z-index:200;transition:right .3s cubic-bezier(.4,0,.2,1);box-shadow:-6px 0 24px rgba(0,0,0,.12);overflow-y:auto}
-.nav-panel.a{right:0}
-.nav-ph{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid #C5D8EB}
-.nav-pcls{background:none;border:none;font-size:1.4rem;cursor:pointer;color:#7A7A74;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .15s}
-.nav-pcls:hover{background:#F4F8F5;color:#0A0A0A}
-.nav-lnk{display:flex;align-items:center;gap:10px;padding:13px 20px;font-size:.93rem;font-weight:600;color:#0A0A0A;text-decoration:none;transition:background .15s;border-left:3px solid transparent}
-.nav-lnk:hover{background:#EBF5F0;color:#5BA882;border-left-color:#5BA882}
-.nav-lnk.cur{background:#EBF5F0;color:#5BA882;border-left-color:#5BA882}
-.nav-lnk svg{flex-shrink:0;opacity:.6;margin-top:2px}
-.nav-lnk-title{font-size:.9rem;font-weight:600;line-height:1.2;color:var(--tx,#0A0A0A)}
-.nav-lnk-sub{font-size:.72rem;font-weight:400;color:#7A7A74;margin-top:1px;line-height:1.2}
-.nav-lnk:hover .nav-lnk-title,.nav-lnk.cur .nav-lnk-title{color:#5BA882}
-.nav-lnk:hover .nav-lnk-sub,.nav-lnk.cur .nav-lnk-sub{color:#5BA882}
-.nav-panel-foot{padding:14px 20px;border-top:1px solid #C5D8EB;margin-top:8px}
-.nav-panel-foot a{font-size:.72rem;color:#9A9A94;text-decoration:none}
-.nav-panel-foot a:hover{color:#5BA882}
-.nav-sep{height:1px;background:#C5D8EB;margin:8px 20px}
-.nav-section-lbl{padding:8px 20px 4px;font-size:.68rem;font-weight:700;color:#7A7A74;letter-spacing:.8px;text-transform:uppercase}
 .site-footer{background:#1B3A5C;color:rgba(255,255,255,.75);padding:28px 32px}
 .footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .footer-copy{font-size:.82rem}
@@ -572,9 +386,9 @@ body{background:var(--bg);min-height:100vh}
   .site-footer .footer-inner{flex-direction:column;text-align:center;gap:14px}
   .footer-links{gap:16px}
   .kw-sec{padding:16px 20px}
-  nav{padding:0 14px!important}
+  body>nav{padding:0 14px!important}
 }
-@media(max-width:480px){nav{padding:0 12px!important}}
+@media(max-width:480px){body>nav{padding:0 12px!important}}
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5NFR33BFDF"></script>
@@ -820,8 +634,8 @@ body{background:var(--bg);min-height:100vh}
 </head>
 <body>
 
-<nav style="position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; z-index: 9999 !important; background: #ffffff !important; height: 60px !important; display: flex !important; opacity: 1 !important; visibility: visible !important; align-items: center !important; justify-content: space-between !important; padding: 0 24px !important; border-bottom: 2px solid #DEDED8 !important;">
-  <a href="/" class="logo" style="text-decoration:none">
+<nav>
+  <a href="/" class="logo" style="text-decoration:none;color:inherit">
     <span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">gu<span class="i-dot">ı</span>den</span>
   </a>
   <div style="display:flex;align-items:center;gap:12px">
@@ -4303,59 +4117,5 @@ function svgModalClose(val) {
     <div id="svgModalBtns" style="display:flex;gap:10px;justify-content:center"></div>
   </div>
 </div>
-  <nav id="fixedSubNav">
-  <div class="nav-inner-container">
-    <a href="index.html" class="nav-logo-text">Studievägsguiden</a>
-    <a href="index.html" class="nav-back-button">← Avbryt</a>
-  </div>
-</nav>
-  <nav id="fixedSubNav">
-  <div class="nav-inner-container">
-    <a href="index.html" class="nav-logo-text">Studievägsguiden</a>
-
-    <div class="nav-center-links">
-      <a href="index.html#calc" class="nav-link">Räkna</a>
-      <a href="index.html#verktyg" class="nav-link">Verktyg</a>
-      <a href="index.html#utforska" class="nav-link">Utforska</a>
-    </div>
-
-    <div class="nav-right-zone">
-      <a href="index.html" class="nav-cancel-link">Avbryt x</a>
-    </div>
-  </div>
-</nav>
-  <nav id="fixedSubNav">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">Studievägsguiden</a>
-    <div class="nav-right">
-      <a href="#" class="btn-login">Logga in</a>
-      <div class="menu-trigger" onclick="toggleNavMenu()">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-  </div>
-</nav>
-
-<div id="navDropdown">
-  <a href="index.html#calc">Räkna på studier</a>
-  <a href="index.html#verktyg">Verktyg</a>
-  <a href="index.html#utforska">Utforska utbildningar</a>
-  <a href="index.html#komvux-guide">Komvux-guide</a>
-  <hr style="border: 0; border-top: 1px solid #EEE; margin: 8px 0;">
-  <a href="index.html" style="color: #C0533A;">Avbryt och gå hem</a>
-</div>
-  <script>
-function toggleNavMenu() {
-  const dropdown = document.getElementById('navDropdown');
-  dropdown.classList.toggle('active');
-}
-
-// Stäng menyn om man klickar utanför
-window.onclick = function(event) {
-  if (!event.target.closest('.menu-trigger') && !event.target.closest('#navDropdown')) {
-    document.getElementById('navDropdown').classList.remove('active');
-  }
-}
-</script>
 </body>
 </html>
