@@ -357,6 +357,81 @@ nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:#fff;border-bott
 body {
   padding-top: 65px !important;
 }
+  /* KOMPLETT DESIGN FÖR NAVIGERING */
+#fixedSubNav {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 70px !important;
+  background: #ffffff !important;
+  border-bottom: 1px solid #DEDED8 !important;
+  z-index: 9999999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.nav-inner-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+}
+
+.nav-logo-text {
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  font-size: 22px;
+  color: #141414;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+/* Meny-länkarna i mitten */
+.nav-center-links {
+  display: flex;
+  gap: 32px;
+}
+
+.nav-link {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: #5C5C58;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-link:hover {
+  color: #141414;
+}
+
+/* Knappen till höger */
+.nav-right-zone {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-cancel-link {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #5C5C58;
+  text-decoration: none;
+}
+
+body {
+  padding-top: 70px !important;
+}
+
+/* Dölj mitten-länkar på mobilen för att det inte ska bli trångt */
+@media (max-width: 768px) {
+  .nav-center-links { display: none; }
+}
 </style>
 <style>
 /* ── Standalone wizard page ── */
@@ -4212,6 +4287,21 @@ function svgModalClose(val) {
   <div class="nav-inner-container">
     <a href="index.html" class="nav-logo-text">Studievägsguiden</a>
     <a href="index.html" class="nav-back-button">← Avbryt</a>
+  </div>
+</nav>
+  <nav id="fixedSubNav">
+  <div class="nav-inner-container">
+    <a href="index.html" class="nav-logo-text">Studievägsguiden</a>
+
+    <div class="nav-center-links">
+      <a href="index.html#calc" class="nav-link">Räkna</a>
+      <a href="index.html#verktyg" class="nav-link">Verktyg</a>
+      <a href="index.html#utforska" class="nav-link">Utforska</a>
+    </div>
+
+    <div class="nav-right-zone">
+      <a href="index.html" class="nav-cancel-link">Avbryt x</a>
+    </div>
   </div>
 </nav>
 </body>
