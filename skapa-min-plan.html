@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Skapa din plan — Studievägsguiden</title>
 <meta name="description" content="Besvara 26 frågor och få din personliga studievägsplan med ekonomisk kalkyl, behörighetskontroll och tidslinje.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
-<style>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
 :root{
   --bg:#F7F7F4;--card:#FFF;--tx:#141414;--mu:#5C5C58;--li:#9A9A94;
   --ac:#7AC29A;--al:#EEF7F2;--ah:#1A3A2A;
@@ -358,6 +358,7 @@ body {
   padding-top: 65px !important;
 }
   /* KOMPLETT DESIGN FÖR NAVIGERING */
+/* --- FULLSTÄNDIG NAVIGERING (STILAD SOM STARTSIDAN) --- */
 #fixedSubNav {
   position: fixed !important;
   top: 0 !important;
@@ -372,7 +373,7 @@ body {
   justify-content: center !important;
 }
 
-.nav-inner-container {
+.nav-inner {
   width: 100%;
   max-width: 1200px;
   display: flex;
@@ -381,56 +382,75 @@ body {
   padding: 0 24px;
 }
 
-.nav-logo-text {
+.nav-logo {
   font-family: 'Playfair Display', serif;
-  font-weight: 800;
+  font-weight: 900;
   font-size: 22px;
   color: #141414;
   text-decoration: none;
-  letter-spacing: -0.01em;
 }
 
-/* Meny-länkarna i mitten */
-.nav-center-links {
-  display: flex;
-  gap: 32px;
-}
-
-.nav-link {
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 500;
-  font-size: 15px;
-  color: #5C5C58;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.nav-link:hover {
-  color: #141414;
-}
-
-/* Knappen till höger */
-.nav-right-zone {
+.nav-right {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
 }
 
-.nav-cancel-link {
+/* Logga in-knappen */
+.btn-login {
+  padding: 10px 20px;
+  background: #141414;
+  color: #fff !important;
+  border-radius: 8px;
+  text-decoration: none;
   font-family: 'DM Sans', sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
+}
+
+/* Hamburgermenyn (de tre strecken) */
+.menu-trigger {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  padding: 8px;
+}
+.menu-trigger span {
+  width: 20px;
+  height: 2px;
+  background: #141414;
+  display: block;
+}
+
+/* Dropdown-menyn (Bild 3) */
+#navDropdown {
+  display: none;
+  position: fixed;
+  top: 70px;
+  right: calc(50% - 600px + 24px); /* Justerat för att ligga under menyn */
+  width: 240px;
+  background: #fff;
+  border: 1px solid #DEDED8;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  padding: 12px;
+  z-index: 10000000;
+}
+#navDropdown.active { display: block; }
+#navDropdown a {
+  display: block;
+  padding: 12px 16px;
   color: #5C5C58;
   text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  border-radius: 8px;
 }
+#navDropdown a:hover { background: #F7F7F4; color: #141414; }
 
-body {
-  padding-top: 70px !important;
-}
-
-/* Dölj mitten-länkar på mobilen för att det inte ska bli trångt */
-@media (max-width: 768px) {
-  .nav-center-links { display: none; }
+@media (max-width: 1200px) {
+  #navDropdown { right: 24px; }
 }
 </style>
 <style>
@@ -4304,5 +4324,38 @@ function svgModalClose(val) {
     </div>
   </div>
 </nav>
+  <nav id="fixedSubNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Studievägsguiden</a>
+    <div class="nav-right">
+      <a href="#" class="btn-login">Logga in</a>
+      <div class="menu-trigger" onclick="toggleNavMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div id="navDropdown">
+  <a href="index.html#calc">Räkna på studier</a>
+  <a href="index.html#verktyg">Verktyg</a>
+  <a href="index.html#utforska">Utforska utbildningar</a>
+  <a href="index.html#komvux-guide">Komvux-guide</a>
+  <hr style="border: 0; border-top: 1px solid #EEE; margin: 8px 0;">
+  <a href="index.html" style="color: #C0533A;">Avbryt och gå hem</a>
+</div>
+  <script>
+function toggleNavMenu() {
+  const dropdown = document.getElementById('navDropdown');
+  dropdown.classList.toggle('active');
+}
+
+// Stäng menyn om man klickar utanför
+window.onclick = function(event) {
+  if (!event.target.closest('.menu-trigger') && !event.target.closest('#navDropdown')) {
+    document.getElementById('navDropdown').classList.remove('active');
+  }
+}
+</script>
 </body>
 </html>
