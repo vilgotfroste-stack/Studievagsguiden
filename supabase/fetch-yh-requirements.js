@@ -38,21 +38,31 @@ const LIMIT    = limitArg !== -1 ? parseInt(process.argv[limitArg + 1]) : null;
 const DELAY_MS = 150;
 
 // ---------------------------------------------------------------
-// Hämta alla myh_ids från Supabase
+// Hämta alla myh_ids från Supabase (hanterar paginering)
 // ---------------------------------------------------------------
 async function fetchIds() {
-  let url = `${SUPABASE_URL}/rest/v1/yh_schools?select=id,myh_id,program_name&order=myh_id`;
-  if (!FORCE) url += '&requirements=is.null&myh_id=not.is.null';
-  if (LIMIT)  url += `&limit=${LIMIT}`;
+  if (LIMIT) {
+    let url = `${SUPABASE_URL}/rest/v1/yh_schools?select=id,myh_id,program_name&order=myh_id&limit=${LIMIT}`;
+    if (!FORCE) url += '&requirements=is.null&myh_id=not.is.null';
+    const res = await fetch(url, { headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` } });
+    if (!res.ok) throw new Error(`Supabase fetch misslyckades: ${await res.text()}`);
+    return res.json();
+  }
 
-  const res = await fetch(url, {
-    headers: {
-      'apikey':        SUPABASE_SERVICE_KEY,
-      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-    },
-  });
-  if (!res.ok) throw new Error(`Supabase fetch misslyckades: ${await res.text()}`);
-  return res.json();
+  // Paginera tills alla rader är hämtade
+  const PAGE = 1000;
+  let all = [], offset = 0;
+  while (true) {
+    let url = `${SUPABASE_URL}/rest/v1/yh_schools?select=id,myh_id,program_name&order=myh_id&limit=${PAGE}&offset=${offset}`;
+    if (!FORCE) url += '&requirements=is.null&myh_id=not.is.null';
+    const res = await fetch(url, { headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` } });
+    if (!res.ok) throw new Error(`Supabase fetch misslyckades: ${await res.text()}`);
+    const page = await res.json();
+    all = all.concat(page);
+    if (page.length < PAGE) break;
+    offset += PAGE;
+  }
+  return all;
 }
 
 // ---------------------------------------------------------------
@@ -67,7 +77,6 @@ async function fetchDetail(myhId) {
   if (!res.ok) throw new Error(`HTTP ${res.status} för ${myhId}`);
 
   const data = await res.json();
-  // API svarar med { status, message, body: { ... } }
   return data.body || data;
 }
 
@@ -76,14 +85,14 @@ async function fetchDetail(myhId) {
 // ---------------------------------------------------------------
 async function saveRequirements(id, detail) {
   const payload = {
-    requirements:          detail.requirements          || null,
-    education_description: detail.educationEventDescription || null,
-    website_url:           detail.contactInfo?.web      || null,
-    contact_email:         detail.contactInfo?.email    || null,
-    contact_phone:         detail.contactInfo?.telephone || null,
-    eligible_for_student_aid: detail.eligibleForStudentAid ?? null,
-    organizer_name:        detail.organizerName         || null,
-    areas_of_interest:     detail.areasOfInterest       || null,
+    requirements:             detail.requirements                  || null,
+    education_description:    detail.educationEventDescription     || null,
+    website_url:              detail.contactInfo?.web              || null,
+    contact_email:            detail.contactInfo?.email            || null,
+    contact_phone:            detail.contactInfo?.telephone        || null,
+    eligible_for_student_aid: detail.eligibleForStudentAid         ?? null,
+    organizer_name:           detail.organizerName                 || null,
+    areas_of_interest:        detail.areasOfInterest               || null,
   };
 
   const res = await fetch(`${SUPABASE_URL}/rest/v1/yh_schools?id=eq.${id}`, {
@@ -106,16 +115,16 @@ async function saveRequirements(id, detail) {
 // Main
 // ---------------------------------------------------------------
 async function main() {
-  console.log('📡 Startar hämtning av requirements från Skolverket...\n');
+  console.log('\ud83d\udce1 Startar hämtning av requirements från Skolverket...\n');
 
-  if (!SUPABASE_SERVICE_KEY) { console.error('❌ Sätt SUPABASE_SERVICE_KEY'); process.exit(1); }
-  if (DRY_RUN) console.log('🧪 DRY-RUN — sparar inte till Supabase\n');
+  if (!SUPABASE_SERVICE_KEY) { console.error('\u274c Sätt SUPABASE_SERVICE_KEY'); process.exit(1); }
+  if (DRY_RUN) console.log('\ud83e\uddea DRY-RUN \u2014 sparar inte till Supabase\n');
 
   const rows = await fetchIds();
-  console.log(`📋 Hittade ${rows.length} utbildningar att berika\n`);
+  console.log(`\ud83d\udccb Hittade ${rows.length} utbildningar att berika\n`);
 
   if (rows.length === 0) {
-    console.log('✅ Alla utbildningar har redan requirements. Kör med --force för att köra om.');
+    console.log('\u2705 Alla utbildningar har redan requirements. Kör med --force för att köra om.');
     return;
   }
 
@@ -129,25 +138,25 @@ async function main() {
       const detail = await fetchDetail(row.myh_id);
 
       if (!detail) {
-        console.log('⚠ 404');
+        console.log('\u26a0 404');
         notFound++;
       } else {
         if (DRY_RUN && i < 3) {
           console.log('\n   requirements:', detail.requirements?.slice(0, 120) || 'null');
         }
         if (!DRY_RUN) await saveRequirements(row.id, detail);
-        console.log(detail.requirements ? '✅' : '⚠ tom');
+        console.log(detail.requirements ? '\u2705' : '\u26a0 tom');
         ok++;
       }
     } catch (e) {
-      console.log('❌', e.message.slice(0, 60));
+      console.log('\u274c', e.message.slice(0, 60));
       failed++;
     }
 
     if (i < rows.length - 1) await new Promise(r => setTimeout(r, DELAY_MS));
   }
 
-  console.log(`\n🎉 Klar!`);
+  console.log(`\n\ud83c\udf89 Klar!`);
   console.log(`   Uppdaterade: ${ok}`);
   console.log(`   Ej hittade:  ${notFound}`);
   console.log(`   Fel:         ${failed}`);
@@ -155,4 +164,4 @@ async function main() {
   else console.log('\n   Kör nu: node supabase/parse-requirements.js');
 }
 
-main().catch(e => { console.error('❌ Oväntat fel:', e.message); process.exit(1); });
+main().catch(e => { console.error('\u274c Oväntat fel:', e.message); process.exit(1); });
