@@ -66,13 +66,14 @@ function parseRequirements(text) {
     }
   }
 
-  // 4. Kurskrav — extrahera allt efter "Kurser:" eller "Förutom detta ställs"
-  // Format: "Engelska 6, 100p" eller "Svenska 2 alt Svenska som andraspråk 2, 100p"
-  const kursSection = text.match(/(?:kurser:|förutom detta ställs följande krav:?)([\s\S]*)/i)?.[1] || '';
+  // 4. Kurskrav — extrahera allt efter "Kurser:", "Förkunskapskurser:" eller "Förutom detta ställs"
+  const kursSection = text.match(/(?:förkunskapskurser:|kurser:|förutom detta ställs följande krav:?)([\s\S]*)/i)?.[1] || '';
 
   if (kursSection) {
-    // Matcha mönster: "Kursnamn nivå, 100p" med optional "alt Alternativkurs nivå"
-    const coursePattern = /([A-ZÅÄÖ][a-zåäö]+(?:\s+[a-zåäö]+)*)\s+(\d+[a-z]?),?\s*(\d+)\s*p(?:\s+alt\s+([A-ZÅÄÖ][^,\n]+?),?\s*\d+\s*p)?/g;
+    // Format 1: "• Engelska 6: 100 poäng" (bullet + kolon)
+    // Format 2: "Engelska 6, 100p" (komma + p)
+    // Format 3: "Engelska 6 alt Svenska som andraspråk 2, 100p"
+    const coursePattern = /[•\-]?\s*([A-ZÅÄÖ][a-zåäö]+(?:\s+[a-zåäö]+)*)\s+(\d+[a-zA-Z]?)[\s:,]+(\d+)\s*(?:poäng|p\b)(?:\s+alt\s+([A-ZÅÄÖ][^,\n•]+?)[\s:,]+\d+\s*(?:poäng|p\b))?/g;
     let match;
     while ((match = coursePattern.exec(kursSection)) !== null) {
       const course = {
@@ -84,7 +85,7 @@ function parseRequirements(text) {
 
       // Filtrera bort gymnasieprogram som råkar matcha
       const isProgram = GYMNASIUM_PROGRAMS.some(p => p.startsWith(course.name));
-      if (!isProgram) result.required_courses.push(course);
+      if (!isProgram && course.points > 0) result.required_courses.push(course);
     }
   }
 
