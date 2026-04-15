@@ -109,18 +109,27 @@ function parseRequirements(text) {
 // Hämta rader från Supabase
 // ---------------------------------------------------------------
 async function fetchRows() {
-  let url = `${SUPABASE_URL}/rest/v1/yh_schools?requirements=not.is.null&select=id,program_name,requirements&order=id`;
-  if (!FORCE) url += '&requirements_parsed=is.null';
-  if (LIMIT)  url += `&limit=${LIMIT}`;
+  if (LIMIT) {
+    let url = `${SUPABASE_URL}/rest/v1/yh_schools?requirements=not.is.null&select=id,program_name,requirements&order=id&limit=${LIMIT}`;
+    if (!FORCE) url += '&requirements_parsed=is.null';
+    const res = await fetch(url, { headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` } });
+    if (!res.ok) throw new Error(`Supabase fetch failed: ${await res.text()}`);
+    return res.json();
+  }
 
-  const res = await fetch(url, {
-    headers: {
-      'apikey':        SUPABASE_SERVICE_KEY,
-      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-    },
-  });
-  if (!res.ok) throw new Error(`Supabase fetch failed: ${await res.text()}`);
-  return res.json();
+  const PAGE = 1000;
+  let all = [], offset = 0;
+  while (true) {
+    let url = `${SUPABASE_URL}/rest/v1/yh_schools?requirements=not.is.null&select=id,program_name,requirements&order=id&limit=${PAGE}&offset=${offset}`;
+    if (!FORCE) url += '&requirements_parsed=is.null';
+    const res = await fetch(url, { headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` } });
+    if (!res.ok) throw new Error(`Supabase fetch failed: ${await res.text()}`);
+    const page = await res.json();
+    all = all.concat(page);
+    if (page.length < PAGE) break;
+    offset += PAGE;
+  }
+  return all;
 }
 
 // ---------------------------------------------------------------
