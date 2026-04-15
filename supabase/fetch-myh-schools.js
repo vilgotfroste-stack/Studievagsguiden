@@ -235,15 +235,14 @@ async function fetchAllFromSkolverket() {
 // Konvertera Skolverket-objekt till yh_schools-struktur
 // ---------------------------------------------------------------
 function skolverketToSchool(edu, eduIds) {
-  // Fälten från Skolverket (baserat på bekräftad API-spec)
-  const schoolName  = edu.providerName  || 'Okänd skola';
-  const programName = edu.titleSv       || edu.title || 'Okänt program';
-  const cityRaw     = edu.town          || edu.municipality || '';
+  const schoolName  = edu.providerName || 'Okänd skola';
+  const programName = edu.studyPathName || edu.titleSv || edu.title || 'Okänt program';
+  const cityRaw     = edu.town || edu.municipality || '';
   const city        = normalizeCity(cityRaw);
   const myhId       = String(edu.educationEventId || edu.id || Math.random());
 
-  const studyMode   = mapStudyModeFromDistance(edu.distance);
-  const studyPace   = mapStudyPaceFromPace(edu.paceOfStudy);
+  const studyMode = mapStudyModeFromDistance(edu.distance);
+  const studyPace = mapStudyPaceFromPace(edu.paceOfStudy);
 
   // Startdatum från semesterStartFrom, t.ex. "2025-08-25" → "HT2025"
   let startDates = [];
@@ -261,20 +260,36 @@ function skolverketToSchool(edu, eduIds) {
   const credits = edu.credits;
   const durationText = credits ? `${credits} YH-poäng` : null;
 
+  // Kontaktinfo
+  const contact = edu.contactInfo || {};
+
   return {
-    school_name:   schoolName,
-    program_name:  programName,
-    website_url:   null,  // Skolverket ger ej URL direkt
-    city:          city,
-    study_mode:    studyMode,
-    study_pace:    studyPace,
-    fee:           0,     // YH är alltid avgiftsfri
-    start_dates:   startDates,
-    duration_text: durationText,
-    education_ids: eduIds,
-    myh_id:        myhId,
-    myh_area:      null,
-    active:        true,
+    school_name:              schoolName,
+    program_name:             programName,
+    website_url:              contact.web || null,
+    contact_email:            contact.email || null,
+    contact_phone:            contact.telephone || null,
+    city:                     city,
+    municipality:             edu.municipality || null,
+    study_mode:               studyMode,
+    study_pace:               studyPace,
+    fee:                      edu.fee ?? 0,
+    start_dates:              startDates,
+    duration_text:            durationText,
+    education_ids:            eduIds,
+    myh_id:                   myhId,
+    myh_area:                 null,
+    online:                   edu.distance === true,
+    active:                   true,
+    // Nya fält
+    requirements:             edu.requirements || null,
+    education_description:    edu.educationEventDescription || null,
+    eligible_for_student_aid: edu.eligibleForStudentAid ?? null,
+    instruction_languages:    edu.instructionLanguages || null,
+    organizer_name:           edu.organizerName || null,
+    areas_of_interest:        edu.areasOfInterest || null,
+    credits:                  edu.credits || null,
+    pace_of_study:            edu.paceOfStudy ? parseFloat(edu.paceOfStudy) : null,
   };
 }
 
@@ -329,29 +344,23 @@ async function main() {
     console.log('   Exempelpost (värden):', JSON.stringify(allPrograms[0]).slice(0, 300), '\n');
   }
 
-  // Matcha program mot EDU_MAP
+  // Matcha program mot EDU_MAP — alla importeras, matchade får education_ids
   let matched = 0;
-  let unmatched = 0;
   const schools = [];
 
   for (const edu of allPrograms) {
-    const title = edu.titleSv || edu.title || '';
+    const title = edu.studyPathName || edu.titleSv || edu.title || '';
     const eduIds = assignEducationIds(title);
-
-    if (eduIds.length > 0) {
-      schools.push(skolverketToSchool(edu, eduIds));
-      matched++;
-    } else {
-      unmatched++;
-    }
+    if (eduIds.length > 0) matched++;
+    schools.push(skolverketToSchool(edu, eduIds));
   }
 
   console.log(`📊 Matchning:`);
-  console.log(`   Matchade:   ${matched} program (läggs in i Supabase)`);
-  console.log(`   Omatchade:  ${unmatched} program (hoppar över)\n`);
+  console.log(`   Matchade mot EDU_MAP: ${matched} av ${schools.length} program`);
+  console.log(`   Alla ${schools.length} program importeras till Supabase\n`);
 
   if (schools.length === 0) {
-    console.log('⚠ Inga matchade utbildningar. Kontrollera exempelposten ovan — fältnamnen kan skilja sig.');
+    console.log('⚠ Inga utbildningar hittades. Kontrollera exempelposten ovan — fältnamnen kan skilja sig.');
     return;
   }
 
@@ -367,7 +376,8 @@ async function main() {
 
   console.log('\n\n🎉 Import klar!');
   console.log('   Verifiera i Supabase → Table Editor → yh_schools');
-  console.log(`   Totalt importerade: ${schools.length} matchade utbildningar av ${allPrograms.length} totalt`);
+  console.log(`   Totalt importerade: ${schools.length} utbildningar`);
+  console.log(`   Varav matchade mot EDU_MAP: ${matched}`);
 
   console.log('\n📊 Fördelning per kategori:');
   for (const mapping of EDU_MAP) {
