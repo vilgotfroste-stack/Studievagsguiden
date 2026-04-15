@@ -38,21 +38,31 @@ const LIMIT    = limitArg !== -1 ? parseInt(process.argv[limitArg + 1]) : null;
 const DELAY_MS = 150;
 
 // ---------------------------------------------------------------
-// Hämta alla myh_ids från Supabase
+// Hämta alla myh_ids från Supabase (hanterar paginering)
 // ---------------------------------------------------------------
 async function fetchIds() {
-  let url = `${SUPABASE_URL}/rest/v1/yh_schools?select=id,myh_id,program_name&order=myh_id`;
-  if (!FORCE) url += '&requirements=is.null&myh_id=not.is.null';
-  if (LIMIT)  url += `&limit=${LIMIT}`;
+  if (LIMIT) {
+    let url = `${SUPABASE_URL}/rest/v1/yh_schools?select=id,myh_id,program_name&order=myh_id&limit=${LIMIT}`;
+    if (!FORCE) url += '&requirements=is.null&myh_id=not.is.null';
+    const res = await fetch(url, { headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` } });
+    if (!res.ok) throw new Error(`Supabase fetch misslyckades: ${await res.text()}`);
+    return res.json();
+  }
 
-  const res = await fetch(url, {
-    headers: {
-      'apikey':        SUPABASE_SERVICE_KEY,
-      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
-    },
-  });
-  if (!res.ok) throw new Error(`Supabase fetch misslyckades: ${await res.text()}`);
-  return res.json();
+  // Paginera tills alla rader är hämtade
+  const PAGE = 1000;
+  let all = [], offset = 0;
+  while (true) {
+    let url = `${SUPABASE_URL}/rest/v1/yh_schools?select=id,myh_id,program_name&order=myh_id&limit=${PAGE}&offset=${offset}`;
+    if (!FORCE) url += '&requirements=is.null&myh_id=not.is.null';
+    const res = await fetch(url, { headers: { 'apikey': SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}` } });
+    if (!res.ok) throw new Error(`Supabase fetch misslyckades: ${await res.text()}`);
+    const page = await res.json();
+    all = all.concat(page);
+    if (page.length < PAGE) break;
+    offset += PAGE;
+  }
+  return all;
 }
 
 // ---------------------------------------------------------------
