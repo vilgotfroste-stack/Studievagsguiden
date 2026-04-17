@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/behorighetskollen-sok", "destination": "/behorighetskollen-sok.html" },
+    { "source": "/behorighetskollen", "destination": "/behorighetskollen.html" },
     { "source": "/komvux", "destination": "/komvux.html" },
     { "source": "/jamfor-utbildningar", "destination": "/jamfor-utbildningar.html" },
     { "source": "/yrken", "destination": "/yrken.html" },

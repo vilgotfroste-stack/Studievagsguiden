@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Behörighetskollen — Kontrollera din behörighet | Studievägsguiden</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F8F5;--card:#fff;--tx:#0A0A0A;--mu:#3A3A36;--li:#7A7A74;--ac:#5BA882;--al:#EBF5F0;--ah:#2D6B4A;--bl:#5A8FB5;--bll:#E4F0FB;--bh:#2A4F6E;--re:#B04830;--rl:#FDECEA;--wa:#9A6A00;--wl:#FBF5EA;--bo:#C5D8EB;--r:12px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background-color:#EAF7F1;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.07) 0px,rgba(100,160,130,0.07) 1px,transparent 1px,transparent 12px);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;letter-spacing:.01em;text-decoration:none;color:inherit}
+.logo .i-dot{position:relative;display:inline-block}
+.logo .i-dot::after{content:'';position:absolute;top:.25em;left:50%;transform:translateX(-50%);width:.2em;height:.2em;background:#6BA3D0;border-radius:50%}
+.nav-login{font-size:.83rem;font-weight:600;color:var(--ah);text-decoration:none;background:#fff;border:1.5px solid #C8E8D8;padding:7px 18px;border-radius:20px;transition:all .18s}
+.nav-login:hover{background:var(--al);border-color:var(--ac)}
+
+.detail-page{max-width:760px;margin:0 auto;padding:80px 24px 100px}
+
+.back-btn{display:inline-flex;align-items:center;gap:8px;font-size:.86rem;font-weight:600;color:var(--mu);background:var(--card);border:1.5px solid var(--bo);border-radius:8px;padding:8px 16px;cursor:pointer;transition:all .18s;margin-bottom:22px;text-decoration:none}
+.back-btn:hover{border-color:var(--ac);color:var(--ac)}
+
+/* Hero */
+.dhero{background:var(--card);border:2px solid var(--bo);border-radius:16px;padding:26px 22px;margin-bottom:16px}
+.dhero-label{font-size:.65rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--ac);margin-bottom:8px}
+.dhero-name{font-family:'DM Serif Display',serif;font-size:1.8rem;line-height:1.2;margin-bottom:6px}
+.dhero-school{font-size:.92rem;font-weight:600;color:var(--mu);margin-bottom:14px}
+.dhero-tags{display:flex;gap:8px;flex-wrap:wrap}
+.dhero-tags span{font-size:.76rem;font-weight:600;padding:4px 12px;border-radius:6px;background:var(--bg);color:var(--mu)}
+.mode-campus{background:#EBF5F0;color:#2D6B4A}
+.mode-distance{background:#E4F0FB;color:#2A4F6E}
+.mode-hybrid{background:#EDE7F5;color:#5A3E8E}
+
+/* Section heading */
+.sec-h{font-family:'DM Serif Display',serif;font-size:1.15rem;margin:24px 0 10px;display:flex;align-items:center;gap:10px}
+.sec-n{width:26px;height:26px;border-radius:50%;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;font-family:'DM Sans',sans-serif;flex-shrink:0}
+
+/* Block */
+.block{background:var(--card);border:2px solid var(--bo);border-radius:12px;padding:20px 18px;margin-bottom:14px}
+
+/* Requirements raw text */
+.req-text{font-size:.84rem;color:var(--mu);line-height:1.75;white-space:pre-wrap;word-break:break-word}
+.req-none{font-size:.84rem;color:var(--li);font-style:italic}
+
+/* Form */
+.check-group{display:grid;gap:10px;margin-bottom:18px}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:1.5px solid var(--bo);border-radius:10px;background:var(--bg);cursor:pointer;transition:border-color .15s,background .15s;user-select:none}
+.check-item:hover{border-color:var(--ac);background:#f0faf5}
+.check-item input[type=checkbox]{width:18px;height:18px;flex-shrink:0;margin-top:1px;accent-color:var(--ac);cursor:pointer}
+.check-item.checked{border-color:var(--ac);background:var(--al)}
+.check-label{font-size:.88rem;font-weight:600;color:var(--tx);line-height:1.4}
+.check-sub{font-size:.75rem;color:var(--li);margin-top:2px}
+
+.gymnasieexamen-item{border-color:var(--bo);background:#f8fcf9}
+.gymnasieexamen-item.checked{border-color:#2D6B4A;background:#EBF5F0}
+
+.other-req-box{background:var(--wl);border:1.5px solid #e0d0a0;border-radius:10px;padding:14px 16px;margin-bottom:18px;font-size:.84rem;color:var(--wa);line-height:1.65}
+.other-req-box strong{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+
+.check-btn{width:100%;background:var(--ac);color:#fff;border:none;border-radius:10px;padding:14px 20px;font-family:inherit;font-size:.98rem;font-weight:700;cursor:pointer;transition:opacity .18s,transform .15s;margin-top:4px}
+.check-btn:hover{opacity:.9;transform:translateY(-1px)}
+.check-btn:active{transform:none}
+
+/* Result boxes */
+.result-box{border-radius:14px;padding:22px 20px;margin-top:20px;display:none}
+.result-box.show{display:block;animation:fadeUp .3s ease}
+.result-icon{font-size:2rem;margin-bottom:10px}
+.result-title{font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:6px}
+.result-body{font-size:.88rem;line-height:1.7}
+
+.result-ok{background:#EBF5F0;border:2px solid #A8D8BC}
+.result-ok .result-title{color:#1A5C34}
+.result-ok .result-body{color:#2D6B4A}
+
+.result-fail{background:var(--rl);border:2px solid #f0b8ae}
+.result-fail .result-title{color:#8A2010}
+.result-fail .result-body{color:var(--re)}
+
+.result-reell{background:var(--bll);border:2px solid #9DC4E0}
+.result-reell .result-title{color:#163860}
+.result-reell .result-body{color:var(--bh)}
+
+.missing-list{margin:10px 0;padding-left:0;list-style:none;display:grid;gap:6px}
+.missing-list li{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600}
+.missing-list li::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--re);flex-shrink:0}
+
+.result-actions{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+.result-link{display:inline-block;padding:10px 20px;border-radius:8px;font-size:.85rem;font-weight:700;text-decoration:none;transition:opacity .15s}
+.result-link:hover{opacity:.85}
+.link-primary{background:var(--ac);color:#fff}
+.link-secondary{background:var(--card);color:var(--mu);border:1.5px solid var(--bo)}
+.link-blue{background:var(--bl);color:#fff}
+
+/* Website link */
+.website-block{background:var(--card);border:2px solid var(--bo);border-radius:12px;padding:16px 18px;margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.website-block p{font-size:.84rem;color:var(--mu);line-height:1.5}
+.website-block a{display:inline-block;background:var(--bh);color:#fff;padding:9px 18px;border-radius:8px;font-size:.82rem;font-weight:700;text-decoration:none;white-space:nowrap;transition:opacity .15s;flex-shrink:0}
+.website-block a:hover{opacity:.88}
+
+/* Loading */
+.loading-state{text-align:center;padding:80px 24px}
+.spinner{width:36px;height:36px;border:3px solid var(--bo);border-top-color:var(--ac);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+.loading-state p{color:var(--mu);font-size:.9rem}
+
+/* Error */
+.error-state{text-align:center;padding:60px 24px;background:var(--card);border:2px solid var(--bo);border-radius:16px}
+.error-state p{color:var(--mu);font-size:.9rem;line-height:1.6}
+.error-state a{color:var(--ac);font-weight:600}
+
+/* No parsed data */
+.no-parsed{background:var(--wl);border:1.5px solid #ddc87a;border-radius:10px;padding:16px;font-size:.86rem;color:var(--wa);line-height:1.65;margin-bottom:14px}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:600px){
+  .detail-page{padding:74px 16px 100px}
+  .dhero-name{font-size:1.45rem}
+  .result-actions{flex-direction:column}
+  .website-block{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">
+    <span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">gu<span class="i-dot">ı</span>den</span>
+  </a>
+  <a href="/min-plan" class="nav-login">Logga in</a>
+</nav>
+
+<div class="detail-page">
+  <a href="/behorighetskollen-sok" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    Tillbaka till sökning
+  </a>
+
+  <div id="pageContent">
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Hämtar utbildning...</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://qofvdpvxrvvjalgdiflg.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Vfm1BArZN_RAWrwTOzVGXA_WWvIk77V';
+
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function modeLabel(m) {
+  return { campus: 'Campus', distance: 'Distans', hybrid: 'Hybrid' }[m] || m || '';
+}
+function modeClass(m) {
+  return { campus: 'mode-campus', distance: 'mode-distance', hybrid: 'mode-hybrid' }[m] || '';
+}
+function paceLabel(p) {
+  return { fulltime: 'Heltid', parttime: 'Deltid' }[p] || '';
+}
+
+async function loadSchool(id) {
+  const url = SUPABASE_URL + '/rest/v1/yh_schools?id=eq.' + encodeURIComponent(id) + '&select=*&limit=1';
+  const res = await fetch(url, {
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+  });
+  const data = await res.json();
+  return Array.isArray(data) && data.length > 0 ? data[0] : null;
+}
+
+function renderPage(school) {
+  const rp = school.requirements_parsed || null;
+  const hasParsed = rp && (rp.required_courses && rp.required_courses.length > 0 || rp.has_gymnasieexamen_requirement || rp.other_requirements);
+
+  const modeTag = school.study_mode ? `<span class="${modeClass(school.study_mode)}">${esc(modeLabel(school.study_mode))}</span>` : '';
+  const paceTag = school.study_pace ? `<span>${esc(paceLabel(school.study_pace))}</span>` : '';
+  const cityTag = school.city ? `<span>${esc(school.city)}</span>` : '';
+  const durTag  = school.duration_text ? `<span>${esc(school.duration_text)}</span>` : '';
+
+  let formHtml = '';
+
+  if (!hasParsed) {
+    formHtml = `
+      <div class="no-parsed">
+        <strong>Krav ej strukturerade</strong>
+        Vi har inte kunnat tolka behörighetskraven för denna utbildning automatiskt.
+        Läs behörighetskraven ovan och kontakta skolan direkt via länken nedan.
+      </div>`;
+  } else {
+    let checkItems = '';
+
+    if (rp.has_gymnasieexamen_requirement) {
+      checkItems += `
+        <label class="check-item gymnasieexamen-item" id="item-gymnasieexamen">
+          <input type="checkbox" id="cb-gymnasieexamen" onchange="onCheck(this)">
+          <div>
+            <div class="check-label">Gymnasieexamen</div>
+            <div class="check-sub">Fullständig gymnasieutbildning med examen</div>
+          </div>
+        </label>`;
+    }
+
+    if (rp.required_courses && rp.required_courses.length > 0) {
+      rp.required_courses.forEach((c, i) => {
+        const name = esc(c.name || '');
+        const level = c.level ? ` ${esc(String(c.level))}` : '';
+        const points = c.points ? ` · ${c.points} p` : '';
+        const alt = c.alternative ? `<div class="check-sub">Alt: ${esc(c.alternative)}</div>` : '';
+        checkItems += `
+          <label class="check-item" id="item-course-${i}">
+            <input type="checkbox" id="cb-course-${i}" data-course-idx="${i}" onchange="onCheck(this)">
+            <div>
+              <div class="check-label">${name}${level}</div>
+              <div class="check-sub">${points ? points.replace(' · ','') : ''}${alt ? '' : ''}</div>
+              ${alt}
+            </div>
+          </label>`;
+      });
+    }
+
+    const otherBox = rp.other_requirements ? `
+      <div class="other-req-box">
+        <strong>Övriga krav</strong>
+        ${esc(rp.other_requirements)}
+      </div>` : '';
+
+    formHtml = `
+      <div class="check-group">${checkItems}</div>
+      ${otherBox}
+      <button class="check-btn" onclick="checkEligibility()">Kontrollera behörighet</button>`;
+  }
+
+  const reqText = school.requirements
+    ? `<div class="block"><div class="req-text">${esc(school.requirements)}</div></div>`
+    : `<div class="block"><div class="req-none">Inga behörighetskrav registrerade för denna utbildning.</div></div>`;
+
+  const websiteHtml = school.website_url ? `
+    <div class="website-block">
+      <p>Meritpoäng och detaljerad information om antagning hanteras av skolan.</p>
+      <a href="${esc(school.website_url)}" target="_blank" rel="noopener">Skolans hemsida →</a>
+    </div>` : '';
+
+  return `
+    <div class="dhero">
+      <div class="dhero-label">Behörighetskollen</div>
+      <div class="dhero-name">${esc(school.program_name)}</div>
+      <div class="dhero-school">${esc(school.school_name)}</div>
+      <div class="dhero-tags">
+        ${modeTag}${paceTag}${cityTag}${durTag}
+      </div>
+    </div>
+
+    <div class="sec-h"><div class="sec-n">1</div>Behörighetskrav</div>
+    ${reqText}
+
+    <div class="sec-h"><div class="sec-n">2</div>Kontrollera din behörighet</div>
+    <div class="block">
+      <p style="font-size:.84rem;color:var(--mu);margin-bottom:16px;line-height:1.65">
+        Bocka av de kurser du har klarat (betyg spelar ingen roll — godkänt räcker för YH-behörighet).
+      </p>
+      ${formHtml}
+
+      <div class="result-box result-ok" id="result-ok">
+        <div class="result-icon">✅</div>
+        <div class="result-title">Du är behörig!</div>
+        <div class="result-body">
+          Du uppfyller alla grundläggande behörighetskrav för denna utbildning.
+          Ansökan görs direkt via skolan — se länken nedan för meritpoäng och antagningsbesked.
+        </div>
+        <div class="result-actions">
+          ${school.website_url ? `<a href="${esc(school.website_url)}" target="_blank" rel="noopener" class="result-link link-primary">Ansök via skolans hemsida →</a>` : ''}
+          <a href="/behorighetskollen-sok" class="result-link link-secondary">Sök fler utbildningar</a>
+        </div>
+      </div>
+
+      <div class="result-box result-fail" id="result-fail">
+        <div class="result-icon">❌</div>
+        <div class="result-title">Du saknar behörighet</div>
+        <div class="result-body" id="result-fail-body">
+          Du behöver komplettera följande på Komvux:
+          <ul class="missing-list" id="missing-list"></ul>
+          Komvux är gratis och du kan läsa kvällstid vid sidan av jobbet.
+        </div>
+        <div class="result-actions">
+          <a href="/komvux" class="result-link link-primary">Läs om Komvux →</a>
+          <a href="/behorighetskollen-sok" class="result-link link-secondary">Sök annan utbildning</a>
+        </div>
+      </div>
+
+      <div class="result-box result-reell" id="result-reell">
+        <div class="result-icon">🔄</div>
+        <div class="result-title">Du kan ansöka via reell kompetens</div>
+        <div class="result-body">
+          Den här utbildningen accepterar ansökningar via reell kompetens — det vill säga
+          om du har arbetslivserfarenhet eller andra kunskaper som motsvarar kraven,
+          även utan formell gymnasieexamen. Skolan gör en individuell bedömning.
+          Kontakta skolan direkt för mer information om hur du ansöker.
+        </div>
+        <div class="result-actions">
+          ${school.website_url ? `<a href="${esc(school.website_url)}" target="_blank" rel="noopener" class="result-link link-blue">Kontakta skolan →</a>` : ''}
+          <a href="/behorighetskollen-sok" class="result-link link-secondary">Sök annan utbildning</a>
+        </div>
+      </div>
+    </div>
+
+    ${websiteHtml}`;
+}
+
+let schoolData = null;
+
+function onCheck(cb) {
+  const item = cb.closest('.check-item');
+  if (item) item.classList.toggle('checked', cb.checked);
+}
+
+function checkEligibility() {
+  if (!schoolData) return;
+  const rp = schoolData.requirements_parsed;
+  if (!rp) return;
+
+  ['result-ok','result-fail','result-reell'].forEach(id => {
+    document.getElementById(id).classList.remove('show');
+  });
+
+  const gymCb = document.getElementById('cb-gymnasieexamen');
+  const hasGym = gymCb ? gymCb.checked : true;
+
+  if (rp.has_gymnasieexamen_requirement && !hasGym) {
+    if (rp.reell_kompetens_accepted) {
+      document.getElementById('result-reell').classList.add('show');
+    } else {
+      const list = document.getElementById('missing-list');
+      list.innerHTML = '<li>Gymnasieexamen</li>';
+      document.getElementById('result-fail').classList.add('show');
+    }
+    scrollToResult();
+    return;
+  }
+
+  const courses = rp.required_courses || [];
+  const missing = [];
+  courses.forEach((c, i) => {
+    const cb = document.getElementById('cb-course-' + i);
+    if (cb && !cb.checked) {
+      const level = c.level ? ' ' + c.level : '';
+      missing.push((c.name || '') + level);
+    }
+  });
+
+  if (missing.length === 0) {
+    document.getElementById('result-ok').classList.add('show');
+  } else {
+    const list = document.getElementById('missing-list');
+    list.innerHTML = missing.map(m => `<li>${esc(m)}</li>`).join('');
+    document.getElementById('result-fail').classList.add('show');
+  }
+  scrollToResult();
+}
+
+function scrollToResult() {
+  setTimeout(() => {
+    const el = document.querySelector('.result-box.show');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 80);
+}
+
+async function init() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const content = document.getElementById('pageContent');
+
+  if (!id) {
+    content.innerHTML = `<div class="error-state"><p>Ingen utbildning vald.<br><a href="/behorighetskollen-sok">Gå tillbaka och välj en utbildning.</a></p></div>`;
+    return;
+  }
+
+  try {
+    const school = await loadSchool(id);
+    if (!school) {
+      content.innerHTML = `<div class="error-state"><p>Utbildningen hittades inte.<br><a href="/behorighetskollen-sok">Sök bland alla utbildningar.</a></p></div>`;
+      return;
+    }
+    schoolData = school;
+    document.title = school.program_name + ' — Behörighetskollen | Studievägsguiden';
+    content.innerHTML = renderPage(school);
+  } catch (e) {
+    content.innerHTML = `<div class="error-state"><p>Kunde inte hämta utbildningen. Kontrollera anslutningen och försök igen.<br><a href="/behorighetskollen-sok">Tillbaka till sökning.</a></p></div>`;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
