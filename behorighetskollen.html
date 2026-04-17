@@ -148,6 +148,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 /* No parsed data */
 .no-parsed{background:var(--wl);border:1.5px solid #ddc87a;border-radius:10px;padding:16px;font-size:.86rem;color:var(--wa);line-height:1.65;margin-bottom:14px}
 
+/* Info pills */
+.info-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.pill{font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap}
+.pill-green{background:#EBF5F0;color:#2D6B4A}
+.pill-blue{background:#E4F0FB;color:#2A4F6E}
+.pill-red{background:var(--rl);color:var(--re)}
+.pill-grey{background:var(--bg);color:var(--mu)}
+.pill-yellow{background:var(--wl);color:var(--wa)}
+
+/* Description */
+.desc-block{background:var(--card);border:2px solid var(--bo);border-radius:12px;padding:20px 18px;margin-bottom:14px}
+.desc-text{font-size:.86rem;color:var(--mu);line-height:1.8;white-space:pre-wrap;word-break:break-word}
+.desc-text.clamped{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;white-space:normal}
+.desc-toggle{background:none;border:none;font-family:inherit;font-size:.8rem;font-weight:700;color:var(--ac);cursor:pointer;margin-top:10px;padding:0;text-decoration:underline}
+
+/* Contact row */
+.contact-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--bo)}
+.contact-link{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:600;color:var(--bh);text-decoration:none;transition:color .15s}
+.contact-link:hover{color:var(--ac)}
+
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes spin{to{transform:rotate(360deg)}}
 
@@ -329,6 +349,33 @@ function renderPage(school) {
   const cityTag = school.city ? `<span>${esc(school.city)}</span>` : '';
   const durTag  = school.duration_text ? `<span>${esc(school.duration_text)}</span>` : '';
 
+  // Extra info pills
+  const pills = [];
+  if (school.eligible_for_student_aid) pills.push(`<span class="pill pill-green">Berättigar till studiemedel (CSN)</span>`);
+  if (school.fee > 0) pills.push(`<span class="pill pill-red">Avgift: ${school.fee.toLocaleString('sv-SE')} kr</span>`);
+  else pills.push(`<span class="pill pill-grey">Avgiftsfri</span>`);
+  if (school.credits) pills.push(`<span class="pill pill-blue">${school.credits} YH-poäng</span>`);
+  if (school.pace_of_study) pills.push(`<span class="pill pill-grey">Studietakt ${school.pace_of_study}%</span>`);
+  if (school.start_dates && school.start_dates.length > 0) {
+    school.start_dates.forEach(d => pills.push(`<span class="pill pill-yellow">Start: ${esc(d)}</span>`));
+  }
+  if (school.online) pills.push(`<span class="pill pill-blue">Online</span>`);
+  const pillsHtml = pills.length ? `<div class="info-pills">${pills.join('')}</div>` : '';
+
+  // Contact row
+  const contactParts = [];
+  if (school.contact_email) contactParts.push(`<a href="mailto:${esc(school.contact_email)}" class="contact-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>${esc(school.contact_email)}</a>`);
+  if (school.contact_phone) contactParts.push(`<a href="tel:${esc(school.contact_phone)}" class="contact-link"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>${esc(school.contact_phone)}</a>`);
+  const contactHtml = contactParts.length ? `<div class="contact-row">${contactParts.join('')}</div>` : '';
+
+  // Description block
+  const descHtml = school.education_description ? `
+    <div class="sec-h"><div class="sec-n">1</div>Om utbildningen</div>
+    <div class="desc-block">
+      <div class="desc-text clamped" id="descText">${esc(school.education_description)}</div>
+      <button class="desc-toggle" id="descToggle" onclick="toggleDesc()">Visa mer</button>
+    </div>` : '';
+
   let formHtml = '';
 
   if (!hasParsed) {
@@ -400,6 +447,8 @@ function renderPage(school) {
       <div class="dhero-tags">
         ${modeTag}${paceTag}${cityTag}${durTag}
       </div>
+      ${pillsHtml}
+      ${contactHtml}
       <div style="margin-top:16px">
         <button class="ia-btn" onclick="openIA()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -408,10 +457,12 @@ function renderPage(school) {
       </div>
     </div>
 
-    <div class="sec-h"><div class="sec-n">1</div>Behörighetskrav</div>
+    ${descHtml}
+
+    <div class="sec-h"><div class="sec-n">${school.education_description ? '2' : '1'}</div>Behörighetskrav</div>
     ${reqText}
 
-    <div class="sec-h"><div class="sec-n">2</div>Kontrollera din behörighet</div>
+    <div class="sec-h"><div class="sec-n">${school.education_description ? '3' : '2'}</div>Kontrollera din behörighet</div>
     <div class="block">
       <p style="font-size:.84rem;color:var(--mu);margin-bottom:16px;line-height:1.65">
         Bocka av de kurser du har klarat (betyg spelar ingen roll — godkänt räcker för YH-behörighet).
@@ -547,6 +598,13 @@ async function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+function toggleDesc() {
+  const el = document.getElementById('descText');
+  const btn = document.getElementById('descToggle');
+  const clamped = el.classList.toggle('clamped');
+  btn.textContent = clamped ? 'Visa mer' : 'Visa mindre';
+}
 
 function toggleNavMenu() {
   const panel = document.getElementById('navPanel');

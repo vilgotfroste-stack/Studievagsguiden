@@ -49,6 +49,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 .filter-body.open{max-height:700px}
 .filter-inner{background:var(--card);border:1.5px solid var(--bo);border-top:none;border-radius:0 0 10px 10px;padding:18px}
 .filter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.filter-checks{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;padding-top:14px;border-top:1px solid var(--bo)}
+.fcheck{display:flex;align-items:center;gap:7px;font-size:.82rem;font-weight:600;color:var(--mu);cursor:pointer;user-select:none}
+.fcheck input[type=checkbox]{width:15px;height:15px;accent-color:var(--ac);cursor:pointer;flex-shrink:0}
 .filter-item label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mu);margin-bottom:6px}
 .filter-item input[type=text],.filter-item select{width:100%;padding:9px 12px;border:1.5px solid var(--bo);border-radius:8px;font-family:inherit;font-size:.85rem;background:#fff;color:var(--tx);transition:border-color .18s;outline:none}
 .filter-item input[type=text]:focus,.filter-item select:focus{border-color:var(--ac)}
@@ -199,6 +202,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
             <option value="">Alla branscher</option>
           </select>
         </div>
+        <div class="filter-item">
+          <label>Startdatum</label>
+          <select id="startSelect" onchange="onFilterChange()">
+            <option value="">Alla</option>
+            <option value="VT2025">VT 2025</option>
+            <option value="HT2025">HT 2025</option>
+            <option value="VT2026">VT 2026</option>
+            <option value="HT2026">HT 2026</option>
+            <option value="VT2027">VT 2027</option>
+            <option value="HT2027">HT 2027</option>
+          </select>
+        </div>
+      </div>
+      <div class="filter-checks">
+        <label class="fcheck"><input type="checkbox" id="cbStudiemedel" onchange="onFilterChange()"> Berättigar till studiemedel (CSN)</label>
+        <label class="fcheck"><input type="checkbox" id="cbAvgiftsfri" onchange="onFilterChange()"> Avgiftsfri utbildning</label>
       </div>
       <div class="filter-foot">
         <button onclick="resetFilters()">Återställ filter</button>
@@ -265,6 +284,9 @@ function getFilters() {
     city: document.getElementById('cityInput').value.trim(),
     pace: document.getElementById('paceSelect').value,
     category: document.getElementById('categorySelect').value,
+    startDate: document.getElementById('startSelect').value,
+    studiemedel: document.getElementById('cbStudiemedel').checked,
+    avgiftsfri: document.getElementById('cbAvgiftsfri').checked,
   };
 }
 
@@ -277,11 +299,14 @@ function buildUrl(offset) {
   params.set('limit', PAGE_SIZE);
   params.set('offset', offset);
 
-  if (activeMode) params.set('study_mode', 'eq.' + activeMode);
-  if (f.pace)     params.set('study_pace', 'eq.' + f.pace);
-  if (f.city)     params.set('city', 'ilike.*' + f.city + '*');
-  if (f.category) params.set('education_ids', 'cs.{' + f.category + '}');
-  if (f.query)    params.set('or', '(program_name.ilike.*' + f.query + '*,school_name.ilike.*' + f.query + '*)');
+  if (activeMode)       params.set('study_mode', 'eq.' + activeMode);
+  if (f.pace)           params.set('study_pace', 'eq.' + f.pace);
+  if (f.city)           params.set('city', 'ilike.*' + f.city + '*');
+  if (f.category)       params.set('education_ids', 'cs.{' + f.category + '}');
+  if (f.studiemedel)    params.set('eligible_for_student_aid', 'eq.true');
+  if (f.avgiftsfri)     params.set('fee', 'eq.0');
+  if (f.startDate)      params.set('start_dates', 'cs.{"' + f.startDate + '"}');
+  if (f.query)          params.set('or', '(program_name.ilike.*' + f.query + '*,school_name.ilike.*' + f.query + '*,education_description.ilike.*' + f.query + '*)');
 
   return SUPABASE_URL + '/rest/v1/yh_schools?' + params.toString();
 }
@@ -418,6 +443,9 @@ function resetFilters() {
   document.getElementById('cityInput').value = '';
   document.getElementById('paceSelect').value = '';
   document.getElementById('categorySelect').value = '';
+  document.getElementById('startSelect').value = '';
+  document.getElementById('cbStudiemedel').checked = false;
+  document.getElementById('cbAvgiftsfri').checked = false;
   document.getElementById('searchClear').style.display = 'none';
   activeMode = '';
   document.querySelectorAll('.qbtn').forEach(b => b.classList.toggle('active', b.dataset.mode === ''));
