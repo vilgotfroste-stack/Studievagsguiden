@@ -1,63 +1,71 @@
-# Behörighetskollen — Sessionsbriefing
+# Sessionsbriefing — Nästa uppgift: URL-omstrukturering
 
-## Vad som är byggt
-Ny undersida på studievägsguiden.se där användaren söker en YH-utbildning, skriver in gymnasieprogram + betyg och får svar om hen är behörig.
+Repo: `vilgotfroste-stack/Studievagsguiden`, branch: `main`. Jobba direkt på main.
 
-## Datalagret (KLART)
-**Supabase-tabell:** `yh_schools` — 2577 YH-utbildningar från Skolverkets API
+## Vad som är byggt (KLART)
 
-**Nyckelkolumner:**
-- `requirements` — råtext från API (behörighetskrav)
-- `requirements_parsed` — strukturerad JSONB, t.ex:
-```json
-{
-  "has_gymnasieexamen_requirement": true,
-  "reell_kompetens_accepted": true,
-  "recommended_programs": ["Teknikprogrammet"],
-  "required_courses": [
-    { "name": "Matematik", "level": "2", "points": 100 },
-    { "name": "Engelska", "level": "6", "points": 100 }
-  ],
-  "other_requirements": null
-}
-```
-- `website_url`, `city`, `municipality`, `study_mode`, `study_pace`, `online`, `education_ids`, `myh_id`
+- `utbildningar.html` — YH-söksida (fd `behorighetskollen-sok.html`), URL: `/utbildningar`
+- `behorighetskollen.html` — Behörighetskontroll per skola, URL: `/behorighetskollen?id=<uuid>`
+- Båda har nav-meny, intresseanmälan-modal och Supabase-integration
+- Supabase-tabell: `yh_schools` (~2 577 YH-utbildningar), nyckel: `sb_publishable_Vfm1BArZN_RAWrwTOzVGXA_WWvIk77V`
 
-**Scripts (supabase/):**
-- `fetch-myh-schools.js` — hämtar alla utbildningar från Skolverket
-- `fetch-yh-requirements.js` — berikar varje rad med requirements via detalj-endpoint
-- `parse-requirements.js` — parsar requirements-text med regex till JSONB
+## Nästa session: URL-omstrukturering
 
-## Nästa session: Bygg frontend
+Genomför i exakt denna ordning:
 
-### Sida 1 — Sök/filtrera utbildningar
-- Filterpanel: stad, distans/campus, bransch (education_ids), studietakt
-- Kortlista med utbildningar från Supabase
-- Klick på utbildning → Sida 2
-- Design: samma tema/struktur som befintlig site (se `js/utbildningar-shared.js`)
+### 1. Radera `utbildningar.html` (gamla yrkessidan)
+Filen är en duplikat av `yrken.html`. Ta bort den.
 
-### Sida 2 — Behörighetskollen
-- Tillbaka-knapp till Sida 1
-- Formulär: välj gymnasieprogram + kryssa i/ange betyg per kurs
-- Logik: jämför ifyllda kurser mot `requirements_parsed.required_courses`
-- Tre möjliga utfall:
-  1. ✅ "Du är behörig"
-  2. ❌ "Du behöver komplettera på Komvux" (visa vilka kurser saknas)
-  3. 🔄 "Du kan ansöka via reell kompetens" (om `reell_kompetens_accepted: true` och gymnasieexamen saknas)
-- Länk till skolans hemsida (`website_url`) för meritpoäng
+### 2. Döp om `behorighetskollen-sok.html` → `utbildningar.html`
+Uppdatera SEO i filen:
+- `<title>`: Hitta YH-utbildning — Sök bland 2 500+ program | Studievägsguiden
+- `<meta name="description">`: Sök och filtrera bland 2 500+ yrkeshögskoleutbildningar efter stad, studieform och bransch. Kontrollera din behörighet direkt.
+- `<link rel="canonical">`: https://www.studievagsguiden.se/utbildningar
+- `<h1>`: Hitta YH-utbildning
 
-### Viktigt att känna till
-- `education_ids: []` = utbildningen saknar kategoritillhörighet (importerad men ej matchad mot EDU_MAP)
-- Betyg spelar ej roll för YH-behörighet — godkänt (E) räcker
-- Reell kompetens (punkt 4) kan ej automatiseras — bara flaggas
-- Meritpoäng hanteras ej — länka till `website_url`
+### 3. Döp om `jamfor-utbildningar.html` → `jamfor-yrken.html`
+Uppdatera SEO:
+- `<title>`: Jämför yrken — Lön, stress och framtid | Studievägsguiden
+- `<link rel="canonical">`: https://www.studievagsguiden.se/jamfor-yrken
 
-## Filstruktur
-```
-js/utbildningar-shared.js   ← befintlig design-logik, EDU_MAP, lönedata
-supabase/                   ← datascripts (kör ej igen om ej nödvändigt)
-```
+### 4. Uppdatera `yrken.html` SEO
+- `<title>`: Yrken — Lön, efterfrågan och utbildning | Studievägsguiden
+- `<link rel="canonical">`: https://www.studievagsguiden.se/yrken
+- `<meta name="description">`: Utforska yrken efter lön, efterfrågan, stress och flexibilitet. Jämför 29 yrken och hitta rätt utbildningsväg.
 
-## Branch/deploy
-- Utveckla på ny branch, skicka PR till `main`
-- Supabase URL: `https://qofvdpvxrvvjalgdiflg.supabase.co`
+### 5. Lägg till CTA-knapp på `yrken.html`
+Hitta befintlig "Jämför utbildningar"-knapp/länk och lägg till en till bredvid:
+- Text: `Hitta YH-utbildningar →`
+- `href="/utbildningar"`
+- Samma stil som övriga CTA-knappar på sidan
+
+### 6. Uppdatera `vercel.json`
+- Ta bort **alla** rader där `source` börjar med `/utbildningar/` (undersidor — spamrisk)
+- Byt `/behorighetskollen-sok` → `/utbildningar` (destination: `/utbildningar.html`)
+- Byt `/jamfor-utbildningar` → `/jamfor-yrken` (destination: `/jamfor-yrken.html`)
+- `/utbildningar` → `/utbildningar.html` (ny YH-söksida)
+- Behåll: `/yrken`, `/behorighetskollen`
+
+### 7. Uppdatera nav-menyn i ALLA HTML-filer i rotkatalogen
+Nav-panelen (slide-in, `id="navPanel"`) finns på alla sidor. Gör dessa byten överallt:
+- `href="/utbildningar"` text "Utbildningar & yrken" → `href="/yrken"` text "Yrken"
+- `href="/jamfor-utbildningar"` → `href="/jamfor-yrken"` text "Jämför yrken"
+- `href="/behorighetskollen-sok"` → `href="/utbildningar"` (text behålls "Behörighetskollen" eller byt till "YH-utbildningar")
+
+Filer att uppdatera (alla i rotkatalogen):
+`index.html`, `yrken.html`, `jamfor-yrken.html`, `utbildningar.html`, `behorighetskollen.html`, `skapa-min-plan.html`, `min-plan.html`, `komvux.html`, `csn-guide.html`, `din-studieplan.html`, `foreldre-som-studerar.html`, `haraduplugg.html`, `studieform.html`, `integritetspolicy.html`
+
+### 8. Uppdatera `sitemap.xml`
+- Byt `/utbildningar` → `/yrken`
+- Ta bort alla rader med `/utbildningar/` (undersidor)
+- Byt `/jamfor-utbildningar` → `/jamfor-yrken`
+- Lägg till `/utbildningar` (ny YH-söksida)
+- Lägg till `/behorighetskollen`
+
+### 9. Commit och push till main
+
+## Viktigt att veta
+- Sajten är statisk HTML, deployad på Vercel — inga byggsteg
+- Det finns redan en `yrken.html` — den ska INTE röras utöver SEO + CTA-knapp
+- Nav-panelen på `utbildningar.html` och `behorighetskollen.html` är en nyare variant (byggd i föregående session) — kontrollera att den matchar index.html-versionen
+- Alla `/utbildningar/[slug]`-undersidor i `utbildningar/`-mappen behöver INTE raderas fysiskt — de är bara döda URLs när vercel.json-raderna tas bort
