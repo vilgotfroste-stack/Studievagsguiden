@@ -3,81 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hitta din utbildning och ditt yrke – Studievägsguiden</title>
+<title>Hitta YH-utbildning — Sök bland 2 500+ program | Studievägsguiden</title>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="canonical" href="https://www.studievagsguiden.se/utbildningar">
-<meta name="description" content="Filtrera och jämför 29 utbildningar efter lön, efterfrågan, stress och flexibilitet. Se ingångslön, CSN-skuld och framtidsutsikter — hitta ditt yrke på 2 minuter.">
+<meta name="description" content="Sök och filtrera bland 2 500+ yrkeshögskoleutbildningar efter stad, studieform och bransch. Kontrollera din behörighet direkt.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#F4F8F5;--card:#fff;--tx:#0A0A0A;--mu:#3A3A36;--li:#7A7A74;--ac:#5BA882;--al:#EBF5F0;--ah:#2D6B4A;--bl:#5A8FB5;--bll:#E4F0FB;--bh:#2A4F6E;--re:#B04830;--rl:#FDECEA;--wa:#9A6A00;--wl:#FBF5EA;--pu:#8A70B5;--pl:#EDE7F5;--bo:#C5D8EB;--r:12px;--sh:0 2px 20px rgba(0,0,0,.06);--shl:0 8px 40px rgba(0,0,0,.1)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background-color:#EAF2ED;background-image:repeating-linear-gradient(135deg,rgba(91,168,130,0.055) 0px,rgba(91,168,130,0.055) 1px,transparent 1px,transparent 14px);color:var(--tx);line-height:1.65;-webkit-font-smoothing:antialiased}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(248,252,249,.95);backdrop-filter:blur(20px);border-bottom:1px solid #D4E6D8;padding:0 28px;height:62px;display:flex;align-items:center;justify-content:space-between}
+body{font-family:'DM Sans',sans-serif;background-color:#EAF7F1;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.07) 0px,rgba(100,160,130,0.07) 1px,transparent 1px,transparent 12px);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;letter-spacing:.01em;text-decoration:none;color:inherit}
 .logo .i-dot{position:relative;display:inline-block}
 .logo .i-dot::after{content:'';position:absolute;top:.25em;left:50%;transform:translateX(-50%);width:.2em;height:.2em;background:#6BA3D0;border-radius:50%}
-.nav-login{font-size:.83rem;font-weight:600;color:var(--ah);text-decoration:none;background:#fff;border:1.5px solid var(--alm, #C8E8D8);padding:7px 18px;border-radius:20px;transition:all .18s}
+.nav-login{font-size:.83rem;font-weight:600;color:var(--ah);text-decoration:none;background:#fff;border:1.5px solid #C8E8D8;padding:7px 18px;border-radius:20px;transition:all .18s}
 .nav-login:hover{background:var(--al);border-color:var(--ac)}
-/* Nästa steg CTA */
-.nasta-steg{background:#2A4F6E;padding:80px 24px}
-.nasta-steg-inner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
-.nasta-steg-label{font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:12px}
-.nasta-steg-h{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.5px;margin-bottom:18px}
-.nasta-steg-p{font-size:.97rem;color:rgba(255,255,255,.75);line-height:1.8;margin-bottom:32px;max-width:420px}
-.nasta-steg-btn{display:inline-block;background:#fff;color:#2A4F6E;font-size:.97rem;font-weight:700;padding:15px 28px;border-radius:10px;text-decoration:none;transition:transform .15s,box-shadow .15s}
-.nasta-steg-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.18)}
-.nasta-steg-chips{display:flex;gap:18px;margin-top:18px;flex-wrap:wrap}
-.nasta-steg-chip{font-size:.82rem;color:rgba(255,255,255,.55);font-weight:500;display:flex;align-items:center;gap:5px}
-.nasta-steg-chip::before{content:'✓';color:rgba(255,255,255,.45);font-size:.8rem}
-.plan-glass{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:20px;overflow:hidden}
-.plan-glass-header{background:rgba(255,255,255,.09);border-bottom:1px solid rgba(255,255,255,.1);padding:16px 20px;display:flex;align-items:center;gap:12px}
-.plan-glass-icon{width:36px;height:36px;background:rgba(255,255,255,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.plan-glass-supertitle{font-size:.62rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:2px}
-.plan-glass-title{font-size:1rem;font-weight:700;color:#fff}
-.plan-glass-rows{padding:4px 0}
-.plan-glass-row{display:flex;align-items:flex-start;gap:12px;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.07)}
-.plan-glass-row:last-of-type{border-bottom:none}
-.plan-glass-row-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.plan-glass-row-title{font-size:.85rem;font-weight:700;color:#fff;margin-bottom:4px}
-.plan-glass-row-blur{font-size:.8rem;color:rgba(255,255,255,.6);line-height:1.5;filter:blur(4px);user-select:none}
-.plan-glass-footer{text-align:center;padding:12px 20px;font-size:.78rem;color:rgba(255,255,255,.35);border-top:1px solid rgba(255,255,255,.07)}
-@media(max-width:720px){.nasta-steg-inner{grid-template-columns:1fr;gap:40px}.plan-glass{display:none}.nasta-steg-p{max-width:100%;text-align:center}.nasta-steg-label,.nasta-steg-h{text-align:center}.nasta-steg-chips{justify-content:center}}
-/* Footer */
-footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
-.footer-inner{max-width:960px;margin:0 auto}
-.footer-top{display:flex;flex-direction:column;align-items:center;text-align:center;padding-bottom:40px;border-bottom:1px solid var(--bo)}
-.footer-logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;text-decoration:none;color:inherit;margin-bottom:10px;display:inline-block}
-.footer-tagline{font-size:.83rem;color:var(--li);max-width:400px;line-height:1.7}
-.footer-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:32px 16px;padding:36px 0 40px}
-.footer-col-label{font-size:.62rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--li);margin-bottom:12px}
-.footer-col a{display:block;font-size:.83rem;color:var(--mu);text-decoration:none;font-weight:500;line-height:1;margin-bottom:10px;transition:color .15s}
-.footer-col a:hover{color:var(--tx)}
-.footer-bottom{border-top:1px solid var(--bo);padding:16px 0;text-align:center}
-.footer-copy{font-size:.76rem;color:var(--li)}
-.footer-seo{background:#EAF2ED;border-top:1px solid var(--bo);padding:20px 24px;text-align:center;font-size:.74rem;color:var(--li);line-height:2}
-@media(max-width:680px){.footer-grid{grid-template-columns:repeat(2,1fr);gap:24px 16px}.footer-grid .footer-col:last-child{grid-column:1/-1}}
-/* Sticky bottom bar */
-.bottom-bar{position:fixed;bottom:0;left:0;right:0;z-index:150;background:#2A4F6E;border-top:1px solid rgba(255,255,255,.12);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;transform:translateY(100%);opacity:0;transition:transform .35s ease,opacity .35s ease}
-.bottom-bar.visible{transform:translateY(0);opacity:1}
-.bottom-bar-text{font-size:.9rem;color:rgba(255,255,255,.8);font-weight:500}
-.bottom-bar-btn{background:#fff;color:#2A4F6E;font-size:.88rem;font-weight:700;padding:10px 22px;border-radius:8px;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:opacity .15s}
-.bottom-bar-btn:hover{opacity:.9}
-@media(max-width:520px){.bottom-bar-text{display:none}}
 
-/* PAGE HEADER */
-.page-header{padding:110px 24px 36px;max-width:760px;margin:0 auto;text-align:center}
-.page-header-wrap{background:#fff}
-.page-header h1{font-family:'Inter',sans-serif;font-size:clamp(3rem,7vw,5rem);font-weight:800;line-height:1.0;letter-spacing:-2px;margin-bottom:14px}
-.page-header p{color:var(--mu);font-size:.95rem;max-width:440px;margin:0 auto;line-height:1.7}
+.page-header{padding:88px 24px 28px;max-width:860px;margin:0 auto;text-align:center}
+.page-header-label{font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--ac);margin-bottom:10px}
+.page-header h1{font-family:'DM Serif Display',serif;font-size:clamp(1.9rem,4.5vw,2.8rem);line-height:1.15;letter-spacing:-.5px;margin-bottom:10px}
+.page-header p{color:var(--mu);font-size:.97rem;max-width:520px;margin:0 auto}
 
-/* SNABBVAL */
-.quick-wrap{max-width:860px;margin:28px auto 18px;padding:0 24px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.search-outer{max-width:860px;margin:0 auto 16px;padding:0 24px}
+.search-wrap{position:relative;display:flex;align-items:center}
+.search-wrap svg{position:absolute;left:14px;color:var(--li);pointer-events:none;flex-shrink:0}
+.search-wrap input{width:100%;padding:13px 40px 13px 44px;border:2px solid var(--bo);border-radius:12px;font-family:inherit;font-size:.96rem;background:var(--card);color:var(--tx);transition:border-color .18s;outline:none}
+.search-wrap input:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(91,168,130,.12)}
+.search-wrap input::placeholder{color:var(--li)}
+.search-clear{position:absolute;right:14px;background:none;border:none;font-size:1.2rem;color:var(--li);cursor:pointer;padding:4px;line-height:1;display:none;align-items:center;justify-content:center;border-radius:50%;width:22px;height:22px;transition:background .15s}
+.search-clear:hover{background:var(--bg);color:var(--tx)}
+
+.quick-wrap{max-width:860px;margin:0 auto 16px;padding:0 24px;display:flex;gap:8px;flex-wrap:wrap}
 .qbtn{padding:8px 16px;border-radius:20px;border:2px solid var(--bo);background:var(--card);font-family:inherit;font-size:.8rem;font-weight:600;color:var(--mu);cursor:pointer;transition:all .18s;white-space:nowrap}
 .qbtn:hover{border-color:var(--ac);color:var(--ac);background:var(--al)}
 .qbtn.active{border-color:var(--ac);background:var(--ac);color:#fff}
 
-/* FILTER PANEL */
 .filter-wrap{max-width:860px;margin:0 auto 20px;padding:0 24px}
 .filter-toggle{width:100%;background:var(--card);border:1.5px solid var(--bo);border-radius:10px;padding:11px 18px;font-family:inherit;font-size:.88rem;font-weight:600;color:var(--mu);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color .2s,color .2s}
 .filter-toggle:hover,.filter-toggle.open{border-color:var(--ac);color:var(--ac)}
@@ -87,209 +49,64 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
 .filter-body.open{max-height:700px}
 .filter-inner{background:var(--card);border:1.5px solid var(--bo);border-top:none;border-radius:0 0 10px 10px;padding:18px}
 .filter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.filter-checks{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;padding-top:14px;border-top:1px solid var(--bo)}
+.fcheck{display:flex;align-items:center;gap:7px;font-size:.82rem;font-weight:600;color:var(--mu);cursor:pointer;user-select:none}
+.fcheck input[type=checkbox]{width:15px;height:15px;accent-color:var(--ac);cursor:pointer;flex-shrink:0}
 .filter-item label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mu);margin-bottom:6px}
-.filter-item .srow{display:flex;align-items:center;gap:8px}
-.filter-item input[type=range]{flex:1;height:5px;cursor:pointer;accent-color:var(--ac);-webkit-appearance:none;appearance:none;background:var(--bo);border-radius:3px}
-.filter-item input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--ac);cursor:pointer;box-shadow:0 1px 6px rgba(91,168,130,.4)}
-.sval{font-size:.78rem;font-weight:700;color:var(--ac);min-width:52px;text-align:right}
-.sublabel{display:flex;justify-content:space-between;font-size:.63rem;color:var(--li);margin-top:3px}
+.filter-item input[type=text],.filter-item select{width:100%;padding:9px 12px;border:1.5px solid var(--bo);border-radius:8px;font-family:inherit;font-size:.85rem;background:#fff;color:var(--tx);transition:border-color .18s;outline:none}
+.filter-item input[type=text]:focus,.filter-item select:focus{border-color:var(--ac)}
+.filter-item select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B6B63' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;cursor:pointer}
 .filter-foot{margin-top:14px;border-top:1px solid var(--bo);padding-top:10px;display:flex;justify-content:flex-end}
 .filter-foot button{background:none;border:none;font-family:inherit;font-size:.78rem;color:var(--li);cursor:pointer;text-decoration:underline}
 .filter-foot button:hover{color:var(--re)}
 
-/* RESULTS META */
 .results-meta{max-width:860px;margin:0 auto 10px;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:12px}
 .results-count{font-size:.8rem;color:var(--mu);font-weight:500}
-.sort-row{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--li)}
-.sort-row select{border:1.5px solid var(--bo);border-radius:6px;padding:4px 28px 4px 8px;font-family:inherit;font-size:.78rem;background:var(--bg);color:var(--mu);cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B6B63' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
-.sort-row select:focus{outline:none;border-color:var(--ac)}
 
-/* GRID */
-.edu-grid{max-width:860px;margin:0 auto;padding:0 24px 100px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.edu-grid{max-width:860px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 
-/* EDU CARD */
-.edu-card{background:var(--card);border:2px solid var(--bo);border-radius:14px;padding:20px 18px 16px;cursor:pointer;transition:border-color .18s,box-shadow .18s,transform .18s;display:flex;flex-direction:column;gap:6px;position:relative;overflow:hidden;opacity:0;animation:fadeUp .35s ease forwards}
-.edu-card:hover{border-color:var(--ac);box-shadow:0 6px 24px rgba(91,168,130,.16);transform:translateY(-2px)}
-.edu-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:14px 0 0 14px}
-.edu-card.sv-dem::before{background:#5BA882}
-.edu-card.sv-stress::before{background:#5A8FB5}
-.edu-card.sv-flex::before{background:#8A70B5}
-.edu-card.sv-fast::before{background:#C49A2A}
-.card-name{font-family:'Inter',sans-serif;font-size:1.05rem;font-weight:700;line-height:1.25;color:var(--tx)}
-.card-sal{font-size:.98rem;font-weight:700;color:var(--ac)}
-.card-sal span{font-size:.72rem;font-weight:400;color:var(--li)}
-.card-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:.7rem;font-weight:700;width:fit-content;margin-top:1px}
-.badge-dem{background:#EBF5F0;color:#2D6B4A}
-.badge-stress{background:#E4F0FB;color:#2A4F6E}
-.badge-flex{background:#EDE7F5;color:#5A3E8E}
-.badge-fast{background:#FBF5EA;color:#7A5200}
-.card-foot{font-size:.72rem;color:var(--li);margin-top:auto;padding-top:8px;border-top:1px solid #f0f0eb;display:flex;justify-content:space-between;align-items:center}
-.card-read{font-size:.72rem;font-weight:700;color:var(--ac)}
+.edu-card{background:var(--card);border:2px solid var(--bo);border-radius:14px;padding:18px 16px 14px;cursor:pointer;transition:border-color .18s,box-shadow .18s,transform .18s;display:flex;flex-direction:column;gap:5px;position:relative;overflow:hidden;text-decoration:none;color:inherit;animation:fadeUp .3s ease forwards;opacity:0}
+.edu-card:hover{border-color:var(--ac);box-shadow:0 6px 24px rgba(91,168,130,.14);transform:translateY(-2px)}
+.card-name{font-family:'DM Serif Display',serif;font-size:1.05rem;line-height:1.25;color:var(--tx);margin-bottom:2px}
+.card-school{font-size:.78rem;font-weight:600;color:var(--mu)}
+.card-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.card-mode-badge{font-size:.67rem;font-weight:700;padding:3px 9px;border-radius:10px;white-space:nowrap}
+.card-pace{font-size:.67rem;font-weight:700;padding:3px 9px;border-radius:10px;background:var(--wl);color:var(--wa)}
+.card-city{font-size:.72rem;color:var(--li);display:flex;align-items:center;gap:3px}
+.card-duration{font-size:.74rem;color:var(--li);margin-top:2px}
+.card-foot{font-size:.75rem;font-weight:600;color:var(--ac);margin-top:auto;padding-top:10px;border-top:1px solid #f0f0eb}
 
-/* CTA STRIP */
-.cta-strip{grid-column:1/-1;background:#2A4F6E;border-radius:14px;padding:22px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;position:relative;overflow:hidden}
-.cta-strip::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0,rgba(255,255,255,.03) 1px,transparent 1px,transparent 14px)}
-.cta-strip .ct{position:relative}
-.cta-strip .ct h3{font-family:'Inter',sans-serif;font-size:1.05rem;font-weight:800;color:#fff;line-height:1.3;margin-bottom:3px}
-.cta-strip .ct p{font-size:.8rem;color:rgba(255,255,255,.75)}
-.cta-strip a{position:relative;background:#fff;color:#2A4F6E;font-size:.84rem;font-weight:700;padding:10px 20px;border-radius:8px;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:opacity .15s}
-.cta-strip a:hover{opacity:.9}
-
-/* EMPTY STATE */
 .empty{grid-column:1/-1;text-align:center;padding:56px 20px}
-.empty .ei{font-size:2.2rem;margin-bottom:12px}
+.empty .ei{font-size:2.4rem;margin-bottom:12px}
 .empty p{font-size:.88rem;color:var(--mu);line-height:1.7}
 .empty button{background:none;border:none;font-family:inherit;font-weight:600;color:var(--ac);cursor:pointer;font-size:.88rem;margin-top:8px;text-decoration:underline}
 
-/* DETAIL VIEW */
-#detailView{display:none;max-width:760px;margin:0 auto;padding:62px 24px 100px}
-.back-bar{position:sticky;top:62px;z-index:90;background:#fff;border-bottom:1px solid var(--bo);box-shadow:0 2px 8px rgba(0,0,0,.06);padding:10px 0;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.back-btn{display:inline-flex;align-items:center;gap:7px;font-size:.83rem;font-weight:600;color:var(--mu);background:none;border:none;border-radius:8px;padding:7px 4px;cursor:pointer;transition:color .18s;white-space:nowrap}
-.back-btn:hover{color:var(--tx)}
+.skeleton{opacity:1 !important;animation:none !important}
+.skel-line{background:linear-gradient(90deg,#e8f0ea 25%,#d4e8da 50%,#e8f0ea 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:6px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
-/* Detail hero card */
-.dhero{background:var(--card);border:2px solid var(--bo);border-radius:16px;padding:26px 22px;margin-bottom:16px;margin-top:8px}
-.dhero-name{font-family:'Inter',sans-serif;font-size:1.7rem;font-weight:800;line-height:1.15;margin-bottom:10px;letter-spacing:-.3px}
-.dhero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.dhero-tags span{font-size:.78rem;font-weight:600;padding:4px 12px;border-radius:6px;background:var(--bg);color:var(--mu)}
-.sal-input-row{background:var(--bg);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.sal-input-row label{font-size:.78rem;font-weight:600;color:var(--mu);white-space:nowrap}
-.sal-input-row input{border:2px solid var(--bo);border-radius:8px;padding:8px 12px;font-family:inherit;font-size:.92rem;color:var(--tx);background:#fff;width:150px;transition:border-color .18s}
-.sal-input-row input:focus{outline:none;border-color:var(--ac)}
-.sal-hint-text{font-size:.78rem;font-weight:600;flex:1}
+.load-more-wrap{text-align:center;padding:24px 24px 80px;display:none;max-width:860px;margin:0 auto}
+.load-more-btn{background:var(--card);border:2px solid var(--bo);border-radius:10px;padding:12px 32px;font-family:inherit;font-size:.88rem;font-weight:600;color:var(--mu);cursor:pointer;transition:all .18s}
+.load-more-btn:hover:not(:disabled){border-color:var(--ac);color:var(--ac);background:var(--al)}
+.load-more-btn:disabled{opacity:.5;cursor:not-allowed}
 
-/* Section heading */
-.sec-h{font-family:'Inter',sans-serif;font-weight:700;font-size:1.05rem;margin:26px 0 12px;display:flex;align-items:center;gap:10px}
-.sec-n{width:26px;height:26px;border-radius:50%;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;font-family:'Inter',sans-serif;flex-shrink:0}
+.error-box{grid-column:1/-1;background:var(--rl);border:1.5px solid #f5c6be;border-radius:12px;padding:20px;text-align:center;color:var(--re);font-size:.88rem}
 
-/* Overview stat cards */
-.ov-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
-.ov-card{background:var(--card);border:2px solid var(--bo);border-radius:10px;padding:14px 12px}
-.ov-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mu);margin-bottom:3px}
-.ov-val{font-family:'DM Serif Display',serif;font-size:1.2rem;line-height:1.2}
-.ov-sub{font-size:.66rem;color:var(--li);margin-top:2px}
-
-/* Pros/cons */
-.pn-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.pn-box{background:var(--card);border:2px solid var(--bo);border-radius:10px;overflow:hidden}
-.pn-head{padding:11px 14px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#fff;display:flex;align-items:center;gap:6px}
-.pn-pro .pn-head{background:#5BA882}.pn-con .pn-head{background:#B04830}
-.pn-list{padding:10px 14px;display:grid;gap:7px}
-.pn-item{font-size:.81rem;line-height:1.5;display:flex;gap:7px;align-items:flex-start;color:var(--tx)}
-.pn-item svg{flex-shrink:0;margin-top:3px}
-.pn-pro .pn-item svg{color:#5BA882}.pn-con .pn-item svg{color:#B04830}
-
-/* Salary block */
-.block{background:var(--card);border:2px solid var(--bo);border-radius:12px;padding:20px 18px;margin-bottom:14px}
-.sal-big{font-family:'DM Serif Display',serif;font-size:2.2rem;letter-spacing:-1px;line-height:1;margin-bottom:4px}
-.sal-sub{font-size:.8rem;color:var(--mu);margin-bottom:16px}
-.pct-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
-.pct-c{padding:12px 10px;border-radius:8px}
-.pct-v{font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:3px}
-.pct-l{font-size:.66rem;line-height:1.4}
-
-/* STEPS */
-.steps-wrap{background:#fff;border-top:1px solid var(--bo);border-bottom:1px solid var(--bo);padding:28px 24px}
-.steps-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.step-card{background:#fff;border:1.5px solid var(--bo);border-radius:14px;padding:18px 16px;position:relative}
-.step-num{width:28px;height:28px;border-radius:50%;background:var(--bll);border:2px solid var(--bl);color:var(--bh);font-size:.72rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-family:'Inter',sans-serif;flex-shrink:0}
-.step-title{font-size:.88rem;font-weight:700;color:var(--tx);line-height:1.3;margin-bottom:6px}
-.step-desc{font-size:.78rem;color:var(--mu);line-height:1.6}
-.step-cta-inline{font-size:.78rem;font-weight:700;color:var(--ac);text-decoration:none;display:block;margin-top:8px}
-.step-cta-inline:hover{text-decoration:underline}
-/* EXPLORE CARDS */
-.explore-section{background:var(--bg);border-top:1px solid var(--bo);border-bottom:1px solid var(--bo);padding:24px 24px}
-.explore-wrap{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.xcard{border-radius:14px;border:1.5px solid var(--bo);overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:border-color .18s,transform .18s;outline:none}
-.xcard:hover{transform:translateY(-2px)}
-.xcard-top{padding:18px 16px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--bo)}
-.xcard-icon{width:36px;height:36px;border-radius:9px;border:1.5px solid rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.xcard-title{font-size:.92rem;font-weight:700;color:var(--tx);line-height:1.3}
-.xcard-foot{padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
-.xcard-link{font-size:.82rem;font-weight:700}
-@media(max-width:700px){.steps-inner{grid-template-columns:1fr 1fr}.explore-wrap{grid-template-columns:1fr}}
-@media(max-width:420px){.steps-inner{grid-template-columns:1fr}}
-.faq-list{display:grid;gap:10px;max-width:720px;margin:0 auto}
-.faq-item{background:var(--card);border:2px solid var(--bo);border-radius:12px;overflow:hidden;transition:border-color .18s}
-.faq-item.open{border-color:var(--ac)}
-.faq-q{width:100%;background:none;border:none;padding:18px 20px;font-family:inherit;font-size:.92rem;font-weight:600;color:var(--tx);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;line-height:1.4}
-.faq-q .arr{flex-shrink:0;transition:transform .25s;color:var(--li)}
-.faq-item.open .faq-q .arr{transform:rotate(180deg);color:var(--ac)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1)}
-.faq-item.open .faq-a{max-height:300px}
-.faq-a-inner{padding:0 20px 18px;font-size:.88rem;color:var(--mu);line-height:1.75}
-/* Animations */
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-
-/* Mobile */
 @media(max-width:700px){
-  .edu-grid{grid-template-columns:repeat(2,1fr);gap:8px;padding:0 16px 100px}
+  .edu-grid{grid-template-columns:repeat(2,1fr);padding:0 16px}
   .filter-grid{grid-template-columns:1fr 1fr}
-  .ov-grid{grid-template-columns:1fr 1fr}
-  .pn-grid{grid-template-columns:1fr}
-  .pct-grid{grid-template-columns:1fr}
-  .cta-strip{flex-direction:column;gap:12px;text-align:center}
-  .quick-wrap,.filter-wrap,.results-meta{padding:0 16px}
-  #detailView{padding:74px 16px 100px}
+  .search-outer,.quick-wrap,.filter-wrap,.results-meta{padding:0 16px}
   .page-header{padding:78px 16px 22px}
-  .page-header h1{font-size:1.65rem}
-  .dhero-name{font-size:1.5rem}
-  .sal-input-row{gap:8px}
+  .load-more-wrap{padding:24px 16px 80px}
 }
 @media(max-width:420px){
   .edu-grid{grid-template-columns:1fr}
   .filter-grid{grid-template-columns:1fr}
 }
 </style>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {"@type":"Question","name":"Vilken utbildning ger högst ingångslön?","acceptedAnswer":{"@type":"Answer","text":"Civilingenjör har högst ingångslön med ca 41 000 kr/mån. Bland kortare utbildningar ligger DevOps/Cloud engineer och IT-säkerhetsspecialist högt på 33–35 000 kr direkt efter examen."}},
-    {"@type":"Question","name":"Hur hittar jag rätt utbildning för mig?","acceptedAnswer":{"@type":"Answer","text":"Använd filtren för att sortera efter det som är viktigast — lön, efterfrågan, stressnivå eller flexibilitet. Klicka sedan på ett yrke för att se ingångslön, lönetak, behörighetskrav och livstidsanalys."}},
-    {"@type":"Question","name":"Kan jag studera med CSN som vuxen?","acceptedAnswer":{"@type":"Answer","text":"Ja. CSN erbjuder bidrag och lån oavsett ålder upp till 56 år, förutsatt CSN-berättigad utbildning. Du kan kombinera med deltidsarbete upp till en inkomstgräns beroende på studiefart."}},
-    {"@type":"Question","name":"Vad betyder efterfrågan 1–5?","acceptedAnswer":{"@type":"Answer","text":"Efterfrågan visar hur svårt det är för arbetsgivare att rekrytera. 5 innebär akut brist — nästan alla examinerade får jobb direkt. Baseras på Arbetsförmedlingens bristyrkesprognos."}},
-    {"@type":"Question","name":"Vad är skillnaden på YH och universitetsutbildning?","acceptedAnswer":{"@type":"Answer","text":"YH-utbildningar (yrkeshögskola) är 1,5–2 år, praktiknära och direkt arbetsmarknadsanpassade. Universitetsutbildningar är 3–5 år och ger en akademisk examen. Båda ger rätt till CSN."}},
-    {"@type":"Question","name":"Är det värt att byta karriär mitt i livet?","acceptedAnswer":{"@type":"Answer","text":"Ofta ja — klicka på ett yrke och ange din nuvarande lön så räknar vi ut livstidsvinsten eller -förlusten exakt för dig. Många yrken med hög efterfrågan ger positivt utfall redan inom 5–10 år."}}
-  ]
-}
-</script>
-<!-- Google tag -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NFR33BFDF"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-5NFR33BFDF');</script>
 </head>
 <body>
-
-<!-- Nav overlay -->
-<div id="navOverlay" onclick="toggleNavMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:150;backdrop-filter:blur(2px)"></div>
-
-<!-- Slide-in panel -->
-<div id="navPanel" style="position:fixed;top:0;right:0;bottom:0;width:300px;background:#fff;z-index:160;transform:translateX(100%);transition:transform .3s cubic-bezier(0.4,0,0.2,1);box-shadow:-8px 0 32px rgba(0,0,0,.12);display:flex;flex-direction:column">
-  <div style="padding:20px 24px;border-bottom:1.5px solid var(--bo);display:flex;justify-content:space-between;align-items:center">
-    <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span></div>
-    <button onclick="toggleNavMenu()" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--mu);width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px">&#x2715;</button>
-  </div>
-  <div style="padding:8px 0;flex:1;overflow-y:auto">
-    <a href="/" style="display:block;padding:13px 24px;text-decoration:none;color:var(--tx);font-weight:700;font-size:.92rem;border-left:3px solid transparent">Startsidan</a>
-    <div style="padding:8px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Planering</div>
-    <a href="/skapa-min-plan" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">Skapa min plan</div></a>
-    <a href="/min-plan" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">Min plan</div></a>
-    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Hitta r&#228;tt yrke</div>
-    <a href="/yrkestest" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">Yrkestest</div></a>
-    <a href="/studieform" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">Hur ska jag studera?</div></a>
-    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Utbildningar</div>
-    <a href="/utbildningar" style="display:block;padding:13px 24px;text-decoration:none;color:var(--tx);font-weight:700;font-size:.92rem;border-left:3px solid var(--ac);background:#F0FAF4">Utbildningar &amp; yrken</a>
-    <a href="/jamfor-utbildningar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">J&#228;mf&#246;r utbildningar</div></a>
-    <a href="/komvux" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">Komvux</div></a>
-    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Ekonomi</div>
-    <a href="/csn-guide" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">CSN-guide</div></a>
-    <a href="/foreldre-som-studerar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent"><div style="font-weight:600">F&#246;r&#228;ldrar som studerar</div></a>
-</div>
-  <div style="padding:16px 24px;border-top:1.5px solid var(--bo)">
-    <a href="/integritetspolicy" style="font-size:.76rem;color:var(--li);text-decoration:none">Integritetspolicy</a>
-  </div>
-</div>
 
 <nav>
   <a href="/" class="logo">
@@ -297,901 +114,372 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
   </a>
   <div style="display:flex;align-items:center;gap:12px">
     <a href="/min-plan" class="nav-login">Logga in</a>
-    <button onclick="toggleNavMenu()" style="background:none;border:1.5px solid var(--bo);border-radius:8px;padding:8px 10px;cursor:pointer;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center" aria-label="Meny">
+    <button onclick="toggleNavMenu()" id="navMenuBtn" style="background:none;border:1.5px solid var(--bo);border-radius:8px;padding:8px 10px;cursor:pointer;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center" aria-label="Meny">
       <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
       <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
       <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
     </button>
   </div>
 </nav>
-
-<!-- ═══════════ LIST VIEW ═══════════ -->
-<div id="listView">
-  <div class="page-header-wrap">
-    <div class="page-header">
-      <h1>Hitta din utbildning och ditt yrke</h1>
-      <p>Filtrera bland yrken efter lön, efterfrågan, stress och flexibilitet. Hitta rätt på två minuter.</p>
-    </div>
+<div id="navOverlay" onclick="toggleNavMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:150;backdrop-filter:blur(2px)"></div>
+<div id="navPanel" style="position:fixed;top:0;right:0;bottom:0;width:300px;background:#fff;z-index:160;transform:translateX(100%);transition:transform .3s cubic-bezier(0.4,0,0.2,1);box-shadow:-8px 0 32px rgba(0,0,0,.12);display:flex;flex-direction:column">
+  <div style="padding:20px 24px;border-bottom:1.5px solid var(--bo);display:flex;justify-content:space-between;align-items:center">
+    <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span></div>
+    <button onclick="toggleNavMenu()" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--mu);width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px">✕</button>
   </div>
-
-  <!-- STEG FÖR STEG -->
-  <div class="steps-wrap">
-    <div class="steps-inner">
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <div class="step-title">Sätt dina filter</div>
-        <div class="step-desc">Välj lön, stress eller flexibilitet för att korta ner listan.</div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <div class="step-title">Välj ett yrke</div>
-        <div class="step-desc">Klicka på ett kort och se lön, behörighetskrav och lönetak.</div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <div class="step-title">Fördjupa dig</div>
-        <div class="step-desc">Se en vanlig dag, lönefördelning och karriärvägar.</div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">4</div>
-        <div class="step-title">Skapa din plan</div>
-        <div class="step-desc">Skolmatchning, behörighet och CSN på 3 min.</div>
-        <a href="#nastasteg" class="step-cta-inline">Sätt igång →</a>
-      </div>
-    </div>
+  <div style="padding:8px 0;flex:1;overflow-y:auto">
+    <a href="/" style="display:block;padding:13px 24px;text-decoration:none;color:var(--tx);font-weight:700;font-size:.92rem;border-left:3px solid transparent;margin-bottom:8px">Startsidan</a>
+    <div style="padding:8px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Planering</div>
+    <a href="/skapa-min-plan" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Skapa min plan</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/min-plan" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Min plan</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Hitta rätt yrke</div>
+    <a href="/yrkestest" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Yrkestest</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/studieform" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Hur ska jag studera?</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Utbildningar</div>
+    <a href="/yrken" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Yrken</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/utbildningar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid var(--ac);background:#F0FAF4"><div style="font-weight:600">YH-utbildningar</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/jamfor-yrken" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Jämför yrken</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/komvux" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Komvux</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Ekonomi</div>
+    <a href="/csn-guide" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">CSN-guide</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/foreldre-som-studerar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Föräldrar som studerar</div></a>
   </div>
-
-  <!-- EXPLORE CARDS -->
-  <div class="explore-section">
-    <div class="explore-wrap">
-    <a href="/jamfor-utbildningar" class="xcard" style="border-color:#B8D4EC" onmouseover="this.style.borderColor='var(--bl)'" onmouseout="this.style.borderColor='#B8D4EC'">
-      <div class="xcard-top" style="background:var(--bll)">
-        <div class="xcard-icon" style="background:#fff;border-color:#B8D4EC">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--bl)" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-        </div>
-        <div class="xcard-title">Jämför utbildningar</div>
-      </div>
-      <div class="xcard-foot">
-        <span class="xcard-link" style="color:var(--bl)">Jämför sida vid sida</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--bl)" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </div>
-    </a>
-    <a href="/yrkestest" class="xcard" style="border-color:#C8E8D8" onmouseover="this.style.borderColor='#5BA882'" onmouseout="this.style.borderColor='#C8E8D8'">
-      <div class="xcard-top" style="background:#EBF5F0">
-        <div class="xcard-icon" style="background:#fff;border-color:#C8E8D8">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5BA882" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="#5BA882"/></svg>
-        </div>
-        <div class="xcard-title">Vet du inte vilket yrke som passar dig?</div>
-      </div>
-      <div class="xcard-foot">
-        <span class="xcard-link" style="color:#5BA882">Gör testet</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5BA882" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </div>
-    </a>
-    <a href="/studieform" class="xcard" style="border-color:#C8B8E8" onmouseover="this.style.borderColor='var(--pu)'" onmouseout="this.style.borderColor='#C8B8E8'">
-      <div class="xcard-top" style="background:var(--pl)">
-        <div class="xcard-icon" style="background:#fff;border-color:#C8B8E8">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--pu)" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-        </div>
-        <div class="xcard-title">Vet du inte hur du ska studera?</div>
-      </div>
-      <div class="xcard-foot">
-        <span class="xcard-link" style="color:var(--pu)">Hitta din studieform</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--pu)" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </div>
-    </a>
-    </div>
+  <div style="padding:16px 24px;border-top:1.5px solid var(--bo)">
+    <a href="/integritetspolicy" style="font-size:.76rem;color:var(--li);text-decoration:none">Integritetspolicy</a>
   </div>
-
-  <div class="quick-wrap">
-    <button class="qbtn" id="q-sal"     onclick="quickSet('sal')">Hög lön</button>
-    <button class="qbtn" id="q-stress"  onclick="quickSet('stress')">Låg stress</button>
-    <button class="qbtn" id="q-dem"     onclick="quickSet('dem')">Störst efterfrågan</button>
-    <button class="qbtn" id="q-flex"    onclick="quickSet('flex')">Mest flexibelt</button>
-    <button class="qbtn" id="q-fast"    onclick="quickSet('fast')">Snabbt få jobb</button>
-  </div>
-
-  <div class="filter-wrap">
-    <button class="filter-toggle" id="ftoggle" onclick="toggleFilters()">
-      <span id="ftoggleLabel">Filtrera utbildningar</span>
-      <svg class="arr" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-    </button>
-    <div class="filter-body" id="fbody">
-      <div class="filter-inner">
-        <div class="filter-grid">
-          <div class="filter-item">
-            <label>Min. ingångslön</label>
-            <div class="srow"><input type="range" id="fLon" min="28000" max="42000" step="1000" value="28000" oninput="rerender()"><span class="sval" id="vLon">Alla</span></div>
-            <div class="sublabel"><span>28 000 kr</span><span>42 000 kr</span></div>
-          </div>
-          <div class="filter-item">
-            <label>Min. efterfrågan</label>
-            <div class="srow"><input type="range" id="fDem" min="1" max="5" step="1" value="1" oninput="rerender()"><span class="sval" id="vDem">Alla</span></div>
-            <div class="sublabel"><span>Låg</span><span>Hög</span></div>
-          </div>
-          <div class="filter-item">
-            <label>Max. stressnivå</label>
-            <div class="srow"><input type="range" id="fStr" min="1" max="5" step="1" value="5" oninput="rerender()"><span class="sval" id="vStr">Alla</span></div>
-            <div class="sublabel"><span>Låg</span><span>Hög</span></div>
-          </div>
-          <div class="filter-item">
-            <label>Arbetsstil</label>
-            <div class="srow"><input type="range" id="fPpl" min="1" max="5" step="1" value="3" oninput="rerender()"><span class="sval" id="vPpl">Alla</span></div>
-            <div class="sublabel"><span>Självständigt</span><span>Med människor</span></div>
-          </div>
-          <div class="filter-item">
-            <label>Typ av jobb</label>
-            <div class="srow"><input type="range" id="fPrc" min="1" max="5" step="1" value="3" oninput="rerender()"><span class="sval" id="vPrc">Alla</span></div>
-            <div class="sublabel"><span>Teoretiskt</span><span>Praktiskt</span></div>
-          </div>
-          <div class="filter-item">
-            <label>Min. flexibilitet</label>
-            <div class="srow"><input type="range" id="fFlx" min="1" max="5" step="1" value="1" oninput="rerender()"><span class="sval" id="vFlx">Alla</span></div>
-            <div class="sublabel"><span>Fast schema</span><span>Full flex</span></div>
-          </div>
-        </div>
-        <div class="filter-foot"><button onclick="resetAll()">Återställ alla filter</button></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="results-meta">
-    <span class="results-count" id="rcount">Visar 29 utbildningar</span>
-    <div class="sort-row">
-      Sortera:
-      <select id="sortSel" onchange="rerender()">
-        <option value="dem">Efterfrågan</option>
-        <option value="sal">Ingångslön</option>
-        <option value="stress">Lägst stress</option>
-        <option value="flex">Mest flexibelt</option>
-        <option value="fast">Kortast utbildning</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="edu-grid" id="grid"></div>
 </div>
 
-<!-- ═══════════ DETAIL VIEW ═══════════ -->
-<div id="detailView">
-  <div class="back-bar">
-    <button class="back-btn" onclick="goBack()">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-      Tillbaka till listan
-    </button>
-    <a id="compareBtn" href="/jamfor-utbildningar" class="back-btn" style="color:var(--bl);text-decoration:none">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-      Jämför utbildning
-    </a>
-  </div>
-  <div id="detailContent" style="padding-top:20px"></div>
+<div class="page-header">
+  <div class="page-header-label">YH-utbildningar</div>
+  <h1>Hitta YH-utbildning</h1>
+  <p>Hitta en yrkeshögskoleutbildning och kontrollera om du är behörig — på 2 minuter.</p>
 </div>
 
-<!-- Sticky bottom bar -->
-<div class="bottom-bar" id="bottomBar">
-  <span class="bottom-bar-text" id="bottomBarText">Din plan</span>
-  <a href="/skapa-min-plan" class="bottom-bar-btn">Skapa min plan →</a>
+<div class="search-outer">
+  <div class="search-wrap">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input id="searchInput" type="text" placeholder="Sök utbildning eller skola..." autocomplete="off" oninput="onSearch()">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()" aria-label="Rensa sökning">×</button>
+  </div>
 </div>
 
-<!-- Nästa steg CTA -->
-<section class="nasta-steg" id="nastasteg">
-  <div class="nasta-steg-inner">
-    <div class="nasta-steg-left">
-      <div class="nasta-steg-label">Nästa steg</div>
-      <div class="nasta-steg-h">Skapa din personliga studieplan</div>
-      <p class="nasta-steg-p">Vi kontrollerar din behörighet, räknar ut CSN-ekonomin och matchar dig mot skolor som tar vuxenstuderande. Klart på 3 minuter.</p>
-      <a href="/skapa-min-plan" class="nasta-steg-btn">Sätt igång gratis →</a>
-      <div class="nasta-steg-chips">
-        <span class="nasta-steg-chip">Gratis</span>
-        <span class="nasta-steg-chip">Exakt skolmatchning</span>
-        <span class="nasta-steg-chip">Klar på 3 min</span>
-      </div>
-    </div>
-    <div class="plan-glass">
-      <div class="plan-glass-header">
-        <div class="plan-glass-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-        </div>
-        <div>
-          <div class="plan-glass-supertitle">Din plan</div>
-          <div class="plan-glass-title" id="planGlassTitle">Välj en utbildning</div>
-        </div>
-      </div>
-      <div class="plan-glass-rows">
-        <div class="plan-glass-row">
-          <div class="plan-glass-row-icon" style="background:rgba(91,168,130,.2)">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7AC29A" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <div>
-            <div class="plan-glass-row-title">Behörighet: Uppfylld</div>
-            <div class="plan-glass-row-blur">Matte 2 · Engelska 6 · ✓ OK</div>
-          </div>
-        </div>
-        <div class="plan-glass-row">
-          <div class="plan-glass-row-icon" style="background:rgba(90,143,181,.2)">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6BA3D0" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-          </div>
-          <div>
-            <div class="plan-glass-row-title">CSN-ekonomi</div>
-            <div class="plan-glass-row-blur">11 234 kr/mån · skuld 277 tkr</div>
-          </div>
-        </div>
-        <div class="plan-glass-row">
-          <div class="plan-glass-row-icon" style="background:rgba(138,112,181,.2)">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A70B5" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-          </div>
-          <div>
-            <div class="plan-glass-row-title">3 matchande skolor</div>
-            <div class="plan-glass-row-blur">Hyper Island · KTH · Nackademin</div>
-          </div>
-        </div>
-      </div>
-      <div class="plan-glass-footer">Exempelplan · Din ser annorlunda ut</div>
-    </div>
-  </div>
-</section>
+<div class="quick-wrap">
+  <button class="qbtn active" data-mode="" onclick="setMode('')">Alla</button>
+  <button class="qbtn" data-mode="campus" onclick="setMode('campus')">Campus</button>
+  <button class="qbtn" data-mode="distance" onclick="setMode('distance')">Distans</button>
+  <button class="qbtn" data-mode="hybrid" onclick="setMode('hybrid')">Hybrid</button>
+</div>
 
-<!-- FAQ -->
-<div style="background:var(--bg);border-top:1px solid var(--bo);border-bottom:1px solid var(--bo);padding:72px 24px">
-  <div style="max-width:760px;margin:0 auto">
-    <div style="font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--ac);margin-bottom:10px;text-align:center">Vanliga frågor</div>
-    <h2 style="font-family:'Inter',sans-serif;font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;text-align:center;margin-bottom:32px;letter-spacing:-.3px">Frågor och svar</h2>
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-q" onclick="tFaq(this)">Vilken utbildning ger högst ingångslön?<svg class="arr" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><div class="faq-a-inner">Civilingenjör har högst ingångslön med ca 41 000 kr/mån. Bland kortare utbildningar ligger DevOps/Cloud engineer och IT-säkerhetsspecialist högt på 33–35 000 kr direkt efter examen. Kom ihåg att ingångslönen bara är starten — löneutveckling och lönetak skiljer sig markant mellan yrken.</div></div>
+<div class="filter-wrap">
+  <button class="filter-toggle" id="filterToggle" onclick="toggleFilter()">
+    Fler filter
+    <svg class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  <div class="filter-body" id="filterBody">
+    <div class="filter-inner">
+      <div class="filter-grid">
+        <div class="filter-item">
+          <label>Stad</label>
+          <input type="text" id="cityInput" placeholder="t.ex. Stockholm" oninput="onFilterChange()">
+        </div>
+        <div class="filter-item">
+          <label>Studietakt</label>
+          <select id="paceSelect" onchange="onFilterChange()">
+            <option value="">Alla</option>
+            <option value="fulltime">Heltid</option>
+            <option value="parttime">Deltid</option>
+          </select>
+        </div>
+        <div class="filter-item">
+          <label>Bransch</label>
+          <select id="categorySelect" onchange="onFilterChange()">
+            <option value="">Alla branscher</option>
+          </select>
+        </div>
+        <div class="filter-item">
+          <label>Startdatum</label>
+          <select id="startSelect" onchange="onFilterChange()">
+            <option value="">Alla</option>
+            <option value="VT2025">VT 2025</option>
+            <option value="HT2025">HT 2025</option>
+            <option value="VT2026">VT 2026</option>
+            <option value="HT2026">HT 2026</option>
+            <option value="VT2027">VT 2027</option>
+            <option value="HT2027">HT 2027</option>
+          </select>
+        </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="tFaq(this)">Hur hittar jag rätt utbildning för mig?<svg class="arr" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><div class="faq-a-inner">Använd filtren ovan för att sortera efter det som är viktigast för dig — lön, efterfrågan, stressnivå eller flexibilitet. Klicka på snabbvalen för en genväg. Klicka sedan på ett yrke för att se ingångslön, lönetak, behörighetskrav och en personlig livstidsanalys om du anger din nuvarande lön.</div></div>
+      <div class="filter-checks">
+        <label class="fcheck"><input type="checkbox" id="cbStudiemedel" onchange="onFilterChange()"> Berättigar till studiemedel (CSN)</label>
+        <label class="fcheck"><input type="checkbox" id="cbAvgiftsfri" onchange="onFilterChange()"> Avgiftsfri utbildning</label>
       </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="tFaq(this)">Vad är skillnaden på YH och universitetsutbildning?<svg class="arr" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><div class="faq-a-inner">YH-utbildningar (yrkeshögskola) är 1,5–2 år, praktiknära och direkt arbetsmarknadsanpassade — arbetsgivare är med och utformar innehållet. Universitetsutbildningar är 3–5 år och ger en akademisk examen med bredare teoretisk grund. Båda ger rätt till CSN, och kortare utbildning innebär inte alltid lägre lön.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="tFaq(this)">Kan jag studera med CSN som vuxen?<svg class="arr" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><div class="faq-a-inner">Ja. CSN erbjuder bidrag (1 542 kr/vecka 2026) och lån (3 048 kr/vecka 2026) oavsett ålder upp till 56 år, förutsatt CSN-berättigad utbildning. Du kan kombinera med deltidsarbete upp till en inkomstgräns beroende på studiefart.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="tFaq(this)">Vad betyder efterfrågan 1–5?<svg class="arr" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><div class="faq-a-inner">Efterfrågan visar hur svårt det är för arbetsgivare att rekrytera inom yrket. 5 innebär akut brist — nästan alla examinerade får jobb direkt. 1 innebär fler sökande än lediga tjänster. Baseras på Arbetsförmedlingens prognoser och uppdateras löpande.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="tFaq(this)">Är det värt att byta karriär mitt i livet?<svg class="arr" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="faq-a"><div class="faq-a-inner">Ofta ja — klicka på ett yrke och ange din nuvarande lön så räknar vi ut livstidsvinsten eller -förlusten exakt för dig. Många yrken med hög efterfrågan ger positivt utfall redan inom 5–10 år. Nyckeln är att välja ett yrke med hög ingångslön relativt studietiden.</div></div>
+      <div class="filter-foot">
+        <button onclick="resetFilters()">Återställ filter</button>
       </div>
     </div>
   </div>
 </div>
 
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <a href="/" class="footer-logo">
-        <span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span>
-      </a>
-      <p class="footer-tagline">Gratis vägledning för dig som funderar på att studera som vuxen.</p>
-    </div>
-    <div class="footer-grid">
-      <div class="footer-col">
-        <div class="footer-col-label">Planering</div>
-        <a href="/skapa-min-plan">Skapa min plan</a>
-        <a href="/min-plan">Min plan</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-label">Yrke & test</div>
-        <a href="/yrkestest">Yrkestest</a>
-        <a href="/studieform">Hur ska jag studera?</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-label">Utbildningar</div>
-        <a href="/utbildningar">Utbildningar & yrken</a>
-        <a href="/jamfor-utbildningar">Jämför utbildningar</a>
-        <a href="/komvux">Komvux</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-label">Ekonomi</div>
-        <a href="/csn-guide">CSN-guide</a>
-        <a href="/foreldre-som-studerar">Föräldrar som studerar</a>
-      </div>
-      <div class="footer-col">
-        
-        
-        <a href="/integritetspolicy">Integritetspolicy</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span class="footer-copy">© 2026 Studievägsguiden · Byggt i Sverige</span>
-    </div>
-  </div>
-</footer>
-<div class="footer-seo">
-  Jämför utbildningar · Lön efter utbildning · Ingångslön Sverige · Lönetak yrke · Studietid utbildning · Efterfrågan arbetsmarknad · YH-utbildning · Yrkeshögskola · Universitetsutbildning · Behörighet grundläggande · Komvux · CSN-lån · CSN bidrag · Studera som vuxen · Karriärbyte · Omskola sig · Löneutveckling · Systemutvecklare lön · Sjuksköterska ingångslön · Civilingenjör lön · Yrkestest · Är utbildning värt det · SCB lönestatistik · Arbetsförmedlingen bristyrken
+<div class="results-meta">
+  <div id="resultsCount" class="results-count">Laddar utbildningar...</div>
+</div>
+
+<div class="edu-grid" id="cardsGrid"></div>
+
+<div class="load-more-wrap" id="loadMoreWrap">
+  <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">Ladda fler utbildningar</button>
 </div>
 
 <script>
-// ══════════════════════════════════════════════════════
-// EDUCATION DATA  — 29 utbildningar med nya fält:
-//   flex     1–5  (1=fast schema/on-site, 5=full distans/fria tider)
-//   people   1–5  (1=självständigt, 5=med många människor)
-//   practical 1–5 (1=rent teoretiskt, 5=praktiskt/hands-on)
-//   sig      'dem'|'stress'|'flex'|'fast'  — kortest ONE signal
-// ══════════════════════════════════════════════════════
-const E=[
-{id:1, t:'Systemutvecklare',          y:3,  s0:35000,s1:54900,dem:4,ai:15,stress:2,future:4,tc:8000, flex:5,people:2,practical:3,sig:'flex',  req:['Matte 2','Engelska 6'],                              rp:['Naturvetenskap','Teknik'],              pp:['Samhäll','Ekonomi'],         sc:{st:'Utvecklare på företag',ho:'Konsult / byter bolag',sp:'Arkitekt / specialist',le:'Tech lead / CTO'}},
-{id:2, t:'Dataanalytiker',            y:3,  s0:33000,s1:54500,dem:4,ai:12,stress:2,future:5,tc:8000, flex:4,people:2,practical:2,sig:'stress',req:['Matte 3c','Engelska 6'],                             rp:['Naturvetenskap','Teknik','Ekonomi'],    pp:['Samhäll'],                   sc:{st:'Dataanalytiker junior',ho:'Senior analytiker / konsult',sp:'Data scientist / BI-specialist',le:'Analytics manager'}},
-{id:3, t:'IT-säkerhetsspecialist',    y:3,  s0:33000,s1:52600,dem:5,ai:5, stress:3,future:5,tc:8000, flex:4,people:2,practical:2,sig:'dem',   req:['Matte 2'],                                           rp:['Naturvetenskap','Teknik'],              pp:['Samhäll','Ekonomi'],         sc:{st:'Säkerhetsanalytiker',ho:'Konsult / byter organisation',sp:'Cybersecurity specialist',le:'CISO / säkerhetschef'}},
-{id:9, t:'Redovisningsekonom',        y:2,  s0:30000,s1:44300,dem:4,ai:20,stress:2,future:3,tc:8000, flex:3,people:2,practical:3,sig:'fast',  req:['Matte 2','Engelska 6'],                              rp:['Ekonomi','Samhäll'],                    pp:['Naturvetenskap','Teknik'],    sc:{st:'Redovisningsekonom',ho:'Konsult / byter byrå',sp:'Auktoriserad revisor',le:'Ekonomichef'}},
-{id:10,t:'Controller',                y:3,  s0:33000,s1:48200,dem:4,ai:20,stress:3,future:3,tc:9000, flex:3,people:3,practical:2,sig:'stress',req:['Matte 3c','Engelska 6'],                             rp:['Ekonomi','Naturvetenskap','Teknik'],    pp:['Samhäll'],                   sc:{st:'Junior controller',ho:'Byter bransch / konsult',sp:'Senior controller',le:'CFO / ekonomichef'}},
-{id:11,t:'Digital marknadsförare',    y:2,  s0:30000,s1:43000,dem:3,ai:18,stress:3,future:3,tc:8000, flex:4,people:3,practical:3,sig:'flex',  req:['Grundläggande behörighet'],                          rp:['Ekonomi','Samhäll','Estet'],            pp:['Naturvetenskap','Teknik'],    sc:{st:'Digital marknadsförare',ho:'Konsult / byrå',sp:'Specialist SEO/SEM/social',le:'Marknadschef'}},
-{id:12,t:'HR-specialist',             y:3,  s0:30000,s1:42000,dem:3,ai:12,stress:3,future:3,tc:9000, flex:3,people:4,practical:3,sig:'stress',req:['Samhällskunskap 1b','Matte 2'],                      rp:['Samhäll','Ekonomi'],                    pp:['Naturvetenskap','Teknik'],    sc:{st:'HR-koordinator',ho:'Byter organisation',sp:'HR Business Partner',le:'HR-chef'}},
-{id:14,t:'Sjuksköterska',             y:3,  s0:32000,s1:43900,dem:5,ai:5, stress:4,future:5,tc:11000,flex:1,people:5,practical:5,sig:'dem',   req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],     rp:['Naturvetenskap','Teknik'],              pp:['Samhäll','Ekonomi'],         sc:{st:'Leg. sjuksköterska',ho:'Byter specialitet / region',sp:'Specialistsjuksköterska',le:'Vårdenhetschef'}},
-{id:16,t:'Arbetsterapeut',            y:3,  s0:29000,s1:38100,dem:4,ai:5, stress:3,future:4,tc:10000,flex:2,people:5,practical:5,sig:'dem',   req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],     rp:['Naturvetenskap','Vård'],                pp:['Teknik','Ekonomi'],           sc:{st:'Leg. arbetsterapeut',ho:'Byter region / verksamhet',sp:'Specialist / konsult',le:'Verksamhetschef'}},
-{id:17,t:'Biomedicinsk analytiker',   y:3,  s0:30000,s1:41200,dem:4,ai:8, stress:2,future:4,tc:10000,flex:1,people:2,practical:4,sig:'stress',req:['Naturkunskap 2','Matte 2','Kemi 1'],                 rp:['Naturvetenskap','Teknik'],              pp:['Samhäll','Ekonomi'],         sc:{st:'Biomedicinsk analytiker',ho:'Byter laboratorium / region',sp:'Cytodiagnostiker / specialist',le:'Laboratoriekemist / chef'}},
-{id:18,t:'Tandhygienist',             y:3,  s0:30000,s1:40900,dem:4,ai:5, stress:3,future:4,tc:10000,flex:2,people:4,practical:5,sig:'dem',   req:['Naturkunskap 2','Matte 2','Samhällskunskap 1b'],     rp:['Naturvetenskap','Vård'],                pp:['Teknik','Ekonomi'],           sc:{st:'Leg. tandhygienist',ho:'Byter klinik / region',sp:'Specialist / konsult',le:'Klinikchef / eget företag'}},
-{id:20,t:'Grundskollärare',           y:3.5,s0:29000,s1:40200,dem:5,ai:5, stress:4,future:4,tc:10000,flex:2,people:5,practical:4,sig:'dem',   req:['Matte 2','Engelska 6','Svenska 3'],                  rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],    sc:{st:'Klassrumslärare',ho:'Byter skola / kommun',sp:'Förstelärare',le:'Rektor / skolledare'}},
-{id:21,t:'Gymnasielärare',            y:4.5,s0:31000,s1:42700,dem:4,ai:5, stress:3,future:4,tc:10000,flex:2,people:5,practical:3,sig:'dem',   req:['Engelska 6','Svenska 3'],                            rp:['Samhäll','Naturvetenskap','Ekonomi','Teknik'],pp:['Estet','Vård'],    sc:{st:'Ämneslärare',ho:'Byter skola / ämne',sp:'Förstelärare',le:'Rektor / skolledare'}},
-{id:22,t:'Studie- och yrkesvägledare',y:3,  s0:29000,s1:40100,dem:4,ai:5, stress:2,future:4,tc:9000, flex:2,people:5,practical:3,sig:'stress',req:['Samhällskunskap 1b'],                               rp:['Samhäll'],                              pp:['Naturvetenskap','Teknik'],    sc:{st:'Studie- och yrkesvägledare',ho:'Byter skola / sektor',sp:'Senior vägledare / specialist',le:'Verksamhetschef'}},
-{id:24,t:'Byggingenjör',              y:3,  s0:34000,s1:46000,dem:4,ai:8, stress:3,future:4,tc:9000, flex:2,people:3,practical:4,sig:'dem',   req:['Matte 3c','Fysik 2','Kemi 1'],                       rp:['Naturvetenskap','Teknik'],              pp:['Samhäll'],                    sc:{st:'Byggingenjör',ho:'Konsult / byter projekt',sp:'Projektingenjör / specialist',le:'Projektchef / platschef'}},
-{id:25,t:'Fastighetsförvaltare',      y:3,  s0:34000,s1:50600,dem:4,ai:8, stress:2,future:4,tc:9000, flex:3,people:3,practical:3,sig:'stress',req:['Matte 2'],                                           rp:['Ekonomi','Teknik','Samhäll'],           pp:['Naturvetenskap'],             sc:{st:'Fastighetsförvaltare',ho:'Byter bolag / region',sp:'Teknisk förvaltare / specialist',le:'Förvaltningschef / fastighetschef'}}
+const SUPABASE_URL = 'https://qofvdpvxrvvjalgdiflg.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Vfm1BArZN_RAWrwTOzVGXA_WWvIk77V';
+const PAGE_SIZE = 24;
+
+const EDU_CATEGORIES = [
+  { id: 1,  label: 'Systemutvecklare / Webbutvecklare' },
+  { id: 2,  label: 'Dataanalytiker / AI' },
+  { id: 3,  label: 'IT-säkerhetsspecialist' },
+  { id: 4,  label: 'UX/UI-designer' },
+  { id: 5,  label: 'Spelutvecklare' },
+  { id: 7,  label: 'DevOps / Molntjänster' },
+  { id: 6,  label: 'Digital marknadsförare' },
+  { id: 8,  label: 'Jurist / Paralegal' },
+  { id: 9,  label: 'Redovisningsekonom' },
+  { id: 10, label: 'Controller / Finansanalytiker' },
+  { id: 11, label: 'Kommunikatör / PR' },
+  { id: 12, label: 'HR-specialist' },
+  { id: 13, label: 'Projektledare' },
+  { id: 14, label: 'Sjuksköterska / Vård' },
+  { id: 15, label: 'Tandhygienist / Tandvård' },
+  { id: 16, label: 'Lärare / Förskollärare' },
+  { id: 17, label: 'Socionom / Socialt arbete' },
+  { id: 18, label: 'Grafisk designer' },
+  { id: 19, label: 'Fotograf / Film' },
+  { id: 20, label: 'Kock / Restaurang' },
+  { id: 21, label: 'Event / Turism' },
+  { id: 22, label: 'Miljösamordnare / Hållbarhet' },
+  { id: 23, label: 'Butikschef / Detaljhandel' },
+  { id: 24, label: 'Inköpare / Upphandlare' },
+  { id: 25, label: 'Fastighet / Mäklare' },
+  { id: 26, label: 'VVS-ingenjör / Energi' },
+  { id: 27, label: 'Automationsingenjör' },
+  { id: 28, label: 'Elektriker / Elkraft' },
+  { id: 29, label: 'Logistiker / Supply chain' },
 ];
 
-const SALD={
-  1:{p25:45200,med:50500,p75:60000,p90:72500},2:{p25:40000,med:47000,p75:57000,p90:68000},
-  3:{p25:40000,med:47500,p75:57000,p90:69000},4:{p25:36000,med:43000,p75:52000,p90:63000},
-  5:{p25:44000,med:53000,p75:67000,p90:83000},6:{p25:37500,med:44000,p75:53000,p90:63000},
-  7:{p25:43000,med:49500,p75:59000,p90:72000},8:{p25:39000,med:46500,p75:58000,p90:72000},
-  9:{p25:33500,med:39500,p75:47000,p90:57000},10:{p25:37000,med:43500,p75:52000,p90:62000},
-  11:{p25:33000,med:38500,p75:47000,p90:58000},12:{p25:33000,med:38000,p75:46000,p90:56000},
-  13:{p25:37000,med:44000,p75:54000,p90:65000},14:{p25:37400,med:41500,p75:47000,p90:55800},
-  15:{p25:33000,med:38500,p75:44500,p90:52000},16:{p25:32000,med:36500,p75:42000,p90:50000},
-  17:{p25:33000,med:38000,p75:44000,p90:52000},18:{p25:33000,med:38000,p75:44000,p90:53000},
-  19:{p25:32500,med:38500,p75:44500,p90:53000},20:{p25:34000,med:38500,p75:43000,p90:49000},
-  21:{p25:37000,med:44700,p75:48500,p90:51200},22:{p25:32000,med:36500,p75:42000,p90:49000},
-  23:{p25:32500,med:37500,p75:45000,p90:55000},24:{p25:36500,med:42000,p75:50000,p90:60000},
-  25:{p25:36500,med:43500,p75:52000,p90:63000},26:{p25:36000,med:41000,p75:49000,p90:59000},
-  27:{p25:37000,med:43500,p75:52000,p90:63000},28:{p25:31000,med:36000,p75:42000,p90:52000},
-  29:{p25:30000,med:35000,p75:46000,p90:62000}
-};
+let currentOffset = 0;
+let totalCount = 0;
+let activeMode = '';
+let searchTimer = null;
 
-const PN={
-  1:{pro:['Remote-arbete standard — de flesta tjänster tillåter hemifrån','35 000 kr ingångslön med snabb stegring till 55 000+','Konsultuppdrag kan ge 50–80% högre timpris','Kort utbildning (3 år) relativt lönenivån'],con:['15% AI-automatiseringsrisk — rutinkodning ersätts redan','Kräver ständig vidareutbildning vid teknikskiften','Konsultmarknaden svänger kraftigt med konjunkturen','Stressigt vid projektdeadlines i agila team']},
-  4:{pro:['2 år YH — snabbaste vägen till ett kreativt digitalt jobb','Remote och frilans vanligt — hög geografisk flexibilitet','Tvärfunktionell roll som fungerar i de flesta branscher','Kreativt arbete med direkt användarfeedback'],con:['22% AI-risk — designverktyg automatiserar allt mer','Stor konkurrens om juniora tjänster efter examen','Bland de första som sägs upp vid nedskärningar','Svårt att kvantifiera affärsvärde för budget']},
-  5:{pro:['Högst ingångslön av alla utbildningar (41 000 kr)','Lönetak 56 000+ kr, ännu högre i chefsroll','Bred anställningsbarhet — tech, energi, fordon, bygg, försvar','Stark internationell efterfrågan på svenska ingenjörer'],con:['5 års utbildningstid — längst av alla alternativ','Hög studietakt med avancerad matematik, fysik och kemi','18% AI-risk på beräknings- och simuleringsarbete','Kräver ofta flytt till storstadsregion för bästa tjänster']},
-  8:{pro:['Bred arbetsmarknad — bank, revision, konsult, industri, startup','Lönetak 54 000+ kr, betydligt högre inom finans','Internationellt gångbar examen','Starkt alumninätverk, särskilt från handelshögskolorna'],con:['25% AI-automatiseringsrisk — analys och rapporter ersätts','Hård konkurrens om trainee- och graduate-platser','Långa arbetsdagar normen inom revision och investment banking','Stor variation i lön beroende på bransch och stad']},
-  14:{pro:['Nästan 100% anställningsbarhet — akut brist i hela landet','OB-tillägg för kvällar, nätter och helger höjer faktisk lön','Möjlighet att specialisera sig med lönepåslag','Offentlig anställning med tjänstepension och kollektivavtal'],con:['Schemaarbete med nätter, helger och röda dagar','Jour och beredskap kan krävas beroende på avdelning','Hög personalomsättning inom vissa specialiteter','Begränsad löneutveckling utan chefsroll eller specialisering']},
-  19:{pro:['Stor efterfrågan — kommuner har svårt att rekrytera socialsekreterare','Bred arbetsmarknad: socialtjänst, kriminalvård, migration, skola','Offentlig anställning med kollektivavtal och tjänstepension','Relativt kort utbildning (3,5 år) med inbyggd praktik'],con:['Högst personalomsättning inom socialtjänsten — snitt 2–3 år','Tunga myndighetsutövningsbeslut (LVU, tvångsomhändertaganden)','Bland lägst ingångslöner i listan (29 000 kr)','Hög sjukfrånvaro i branschen jämfört med andra yrken']},
-  20:{pro:['13 veckors sammanhängande ledighet utöver semester','Jobb i alla kommuner — ingen geografisk begränsning','Lönetillägg som förstelärare (+5 000 kr/mån)','Statliga studielånsavskrivningar för lärare i bristämnen'],con:['Hög administrativ börda — dokumentation, omdömen, åtgärdsprogram','Lärarbrist leder till högre arbetsbelastning per lärare','Lönetak runt 40 000 kr utan skolledarroll','Begränsad karriärstege — förstelärare eller rektor i princip enda stegen']},
-  21:{pro:['13 veckors sammanhängande ledighet utöver semester','Jobb i alla kommuner — ingen geografisk begränsning','Lönetillägg som förstelärare (+5 000 kr/mån)','Statliga studielånsavskrivningar för lärare i bristämnen'],con:['Hög administrativ börda — dokumentation och omdömen','Lärarbrist leder till högre arbetsbelastning per lärare','Lönetak runt 43 000 kr utan skolledarroll','Begränsad karriärstege']}
-};
+function getFilters() {
+  return {
+    query: document.getElementById('searchInput').value.trim(),
+    city: document.getElementById('cityInput').value.trim(),
+    pace: document.getElementById('paceSelect').value,
+    category: document.getElementById('categorySelect').value,
+    startDate: document.getElementById('startSelect').value,
+    studiemedel: document.getElementById('cbStudiemedel').checked,
+    avgiftsfri: document.getElementById('cbAvgiftsfri').checked,
+  };
+}
 
-const DAG = {
-  1: ['08:00 — Standup med teamet, går igenom dagens uppgifter','09:00 — Kodar en ny feature i VS Code, skriver tester','12:00 — Lunch, often remote från hemmakontoret','13:00 — Code review av kollegans pull request','15:00 — Möte med produktägaren om kommande sprint','16:30 — Pushar kod och stänger datorn'],
-  2: ['08:30 — Hämtar data från databasen, kontrollerar kvalitet','09:30 — Bygger visualiseringar i Python / Power BI','12:00 — Lunch','13:00 — Presenterar insikter för marknadsteamet','14:30 — Möte om nya KPI:er med chefen','16:00 — Dokumenterar analys och skickar rapport'],
-  3: ['08:00 — Granskar säkerhetsloggar och larm','09:30 — Penetrationstesta ett nytt system','12:00 — Lunch','13:00 — Skriver incidentrapport efter ett intrångsförsök','15:00 — Utbildar kollegor i phishing-medvetenhet','16:30 — Avslutar och uppdaterar säkerhetsrutiner'],
-  4: ['09:00 — Genomgår användarintervjuer från igår','10:00 — Skissar wireframes i Figma','12:00 — Lunch','13:00 — Presenterar prototyp för produktteamet','14:30 — Itererar på designen utifrån feedback','16:30 — Uppdaterar designsystemet och avslutar'],
-  5: ['07:30 — Morgonmöte om pågående projekt','09:00 — Simuleringar och beräkningar i MATLAB','12:00 — Lunch','13:00 — Möte med leverantör om komponenter','15:00 — Dokumenterar tekniska krav','17:00 — Avslutar och förbereder nästa dags presentation'],
-  6: ['07:30 — Fabriksrond, kontrollerar produktionen','09:00 — CAD-ritningar och teknisk dokumentation','12:00 — Lunch','13:00 — Möte med projektledaren','14:30 — Felsöker ett problem i produktionslinjen','16:30 — Skriver avvikelserapport'],
-  7: ['08:00 — Standup med DevOps-teamet','09:00 — Konfigurerar CI/CD-pipeline i GitHub Actions','12:00 — Lunch','13:00 — Deployar ny version till Kubernetes-kluster','15:00 — Incident — felsöker serverfel i produktionsmiljö','17:00 — Post-mortem och åtgärdslista'],
-  8: ['08:30 — Granskar finansiella rapporter','10:00 — Möte med kund om investeringsstrategi','12:00 — Lunch','13:00 — Analyserar kvartalsprognos','15:00 — Presenterar för styrelsen','17:00 — Skriver sammanfattning och skickar till chefen'],
-  9: ['08:00 — Bokför föregående dags transaktioner','10:00 — Stämmer av konton i Fortnox','12:00 — Lunch','13:00 — Förbereder löneunderlag','15:00 — Möte med revisor','16:30 — Skickar momsdeklaration'],
-  10:['08:00 — Morgonmöte, granskar budget mot utfall','09:30 — Uppdaterar månadsprognos i Excel','12:00 — Lunch','13:00 — Möte med verksamhetschefen','14:30 — Analyserar avvikelser mot budget','16:30 — Skickar månadsrapport'],
-  11:['08:00 — Planerar digitala kampanjer i Meta Ads','10:00 — Analyserar SEO-trafik i Google Analytics','12:00 — Lunch','13:00 — Skriver copy för nytt annonsmaterial','15:00 — A/B-testar landningssida','16:30 — Rapport till kunden'],
-  12:['08:30 — Genomgång av rekryteringsärenden','10:00 — Intervju med kandidat till ny tjänst','12:00 — Lunch','13:00 — Möte om medarbetarundersökning','15:00 — Uppdaterar HR-system med lönerevisionsdata','16:30 — Svarar på frågor från medarbetare'],
-  13:['08:00 — Granskar projektplan och tidslinje','09:30 — Standup med projektteamet','12:00 — Lunch','13:00 — Riskgenomgång med beställaren','15:00 — Uppdaterar Jira och projektdokument','16:30 — Förbereder veckorapport'],
-  14:['06:30 — Tar emot rapport från nattpersonalen','07:00 — Delar ut mediciner och kontrollerar vitala värden','09:00 — Ronden med läkaren','12:00 — Hjälper patienter med lunch','14:00 — Dokumenterar i journalsystemet','15:00 — Lämnar rapport till eftermiddagspasset'],
-  15:['08:00 — Förbereder behandlingsrummet','08:30 — Tar emot första patient, funktionsbedömning','10:00 — Träningspass med patient efter knäoperation','12:00 — Lunch','13:00 — Hembesök hos äldre patient','15:30 — Dokumenterar i journalsystemet'],
-  16:['08:30 — Möte med vårdteamet','09:00 — Bedömning av ny patient','10:30 — Tränar ADL-aktiviteter med patient','12:00 — Lunch','13:00 — Skriver remiss och åtgärdsplan','15:00 — Uppföljning av hjälpmedel'],
-  17:['07:00 — Förbereder analysapparatur','08:00 — Analyserar blodprover','11:00 — Kvalitetskontroll av instrument','12:00 — Lunch','13:00 — Skriver svar på remisser','15:00 — Avvikelsehantering och dokumentation'],
-  18:['08:00 — Förbereder utrustning och ser journaler','09:00 — Tar emot första patient, tandrengöring','11:00 — Röntgenkontroll och hälsokoll','12:00 — Lunch','13:00 — Fyra patienter eftermiddag','16:00 — Dokumenterar och förbereder nästa dag'],
-  19:['08:00 — Läser in ärenden från helgen','09:00 — Hembesök hos familj under utredning','12:00 — Lunch','13:00 — Möte med familjerätten','15:00 — Skriver utredningsunderlag','16:30 — Handledning med chef'],
-  20:['07:30 — Förbereder lektionen','08:00 — Lektioner i matematik och svenska','12:00 — Rast och lunchrond','13:00 — Lektioner och enskild läsning','15:00 — Föräldramöte','16:00 — Planerar nästa dags lektioner'],
-  21:['07:30 — Förbereder genomgångar','08:00 — Lektioner i gymnasiet','12:00 — Lunch och kollegialt samtal','13:00 — Lektioner och laborationer','15:30 — Rättar inlämningar','17:00 — Planerar provuppgifter'],
-  22:['08:00 — Tar emot elever för vägledningssamtal','10:00 — Möte med lärare om elev i behov av stöd','12:00 — Lunch','13:00 — Gruppinformation om gymnasievalet','15:00 — Dokumenterar och svarar på mejl','16:00 — Uppdaterar studie- och yrkesvägledningsplan'],
-  23:['08:30 — Granskar sjukfrånvarostatistik','09:30 — Möte om pågående rehab-ärende','12:00 — Lunch','13:00 — Lönerevision med chef','15:00 — Utbildning i arbetsrätt för chefer','16:30 — Svarar på frågor från anställda'],
-  24:['07:00 — Morgonmöte på byggarbetsplatsen','08:00 — Kontrollerar konstruktionsritningar i fält','10:00 — Möte med underentreprenör','12:00 — Lunch i bodet','13:00 — Kontrollmätningar och avvikelserapport','16:00 — Uppdaterar projektdokumentation'],
-  25:['08:00 — Granskar hyresavier och betalningar','10:00 — Felanmälan — besiktigar lägenhet','12:00 — Lunch','13:00 — Möte med fastighetsägaren om renoveringsplan','15:00 — Upphandlar hantverkare','16:30 — Uppdaterar fastighetssystemet'],
-  26:['07:30 — Genomgång av ritningar','09:00 — Besöker byggarbetsplatsen för ventilationskontroll','12:00 — Lunch','13:00 — Beräknar flöden i CAD','15:00 — Möte med arkitekt om ändringar','16:30 — Skriver teknisk rapport'],
-  27:['07:00 — Läser av mätvärden och kontrollerar säkerhetssystem','09:00 — Underhållsarbete på elcentralen','12:00 — Lunch','13:00 — Felsöker strömavbrott i fabrik','15:00 — Dokumenterar arbete och uppdaterar ritningar','16:30 — Lämnar rapport till driftchef'],
-  28:['08:30 — Kundmöte, presenterar nytt bestånd','10:00 — Visning av lägenhet med spekulant','12:00 — Lunch','13:00 — Förhandlar köpekontrakt','15:00 — Fotograferar ny fastighet','17:00 — Skriver objektsbeskrivning och publicerar annons'],
-  29:['09:00 — Förbereder workshop med klientgrupp','10:00 — Samtalsgrupp med fokus på beteendeförändring','12:00 — Lunch','13:00 — Individuell session med klient','15:00 — Dokumenterar och skriver remiss','16:30 — Handledning med teamet']
-};
+function buildUrl(offset) {
+  const f = getFilters();
+  const params = new URLSearchParams();
+  params.set('select', 'id,program_name,school_name,city,study_mode,study_pace,duration_text');
+  params.set('active', 'eq.true');
+  params.set('order', 'program_name.asc');
+  params.set('limit', PAGE_SIZE);
+  params.set('offset', offset);
 
-// ══════════════════════════════════════════════════════
-// STATE
-// ══════════════════════════════════════════════════════
-let activeQuick = new Set();
-let detailId    = null;
-let detailSal   = 0;
+  if (activeMode)       params.set('study_mode', 'eq.' + activeMode);
+  if (f.pace)           params.set('study_pace', 'eq.' + f.pace);
+  if (f.city)           params.set('city', 'ilike.*' + f.city + '*');
+  if (f.category)       params.set('education_ids', 'cs.{' + f.category + '}');
+  if (f.studiemedel)    params.set('eligible_for_student_aid', 'eq.true');
+  if (f.avgiftsfri)     params.set('fee', 'eq.0');
+  if (f.startDate)      params.set('start_dates', 'cs.{"' + f.startDate + '"}');
+  if (f.query)          params.set('or', '(program_name.ilike.*' + f.query + '*,school_name.ilike.*' + f.query + '*,education_description.ilike.*' + f.query + '*)');
 
-const fmt = n => Math.round(n).toLocaleString('sv-SE');
+  return SUPABASE_URL + '/rest/v1/yh_schools?' + params.toString();
+}
 
-const SIG = {
-  dem:   { cls:'badge-dem',    cardCls:'sv-dem',    label:'Hög efterfrågan' },
-  stress:{ cls:'badge-stress', cardCls:'sv-stress', label:'Låg stress' },
-  flex:  { cls:'badge-flex',   cardCls:'sv-flex',   label:'Flexibelt' },
-  fast:  { cls:'badge-fast',   cardCls:'sv-fast',   label:'Snabbt få jobb' }
-};
-
-const CTA_DATA = [
-  { h:'Redo att ta nästa steg?',        p:'Vi räknar ut ekonomin, kontrollerar din behörighet och listar skolor.' },
-  { h:'Hitta ditt yrke med framtid.',   p:'Din personliga plan klar på 3 minuter — lön, CSN och vad som krävs.' },
-  { h:'Passar du för det du siktar på?',p:'Vi matchar din bakgrund mot utbildningens krav — direkt och konkret.' }
-];
-
-// ══════════════════════════════════════════════════════
-// FILTER LOGIC
-// ══════════════════════════════════════════════════════
-function getFiltered() {
-  const lon = parseInt(document.getElementById('fLon').value);
-  const dem = parseInt(document.getElementById('fDem').value);
-  const str = parseInt(document.getElementById('fStr').value);
-  const ppl = parseInt(document.getElementById('fPpl').value);
-  const prc = parseInt(document.getElementById('fPrc').value);
-  const flx = parseInt(document.getElementById('fFlx').value);
-  const sort = document.getElementById('sortSel').value;
-
-  let r = E.filter(e => {
-    if (e.s0 < lon) return false;
-    if (e.dem < dem) return false;
-    if (e.stress > str) return false;
-    if (flx > 1 && e.flex < flx) return false;
-    // People: slider≤2 → show independent (people≤3), slider≥4 → show social (people≥3)
-    if (ppl <= 2 && e.people > 3) return false;
-    if (ppl >= 4 && e.people < 3) return false;
-    // Practical: slider≤2 → theoretical (practical≤3), slider≥4 → practical (practical≥3)
-    if (prc <= 2 && e.practical > 3) return false;
-    if (prc >= 4 && e.practical < 3) return false;
-    return true;
-  });
-
-  // Quick filters: each active filter narrows independently, sort by first active
-  if (activeQuick.size > 0) {
-    if (activeQuick.has('stress')) r = r.filter(e => e.stress <= 2);
-    if (activeQuick.has('dem'))    r = r.filter(e => e.dem >= 4);
-    if (activeQuick.has('flex'))   r = r.filter(e => e.flex >= 4);
-    if (activeQuick.has('fast'))   r = r.filter(e => e.y <= 2);
-    // Sort priority: sal > dem > stress > flex > fast
-    if      (activeQuick.has('sal'))    r.sort((a,b) => b.s0 - a.s0);
-    else if (activeQuick.has('dem'))    r.sort((a,b) => b.dem - a.dem || b.future - a.future);
-    else if (activeQuick.has('stress')) r.sort((a,b) => a.stress - b.stress || b.s0 - a.s0);
-    else if (activeQuick.has('flex'))   r.sort((a,b) => b.flex - a.flex || b.s0 - a.s0);
-    else if (activeQuick.has('fast'))   r.sort((a,b) => a.y - b.y || b.s0 - a.s0);
-  } else {
-    if      (sort === 'dem')    r.sort((a,b) => (b.dem*2+b.future) - (a.dem*2+a.future));
-    else if (sort === 'sal')    r.sort((a,b) => b.s0 - a.s0);
-    else if (sort === 'stress') r.sort((a,b) => a.stress - b.stress || b.s0 - a.s0);
-    else if (sort === 'flex')   r.sort((a,b) => b.flex - a.flex || b.s0 - a.s0);
-    else if (sort === 'fast')   r.sort((a,b) => a.y - b.y || b.s0 - a.s0);
+async function fetchSchools(reset) {
+  const offset = reset ? 0 : currentOffset;
+  if (reset) {
+    currentOffset = 0;
+    document.getElementById('cardsGrid').innerHTML = renderSkeletons();
+    document.getElementById('loadMoreWrap').style.display = 'none';
   }
-  return r;
-}
 
-function updateLabels() {
-  const lon = parseInt(document.getElementById('fLon').value);
-  const dem = parseInt(document.getElementById('fDem').value);
-  const str = parseInt(document.getElementById('fStr').value);
-  const ppl = parseInt(document.getElementById('fPpl').value);
-  const prc = parseInt(document.getElementById('fPrc').value);
-  const flx = parseInt(document.getElementById('fFlx').value);
-  const demL = ['','Mycket låg','Låg','Medel','Hög','Hög'];
-
-  document.getElementById('vLon').textContent = lon <= 28000 ? 'Alla' : fmt(lon)+' kr+';
-  document.getElementById('vDem').textContent = dem === 1 ? 'Alla' : demL[dem]||dem;
-  document.getElementById('vStr').textContent = str === 5 ? 'Alla' : ['','Låg','Låg','Medel','Hög',''][str];
-  document.getElementById('vPpl').textContent = ppl === 3 ? 'Alla' : ppl <= 2 ? 'Självständigt' : 'Med människor';
-  document.getElementById('vPrc').textContent = prc === 3 ? 'Alla' : prc <= 2 ? 'Teoretiskt' : 'Praktiskt';
-  document.getElementById('vFlx').textContent = flx === 1 ? 'Alla' : flx+'/5';
-}
-
-function rerender() {
-  updateLabels();
-  renderGrid();
-}
-
-function resetAll() {
-  document.getElementById('fLon').value = 28000;
-  document.getElementById('fDem').value = 1;
-  document.getElementById('fStr').value = 5;
-  document.getElementById('fPpl').value = 3;
-  document.getElementById('fPrc').value = 3;
-  document.getElementById('fFlx').value = 1;
-  activeQuick = new Set();
-  document.querySelectorAll('.qbtn').forEach(b => b.classList.remove('active'));
-  rerender();
-}
-
-function quickSet(type) {
-  if (activeQuick.has(type)) {
-    activeQuick.delete(type);
-    document.getElementById('q-'+type).classList.remove('active');
-  } else {
-    activeQuick.add(type);
-    document.getElementById('q-'+type).classList.add('active');
-  }
-  renderGrid();
-}
-
-function toggleFilters() {
-  const fb = document.getElementById('fbody');
-  const ft = document.getElementById('ftoggle');
-  fb.classList.toggle('open');
-  ft.classList.toggle('open');
-  document.getElementById('ftoggleLabel').textContent = fb.classList.contains('open') ? 'Dölj filter' : 'Filtrera utbildningar';
-}
-
-// ══════════════════════════════════════════════════════
-// RENDER GRID
-// ══════════════════════════════════════════════════════
-function renderGrid() {
-  const data = getFiltered();
-  const grid = document.getElementById('grid');
-  document.getElementById('rcount').textContent = `Visar ${data.length} utbildning${data.length!==1?'ar':''}`;
-
-  if (data.length === 0) {
-    grid.innerHTML = `<div class="empty"><div class="ei"></div><p>Inga utbildningar matchar dina filter.</p><button onclick="resetAll()">Återställ filter</button></div>`;
+  let res, data;
+  try {
+    res = await fetch(buildUrl(offset), {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Prefer': 'count=exact',
+      }
+    });
+    data = await res.json();
+  } catch (e) {
+    document.getElementById('cardsGrid').innerHTML = '<div class="error-box">Kunde inte ladda utbildningar. Kontrollera din anslutning och försök igen.</div>';
+    document.getElementById('resultsCount').textContent = '';
     return;
   }
 
-  let html = '';
-  let ctaN = 0;
-
-  data.forEach((e, i) => {
-    const s = SIG[e.sig] || SIG.dem;
-    const typeLabel = e.y <= 2 ? 'YH / kortkurs' : e.y >= 4.5 ? 'Lång högskoleutb.' : 'Högskoleutbildning';
-    html += `<div class="edu-card ${s.cardCls}" style="animation-delay:${(i % 9)*40}ms" onclick="openDetail(${e.id})">
-      <div class="card-name">${e.t}</div>
-      <div class="card-sal">${fmt(e.s0)} kr<span>/mån</span></div>
-      <div class="card-badge ${s.cls}">${s.label}</div>
-      <div class="card-foot"><span>${e.y} år · ${typeLabel}</span><span class="card-read">Läs mer →</span></div>
-    </div>`;
-
-    if ((i + 1) % 4 === 0 && i < data.length - 1) {
-      const c = CTA_DATA[ctaN++ % CTA_DATA.length];
-      html += `<div class="cta-strip"><div class="ct"><h3>${c.h}</h3><p>${c.p}</p></div><a href="/skapa-min-plan">Skapa min plan →</a></div>`;
-    }
-  });
-
-  grid.innerHTML = html;
-}
-
-// ══════════════════════════════════════════════════════
-// DETAIL VIEW
-// ══════════════════════════════════════════════════════
-function openDetail(id) {
-  detailId  = id;
-  detailSal = 0;
-  const edu = E.find(e=>e.id===id);
-  document.getElementById('listView').style.display   = 'none';
-  document.getElementById('detailView').style.display = 'block';
-  document.getElementById('bottomBar').classList.add('visible');
-  document.getElementById('bottomBarText').textContent = edu ? `Din plan: ${edu.t}` : 'Din plan';
-  const pgt = document.getElementById('planGlassTitle');
-  if (pgt && edu) pgt.textContent = `${edu.t}, ${edu.y} år`;
-  window.scrollTo({ top: 0, behavior: 'instant' });
-  renderDetail();
-  if (typeof gtag !== 'undefined') gtag('event','view_education',{edu_id:id,edu_name:edu?.t});
-}
-
-function goBack() {
-  document.getElementById('detailView').style.display   = 'none';
-  document.getElementById('listView').style.display     = 'block';
-  document.getElementById('bottomBar').classList.remove('visible');
-  window.scrollTo({ top: 0, behavior: 'instant' });
-}
-
-function updateDetailSal(val) {
-  detailSal = parseInt(val) || 0;
-  const scrollY = window.scrollY;
-  renderDetail();
-  window.scrollTo(0, scrollY);
-}
-
-function renderDetail() {
-  const e = E.find(x => x.id === detailId);
-  if (!e) return;
-
-  const demL = ['','Mycket låg','Låg','Medel','Hög','Mycket hög'];
-  const futL = ['','Mycket svag','Svag','Stabil','God','Mycket god'];
-  const demC = ['','#B04830','#9A6A00','#5A8FB5','#5BA882','#5BA882'];
-  const futC = ['','#B04830','#9A6A00','#5A8FB5','#5BA882','#5BA882'];
-  const sig  = SIG[e.sig] || SIG.dem;
-  const sd   = SALD[e.id] || {p25:Math.round(e.s0*.9),med:Math.round(e.s0*1.1),p75:Math.round(e.s0*1.25),p90:Math.round(e.s1)};
-  const hasSal = detailSal > 0;
-  const debt = e.tc * Math.round(e.y * 10);
-
-  // Salary-dependent calcs
-  let bo=null, be=null, totalCost=null;
-  if (hasSal) {
-    bo = e.s0 - detailSal;
-    const op = detailSal * 12 * e.y;
-    totalCost = Math.round((debt + op) / 1000);
-    const yg = bo * 12;
-    if (yg > 0) be = Math.ceil((op + debt) / yg);
+  if (!Array.isArray(data)) {
+    document.getElementById('cardsGrid').innerHTML = '<div class="error-box">Något gick fel vid hämtning av utbildningar.</div>';
+    return;
   }
 
-  // Hint text next to salary input
-  const hintTxt = hasSal
-    ? (bo >= 0
-        ? `<span style="color:var(--ac)">+${fmt(bo)} kr/mån efter examen</span>`
-        : `<span style="color:var(--re)">${fmt(bo)} kr/mån (lägre ingångslön)</span>`)
-    : `<span style="color:var(--li)">Ange din lön för att se löneskillnad</span>`;
+  const rangeHeader = res.headers.get('content-range') || '';
+  const total = parseInt(rangeHeader.split('/')[1]) || 0;
+  if (reset) totalCount = total;
 
-  // Pros/cons
-  const fallback = {
-    pro:[
-      e.dem>=4?'Hög efterfrågan på arbetsmarknaden':'God anställningsbarhet efter examen',
-      `Ingångslön ${fmt(e.s0)} kr med potential upp till ${fmt(e.s1)} kr`,
-      e.ai<=10?'Låg risk för AI-automatisering':'Yrket kräver mänsklig kompetens och omdöme',
-      e.future>=4?'God framtidsprognos enligt Arbetsförmedlingen':'Stabil bransch med kontinuerliga behov'
-    ],
-    con:[
-      e.stress>=4?'Stressigt yrke med hög arbetsbelastning':'Kräver kontinuerlig kompetensutveckling',
-      `${e.y} år studietid — CSN-skuld ca ${fmt(debt)} kr`,
-      e.ai>=20?`${e.ai}% risk för AI-automatisering inom 10 år`:'Kräver anpassning till teknisk utveckling',
-      'Ingångslönen lägre än erfaren lön — tar tid att nå lönetoppen'
-    ]
-  };
-  const pn = PN[e.id] || fallback;
-  const chk   = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`;
-  const cross  = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
-
-  // Career scenarios
-  const scens = [
-    {label:'Stanna länge', desc:'10–15 år på samma arbetsplats', sal:Math.round(e.s0+(e.s1-e.s0)*.5),  col:'#6c757d'},
-    {label:'Byta ofta',    desc:'5–10 byten av arbetsgivare',    sal:Math.round(e.s0+(e.s1-e.s0)*.7),  col:'#0dcaf0'},
-    {label:'Specialist',   desc:'Expertroll utan chefsansvar',   sal:Math.round(e.s1*1.1),              col:'#0d6efd'},
-    {label:'Chef',         desc:'Ledande position',              sal:Math.round(e.s1*1.3),              col:'#198754'}
-  ];
-  const maxS = Math.max(...scens.map(s => s.sal));
-
-  let html = `
-  <div class="dhero">
-    <div class="dhero-name">${e.t}</div>
-    <div class="dhero-tags">
-      <span>${e.y} år</span>
-      <span>${fmt(e.s0)} kr ingångslön</span>
-      <span class="${sig.cls}" style="padding:4px 12px;border-radius:6px">${sig.label}</span>
-    </div>
-    <div class="sal-input-row">
-      <label>Din lön idag:</label>
-      <input type="number" id="dSalIn" placeholder="T.ex. 32 000" step="500" value="${detailSal||''}" onchange="updateDetailSal(this.value)">
-      <div class="sal-hint-text">${hintTxt}</div>
-    </div>
-  </div>
-
-  <!-- 1. ÖVERSIKT -->
-  <div class="sec-h"><div class="sec-n">1</div>Översikt</div>
-  <div class="ov-grid">
-    <div class="ov-card">
-      <div class="ov-label" style="color:${demC[e.dem]}">Efterfrågan</div>
-      <div class="ov-val"  style="color:${demC[e.dem]}">${demL[e.dem]}</div>
-      <div class="ov-sub">Arbetsförmedlingen 2024</div>
-    </div>
-    <div class="ov-card">
-      <div class="ov-label" style="color:${futC[e.future]}">Framtidsutsikter</div>
-      <div class="ov-val"  style="color:${futC[e.future]}">${futL[e.future]}</div>
-      <div class="ov-sub">5-årsprognos</div>
-    </div>
-    <div class="ov-card">
-      <div class="ov-label">AI-risk</div>
-      <div class="ov-val" style="color:${e.ai<=10?'#5BA882':e.ai<=20?'#9A6A00':'#B04830'}">${e.ai}%</div>
-      <div class="ov-sub">Automation inom 10 år</div>
-    </div>
-    ${hasSal ? `
-    <div class="ov-card">
-      <div class="ov-label" style="color:${bo>=0?'#5BA882':'#B04830'}">Löneskillnad</div>
-      <div class="ov-val"  style="color:${bo>=0?'#5BA882':'#B04830'}">${bo>=0?'+':''}${fmt(bo)} kr</div>
-      <div class="ov-sub">ingångslön vs din lön nu</div>
-    </div>
-    <div class="ov-card">
-      <div class="ov-label" style="color:#B04830">Total kostnad</div>
-      <div class="ov-val"  style="color:#B04830">${totalCost} tkr</div>
-      <div class="ov-sub">CSN-skuld + förlorad lön</div>
-    </div>
-    <div class="ov-card">
-      <div class="ov-label" style="color:#5A8FB5">Betalar sig</div>
-      <div class="ov-val"  style="color:#5A8FB5">${be&&be<60?'~'+be+' år':'—'}</div>
-      <div class="ov-sub">år tills bytet lönar sig</div>
-    </div>
-    ` : `
-    <div class="ov-card">
-      <div class="ov-label">Ingångslön</div>
-      <div class="ov-val" style="color:#5BA882">${fmt(e.s0)} kr</div>
-      <div class="ov-sub">direkt efter examen</div>
-    </div>
-    <div class="ov-card">
-      <div class="ov-label">Erfaren lön</div>
-      <div class="ov-val">${fmt(e.s1)} kr</div>
-      <div class="ov-sub">senior / specialist</div>
-    </div>
-    <div class="ov-card">
-      <div class="ov-label">CSN-skuld</div>
-      <div class="ov-val" style="color:#B04830">~${fmt(debt)} kr</div>
-      <div class="ov-sub">efter ${e.y} år studier</div>
-    </div>
-    `}
-  </div>
-
-  <!-- PROS/CONS -->
-  <div class="pn-grid">
-    <div class="pn-box pn-pro">
-      <div class="pn-head">${chk} Fördelar</div>
-      <div class="pn-list">${pn.pro.map(p=>`<div class="pn-item">${chk}<span>${p}</span></div>`).join('')}</div>
-    </div>
-    <div class="pn-box pn-con">
-      <div class="pn-head">${cross} Nackdelar</div>
-      <div class="pn-list">${pn.con.map(c=>`<div class="pn-item">${cross}<span>${c}</span></div>`).join('')}</div>
-    </div>
-  </div>
-
-  <!-- EN VANLIG DAG -->
-  <div class="sec-h"><div class="sec-n">1</div>En vanlig dag</div>
-  <div class="block" style="padding:14px 16px">
-    <div style="display:grid;gap:0">
-    ${(DAG[e.id]||['08:00 — Startar arbetsdagen','12:00 — Lunch','13:00 — Fortsätter med arbetsuppgifter','16:30 — Avslutar dagen']).map((rad,i)=>{
-      const [tid,text]= rad.split(' — ');
-      return `<div style="display:flex;gap:14px;padding:10px 0;${i>0?'border-top:1px solid var(--bg)':''}">
-        <div style="font-size:.72rem;font-weight:700;color:var(--li);min-width:46px;padding-top:1px">${tid}</div>
-        <div style="font-size:.84rem;color:var(--tx);line-height:1.5">${text}</div>
-      </div>`;
-    }).join('')}
-    </div>
-  </div>
-
-  <!-- 3. LÖN -->
-  <div class="sec-h"><div class="sec-n">3</div>Lön</div>
-  <div class="block">
-    <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--li);margin-bottom:4px">Medianlön · ${e.t}</div>
-    <div class="sal-big">${fmt(sd.med)} kr</div>
-    <div class="sal-sub">Hälften tjänar mer, hälften tjänar mindre &nbsp;<span style="background:var(--al);color:var(--ac);font-size:.64rem;font-weight:700;padding:2px 8px;border-radius:4px">SCB 2024</span></div>
-    <div class="pct-grid">
-      <div class="pct-c" style="background:#FFFBEB"><div class="pct-v" style="color:#78350F">${fmt(sd.p90)} kr</div><div class="pct-l" style="color:#92400E">10% tjänar detta eller mer</div></div>
-      <div class="pct-c" style="background:#F0FDF4"><div class="pct-v" style="color:#14532D">${fmt(sd.p75)} kr</div><div class="pct-l" style="color:#166534">25% tjänar detta eller mer</div></div>
-      <div class="pct-c" style="background:#FFF7ED"><div class="pct-v" style="color:#7C2D12">${fmt(sd.p25)} kr</div><div class="pct-l" style="color:#9A3412">25% tjänar detta eller mindre</div></div>
-    </div>
-    <div style="background:var(--bg);border-radius:8px;padding:12px 14px">
-      <div style="display:flex;justify-content:space-between;font-size:.76rem;font-weight:600;margin-bottom:6px"><span>Lönespridning</span><span style="color:var(--li)">${fmt(sd.p25)} – ${fmt(sd.p90)} kr</span></div>
-      <div style="position:relative;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden">
-        <div style="position:absolute;left:${Math.round((sd.p25/sd.p90)*100)}%;right:${Math.round(100-(sd.p75/sd.p90)*100)}%;height:100%;background:var(--ac);border-radius:4px"></div>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:.66rem;color:var(--li);margin-top:4px"><span>${fmt(sd.p25)}</span><span style="color:var(--tx);font-weight:600">${fmt(sd.med)} median</span><span>${fmt(sd.p90)}</span></div>
-    </div>
-    <div style="background:var(--al);border-radius:8px;padding:11px 13px;display:flex;gap:8px;align-items:flex-start;margin-top:12px">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <div style="font-size:.78rem;color:var(--ah);line-height:1.55">Du börjar på <strong>${fmt(e.s0)} kr</strong> — ${sd.med-e.s0>0?`${fmt(sd.med-e.s0)} kr under medianen. De flesta når medianen inom 3–5 år.`:`redan nära medianen för yrket.`}</div>
-    </div>
-  </div>
-
-  <!-- 4. KARRIÄR -->
-  <div class="sec-h"><div class="sec-n">4</div>Karriär</div>
-  <div class="block">
-    <div style="display:grid;gap:9px">
-    ${scens.map(sc=>{
-      const pct = (sc.sal/maxS*100).toFixed(0);
-      return `<div style="padding:11px 13px;background:var(--bg);border-radius:9px;border:1px solid var(--bo)">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-          <div><div style="font-weight:700;font-size:.86rem">${sc.label}</div><div style="font-size:.72rem;color:var(--mu)">${sc.desc}</div></div>
-          <div style="text-align:right"><div style="font-family:'Inter',sans-serif;font-size:1rem;font-weight:800;color:${sc.col}">${fmt(sc.sal)} kr</div><div style="font-size:.68rem;color:var(--mu)">+${Math.round((sc.sal-e.s0)/e.s0*100)}%</div></div>
-        </div>
-        <div style="background:#e9ecef;height:20px;border-radius:5px;overflow:hidden"><div style="background:${sc.col};height:100%;width:${pct}%;display:flex;align-items:center;justify-content:flex-end;padding-right:6px"><span style="color:#fff;font-weight:600;font-size:.68rem">${pct}%</span></div></div>
-      </div>`;
-    }).join('')}
-    </div>
-    <div style="margin-top:12px;padding:11px 13px;background:var(--bg);border-radius:8px;font-size:.78rem;color:var(--mu);border-left:3px solid var(--ac)"><strong style="color:var(--ac)">Tips:</strong> De flesta yrken har tydlig löneutveckling de första 5 åren — ingångslönen är bara starten.</div>
-  </div>
-
-  <!-- 5. LIVSTIDSANALYS -->
-  <div class="sec-h"><div class="sec-n">5</div>Livstidsanalys</div>
-  <div class="block" id="lifetimeBlock">
-    ${hasSal ? buildLifetimeHTML(e, detailSal) : `
-    <div style="text-align:center;padding:28px 16px">
-      <div style="font-size:1.8rem;margin-bottom:10px"></div>
-      <p style="font-size:.86rem;color:var(--mu);line-height:1.65">Ange din nuvarande lön ovan — vi räknar ut vad karriärbytet är värt totalt över 40 år.</p>
-    </div>`}
-  </div>`;
-
-  document.getElementById('detailContent').innerHTML = html;
+  renderCards(data, reset);
+  updateMeta();
 }
 
-function buildLifetimeHTML(e, sal) {
-  const workYears  = 40;
-  const studyYears = e.y;
-  const newYears   = workYears - studyYears;
+function renderSkeletons() {
+  const arr = [];
+  for (let i = 0; i < 6; i++) {
+    arr.push('<div class="edu-card skeleton" style="opacity:1;animation:none"><div class="skel-line" style="width:75%;height:18px;margin-bottom:10px"></div><div class="skel-line" style="width:55%;height:13px;margin-bottom:8px"></div><div class="skel-line" style="width:45%;height:12px"></div></div>');
+  }
+  return arr.join('');
+}
 
-  function grow(s0, yrs, type) {
-    let tot = 0, s = s0;
-    for (let i = 0; i < yrs; i++) {
-      tot += s * 12;
-      s   *= type === 'cur' ? 1.02 : (i < 5 ? 1.05 : i < 15 ? 1.03 : 1.02);
-    }
-    return tot;
+function renderCards(schools, reset) {
+  const grid = document.getElementById('cardsGrid');
+
+  if (reset && schools.length === 0) {
+    grid.innerHTML = '<div class="empty"><div class="ei">🔍</div><p>Inga utbildningar matchade dina filter.<br>Prova att bredda sökningen eller återställ filtren.</p><button onclick="resetFilters()">Återställ filter</button></div>';
+    document.getElementById('loadMoreWrap').style.display = 'none';
+    return;
   }
 
-  const curTotal  = grow(sal, workYears, 'cur') / 1e6;
-  const lostInc   = grow(sal, studyYears, 'cur');
-  const debt      = e.tc * Math.round(studyYears * 10);
-  const cost      = (lostInc + debt) / 1e6;
-  const newInc    = grow(e.s0, newYears, 'new') / 1e6;
-  const newTotal  = newInc - cost;
-  const diff      = newTotal - curTotal;
-  const diffAbs   = Math.abs(diff);
-  const maxV      = Math.max(curTotal, newTotal);
-  const curPct    = (curTotal / maxV * 100).toFixed(1);
-  const newPct    = Math.max(newTotal / maxV * 100, 0).toFixed(1);
-  const winner    = diff > 0;
-  const winColor  = winner ? 'var(--ac)' : 'var(--re)';
-  const loseColor = winner ? 'var(--re)' : 'var(--ac)';
+  const modeColors = { campus: '#5BA882', distance: '#5A8FB5', hybrid: '#8A70B5' };
+  const modeLabels = { campus: 'Campus', distance: 'Distans', hybrid: 'Hybrid' };
 
-  return `
-  <div style="display:grid;gap:14px;margin-bottom:18px">
-    <div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-        <div><div style="font-size:.8rem;font-weight:600;color:var(--mu)">Fortsätt med nuvarande jobb</div><div style="font-size:.68rem;color:var(--li)">${fmt(sal)} kr/mån idag (+2%/år)</div></div>
-        <div style="font-size:1rem;font-weight:700;color:${winner?loseColor:winColor}">${curTotal.toFixed(1)} M kr</div>
+  const cards = schools.map((s, i) => {
+    const modeColor = modeColors[s.study_mode] || '#7A7A74';
+    const modeLabel = modeLabels[s.study_mode] || s.study_mode || '';
+    const delay = reset ? (i % PAGE_SIZE) * 30 : 0;
+    return `<a href="/behorighetskollen?id=${s.id}" class="edu-card" style="animation-delay:${delay}ms">
+      <div class="card-name">${esc(s.program_name)}</div>
+      <div class="card-school">${esc(s.school_name)}</div>
+      <div class="card-meta">
+        ${modeLabel ? `<span class="card-mode-badge" style="background:${modeColor}20;color:${modeColor}">${modeLabel}</span>` : ''}
+        ${s.study_pace === 'parttime' ? '<span class="card-pace">Deltid</span>' : ''}
+        ${s.city ? `<span class="card-city"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>${esc(s.city)}</span>` : ''}
       </div>
-      <div style="height:28px;background:var(--bo);border-radius:6px;overflow:hidden"><div style="height:100%;background:${winner?loseColor:winColor};width:${curPct}%;border-radius:6px;transition:width 1s ease"></div></div>
-    </div>
-    <div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-        <div><div style="font-size:.8rem;font-weight:600;color:var(--mu)">Plugga till ${e.t.toLowerCase()}</div><div style="font-size:.68rem;color:var(--li)">${fmt(e.s0)} kr ingångslön (+5%→+3%→+2%/år)</div></div>
-        <div style="font-size:1rem;font-weight:700;color:${winner?winColor:loseColor}">${newTotal.toFixed(1)} M kr</div>
-      </div>
-      <div style="height:28px;background:var(--bo);border-radius:6px;overflow:hidden"><div style="height:100%;background:${winner?winColor:loseColor};width:${newPct}%;border-radius:6px;transition:width 1s ease .2s"></div></div>
-    </div>
-  </div>
-  <div style="background:${winner?'var(--al)':'var(--rl)'};border:2px solid ${winner?'var(--ac)':'var(--re)'};border-radius:10px;padding:16px;text-align:center">
-    <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;color:${winner?'var(--ac)':'var(--re)'};margin-bottom:4px">${winner?'Livstidsvinst':'Livstidsförlust'}</div>
-    <div style="font-family:'DM Serif Display',serif;font-size:1.75rem;color:${winner?'var(--ac)':'var(--re)'}">${winner?'+':'−'}${diffAbs.toFixed(1)} M kr</div>
-    <div style="font-size:.8rem;color:${winner?'var(--ac)':'var(--re)'};margin-top:4px;opacity:.9">${winner?`Att plugga ger dig ${diffAbs.toFixed(1)} M kr mer totalt över 40 år`:`Nuvarande jobb ger dig ${diffAbs.toFixed(1)} M kr mer totalt`}</div>
-  </div>
-  <div style="font-size:.7rem;color:var(--li);line-height:1.6;padding:9px 11px;background:var(--bg);border-radius:7px;margin-top:10px">
-    <strong style="color:var(--mu)">Antaganden:</strong> Nuvarande lön +2%/år. ${e.t}: +5% år 1–5, +3% år 6–15, +2% därefter. Studiekostnad = förlorad lön + CSN-lån (~${fmt(debt)} kr). Inga skatter, pension eller inflation inräknade.
-  </div>`;
+      ${s.duration_text ? `<div class="card-duration">${esc(s.duration_text)}</div>` : ''}
+      <div class="card-foot">Kontrollera behörighet →</div>
+    </a>`;
+  }).join('');
+
+  if (reset) {
+    grid.innerHTML = cards;
+    currentOffset = schools.length;
+  } else {
+    grid.insertAdjacentHTML('beforeend', cards);
+    currentOffset += schools.length;
+  }
+
+  document.getElementById('loadMoreWrap').style.display = currentOffset < totalCount ? 'block' : 'none';
 }
 
-// ══════════════════════════════════════════════════════
-// INIT
-// ══════════════════════════════════════════════════════
+function updateMeta() {
+  const el = document.getElementById('resultsCount');
+  if (totalCount === 0) {
+    el.textContent = 'Inga utbildningar hittades';
+  } else {
+    el.textContent = `Visar ${Math.min(currentOffset, totalCount).toLocaleString('sv-SE')} av ${totalCount.toLocaleString('sv-SE')} utbildningar`;
+  }
+}
+
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function setMode(mode) {
+  activeMode = mode;
+  document.querySelectorAll('.qbtn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  fetchSchools(true);
+}
+
+function onSearch() {
+  const val = document.getElementById('searchInput').value;
+  document.getElementById('searchClear').style.display = val ? 'flex' : 'none';
+  onFilterChange();
+}
+
+function onFilterChange() {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => fetchSchools(true), 380);
+}
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').style.display = 'none';
+  fetchSchools(true);
+}
+
+function toggleFilter() {
+  document.getElementById('filterBody').classList.toggle('open');
+  document.getElementById('filterToggle').classList.toggle('open');
+}
+
+function resetFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('cityInput').value = '';
+  document.getElementById('paceSelect').value = '';
+  document.getElementById('categorySelect').value = '';
+  document.getElementById('startSelect').value = '';
+  document.getElementById('cbStudiemedel').checked = false;
+  document.getElementById('cbAvgiftsfri').checked = false;
+  document.getElementById('searchClear').style.display = 'none';
+  activeMode = '';
+  document.querySelectorAll('.qbtn').forEach(b => b.classList.toggle('active', b.dataset.mode === ''));
+  fetchSchools(true);
+}
+
+async function loadMore() {
+  const btn = document.getElementById('loadMoreBtn');
+  btn.textContent = 'Laddar...';
+  btn.disabled = true;
+  await fetchSchools(false);
+  btn.textContent = 'Ladda fler utbildningar';
+  btn.disabled = false;
+}
+
+function toggleNavMenu() {
+  const panel = document.getElementById('navPanel');
+  const overlay = document.getElementById('navOverlay');
+  const open = panel.style.transform === 'translateX(0%)';
+  panel.style.transform = open ? 'translateX(100%)' : 'translateX(0%)';
+  overlay.style.display = open ? 'none' : 'block';
+  document.body.style.overflow = open ? '' : 'hidden';
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  updateLabels();
-  renderGrid();
+  const sel = document.getElementById('categorySelect');
+  EDU_CATEGORIES.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.id;
+    opt.textContent = c.label;
+    sel.appendChild(opt);
+  });
+  fetchSchools(true);
 });
-
-// ── FAQ ──
-function tFaq(btn) {
-  const item = btn.closest('.faq-item');
-  const was = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(el=>el.classList.remove('open'));
-  if (!was) item.classList.add('open');
-}
-
-// ── NAV MENU ──
-function toggleNavMenu(){
-  const panel=document.getElementById('navPanel');
-  const overlay=document.getElementById('navOverlay');
-  const open=panel.style.transform==='translateX(0px)'||panel.style.transform==='translateX(0%)';
-  panel.style.transform=open?'translateX(100%)':'translateX(0%)';
-  overlay.style.display=open?'none':'block';
-  document.body.style.overflow=open?'':'hidden';
-}
-
-// ── STICKY BOTTOM BAR (list view scroll trigger) ──
-(function(){
-  const bar = document.getElementById('bottomBar');
-  if (!bar) return;
-  let shown = false;
-  // Don't auto-show in detail view (openDetail handles that)
-  window.addEventListener('scroll', function(){
-    if (document.getElementById('detailView').style.display === 'block') return;
-    const shouldShow = window.scrollY > 600;
-    if (shouldShow !== shown) {
-      shown = shouldShow;
-      bar.classList.toggle('visible', shown);
-    }
-  }, {passive:true});
-})();
 </script>
 </body>
 </html>
