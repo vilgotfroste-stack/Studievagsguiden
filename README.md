@@ -211,3 +211,157 @@ node supabase/fetch-occupation-forecasts.js --all-regions
 | `age_45_54`     | Genomsnittslön, 45–54 år           |
 | `age_55_64`     | Genomsnittslön, 55–64 år           |
 | `stat_year`     | Statistikår (t.ex. 2024)           |
+
+---
+
+## Behörighetskollen
+
+Undersida där användaren söker en YH-utbildning och kontrollerar om hen är behörig.
+
+### Arkitektur
+
+```
+behorighetskollen-sok.html   ← Sida 1: Sök och filtrera utbildningar
+behorighetskollen.html       ← Sida 2: Behörighetskontroll för en specifik utbildning
+supabase/fetch-myh-schools.js      ← Hämtar alla YH-utbildningar från Skolverkets API
+supabase/fetch-yh-requirements.js  ← Berikar varje rad med behörighetskrav (detalj-endpoint)
+supabase/parse-requirements.js     ← Parsar råtext → strukturerad JSONB
+supabase/schema_yh_schools.sql     ← Tabellschema
+```
+
+**URL-routing (vercel.json):**
+- `/behorighetskollen-sok` → `behorighetskollen-sok.html`
+- `/behorighetskollen?id=<uuid>` → `behorighetskollen.html`
+
+---
+
+### Supabase-tabell: `yh_schools`
+
+Data från Skolverkets API (~2 577 YH-utbildningar). Viktiga kolumner:
+
+| Kolumn | Beskrivning |
+|--------|-------------|
+| `id` | UUID — används i URL (?id=...) |
+| `program_name` | Utbildningens namn |
+| `school_name` | Skolans namn |
+| `city` | Studieort |
+| `study_mode` | `campus` / `distance` / `hybrid` |
+| `study_pace` | `fulltime` / `parttime` |
+| `fee` | Avgift i kr (0 = avgiftsfri) |
+| `eligible_for_student_aid` | Boolean — CSN-berättigad |
+| `start_dates` | Array, t.ex. `["HT2026"]` |
+| `credits` | YH-poäng (t.ex. 430) |
+| `pace_of_study` | Studietakt i procent (t.ex. 100) |
+| `education_description` | Fritext — utbildningsbeskrivning |
+| `contact_email` / `contact_phone` | Kontaktuppgifter |
+| `website_url` | Länk till skolans sida |
+| `requirements` | Råtext från Skolverkets API |
+| `requirements_parsed` | Strukturerad JSONB (se nedan) |
+| `education_ids` | Koppling till interna kategori-ID:n (se EDU_MAP) |
+
+**`requirements_parsed`-struktur:**
+```json
+{
+  "has_gymnasieexamen_requirement": true,
+  "reell_kompetens_accepted": true,
+  "recommended_programs": ["Teknikprogrammet"],
+  "required_courses": [
+    { "name": "Matematik", "level": "2", "points": 100 }
+  ],
+  "other_requirements": null
+}
+```
+
+> `education_ids: []` = utbildningen saknar kategoritillhörighet (importerad men ej matchad mot EDU_MAP). Visas ändå på sida 1.
+
+---
+
+### Hur behörighetsbedömningen fungerar
+
+**Betyg spelar ingen roll** — godkänt (E) räcker för YH-behörighet.
+
+Logiken i `behorighetskollen.html`:
+
+```
+1. Om has_gymnasieexamen_requirement = true OCH användaren saknar gymnasieexamen:
+     → Om reell_kompetens_accepted = true  →  "Ansök via reell kompetens"
+     → Annars                              →  "Saknar behörighet" (gymnasieexamen saknas)
+
+2. Annars — kolla required_courses:
+     → Alla kurser bockas av              →  "Du är behörig"
+     → Kurser saknas                      →  "Komplettera på Komvux" (lista saknade kurser)
+```
+
+Reell kompetens kan **inte** automatiseras — funktionen flaggar bara möjligheten.  
+Meritpoäng hanteras inte — användaren länkas till `website_url`.
+
+---
+
+### Uppdatera YH-data
+
+Skolverket uppdaterar sina utbildningar löpande. Kör dessa script för att synka Supabase:
+
+**Förutsättningar:**
+```bash
+export SUPABASE_SERVICE_KEY="din_service_role_nyckel"  # Mac/Linux
+$env:SUPABASE_SERVICE_KEY = "din_service_role_nyckel"  # Windows PowerShell
+```
+
+**Steg 1 — Hämta alla utbildningar:**
+```bash
+node supabase/fetch-myh-schools.js
+```
+Hämtar ~2 577 program från `api.skolverket.se`, matchar mot EDU_MAP och upsert:ar till `yh_schools`.
+
+**Steg 2 — Berika med behörighetskrav:**
+```bash
+node supabase/fetch-yh-requirements.js
+```
+Kör detalj-endpoint per utbildning och fyller i `requirements`, `education_description`, `contact_phone` m.fl.
+
+**Steg 3 — Parsa behörighetskrav:**
+```bash
+node supabase/parse-requirements.js
+```
+Parsar `requirements`-råtext med regex → fyller `requirements_parsed` (JSONB).  
+Lägg till `--force` för att köra om redan parsade rader. `--dry-run` för att testa utan att spara.
+
+> **OBS:** Kör scripten i ordning. Kör aldrig om utan anledning — API-anropen är många och långsamma.
+
+---
+
+### Intresseanmälan
+
+Knappen "Gör en intresseanmälan" på sida 2 sparar till tabellen `school_leads` i Supabase.
+
+**Kolumner som sparas:** `school_id`, `school_name`, `program_name`, `education_id`, `first_name`, `last_name`, `email`, `phone`, `city`, `study_city`, `message`, `gdpr_accepted`
+
+Leads läses **bara** via Supabase-dashboarden (service role) — ingen frontend-vy finns.
+
+---
+
+### Filterfunktioner (Sida 1)
+
+| Filter | Supabase-query |
+|--------|----------------|
+| Fritextsökning | `or=(program_name.ilike.*X*,school_name.ilike.*X*,education_description.ilike.*X*)` |
+| Studieform (snabbknappar) | `study_mode=eq.campus` / `distance` / `hybrid` |
+| Stad | `city=ilike.*X*` |
+| Studietakt | `study_pace=eq.fulltime` / `parttime` |
+| Bransch | `education_ids=cs.{ID}` (array contains) |
+| Startdatum | `start_dates=cs.{"HT2026"}` (array contains) |
+| Studiemedel | `eligible_for_student_aid=eq.true` |
+| Avgiftsfri | `fee=eq.0` |
+
+Resultat pagineras med `limit=24&offset=N` + `Prefer: count=exact`.
+
+---
+
+### Möjliga förbättringar
+
+- **Parsningskvalitet:** `parse-requirements.js` regex missar ovanliga formuleringar. Kan förbättras med LLM-parsning (Claude API) istället för regex.
+- **Kursmappning per gymnasieprogram:** Förifyll vilka kurser användaren redan har baserat på valt program — kräver en mapping-tabell.
+- **Fler filter:** Längd (credits-slider), organisatör, språk.
+- **Sök på stad i URL:** `?city=stockholm` för direktlänkar.
+- **Logo:** `logo_url` finns i tabellen men är tom på de flesta rader — kan fyllas i manuellt för stora skolor.
+- **Schemalagd re-sync:** Automatisera `fetch-myh-schools.js` via Supabase Edge Function eller GitHub Actions (t.ex. månadsvis).
