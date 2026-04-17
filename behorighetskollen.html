@@ -19,6 +19,40 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 .nav-login{font-size:.83rem;font-weight:600;color:var(--ah);text-decoration:none;background:#fff;border:1.5px solid #C8E8D8;padding:7px 18px;border-radius:20px;transition:all .18s}
 .nav-login:hover{background:var(--al);border-color:var(--ac)}
 
+/* IA Modal */
+.ia-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:20px}
+.ia-overlay.open{display:flex}
+.ia-modal{background:var(--card);border-radius:16px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;border:1.5px solid var(--bo)}
+.ia-head{padding:22px 24px 16px;border-bottom:1px solid var(--bo);display:flex;justify-content:space-between;align-items:flex-start}
+.ia-head-left h3{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:4px}
+.ia-head-left p{font-size:.82rem;color:var(--mu);line-height:1.4}
+.ia-close{background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--li);width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0;margin-top:-2px}
+.ia-close:hover{background:var(--bg);color:var(--tx)}
+.ia-perks{display:flex;flex-direction:column;gap:6px;padding:14px 24px;border-bottom:1px solid var(--bo);background:var(--al)}
+.ia-perk{display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--ah);font-weight:600}
+.ia-perk::before{content:'✓';font-weight:800}
+.ia-body{padding:20px 24px 24px}
+.ia-for{font-size:.84rem;color:var(--mu);margin-bottom:18px}
+.ia-for strong{color:var(--tx)}
+.ia-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:0}
+.ia-field{margin-bottom:12px}
+.ia-field label{display:block;font-size:.72rem;font-weight:700;color:var(--li);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.ia-field input,.ia-field select,.ia-field textarea{width:100%;padding:11px 13px;border:1.5px solid var(--bo);border-radius:8px;font-family:inherit;font-size:.92rem;color:var(--tx);background:var(--bg);transition:border-color .2s;outline:none}
+.ia-field input:focus,.ia-field select:focus,.ia-field textarea:focus{border-color:var(--ac)}
+.ia-field textarea{resize:vertical;min-height:80px}
+.ia-gdpr{display:flex;align-items:flex-start;gap:10px;margin:16px 0}
+.ia-gdpr input[type=checkbox]{margin-top:2px;width:16px;height:16px;flex-shrink:0;accent-color:var(--ac)}
+.ia-gdpr label{font-size:.78rem;color:var(--mu);line-height:1.5}
+.ia-submit{width:100%;padding:14px;background:var(--ac);color:#fff;border:none;border-radius:10px;font-family:inherit;font-size:1rem;font-weight:800;cursor:pointer;transition:background .2s}
+.ia-submit:hover{background:#4d9970}
+.ia-submit:disabled{background:var(--li);cursor:not-allowed}
+.ia-success{text-align:center;padding:32px 24px}
+.ia-success .ia-check{font-size:2.5rem;margin-bottom:12px}
+.ia-success h4{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:8px}
+.ia-success p{color:var(--mu);font-size:.88rem;line-height:1.6}
+.ia-btn{display:inline-flex;align-items:center;gap:8px;background:var(--bh);color:#fff;border:none;border-radius:9px;padding:11px 20px;font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;transition:opacity .15s;text-decoration:none}
+.ia-btn:hover{opacity:.88}
+
 .detail-page{max-width:760px;margin:0 auto;padding:80px 24px 100px}
 
 .back-btn{display:inline-flex;align-items:center;gap:8px;font-size:.86rem;font-weight:600;color:var(--mu);background:var(--card);border:1.5px solid var(--bo);border-radius:8px;padding:8px 16px;cursor:pointer;transition:all .18s;margin-bottom:22px;text-decoration:none}
@@ -131,8 +165,48 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
   <a href="/" class="logo">
     <span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">gu<span class="i-dot">ı</span>den</span>
   </a>
-  <a href="/min-plan" class="nav-login">Logga in</a>
+  <div style="display:flex;align-items:center;gap:12px">
+    <a href="/min-plan" class="nav-login">Logga in</a>
+    <button onclick="toggleNavMenu()" id="navMenuBtn" style="background:none;border:1.5px solid var(--bo);border-radius:8px;padding:8px 10px;cursor:pointer;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center" aria-label="Meny">
+      <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
+      <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
+      <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
+    </button>
+  </div>
 </nav>
+<div id="navOverlay" onclick="toggleNavMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:150;backdrop-filter:blur(2px)"></div>
+<div id="navPanel" style="position:fixed;top:0;right:0;bottom:0;width:300px;background:#fff;z-index:160;transform:translateX(100%);transition:transform .3s cubic-bezier(0.4,0,0.2,1);box-shadow:-8px 0 32px rgba(0,0,0,.12);display:flex;flex-direction:column">
+  <div style="padding:20px 24px;border-bottom:1.5px solid var(--bo);display:flex;justify-content:space-between;align-items:center">
+    <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span></div>
+    <button onclick="toggleNavMenu()" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--mu);width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px">✕</button>
+  </div>
+  <div style="padding:8px 0;flex:1;overflow-y:auto">
+    <a href="/" style="display:block;padding:13px 24px;text-decoration:none;color:var(--tx);font-weight:700;font-size:.92rem;border-left:3px solid transparent;margin-bottom:8px">Startsidan</a>
+    <div style="padding:8px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Planering</div>
+    <a href="/skapa-min-plan" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Skapa min plan</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/min-plan" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Min plan</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Hitta rätt yrke</div>
+    <a href="/yrkestest" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Yrkestest</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/studieform" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Hur ska jag studera?</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Utbildningar</div>
+    <a href="/utbildningar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Utbildningar &amp; yrken</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/behorighetskollen-sok" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid var(--ac);background:#F0FAF4;transition:background .15s,border-color .15s"><div style="font-weight:600">Behörighetskollen</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/jamfor-utbildningar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Jämför utbildningar</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/komvux" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Komvux</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Ekonomi</div>
+    <a href="/csn-guide" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">CSN-guide</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/foreldre-som-studerar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Föräldrar som studerar</div></a>
+  </div>
+  <div style="padding:16px 24px;border-top:1.5px solid var(--bo)">
+    <a href="/integritetspolicy" style="font-size:.76rem;color:var(--li);text-decoration:none">Integritetspolicy</a>
+  </div>
+</div>
 
 <div class="detail-page">
   <a href="/behorighetskollen-sok" class="back-btn">
@@ -144,6 +218,76 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
     <div class="loading-state">
       <div class="spinner"></div>
       <p>Hämtar utbildning...</p>
+    </div>
+  </div>
+</div>
+
+<!-- IA Modal -->
+<div id="iaOverlay" class="ia-overlay" role="dialog" aria-modal="true" aria-labelledby="iaTitle">
+  <div class="ia-modal">
+    <div class="ia-head">
+      <div class="ia-head-left">
+        <h3 id="iaTitle">Gör en intresseanmälan</h3>
+        <p id="iaSubtitle">Lämna dina uppgifter så kontaktar skolan dig med mer info.</p>
+      </div>
+      <button class="ia-close" onclick="closeIA()" aria-label="Stäng">&times;</button>
+    </div>
+    <div class="ia-perks">
+      <div class="ia-perk">Få mer information via mejl</div>
+      <div class="ia-perk">Inte bindande</div>
+      <div class="ia-perk">Kostnadsfritt</div>
+    </div>
+    <div class="ia-body">
+      <div class="ia-for">Intresseanmälan för: <strong id="iaForProgram">—</strong></div>
+      <form id="iaForm" onsubmit="submitIA(event)">
+        <div class="ia-row">
+          <div class="ia-field"><label>Förnamn *</label><input type="text" id="iaFirstName" required placeholder="Förnamn" autocomplete="given-name"></div>
+          <div class="ia-field"><label>Efternamn *</label><input type="text" id="iaLastName" required placeholder="Efternamn" autocomplete="family-name"></div>
+        </div>
+        <div class="ia-row">
+          <div class="ia-field"><label>Email *</label><input type="email" id="iaEmail" required placeholder="din@email.se" autocomplete="email"></div>
+          <div class="ia-field"><label>Telefon *</label><input type="tel" id="iaPhone" required placeholder="07XXXXXXXX" autocomplete="tel"></div>
+        </div>
+        <div class="ia-row">
+          <div class="ia-field"><label>Ort *</label><input type="text" id="iaCity" required placeholder="Din ort" autocomplete="address-level2"></div>
+          <div class="ia-field"><label>Ålder *</label>
+            <select id="iaAge" required>
+              <option value="">— Välj ålder —</option>
+              <option value="under18">Under 18</option>
+              <option value="18-24">18–24</option>
+              <option value="25-29">25–29</option>
+              <option value="30-34">30–34</option>
+              <option value="35-39">35–39</option>
+              <option value="40-49">40–49</option>
+              <option value="50+">50+</option>
+            </select>
+          </div>
+        </div>
+        <div class="ia-field"><label>Önskad studieort</label>
+          <select id="iaStudyCity">
+            <option value="">— Välj studieort —</option>
+            <option value="stockholm">Stockholm</option>
+            <option value="goteborg">Göteborg</option>
+            <option value="malmo">Malmö</option>
+            <option value="linkoping">Linköping</option>
+            <option value="orebro">Örebro</option>
+            <option value="umea">Umeå</option>
+            <option value="distance">Distans</option>
+            <option value="other">Annan ort</option>
+          </select>
+        </div>
+        <div class="ia-field"><label>Frågor eller meddelande</label><textarea id="iaMessage" placeholder="Skriv eventuella frågor eller vad du vill veta mer om."></textarea></div>
+        <div class="ia-gdpr">
+          <input type="checkbox" id="iaGdpr" required>
+          <label for="iaGdpr">Jag accepterar att mina uppgifter lagras och delas med utbildningsanordnaren i syfte att ge mig information om utbildningen. <a href="/integritetspolicy" target="_blank" style="color:var(--ac)">Integritetspolicy</a></label>
+        </div>
+        <button type="submit" class="ia-submit" id="iaSubmitBtn">Skicka intresseanmälan →</button>
+      </form>
+      <div id="iaSuccess" class="ia-success" style="display:none">
+        <div class="ia-check">✅</div>
+        <h4>Intresseanmälan skickad!</h4>
+        <p>Tack! <strong id="iaSuccessSchool"></strong> kommer att kontakta dig med mer information om <strong id="iaSuccessProgram"></strong>.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -255,6 +399,12 @@ function renderPage(school) {
       <div class="dhero-school">${esc(school.school_name)}</div>
       <div class="dhero-tags">
         ${modeTag}${paceTag}${cityTag}${durTag}
+      </div>
+      <div style="margin-top:16px">
+        <button class="ia-btn" onclick="openIA()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Gör en intresseanmälan
+        </button>
       </div>
     </div>
 
@@ -397,6 +547,88 @@ async function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+function toggleNavMenu() {
+  const panel = document.getElementById('navPanel');
+  const overlay = document.getElementById('navOverlay');
+  const open = panel.style.transform === 'translateX(0%)';
+  panel.style.transform = open ? 'translateX(100%)' : 'translateX(0%)';
+  overlay.style.display = open ? 'none' : 'block';
+  document.body.style.overflow = open ? '' : 'hidden';
+}
+
+function openIA() {
+  if (!schoolData) return;
+  document.getElementById('iaForProgram').textContent =
+    schoolData.program_name + ' — ' + schoolData.school_name;
+  document.getElementById('iaForm').style.display = 'block';
+  document.getElementById('iaSuccess').style.display = 'none';
+  document.getElementById('iaSubmitBtn').disabled = false;
+  document.getElementById('iaSubmitBtn').textContent = 'Skicka intresseanmälan →';
+  document.getElementById('iaGdpr').checked = false;
+  document.getElementById('iaOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeIA() {
+  document.getElementById('iaOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('click', function(e) {
+  if (e.target === document.getElementById('iaOverlay')) closeIA();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeIA();
+});
+
+async function submitIA(e) {
+  e.preventDefault();
+  if (!schoolData) return;
+  const btn = document.getElementById('iaSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Skickar...';
+
+  const payload = {
+    school_id:    schoolData.id || null,
+    school_name:  schoolData.school_name,
+    program_name: schoolData.program_name,
+    education_id: schoolData.education_ids && schoolData.education_ids[0] ? schoolData.education_ids[0] : null,
+    plan_id:      null,
+    first_name:   document.getElementById('iaFirstName').value.trim(),
+    last_name:    document.getElementById('iaLastName').value.trim(),
+    email:        document.getElementById('iaEmail').value.trim().toLowerCase(),
+    phone:        document.getElementById('iaPhone').value.trim(),
+    city:         document.getElementById('iaCity').value.trim(),
+    age:          document.getElementById('iaAge').value || null,
+    study_city:   document.getElementById('iaStudyCity').value || null,
+    message:      document.getElementById('iaMessage').value.trim() || null,
+    gdpr_accepted: document.getElementById('iaGdpr').checked,
+  };
+
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/school_leads', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    document.getElementById('iaForm').style.display = 'none';
+    document.getElementById('iaSuccessSchool').textContent = schoolData.school_name;
+    document.getElementById('iaSuccessProgram').textContent = schoolData.program_name;
+    document.getElementById('iaSuccess').style.display = 'block';
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Skicka intresseanmälan →';
+    alert('Något gick fel. Försök igen eller kontakta skolan direkt.');
+  }
+}
 </script>
 </body>
 </html>

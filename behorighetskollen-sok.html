@@ -109,8 +109,48 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
   <a href="/" class="logo">
     <span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">gu<span class="i-dot">ı</span>den</span>
   </a>
-  <a href="/min-plan" class="nav-login">Logga in</a>
+  <div style="display:flex;align-items:center;gap:12px">
+    <a href="/min-plan" class="nav-login">Logga in</a>
+    <button onclick="toggleNavMenu()" id="navMenuBtn" style="background:none;border:1.5px solid var(--bo);border-radius:8px;padding:8px 10px;cursor:pointer;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center" aria-label="Meny">
+      <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
+      <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
+      <span style="display:block;width:18px;height:2px;background:var(--mu);border-radius:2px"></span>
+    </button>
+  </div>
 </nav>
+<div id="navOverlay" onclick="toggleNavMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:150;backdrop-filter:blur(2px)"></div>
+<div id="navPanel" style="position:fixed;top:0;right:0;bottom:0;width:300px;background:#fff;z-index:160;transform:translateX(100%);transition:transform .3s cubic-bezier(0.4,0,0.2,1);box-shadow:-8px 0 32px rgba(0,0,0,.12);display:flex;flex-direction:column">
+  <div style="padding:20px 24px;border-bottom:1.5px solid var(--bo);display:flex;justify-content:space-between;align-items:center">
+    <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700"><span style="color:#6BA3D0">Studievägs</span><span style="color:#7AC29A">guiden</span></div>
+    <button onclick="toggleNavMenu()" style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--mu);width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px">✕</button>
+  </div>
+  <div style="padding:8px 0;flex:1;overflow-y:auto">
+    <a href="/" style="display:block;padding:13px 24px;text-decoration:none;color:var(--tx);font-weight:700;font-size:.92rem;border-left:3px solid transparent;margin-bottom:8px">Startsidan</a>
+    <div style="padding:8px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Planering</div>
+    <a href="/skapa-min-plan" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Skapa min plan</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/min-plan" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Min plan</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Hitta rätt yrke</div>
+    <a href="/yrkestest" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Yrkestest</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/studieform" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Hur ska jag studera?</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Utbildningar</div>
+    <a href="/utbildningar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Utbildningar &amp; yrken</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/behorighetskollen-sok" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid var(--ac);background:#F0FAF4"><div style="font-weight:600">Behörighetskollen</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/jamfor-utbildningar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Jämför utbildningar</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/komvux" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Komvux</div></a>
+    <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Ekonomi</div>
+    <a href="/csn-guide" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">CSN-guide</div></a>
+    <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
+    <a href="/foreldre-som-studerar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Föräldrar som studerar</div></a>
+  </div>
+  <div style="padding:16px 24px;border-top:1.5px solid var(--bo)">
+    <a href="/integritetspolicy" style="font-size:.76rem;color:var(--li);text-decoration:none">Integritetspolicy</a>
+  </div>
+</div>
 
 <div class="page-header">
   <div class="page-header-label">Behörighetskollen</div>
@@ -391,6 +431,15 @@ async function loadMore() {
   await fetchSchools(false);
   btn.textContent = 'Ladda fler utbildningar';
   btn.disabled = false;
+}
+
+function toggleNavMenu() {
+  const panel = document.getElementById('navPanel');
+  const overlay = document.getElementById('navOverlay');
+  const open = panel.style.transform === 'translateX(0%)';
+  panel.style.transform = open ? 'translateX(100%)' : 'translateX(0%)';
+  overlay.style.display = open ? 'none' : 'block';
+  document.body.style.overflow = open ? '' : 'hidden';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
