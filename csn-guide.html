@@ -279,6 +279,8 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
   .steps-grid a{border-right:none!important;border-bottom:1px solid var(--bo);padding:0 0 16px 0!important;margin-bottom:0}
 }
 @media(max-width:480px){
+  .steps-grid{grid-template-columns:1fr!important}
+  .steps-grid a:nth-child(5){flex-direction:column!important;grid-column:auto}
   .info-grid{grid-template-columns:1fr}
   .city-btn{font-size:.77rem;padding:6px 12px}
 }
@@ -350,7 +352,7 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
 <div style="background:#fff;border-bottom:1px solid var(--bo)">
   <div style="max-width:860px;margin:0 auto;padding:36px 28px">
     <p style="font-size:.7rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--li);margin-bottom:20px">Så här använder du guiden</p>
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
+    <div class="steps-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
       <a onclick="navScroll(event,'bidrag')" href="#bidrag" style="text-decoration:none;display:flex;flex-direction:column;gap:10px;padding:18px;border:1.5px solid var(--bll);border-radius:14px;background:#fff;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='var(--bl)'" onmouseout="this.style.borderColor='var(--bll)'">
         <div style="width:30px;height:30px;border-radius:50%;background:var(--bll);border:2px solid var(--bl);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:var(--bl);flex-shrink:0">1</div>
         <div style="font-size:.86rem;font-weight:700;color:var(--tx);line-height:1.3">Hur mycket CSN får du?</div>
