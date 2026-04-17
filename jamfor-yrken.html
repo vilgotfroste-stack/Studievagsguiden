@@ -348,6 +348,9 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
   .metrics-grid{grid-template-columns:1fr}
   h1{font-size:1.75rem}
 }
+@media(max-width:600px){
+  .quick-links-grid{grid-template-columns:1fr!important}
+}
 </style>
 </head>
 <body>
@@ -433,7 +436,7 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
 </div><!-- /hero white bg -->
 
 <div style="background:#fff;border-bottom:1px solid var(--bo);padding:20px 24px">
-  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+  <div class="quick-links-grid" style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
 
     <a href="/yrken" style="display:flex;flex-direction:column;text-decoration:none;background:#fff;border:2px solid var(--bo);border-radius:12px;overflow:hidden;transition:border-color .18s,transform .18s" onmouseover="this.style.borderColor='var(--ac)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--bo)';this.style.transform=''">
       <div style="background:var(--al);padding:16px 16px 12px;border-bottom:1.5px solid var(--bo);display:flex;align-items:center;gap:11px">
