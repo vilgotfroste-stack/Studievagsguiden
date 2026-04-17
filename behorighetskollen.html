@@ -211,11 +211,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
     <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
     <a href="/studieform" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Hur ska jag studera?</div></a>
     <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Utbildningar</div>
-    <a href="/utbildningar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Utbildningar &amp; yrken</div></a>
+    <a href="/yrken" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Yrken</div></a>
     <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
-    <a href="/behorighetskollen-sok" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid var(--ac);background:#F0FAF4;transition:background .15s,border-color .15s"><div style="font-weight:600">Behörighetskollen</div></a>
+    <a href="/utbildningar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid var(--ac);background:#F0FAF4;transition:background .15s,border-color .15s"><div style="font-weight:600">YH-utbildningar</div></a>
     <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
-    <a href="/jamfor-utbildningar" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Jämför utbildningar</div></a>
+    <a href="/jamfor-yrken" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Jämför yrken</div></a>
     <hr style="margin:0 24px;border:none;border-top:1px solid var(--bo)">
     <a href="/komvux" style="display:block;padding:11px 24px;text-decoration:none;color:var(--tx);font-size:.9rem;border-left:3px solid transparent;transition:background .15s,border-color .15s" onmouseover="this.style.background='#F4F8F5';this.style.borderLeftColor='var(--bl)'" onmouseout="this.style.background='';this.style.borderLeftColor='transparent'"><div style="font-weight:600">Komvux</div></a>
     <div style="padding:12px 24px 4px;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--li)">Ekonomi</div>
@@ -229,7 +229,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 </div>
 
 <div class="detail-page">
-  <a href="/behorighetskollen-sok" class="back-btn">
+  <a href="/utbildningar" class="back-btn">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
     Tillbaka till sökning
   </a>
@@ -441,7 +441,7 @@ function renderPage(school) {
 
   return `
     <div class="dhero">
-      <div class="dhero-label">Behörighetskollen</div>
+      <div class="dhero-label">YH-utbildningar</div>
       <div class="dhero-name">${esc(school.program_name)}</div>
       <div class="dhero-school">${esc(school.school_name)}</div>
       <div class="dhero-tags">
@@ -478,7 +478,7 @@ function renderPage(school) {
         </div>
         <div class="result-actions">
           ${school.website_url ? `<a href="${esc(school.website_url)}" target="_blank" rel="noopener" class="result-link link-primary">Ansök via skolans hemsida →</a>` : ''}
-          <a href="/behorighetskollen-sok" class="result-link link-secondary">Sök fler utbildningar</a>
+          <a href="/utbildningar" class="result-link link-secondary">Sök fler utbildningar</a>
         </div>
       </div>
 
@@ -492,7 +492,7 @@ function renderPage(school) {
         </div>
         <div class="result-actions">
           <a href="/komvux" class="result-link link-primary">Läs om Komvux →</a>
-          <a href="/behorighetskollen-sok" class="result-link link-secondary">Sök annan utbildning</a>
+          <a href="/utbildningar" class="result-link link-secondary">Sök annan utbildning</a>
         </div>
       </div>
 
@@ -507,7 +507,7 @@ function renderPage(school) {
         </div>
         <div class="result-actions">
           ${school.website_url ? `<a href="${esc(school.website_url)}" target="_blank" rel="noopener" class="result-link link-blue">Kontakta skolan →</a>` : ''}
-          <a href="/behorighetskollen-sok" class="result-link link-secondary">Sök annan utbildning</a>
+          <a href="/utbildningar" class="result-link link-secondary">Sök annan utbildning</a>
         </div>
       </div>
     </div>
@@ -579,21 +579,21 @@ async function init() {
   const content = document.getElementById('pageContent');
 
   if (!id) {
-    content.innerHTML = `<div class="error-state"><p>Ingen utbildning vald.<br><a href="/behorighetskollen-sok">Gå tillbaka och välj en utbildning.</a></p></div>`;
+    content.innerHTML = `<div class="error-state"><p>Ingen utbildning vald.<br><a href="/utbildningar">Gå tillbaka och välj en utbildning.</a></p></div>`;
     return;
   }
 
   try {
     const school = await loadSchool(id);
     if (!school) {
-      content.innerHTML = `<div class="error-state"><p>Utbildningen hittades inte.<br><a href="/behorighetskollen-sok">Sök bland alla utbildningar.</a></p></div>`;
+      content.innerHTML = `<div class="error-state"><p>Utbildningen hittades inte.<br><a href="/utbildningar">Sök bland alla utbildningar.</a></p></div>`;
       return;
     }
     schoolData = school;
     document.title = school.program_name + ' — Behörighetskollen | Studievägsguiden';
     content.innerHTML = renderPage(school);
   } catch (e) {
-    content.innerHTML = `<div class="error-state"><p>Kunde inte hämta utbildningen. Kontrollera anslutningen och försök igen.<br><a href="/behorighetskollen-sok">Tillbaka till sökning.</a></p></div>`;
+    content.innerHTML = `<div class="error-state"><p>Kunde inte hämta utbildningen. Kontrollera anslutningen och försök igen.<br><a href="/utbildningar">Tillbaka till sökning.</a></p></div>`;
   }
 }
 
