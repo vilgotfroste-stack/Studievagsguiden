@@ -223,7 +223,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tx)
 .lt-opp-sub { font-size: .68rem; color: var(--li); margin-top: 2px; }
 
 /* SECTION LABEL */
-.section-label { font-size: .6rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ah); margin: 18px 0 6px; padding: 6px 10px; border-radius: 6px; background: #EAF7F1; background-image: repeating-linear-gradient(135deg, rgba(100,160,130,0.08) 0px, rgba(100,160,130,0.08) 1px, transparent 1px, transparent 12px); border: 1px solid rgba(91,168,130,.2); display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.section-label { font-size: .62rem; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--mu); margin: 20px 0 8px; padding: 0 2px; display: flex; align-items: center; justify-content: space-between; gap: 6px; background: none; border: none; border-radius: 0; }
 
 /* EKONOMI */
 .balance-hero { border-radius: 14px; margin-bottom: 12px; overflow: hidden; border: 1.5px solid var(--bo); display: grid; grid-template-rows: auto auto; }
@@ -489,6 +489,23 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 .score-factor.ok { background: var(--al); color: var(--ah); }
 .score-factor.warn { background: var(--wl); color: var(--wa); }
 .score-factor.bad { background: var(--rl); color: var(--re); }
+
+/* SCORE ACTION SENTENCE */
+.score-action { font-size: .84rem; font-weight: 600; color: var(--tx); margin-top: 10px; padding: 10px 12px; background: var(--bg); border-radius: 8px; border-left: 3px solid var(--ac); line-height: 1.45; }
+.score-action.warn-action { border-left-color: var(--wa); }
+.score-action.bad-action  { border-left-color: var(--re); }
+
+/* STICKY BOTTOM CTA */
+.sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 95; background: rgba(255,255,255,.97); backdrop-filter: blur(12px); border-top: 1.5px solid var(--bo); padding: 12px 16px; display: none; align-items: center; gap: 10px; box-shadow: 0 -4px 20px rgba(0,0,0,.08); }
+.sticky-cta.visible { display: flex; }
+.sticky-cta-main { flex: 1; padding: 12px 16px; border: none; border-radius: 10px; font-family: 'Inter', sans-serif; font-size: .9rem; font-weight: 700; cursor: pointer; transition: all .2s; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.sticky-cta-main.green { background: var(--ac); color: #fff; }
+.sticky-cta-main.green:hover { background: var(--ah); }
+.sticky-cta-main.blue  { background: var(--bl); color: #fff; }
+.sticky-cta-main.blue:hover  { background: var(--bh); }
+.sticky-cta-main.amber { background: var(--wa); color: #fff; }
+.sticky-cta-edit { padding: 12px 14px; border: 1.5px solid var(--bo); border-radius: 10px; background: #fff; font-family: 'Inter', sans-serif; font-size: .82rem; font-weight: 600; color: var(--mu); cursor: pointer; white-space: nowrap; transition: border-color .15s; }
+.sticky-cta-edit:hover { border-color: var(--ac); color: var(--ac); }
 .score-subs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
 .score-sub { background: rgba(255,255,255,.7); border: 1px solid var(--bo); border-radius: 10px; padding: 10px 12px; }
 .score-sub-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
@@ -1438,6 +1455,10 @@ function buildFP(name) {
  <div class="hero-eyebrow">${e.t}</div>
  <div class="hero-title">Din framtid i siffror</div>
  <div class="hero-sub">Baserat på dina svar · ${firstName}, ${age} år</div>
+ <div style="display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap">
+   <button onclick="openEditModal()" style="font-family:'Inter',sans-serif;font-size:.73rem;font-weight:600;padding:5px 11px;border:1.5px solid var(--bo);border-radius:6px;background:#fff;color:var(--mu);cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='var(--ac)';this.style.color='var(--ac)'" onmouseout="this.style.borderColor='var(--bo)';this.style.color='var(--mu)'">Byt utbildning</button>
+   <button onclick="goTo('ekonomi')" style="font-family:'Inter',sans-serif;font-size:.73rem;font-weight:600;padding:5px 11px;border:1.5px solid var(--bo);border-radius:6px;background:#fff;color:var(--mu);cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='var(--bl)';this.style.color='var(--bl)'" onmouseout="this.style.borderColor='var(--bo)';this.style.color='var(--mu)'">Justera ekonomi</button>
+ </div>
  <div class="stat-grid">
  <div class="stat-card good">
  <div class="stat-label">Ingångslön</div>
@@ -1921,6 +1942,7 @@ function buildFP(name) {
    </div>
  </div>
  <div class="score-factors" id="score-factors"></div>
+ <div id="score-action" class="score-action" style="display:none"></div>
  <div class="score-subs" id="score-subs"></div>
  </div>`;
 
@@ -2440,6 +2462,34 @@ function updateScore() {
                          score >= 40 ? 'Möjligt men utmanande — se vad som kan förbättras.' :
                          'Tufft läge just nu — justera planen nedan.';
   }
+
+  // Konkret handlingstext
+  const actionEl = document.getElementById('score-action');
+  if (actionEl && edu && ans) {
+    const miss = planState.missingCount;
+    const { bal } = calcBalance ? calcBalance() : {bal:0};
+    const behVerified = ans.beh_verified;
+    let actionText = '', actionClass = '';
+    if (!behVerified) {
+      actionText = 'Verifiera din behörighet för att se om du kan söka direkt — tar 2 minuter.';
+      actionClass = 'warn-action';
+    } else if (miss > 0) {
+      actionText = `Du behöver ${miss} Komvux-kurs${miss > 1 ? 'er' : ''} — se behörighetsfliken för tidsplan.`;
+      actionClass = 'warn-action';
+    } else if (bal < 0) {
+      actionText = 'Budgeten går minus — justera CSN-lånet eller extrajobb i ekonomifliken.';
+      actionClass = 'bad-action';
+    } else {
+      actionText = `Du kan söka ${edu.t} — kolla ansökningsdatum i planfliken och sätt igång.`;
+      actionClass = '';
+    }
+    actionEl.textContent = actionText;
+    actionEl.className = 'score-action' + (actionClass ? ' ' + actionClass : '');
+    actionEl.style.display = 'block';
+  }
+
+  // Uppdatera sticky CTA
+  _updateStickyCTA(factors);
   if (facEl) {
     facEl.innerHTML = factors.map(f => {
       const clickable = f.nav
@@ -2475,6 +2525,33 @@ function updateScore() {
     };
     subsEl.innerHTML = renderSub('Ekonomi', eko) + renderSub('Behörighet', beh);
   }
+}
+
+function _updateStickyCTA(factors) {
+  const bar = document.getElementById('sticky-cta');
+  if (!bar || !edu || !ans) return;
+  const miss = planState.missingCount;
+  const behVerified = ans.beh_verified;
+  const studentumUrl = buildStudentumUrl ? buildStudentumUrl() : '#';
+  let mainHTML = '', editLabel = 'Ändra svar';
+
+  if (!behVerified) {
+    mainHTML = `<button class="sticky-cta-main blue" onclick="openVerifyModal()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Verifiera behörighet
+    </button>`;
+  } else if (miss > 0) {
+    mainHTML = `<button class="sticky-cta-main amber" onclick="goTo('beh')">
+      Se Komvux-plan →
+    </button>`;
+  } else {
+    mainHTML = `<a href="${studentumUrl}" target="_blank" rel="noopener" class="sticky-cta-main green">
+      Sök ${edu.t} →
+    </a>`;
+  }
+
+  bar.innerHTML = mainHTML + `<button class="sticky-cta-edit" onclick="openEditModal()">Ändra svar</button>`;
+  bar.classList.add('visible');
 }
 
 // Navigation from score badges
@@ -4304,5 +4381,8 @@ async function submitIA(e) {
   }
 }
 </script>
+<!-- Sticky bottom CTA -->
+<div class="sticky-cta" id="sticky-cta"></div>
+
 </body>
 </html>
