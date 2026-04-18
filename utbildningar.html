@@ -7,102 +7,142 @@
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="canonical" href="https://www.studievagsguiden.se/utbildningar">
 <meta name="description" content="Sök och filtrera bland 2 500+ yrkeshögskoleutbildningar efter stad, studieform och bransch. Kontrollera din behörighet direkt.">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#F4F8F5;--card:#fff;--tx:#0A0A0A;--mu:#3A3A36;--li:#7A7A74;--ac:#5BA882;--al:#EBF5F0;--ah:#2D6B4A;--bl:#5A8FB5;--bll:#E4F0FB;--bh:#2A4F6E;--re:#B04830;--rl:#FDECEA;--wa:#9A6A00;--wl:#FBF5EA;--pu:#8A70B5;--pl:#EDE7F5;--bo:#C5D8EB;--r:12px;--sh:0 2px 20px rgba(0,0,0,.06);--shl:0 8px 40px rgba(0,0,0,.1)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background-color:#EAF7F1;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.07) 0px,rgba(100,160,130,0.07) 1px,transparent 1px,transparent 12px);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',sans-serif;background-color:#EAF7F1;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.07) 0px,rgba(100,160,130,0.07) 1px,transparent 1px,transparent 12px);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
 
+/* ── Nav ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;letter-spacing:.01em;text-decoration:none;color:inherit}
+.logo{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;letter-spacing:.01em;text-decoration:none;color:inherit}
 .logo .i-dot{position:relative;display:inline-block}
 .logo .i-dot::after{content:'';position:absolute;top:.25em;left:50%;transform:translateX(-50%);width:.2em;height:.2em;background:#6BA3D0;border-radius:50%}
 .nav-login{font-size:.83rem;font-weight:600;color:var(--ah);text-decoration:none;background:#fff;border:1.5px solid #C8E8D8;padding:7px 18px;border-radius:20px;transition:all .18s}
 .nav-login:hover{background:var(--al);border-color:var(--ac)}
 
-.page-header{padding:88px 24px 28px;max-width:860px;margin:0 auto;text-align:center}
-.page-header-label{font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--ac);margin-bottom:10px}
-.page-header h1{font-family:'DM Serif Display',serif;font-size:clamp(1.9rem,4.5vw,2.8rem);line-height:1.15;letter-spacing:-.5px;margin-bottom:10px}
-.page-header p{color:var(--mu);font-size:.97rem;max-width:520px;margin:0 auto}
+/* ── Page header ── */
+.page-header{padding:72px 28px 0;max-width:1280px;margin:0 auto}
+.page-header-inner{padding:24px 0 20px;border-bottom:1.5px solid var(--bo);display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.page-header-label{font-size:.66rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ac);margin-bottom:6px}
+.page-header h1{font-family:'Inter',sans-serif;font-size:clamp(1.55rem,3vw,2.1rem);font-weight:900;line-height:1.1;letter-spacing:-.05em;margin-bottom:5px}
+.page-header p{color:var(--mu);font-size:.88rem;max-width:400px}
 
-.search-outer{max-width:860px;margin:0 auto 16px;padding:0 24px}
-.search-wrap{position:relative;display:flex;align-items:center}
-.search-wrap svg{position:absolute;left:14px;color:var(--li);pointer-events:none;flex-shrink:0}
-.search-wrap input{width:100%;padding:13px 40px 13px 44px;border:2px solid var(--bo);border-radius:12px;font-family:inherit;font-size:.96rem;background:var(--card);color:var(--tx);transition:border-color .18s;outline:none}
-.search-wrap input:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(91,168,130,.12)}
-.search-wrap input::placeholder{color:var(--li)}
-.search-clear{position:absolute;right:14px;background:none;border:none;font-size:1.2rem;color:var(--li);cursor:pointer;padding:4px;line-height:1;display:none;align-items:center;justify-content:center;border-radius:50%;width:22px;height:22px;transition:background .15s}
+/* ── Two-column layout ── */
+.page-layout{max-width:1280px;margin:0 auto;padding:22px 28px 80px;display:flex;gap:22px;align-items:flex-start}
+
+/* ── Sidebar ── */
+.sidebar{width:256px;flex-shrink:0;position:sticky;top:74px;max-height:calc(100vh - 88px);overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding-right:2px;padding-bottom:16px}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--bo);border-radius:3px}
+
+.sb-block{background:var(--card);border:1.5px solid var(--bo);border-radius:12px;padding:14px 16px}
+
+/* Search */
+.sb-search{position:relative;display:flex;align-items:center}
+.sb-search svg{position:absolute;left:11px;color:var(--li);pointer-events:none;flex-shrink:0}
+.sb-search input{width:100%;padding:9px 34px 9px 34px;border:1.5px solid var(--bo);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem;background:#fff;color:var(--tx);transition:border-color .18s;outline:none}
+.sb-search input:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(91,168,130,.1)}
+.sb-search input::placeholder{color:var(--li)}
+.search-clear{position:absolute;right:9px;background:none;border:none;font-size:1rem;color:var(--li);cursor:pointer;line-height:1;display:none;align-items:center;justify-content:center;border-radius:50%;width:20px;height:20px;transition:background .15s}
 .search-clear:hover{background:var(--bg);color:var(--tx)}
 
-.quick-wrap{max-width:860px;margin:0 auto 16px;padding:0 24px;display:flex;gap:8px;flex-wrap:wrap}
-.qbtn{padding:8px 16px;border-radius:20px;border:2px solid var(--bo);background:var(--card);font-family:inherit;font-size:.8rem;font-weight:600;color:var(--mu);cursor:pointer;transition:all .18s;white-space:nowrap}
+/* Mode buttons */
+.sb-label{display:block;font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--li);margin-bottom:10px}
+.mode-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.qbtn{padding:7px 8px;border-radius:8px;border:1.5px solid var(--bo);background:var(--card);font-family:'Inter',sans-serif;font-size:.76rem;font-weight:600;color:var(--mu);cursor:pointer;transition:all .18s;white-space:nowrap;text-align:center}
 .qbtn:hover{border-color:var(--ac);color:var(--ac);background:var(--al)}
 .qbtn.active{border-color:var(--ac);background:var(--ac);color:#fff}
 
-.filter-wrap{max-width:860px;margin:0 auto 20px;padding:0 24px}
-.filter-toggle{width:100%;background:var(--card);border:1.5px solid var(--bo);border-radius:10px;padding:11px 18px;font-family:inherit;font-size:.88rem;font-weight:600;color:var(--mu);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color .2s,color .2s}
-.filter-toggle:hover,.filter-toggle.open{border-color:var(--ac);color:var(--ac)}
-.filter-toggle .arr{transition:transform .25s}
-.filter-toggle.open .arr{transform:rotate(180deg)}
-.filter-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
-.filter-body.open{max-height:700px}
-.filter-inner{background:var(--card);border:1.5px solid var(--bo);border-top:none;border-radius:0 0 10px 10px;padding:18px}
-.filter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.filter-checks{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;padding-top:14px;border-top:1px solid var(--bo)}
-.fcheck{display:flex;align-items:center;gap:7px;font-size:.82rem;font-weight:600;color:var(--mu);cursor:pointer;user-select:none}
-.fcheck input[type=checkbox]{width:15px;height:15px;accent-color:var(--ac);cursor:pointer;flex-shrink:0}
-.filter-item label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mu);margin-bottom:6px}
-.filter-item input[type=text],.filter-item select{width:100%;padding:9px 12px;border:1.5px solid var(--bo);border-radius:8px;font-family:inherit;font-size:.85rem;background:#fff;color:var(--tx);transition:border-color .18s;outline:none}
+/* Filter inputs */
+.filter-item{margin-bottom:11px}
+.filter-item:last-of-type{margin-bottom:0}
+.filter-item label{display:block;font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--li);margin-bottom:5px}
+.filter-item input[type=text],.filter-item select{width:100%;padding:8px 10px;border:1.5px solid var(--bo);border-radius:8px;font-family:'Inter',sans-serif;font-size:.83rem;background:#fff;color:var(--tx);transition:border-color .18s;outline:none}
 .filter-item input[type=text]:focus,.filter-item select:focus{border-color:var(--ac)}
 .filter-item select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B6B63' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;cursor:pointer}
-.filter-foot{margin-top:14px;border-top:1px solid var(--bo);padding-top:10px;display:flex;justify-content:flex-end}
-.filter-foot button{background:none;border:none;font-family:inherit;font-size:.78rem;color:var(--li);cursor:pointer;text-decoration:underline}
-.filter-foot button:hover{color:var(--re)}
 
-.results-meta{max-width:860px;margin:0 auto 10px;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.results-count{font-size:.8rem;color:var(--mu);font-weight:500}
+.sb-checks{margin-top:12px;padding-top:11px;border-top:1px solid var(--bo);display:flex;flex-direction:column;gap:1px}
+.fcheck{display:flex;align-items:center;gap:8px;font-size:.79rem;font-weight:500;color:var(--mu);cursor:pointer;user-select:none;padding:5px 0}
+.fcheck input[type=checkbox]{width:14px;height:14px;accent-color:var(--ac);cursor:pointer;flex-shrink:0}
+.sb-reset{width:100%;background:none;border:none;font-family:'Inter',sans-serif;font-size:.76rem;color:var(--li);cursor:pointer;text-decoration:underline;padding:10px 0 0;text-align:left}
+.sb-reset:hover{color:var(--re)}
 
-.edu-grid{max-width:860px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+/* ── Results area ── */
+.results-area{flex:1;min-width:0}
+.results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:12px}
+.results-count{font-size:.79rem;color:var(--mu);font-weight:500}
+.view-toggle{display:flex;gap:4px;flex-shrink:0}
+.vtbtn{background:var(--card);border:1.5px solid var(--bo);border-radius:7px;padding:6px 8px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;color:var(--li)}
+.vtbtn:hover{border-color:var(--ac);color:var(--ac)}
+.vtbtn.active{border-color:var(--ac);background:var(--ac);color:#fff}
 
-.edu-card{background:var(--card);border:2px solid var(--bo);border-radius:14px;padding:18px 16px 14px;cursor:pointer;transition:border-color .18s,box-shadow .18s,transform .18s;display:flex;flex-direction:column;gap:5px;position:relative;overflow:hidden;text-decoration:none;color:inherit;animation:fadeUp .3s ease forwards;opacity:0}
-.edu-card:hover{border-color:var(--ac);box-shadow:0 6px 24px rgba(91,168,130,.14);transform:translateY(-2px)}
-.card-name{font-family:'DM Serif Display',serif;font-size:1.05rem;line-height:1.25;color:var(--tx);margin-bottom:2px}
-.card-school{font-size:.78rem;font-weight:600;color:var(--mu)}
-.card-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
-.card-mode-badge{font-size:.67rem;font-weight:700;padding:3px 9px;border-radius:10px;white-space:nowrap}
-.card-pace{font-size:.67rem;font-weight:700;padding:3px 9px;border-radius:10px;background:var(--wl);color:var(--wa)}
-.card-city{font-size:.72rem;color:var(--li);display:flex;align-items:center;gap:3px}
-.card-duration{font-size:.74rem;color:var(--li);margin-top:2px}
-.card-foot{font-size:.75rem;font-weight:600;color:var(--ac);margin-top:auto;padding-top:10px;border-top:1px solid #f0f0eb}
+/* ── Cards: grid mode ── */
+.edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
 
+.edu-card{background:var(--card);border:1.5px solid var(--bo);border-radius:12px;padding:16px 14px 12px;cursor:pointer;transition:border-color .18s,box-shadow .18s,transform .18s;display:flex;flex-direction:column;gap:0;position:relative;text-decoration:none;color:inherit;animation:fadeUp .3s ease forwards;opacity:0}
+.edu-card:hover{border-color:var(--ac);box-shadow:0 4px 18px rgba(91,168,130,.13);transform:translateY(-2px)}
+
+/* card-body and card-aside are transparent in grid mode */
+.edu-grid:not(.list-mode) .card-body{display:contents}
+.edu-grid:not(.list-mode) .card-aside{display:contents}
+.edu-grid:not(.list-mode) .list-cta{display:none}
+
+.card-name{font-family:'Inter',sans-serif;font-size:.92rem;font-weight:700;line-height:1.25;color:var(--tx);margin-bottom:3px;letter-spacing:-.02em}
+.card-school{font-size:.73rem;font-weight:500;color:var(--mu)}
+.card-meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.card-mode-badge{font-size:.63rem;font-weight:700;padding:3px 8px;border-radius:8px;white-space:nowrap}
+.card-pace{font-size:.63rem;font-weight:700;padding:3px 8px;border-radius:8px;background:var(--wl);color:var(--wa)}
+.card-city{font-size:.7rem;color:var(--li);display:flex;align-items:center;gap:3px;margin-top:3px}
+.card-duration{font-size:.7rem;color:var(--li);margin-top:3px}
+.card-foot{font-size:.72rem;font-weight:700;color:var(--ac);margin-top:auto;padding-top:10px;border-top:1px solid #eef2ee;letter-spacing:-.01em}
+
+/* ── Cards: list mode ── */
+.edu-grid.list-mode{grid-template-columns:1fr;gap:6px}
+.edu-grid.list-mode .edu-card{flex-direction:row;align-items:center;padding:12px 16px;transform:none !important}
+.edu-grid.list-mode .edu-card:hover{transform:none !important}
+.edu-grid.list-mode .card-body{display:flex;flex-direction:column;flex:1;min-width:0;gap:2px}
+.edu-grid.list-mode .card-aside{display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:14px}
+.edu-grid.list-mode .card-foot{display:none}
+.edu-grid.list-mode .card-meta{margin-top:0}
+.edu-grid.list-mode .card-city{margin-top:0}
+.edu-grid.list-mode .card-duration{margin-top:0}
+.edu-grid.list-mode .card-name{font-size:.86rem}
+.edu-grid.list-mode .card-school{font-size:.71rem}
+.list-cta{font-size:.72rem;font-weight:700;color:var(--ac);white-space:nowrap;padding-left:6px}
+
+/* ── Skeletons, empty, error ── */
 .empty{grid-column:1/-1;text-align:center;padding:56px 20px}
-.empty .ei{font-size:2.4rem;margin-bottom:12px}
-.empty p{font-size:.88rem;color:var(--mu);line-height:1.7}
-.empty button{background:none;border:none;font-family:inherit;font-weight:600;color:var(--ac);cursor:pointer;font-size:.88rem;margin-top:8px;text-decoration:underline}
-
+.empty .ei{font-size:2.2rem;margin-bottom:12px}
+.empty p{font-size:.87rem;color:var(--mu);line-height:1.7}
+.empty button{background:none;border:none;font-family:'Inter',sans-serif;font-weight:600;color:var(--ac);cursor:pointer;font-size:.87rem;margin-top:8px;text-decoration:underline}
 .skeleton{opacity:1 !important;animation:none !important}
 .skel-line{background:linear-gradient(90deg,#e8f0ea 25%,#d4e8da 50%,#e8f0ea 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:6px}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.error-box{grid-column:1/-1;background:var(--rl);border:1.5px solid #f5c6be;border-radius:12px;padding:20px;text-align:center;color:var(--re);font-size:.88rem}
 
-.load-more-wrap{text-align:center;padding:24px 24px 80px;display:none;max-width:860px;margin:0 auto}
-.load-more-btn{background:var(--card);border:2px solid var(--bo);border-radius:10px;padding:12px 32px;font-family:inherit;font-size:.88rem;font-weight:600;color:var(--mu);cursor:pointer;transition:all .18s}
+.load-more-wrap{text-align:center;padding:20px 0 0;display:none}
+.load-more-btn{background:var(--card);border:1.5px solid var(--bo);border-radius:10px;padding:11px 28px;font-family:'Inter',sans-serif;font-size:.85rem;font-weight:600;color:var(--mu);cursor:pointer;transition:all .18s}
 .load-more-btn:hover:not(:disabled){border-color:var(--ac);color:var(--ac);background:var(--al)}
 .load-more-btn:disabled{opacity:.5;cursor:not-allowed}
 
-.error-box{grid-column:1/-1;background:var(--rl);border:1.5px solid #f5c6be;border-radius:12px;padding:20px;text-align:center;color:var(--re);font-size:.88rem}
-
-@media(max-width:700px){
-  .edu-grid{grid-template-columns:repeat(2,1fr);padding:0 16px}
-  .filter-grid{grid-template-columns:1fr 1fr}
-  .search-outer,.quick-wrap,.filter-wrap,.results-meta{padding:0 16px}
-  .page-header{padding:78px 16px 22px}
-  .load-more-wrap{padding:24px 16px 80px}
+/* ── Responsive ── */
+@media(max-width:860px){
+  .edu-grid{grid-template-columns:repeat(2,1fr)}
 }
-@media(max-width:420px){
+@media(max-width:768px){
+  .page-layout{flex-direction:column;padding:16px 16px 80px;gap:14px}
+  .sidebar{width:100%;position:static;max-height:none;overflow-y:visible;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-right:0}
+  .sb-block.sb-search-block{grid-column:1/-1}
+  .page-header{padding:70px 16px 0}
+  .page-header-inner{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:480px){
   .edu-grid{grid-template-columns:1fr}
-  .filter-grid{grid-template-columns:1fr}
+  .sidebar{grid-template-columns:1fr}
+  .sb-block.sb-search-block{grid-column:auto}
 }
 </style>
 </head>
@@ -158,84 +198,100 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 </div>
 
 <div class="page-header">
-  <div class="page-header-label">YH-utbildningar</div>
-  <h1>Hitta YH-utbildning</h1>
-  <p>Hitta en yrkeshögskoleutbildning och kontrollera om du är behörig — på 2 minuter.</p>
-</div>
-
-<div class="search-outer">
-  <div class="search-wrap">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input id="searchInput" type="text" placeholder="Sök utbildning eller skola..." autocomplete="off" oninput="onSearch()">
-    <button class="search-clear" id="searchClear" onclick="clearSearch()" aria-label="Rensa sökning">×</button>
-  </div>
-</div>
-
-<div class="quick-wrap">
-  <button class="qbtn active" data-mode="" onclick="setMode('')">Alla</button>
-  <button class="qbtn" data-mode="campus" onclick="setMode('campus')">Campus</button>
-  <button class="qbtn" data-mode="distance" onclick="setMode('distance')">Distans</button>
-  <button class="qbtn" data-mode="hybrid" onclick="setMode('hybrid')">Hybrid</button>
-</div>
-
-<div class="filter-wrap">
-  <button class="filter-toggle" id="filterToggle" onclick="toggleFilter()">
-    Fler filter
-    <svg class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-  </button>
-  <div class="filter-body" id="filterBody">
-    <div class="filter-inner">
-      <div class="filter-grid">
-        <div class="filter-item">
-          <label>Stad</label>
-          <input type="text" id="cityInput" placeholder="t.ex. Stockholm" oninput="onFilterChange()">
-        </div>
-        <div class="filter-item">
-          <label>Studietakt</label>
-          <select id="paceSelect" onchange="onFilterChange()">
-            <option value="">Alla</option>
-            <option value="fulltime">Heltid</option>
-            <option value="parttime">Deltid</option>
-          </select>
-        </div>
-        <div class="filter-item">
-          <label>Bransch</label>
-          <select id="categorySelect" onchange="onFilterChange()">
-            <option value="">Alla branscher</option>
-          </select>
-        </div>
-        <div class="filter-item">
-          <label>Startdatum</label>
-          <select id="startSelect" onchange="onFilterChange()">
-            <option value="">Alla</option>
-            <option value="VT2025">VT 2025</option>
-            <option value="HT2025">HT 2025</option>
-            <option value="VT2026">VT 2026</option>
-            <option value="HT2026">HT 2026</option>
-            <option value="VT2027">VT 2027</option>
-            <option value="HT2027">HT 2027</option>
-          </select>
-        </div>
-      </div>
-      <div class="filter-checks">
-        <label class="fcheck"><input type="checkbox" id="cbStudiemedel" onchange="onFilterChange()"> Berättigar till studiemedel (CSN)</label>
-        <label class="fcheck"><input type="checkbox" id="cbAvgiftsfri" onchange="onFilterChange()"> Avgiftsfri utbildning</label>
-      </div>
-      <div class="filter-foot">
-        <button onclick="resetFilters()">Återställ filter</button>
-      </div>
+  <div class="page-header-inner">
+    <div>
+      <div class="page-header-label">YH-utbildningar</div>
+      <h1>Hitta YH-utbildning</h1>
+      <p>Sök bland 2 500+ program och kontrollera om du är behörig — på 2 minuter.</p>
     </div>
   </div>
 </div>
 
-<div class="results-meta">
-  <div id="resultsCount" class="results-count">Laddar utbildningar...</div>
-</div>
+<div class="page-layout">
 
-<div class="edu-grid" id="cardsGrid"></div>
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar">
 
-<div class="load-more-wrap" id="loadMoreWrap">
-  <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">Ladda fler utbildningar</button>
+    <div class="sb-block sb-search-block">
+      <div class="sb-search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="searchInput" type="text" placeholder="Sök utbildning eller skola..." autocomplete="off" oninput="onSearch()">
+        <button class="search-clear" id="searchClear" onclick="clearSearch()" aria-label="Rensa sökning">×</button>
+      </div>
+    </div>
+
+    <div class="sb-block">
+      <span class="sb-label">Studieform</span>
+      <div class="mode-btns">
+        <button class="qbtn active" data-mode="" onclick="setMode('')">Alla</button>
+        <button class="qbtn" data-mode="campus" onclick="setMode('campus')">Campus</button>
+        <button class="qbtn" data-mode="distance" onclick="setMode('distance')">Distans</button>
+        <button class="qbtn" data-mode="hybrid" onclick="setMode('hybrid')">Hybrid</button>
+      </div>
+    </div>
+
+    <div class="sb-block">
+      <span class="sb-label">Filter</span>
+      <div class="filter-item">
+        <label>Stad</label>
+        <input type="text" id="cityInput" placeholder="t.ex. Stockholm" oninput="onFilterChange()">
+      </div>
+      <div class="filter-item">
+        <label>Studietakt</label>
+        <select id="paceSelect" onchange="onFilterChange()">
+          <option value="">Alla</option>
+          <option value="fulltime">Heltid</option>
+          <option value="parttime">Deltid</option>
+        </select>
+      </div>
+      <div class="filter-item">
+        <label>Bransch</label>
+        <select id="categorySelect" onchange="onFilterChange()">
+          <option value="">Alla branscher</option>
+        </select>
+      </div>
+      <div class="filter-item">
+        <label>Startdatum</label>
+        <select id="startSelect" onchange="onFilterChange()">
+          <option value="">Alla</option>
+          <option value="VT2025">VT 2025</option>
+          <option value="HT2025">HT 2025</option>
+          <option value="VT2026">VT 2026</option>
+          <option value="HT2026">HT 2026</option>
+          <option value="VT2027">VT 2027</option>
+          <option value="HT2027">HT 2027</option>
+        </select>
+      </div>
+      <div class="sb-checks">
+        <label class="fcheck"><input type="checkbox" id="cbStudiemedel" onchange="onFilterChange()"> Berättigar till studiemedel (CSN)</label>
+        <label class="fcheck"><input type="checkbox" id="cbAvgiftsfri" onchange="onFilterChange()"> Avgiftsfri utbildning</label>
+      </div>
+      <button class="sb-reset" onclick="resetFilters()">Återställ filter</button>
+    </div>
+
+  </aside>
+
+  <!-- ── Results ── -->
+  <div class="results-area">
+    <div class="results-header">
+      <div id="resultsCount" class="results-count">Laddar utbildningar...</div>
+      <div class="view-toggle">
+        <button class="vtbtn active" id="vtGrid" onclick="setView('grid')" title="Rutnät">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </button>
+        <button class="vtbtn" id="vtList" onclick="setView('list')" title="Lista">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="edu-grid" id="cardsGrid"></div>
+
+    <div class="load-more-wrap" id="loadMoreWrap">
+      <button class="load-more-btn" id="loadMoreBtn" onclick="loadMore()">Ladda fler utbildningar</button>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -279,6 +335,15 @@ let currentOffset = 0;
 let totalCount = 0;
 let activeMode = '';
 let searchTimer = null;
+let viewMode = 'grid';
+
+function setView(mode) {
+  viewMode = mode;
+  const grid = document.getElementById('cardsGrid');
+  grid.classList.toggle('list-mode', mode === 'list');
+  document.getElementById('vtGrid').classList.toggle('active', mode === 'grid');
+  document.getElementById('vtList').classList.toggle('active', mode === 'list');
+}
 
 function getFilters() {
   return {
@@ -375,14 +440,19 @@ function renderCards(schools, reset) {
     const modeLabel = modeLabels[s.study_mode] || s.study_mode || '';
     const delay = reset ? (i % PAGE_SIZE) * 30 : 0;
     return `<a href="/behorighetskollen?id=${s.id}" class="edu-card" style="animation-delay:${delay}ms">
-      <div class="card-name">${esc(s.program_name)}</div>
-      <div class="card-school">${esc(s.school_name)}</div>
-      <div class="card-meta">
-        ${modeLabel ? `<span class="card-mode-badge" style="background:${modeColor}20;color:${modeColor}">${modeLabel}</span>` : ''}
-        ${s.study_pace === 'parttime' ? '<span class="card-pace">Deltid</span>' : ''}
-        ${s.city ? `<span class="card-city"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>${esc(s.city)}</span>` : ''}
+      <div class="card-body">
+        <div class="card-name">${esc(s.program_name)}</div>
+        <div class="card-school">${esc(s.school_name)}</div>
+        ${s.city ? `<div class="card-city"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>${esc(s.city)}</div>` : ''}
       </div>
-      ${s.duration_text ? `<div class="card-duration">${esc(s.duration_text)}</div>` : ''}
+      <div class="card-aside">
+        <div class="card-meta">
+          ${modeLabel ? `<span class="card-mode-badge" style="background:${modeColor}20;color:${modeColor}">${modeLabel}</span>` : ''}
+          ${s.study_pace === 'parttime' ? '<span class="card-pace">Deltid</span>' : ''}
+        </div>
+        ${s.duration_text ? `<div class="card-duration">${esc(s.duration_text)}</div>` : ''}
+        <div class="list-cta">Kontrollera →</div>
+      </div>
       <div class="card-foot">Kontrollera behörighet →</div>
     </a>`;
   }).join('');
