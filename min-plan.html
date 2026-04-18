@@ -5,27 +5,45 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <link rel="icon" type="image/png" href="/favicon.png">
 <title>Min plan — Studievägsguiden</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 :root {
- --bg: #F7F7F4; --card: #FFFFFF; --tx: #141414; --mu: #5C5C58; --li: #9A9A94;
- --bo: #DEDED8; --ac: #7AC29A; --ah: #1A3A2A; --al: #EEF7F2; --re: #C0533A;
- --rl: #FBF0ED; --wa: #A07830; --wl: #FBF5EA; --bl: #6BA3D0; --bll: #EBF3FA;
- --bh: #1A3A5C;
+ --bg: #F4F8F5; --card: #FFFFFF; --tx: #0A0A0A; --mu: #3A3A36; --li: #7A7A74;
+ --bo: #C5D8EB; --ac: #5BA882; --ah: #2D6B4A; --al: #EBF5F0; --re: #B04830;
+ --rl: #FDECEA; --wa: #9A6A00; --wl: #FBF5EA; --bl: #5A8FB5; --bll: #E4F0FB;
+ --bh: #2A4F6E; --r: 12px; --sh: 0 2px 20px rgba(0,0,0,.06); --shl: 0 8px 40px rgba(0,0,0,.1);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--tx); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tx); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
 /* PLAN WRAP */
 .plan-wrap { max-width: 480px; margin: 0 auto; background: var(--bg); min-height: 100vh; position: relative; }
 
 @media (min-width: 768px) {
-  body { background: #EDEEE9; }
-  .plan-wrap { max-width: 680px; margin: 0 auto; box-shadow: 0 4px 40px rgba(0,0,0,.10); border-left: 1px solid var(--bo); border-right: 1px solid var(--bo); }
-  .plan-nav { padding: 16px 32px 14px; }
-  .tab-bar { padding: 0 32px; }
-  .plan-section { padding-left: 32px; padding-right: 32px; }
+  body {
+    background: #E4EDE8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 0 60px;
+    min-height: 100vh;
+  }
+  .plan-wrap {
+    max-width: 520px;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.06);
+    border: none;
+    min-height: unset;
+    overflow: hidden;
+  }
+  .plan-nav { padding: 16px 28px 14px; top: 0; border-radius: 0; }
+  .tabs { top: 61px; }
+  .tab-bar { padding: 0 28px; }
+  .plan-section { padding-left: 28px; padding-right: 28px; }
+  .panel { padding-left: 20px; padding-right: 20px; }
 }
 
 /* NAV */
@@ -40,7 +58,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .nav-name {
  font-size: .78rem; font-weight: 600; color: var(--mu); background: var(--al);
  padding: 5px 12px; border-radius: 6px; cursor: pointer; position: relative;
- user-select: none; border: none; font-family: 'Plus Jakarta Sans', sans-serif; transition: background .15s;
+ user-select: none; border: none; font-family: 'Inter', sans-serif; transition: background .15s;
 }
 .nav-name:active { background: #d4eddf; }
 .profile-popup {
@@ -56,7 +74,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .popup-edu { font-size: .75rem; color: var(--mu); margin-top: 2px; }
 .popup-btn {
  display: flex; align-items: center; gap: 10px; width: 100%; padding: 12px 16px;
- border: none; background: none; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .83rem;
+ border: none; background: none; font-family: 'Inter', sans-serif; font-size: .83rem;
  font-weight: 600; color: var(--tx); cursor: pointer; text-align: left; transition: background .12s;
 }
 .popup-btn:hover { background: var(--bg); }
@@ -115,42 +133,50 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 
 /* TABS */
 .tabs {
- display: grid; grid-template-columns: repeat(4, 1fr);
- border-bottom: 2px solid var(--bo); background: var(--card);
- position: sticky; top: 113px; z-index: 90;
+ display: flex; gap: 6px;
+ background: rgba(250,250,247,.98); backdrop-filter: blur(12px);
+ border-bottom: 2px solid var(--bo);
+ padding: 8px 12px;
+ position: sticky; top: 61px; z-index: 90;
+ overflow-x: auto; scrollbar-width: none;
 }
+.tabs::-webkit-scrollbar { display: none; }
 .tab-btn {
- padding: 12px 4px 10px; border: none; background: none;
- font-family: 'Plus Jakarta Sans', sans-serif; font-size: .66rem; font-weight: 600;
- color: var(--li); cursor: pointer; border-bottom: 2px solid transparent;
- margin-bottom: -2px; transition: all .2s; display: flex; flex-direction: column;
- align-items: center; gap: 4px;
+ flex: 1; padding: 9px 6px 8px; border: 2px solid transparent;
+ background: #fff; border-radius: 10px;
+ font-family: 'Inter', sans-serif; font-size: .68rem; font-weight: 600;
+ color: var(--li); cursor: pointer; transition: all .2s;
+ display: flex; flex-direction: column; align-items: center; gap: 3px;
+ white-space: nowrap;
 }
-.tab-btn .tab-icon { font-size: 1rem; }
-.tab-btn.act { color: var(--ah); border-bottom-color: var(--ac); }
+.tab-btn:hover { border-color: var(--ac); color: var(--ac); }
+.tab-btn .tab-icon { font-size: .95rem; }
+.tab-btn.act { background: linear-gradient(135deg, var(--ac), var(--ah)); color: #fff; border-color: transparent; box-shadow: 0 4px 12px rgba(91,168,130,.3); }
 
 /* PANELS */
 .panel { display: none; padding: 16px 16px 80px; }
 .panel.act { display: block; }
 
-/* HERO DARK CARD */
+/* HERO CARD */
 .hero-block {
- background: #5C7D8F;
+ background: var(--card);
+ border: 2px solid var(--bo);
  border-radius: 16px; padding: 20px; margin-bottom: 12px;
  position: relative; overflow: hidden;
+ box-shadow: var(--sh);
 }
 .hero-block::before { content: none; }
-.hero-eyebrow { font-size: .6rem; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 8px; }
-.hero-title { font-family: 'Playfair Display', serif; font-size: 1.45rem; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 4px; }
-.hero-sub { font-size: .78rem; color: rgba(255,255,255,.55); margin-bottom: 20px; }
-.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-.stat-card { background: rgba(0,0,0,.15); border: 1px solid rgba(255,255,255,.2); border-radius: 8px; padding: 11px 12px; }
-.stat-label { font-size: .57rem; font-weight: 700; text-transform: uppercase; letter-spacing: .9px; color: rgba(255,255,255,.65); margin-bottom: 5px; }
-.stat-value { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.2rem; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 3px; letter-spacing: -.02em; }
-.stat-sub { font-size: .64rem; color: rgba(255,255,255,.65); }
-.stat-card.good .stat-value { color: #AAFCD8; }
-.stat-card.warn .stat-value { color: #FFE57A; }
-.stat-card.neu .stat-value { color: #B8E8FF; }
+.hero-eyebrow { font-size: .62rem; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; color: var(--ac); margin-bottom: 8px; }
+.hero-title { font-family: 'Playfair Display', serif; font-size: 1.45rem; font-weight: 700; color: var(--tx); line-height: 1.2; margin-bottom: 4px; }
+.hero-sub { font-size: .78rem; color: var(--mu); margin-bottom: 20px; }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.stat-card { background: var(--bg); border: 1.5px solid var(--bo); border-radius: 10px; padding: 11px 12px; }
+.stat-label { font-size: .57rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--li); margin-bottom: 5px; }
+.stat-value { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--tx); line-height: 1; margin-bottom: 3px; letter-spacing: -.02em; }
+.stat-sub { font-size: .64rem; color: var(--mu); }
+.stat-card.good .stat-value { color: var(--ah); }
+.stat-card.warn .stat-value { color: var(--wa); }
+.stat-card.neu .stat-value { color: var(--bh); }
 
 /* CONCERN CARD — replaced by combo-card but keep for compat */
 .concern-card { background: var(--card); border: 1.5px solid var(--bo); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
@@ -186,7 +212,7 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); colo
 .combo-row:last-child { border-bottom: none; }
 .combo-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; opacity: .7; }
 .combo-lbl { font-size: .6rem; font-weight: 700; color: var(--li); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 2px; }
-.combo-main { font-family: 'Plus Jakarta Sans', sans-serif; font-size: .88rem; font-weight: 600; color: var(--tx); line-height: 1.45; }
+.combo-main { font-family: 'Inter', sans-serif; font-size: .88rem; font-weight: 600; color: var(--tx); line-height: 1.45; }
 
 /* FIT CARD */
 .fit-card { background: var(--al); border: 1.5px solid rgba(91,168,130,.25); border-left: 3px solid var(--ac); border-radius: 10px; padding: 13px 14px; margin-bottom: 10px; }
@@ -249,7 +275,7 @@ input[type="range"].green::-webkit-slider-thumb { border-color: var(--ac); }
 input[type="range"].amber::-webkit-slider-thumb { border-color: var(--wa); }
 input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 .slider-meta { display: flex; justify-content: space-between; font-size: .61rem; color: var(--li); margin-top: 4px; }
-.hou-btn { flex: 1; padding: 5px 3px; border: 1.5px solid var(--bo); border-radius: 5px; background: var(--card); font-family: 'Plus Jakarta Sans', sans-serif; font-size: .64rem; font-weight: 600; color: var(--mu); cursor: pointer; transition: all .15s; }
+.hou-btn { flex: 1; padding: 5px 3px; border: 1.5px solid var(--bo); border-radius: 5px; background: var(--card); font-family: 'Inter', sans-serif; font-size: .64rem; font-weight: 600; color: var(--mu); cursor: pointer; transition: all .15s; }
 .hou-btn.act { border-color: var(--re); background: var(--rl); color: var(--re); }
 
 /* BEHÖRIGHET */
@@ -321,7 +347,7 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 .combo-row:last-child { border-bottom: none; }
 .combo-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; opacity: .65; }
 .combo-lbl { font-size: .6rem; font-weight: 700; color: var(--li); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 2px; }
-.combo-main { font-family: 'Plus Jakarta Sans', sans-serif; font-size: .88rem; font-weight: 600; color: var(--tx); line-height: 1.45; }
+.combo-main { font-family: 'Inter', sans-serif; font-size: .88rem; font-weight: 600; color: var(--tx); line-height: 1.45; }
 
 /* FIT CARD */
 .fit-card { background: var(--card); border: 1.5px solid var(--bo); border-radius: 10px; padding: 13px 14px; margin-bottom: 10px; }
@@ -367,7 +393,7 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 .lt-wait-row { margin-top: 14px; padding-top: 13px; border-top: 1px solid var(--bo); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 .lt-wait-lbl { font-size: .75rem; font-weight: 600; color: var(--mu); }
 .lt-wait-btns { display: flex; gap: 5px; }
-.lt-wait-btn { padding: 5px 11px; border-radius: 5px; border: 1.5px solid var(--bo); background: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .75rem; font-weight: 700; cursor: pointer; color: var(--mu); transition: all .15s; }
+.lt-wait-btn { padding: 5px 11px; border-radius: 5px; border: 1.5px solid var(--bo); background: #fff; font-family: 'Inter', sans-serif; font-size: .75rem; font-weight: 700; cursor: pointer; color: var(--mu); transition: all .15s; }
 .lt-wait-btn.act { background: var(--ah); color: #fff; border-color: var(--ah); }
 .lt-opp { margin-top: 10px; display: none; }
 .lt-opp-row { display: flex; align-items: baseline; justify-content: space-between; }
@@ -468,7 +494,7 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 .alone-lbl { font-size: .67rem; color: var(--mu); margin-top: 3px; line-height: 1.4; }
 
 @keyframes fu { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.score-header { background: #EAF7F1; background-image: repeating-linear-gradient(135deg, rgba(100,160,130,0.07) 0px, rgba(100,160,130,0.07) 1px, transparent 1px, transparent 12px); border: 1.5px solid rgba(91,168,130,.2); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
+.score-header { background: var(--card); border: 2px solid var(--bo); border-radius: var(--r); padding: 18px 20px; margin-bottom: 14px; box-shadow: var(--sh); }
 .score-row { display: flex; align-items: center; gap: 16px; }
 .score-num { font-size: 3rem; font-weight: 800; line-height: 1; min-width: 70px; letter-spacing: -.03em; }
 .score-right { flex: 1; }
@@ -481,12 +507,22 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 .score-factor.ok { background: var(--al); color: var(--ah); }
 .score-factor.warn { background: var(--wl); color: var(--wa); }
 .score-factor.bad { background: var(--rl); color: var(--re); }
+.score-subs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.score-sub { background: rgba(255,255,255,.7); border: 1px solid var(--bo); border-radius: 10px; padding: 10px 12px; }
+.score-sub-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.score-sub-lbl { font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .7px; color: var(--mu); }
+.score-sub-pct { font-size: .95rem; font-weight: 800; letter-spacing: -.02em; }
+.score-sub-item { display: flex; align-items: flex-start; gap: 5px; font-size: .71rem; color: var(--mu); margin-bottom: 3px; line-height: 1.3; }
+.score-sub-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.score-sub-dot.ok { background: var(--ac); }
+.score-sub-dot.warn { background: var(--wa); }
+.score-sub-dot.bad { background: var(--re); }
 
 /* WAIT/LIVSTID BLOCK */
 .wait-block { background: var(--card); border: 1.5px solid var(--bo); border-radius: 10px; padding: 16px; margin: 14px 0; }
 .wait-title { font-size: .9rem; font-weight: 700; color: var(--tx); margin-bottom: 12px; }
 .wait-btns { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 0; }
-.wait-btn { padding: 5px 11px; border-radius: 5px; border: 1.5px solid var(--bo); background: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: .78rem; font-weight: 700; cursor: pointer; color: var(--mu); transition: all .15s; }
+.wait-btn { padding: 5px 11px; border-radius: 5px; border: 1.5px solid var(--bo); background: #fff; font-family: 'Inter', sans-serif; font-size: .78rem; font-weight: 700; cursor: pointer; color: var(--mu); transition: all .15s; }
 .wait-btn.active { background: var(--ah); color: #fff; border-color: var(--ah); }
 .wait-cost { font-size: 1.4rem; font-weight: 800; color: var(--re); margin: 6px 0 2px; letter-spacing: -.02em; }
 .wait-sub { font-size: .78rem; color: var(--li); }
@@ -1767,53 +1803,8 @@ function buildFP(name) {
  // ── ANTAGNING HERO ─────────────────────────────────────────────────────────
  let bh = '';
 
- // Three states: unverified (amber) | verified+ok (green) | verified+missing (red)
- const svgCheck = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
- const svgCross = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
- const svgQ    = '';
-
- if (!isVerified) {
-   // AMBER — not yet verified
-   bh += `<div class="status-hero" style="background:#FFF8EC;border-color:#D97706">
- <div>
-   <div class="status-title" style="color:#92400E">Verifiera din behörighet</div>
-   <div class="status-body">Vi utgår från ditt gymnasieprogram — bekräfta vilka kurser du faktiskt läst.</div>
-   <button class="verify-btn" style="border-color:#D97706;color:#D97706" onclick="openVerifyModal()">
-     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-     Verifiera behörighet
-   </button>
- </div>
-</div>`;
- } else if (behOk) {
-   // GREEN — verified and eligible
-   bh += `<div class="status-hero ok">
- <div class="status-circle">${svgCheck}</div>
- <div>
-   <div class="status-title">Behörig — du kan söka direkt</div>
-   <div class="status-body">Du uppfyller alla kurskrav för ${e.t}.</div>
-   <button class="verify-btn" onclick="openVerifyModal()">
-     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-     Ändra verifiering
-   </button>
- </div>
-</div>`;
- } else {
-   // RED — verified but missing courses
-   const bodyText = !hasExam
-     ? `Saknar gymnasieexamen${missingReqs.length > 0 ? ' + ' + missingReqs.join(', ') : ''} — komplettering behövs.`
-     : `Saknar: ${missingReqs.join(', ')} — ingår i din Komvux-plan (~${komvuxHeltid}).`;
-   bh += `<div class="status-hero warn">
- <div class="status-circle">${svgCross}</div>
- <div>
-   <div class="status-title">Komplettering krävs</div>
-   <div class="status-body">${bodyText}</div>
-   <button class="verify-btn" onclick="openVerifyModal()">
-     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-     Ändra verifiering
-   </button>
- </div>
-</div>`;
- }
+ // Hero — rendered via standalone function so verify modal can refresh it live
+ bh += '<div id="beh-hero-wrap">' + _buildBehHeroHTML() + '</div>';
 
  // ── FÖRKUNSKAPSKRAV-LISTA ──────────────────────────────────────────────────
  if (specificReqs.length > 0) {
@@ -1948,6 +1939,7 @@ function buildFP(name) {
    </div>
  </div>
  <div class="score-factors" id="score-factors"></div>
+ <div class="score-subs" id="score-subs"></div>
  </div>`;
 
  // Date chips / admission message — three-way logic
@@ -2212,7 +2204,7 @@ function buildFP(name) {
 
    pl += `<div class="section-label" style="margin-top:20px;justify-content:space-between">
      <span>Livstidsanalys</span>
-     <button onclick="(function(btn){var b=document.getElementById('lt-block');var h=b.style.display==='none';b.style.display=h?'block':'none';btn.textContent=h?'Dölj ▴':'Visa ▾';})(this)" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:.6rem;font-weight:700;color:var(--li);background:none;border:none;cursor:pointer;letter-spacing:.5px;text-transform:uppercase;padding:0">Dölj ▴</button>
+     <button onclick="(function(btn){var b=document.getElementById('lt-block');var h=b.style.display==='none';b.style.display=h?'block':'none';btn.textContent=h?'Dölj ▴':'Visa ▾';})(this)" style="font-family:'Inter',sans-serif;font-size:.6rem;font-weight:700;color:var(--li);background:none;border:none;cursor:pointer;letter-spacing:.5px;text-transform:uppercase;padding:0">Dölj ▴</button>
    </div>
    <div class="lifetime-block" id="lt-block">
      <div class="lt-bar-row">
@@ -2323,36 +2315,36 @@ function calcScore() {
 
   // 1. Livstidsvinst — w:25
   const lg = planState.lifetimeGain;
-  if      (lg === null)   fw.push({s:60, w:25,t:'Livstidsvinst okänd',c:'warn',nav:'plan',ek:'lt'});
-  else if (lg > 1.5e6)    fw.push({s:100,w:25,t:'Stark livstidsvinst ✓',c:'ok'});
-  else if (lg > 5e5)      fw.push({s:70, w:25,t:'Måttlig livstidsvinst',c:'warn',nav:'plan',ek:'lt'});
-  else if (lg > 0)        fw.push({s:40, w:25,t:'Liten livstidsvinst'+hint('Prova annan utbildning'),c:'warn',nav:'edit',ek:'education_type'});
-  else                    fw.push({s:0,  w:25,t:'Negativ livstidsvinst'+hint('Prova annan utbildning'),c:'bad',nav:'edit',ek:'education_type'});
+  if      (lg === null)   fw.push({s:60, w:25,t:'Livstidsvinst okänd',c:'warn',cat:'ekonomi',nav:'plan',ek:'lt'});
+  else if (lg > 1.5e6)    fw.push({s:100,w:25,t:'Stark livstidsvinst ✓',c:'ok',cat:'ekonomi'});
+  else if (lg > 5e5)      fw.push({s:70, w:25,t:'Måttlig livstidsvinst',c:'warn',cat:'ekonomi',nav:'plan',ek:'lt'});
+  else if (lg > 0)        fw.push({s:40, w:25,t:'Liten livstidsvinst'+hint('Prova annan utbildning'),c:'warn',cat:'ekonomi',nav:'edit',ek:'education_type'});
+  else                    fw.push({s:0,  w:25,t:'Negativ livstidsvinst'+hint('Prova annan utbildning'),c:'bad',cat:'ekonomi',nav:'edit',ek:'education_type'});
 
   // 2. Budget-marginal — w:25
-  if      (balV >= 3000) fw.push({s:100,w:25,t:'Bra ekonomisk marginal ✓',c:'ok'});
-  else if (balV >= 0)    fw.push({s:50, w:25,t:'Tight budget'+hint('Justera ekonomin'),c:'warn',nav:'ekonomi'});
-  else                   fw.push({s:0,  w:25,t:'Underskott i budget'+hint('Justera ekonomin'),c:'bad',nav:'ekonomi'});
+  if      (balV >= 3000) fw.push({s:100,w:25,t:'Bra ekonomisk marginal ✓',c:'ok',cat:'ekonomi'});
+  else if (balV >= 0)    fw.push({s:50, w:25,t:'Tight budget'+hint('Justera ekonomin'),c:'warn',cat:'ekonomi',nav:'ekonomi'});
+  else                   fw.push({s:0,  w:25,t:'Underskott i budget'+hint('Justera ekonomin'),c:'bad',cat:'ekonomi',nav:'ekonomi'});
 
   // 3. Behörighet — w:20
   const miss = planState.missingCount;
-  if      (!a.beh_verified) fw.push({s:75, w:20,t:'Behörighet ej verifierad'+hint('Verifiera nu'),c:'warn',nav:'beh'});
-  else if (miss === 0)      fw.push({s:100,w:20,t:'Behörig direkt ✓',c:'ok'});
-  else if (miss <= 2)       fw.push({s:50, w:20,t:miss+' komvux-kurs'+(miss>1?'er':'')+ ' saknas'+hint('Se plan'),c:'warn',nav:'beh'});
-  else                      fw.push({s:0,  w:20,t:miss+' komvux-kurser krävs'+hint('Se plan'),c:'bad',nav:'beh'});
+  if      (!a.beh_verified) fw.push({s:75, w:20,t:'Behörighet ej verifierad'+hint('Verifiera nu'),c:'warn',cat:'beh',nav:'beh'});
+  else if (miss === 0)      fw.push({s:100,w:20,t:'Behörig direkt ✓',c:'ok',cat:'beh'});
+  else if (miss <= 2)       fw.push({s:50, w:20,t:miss+' komvux-kurs'+(miss>1?'er':'')+ ' saknas'+hint('Se plan'),c:'warn',cat:'beh',nav:'beh'});
+  else                      fw.push({s:0,  w:20,t:miss+' komvux-kurser krävs'+hint('Se plan'),c:'bad',cat:'beh',nav:'beh'});
 
   // 4. Ålder / tid kvar — w:15
   const age = parseInt(a.age)||30;
   const wYrs = 65 - age - (e.y||3) - miss*0.25;
-  if      (wYrs >= 25) fw.push({s:100,w:15,t:'God tid att tjäna igen ✓',c:'ok'});
-  else if (wYrs >= 15) fw.push({s:55, w:15,t:'Medellång återbetalningstid',c:'warn'});
-  else                 fw.push({s:0,  w:15,t:'Kort tid kvar till pension'+hint('Prova kortare utbildning'),c:'bad',nav:'edit',ek:'education_type'});
+  if      (wYrs >= 25) fw.push({s:100,w:15,t:'God tid att tjäna igen ✓',c:'ok',cat:'ekonomi'});
+  else if (wYrs >= 15) fw.push({s:55, w:15,t:'Medellång återbetalningstid',c:'warn',cat:'ekonomi'});
+  else                 fw.push({s:0,  w:15,t:'Kort tid kvar till pension'+hint('Prova kortare utbildning'),c:'bad',cat:'ekonomi',nav:'edit',ek:'education_type'});
 
   // 5. Buffert — w:10
   const sav = ({'none':0,'under10':5000,'10-50':30000,'50-100':75000,'100+':150000})[a.savings_amount]||0;
-  if      (sav >= 30000) fw.push({s:100,w:10,t:'Bra buffert ✓',c:'ok'});
-  else if (sav > 0)      fw.push({s:50, w:10,t:'Liten buffert',c:'warn'});
-  else                   fw.push({s:0,  w:10,t:'Ingen buffert'+hint('Justera ekonomin'),c:'bad',nav:'ekonomi'});
+  if      (sav >= 30000) fw.push({s:100,w:10,t:'Bra buffert ✓',c:'ok',cat:'ekonomi'});
+  else if (sav > 0)      fw.push({s:50, w:10,t:'Liten buffert',c:'warn',cat:'ekonomi'});
+  else                   fw.push({s:0,  w:10,t:'Ingen buffert'+hint('Justera ekonomin'),c:'bad',cat:'ekonomi',nav:'ekonomi'});
 
   // 6. Arbetsmarknad — w:10
   const dem = e.dem || 3;
@@ -2363,15 +2355,15 @@ function calcScore() {
   // 7. AI-risk — w:5
   const ai = e.ai || 0;
   if      (ai <= 5)  fw.push({s:100,w:5,t:'Låg AI-risk ✓',c:'ok'});
-  else if (ai <= 15) fw.push({s:60, w:5,t:'Måttlig AI-risk',c:'warn',nav:'edit',ek:'education_type'});
-  else               fw.push({s:20, w:5,t:'Hög AI-risk'+hint('Prova annan utbildning'),c:'bad',nav:'edit',ek:'education_type'});
+  else if (ai <= 15) fw.push({s:60, w:5,t:'Måttlig AI-risk',c:'warn'});
+  else               fw.push({s:20, w:5,t:'Hög AI-risk — yrket kan påverkas av AI',c:'bad'});
 
   // Optional — only added when triggered
   const pace = a.study_pace;
   if (pace === 'parttime' && jobbV > 0) {
-    fw.push({s:100,w:5,t:'Deltid + extrainkomst ✓',c:'ok'});
+    fw.push({s:100,w:5,t:'Deltid + extrainkomst ✓',c:'ok',cat:'ekonomi'});
   } else if (pace === 'fulltime' && jobbV === 0 && balV < 500) {
-    fw.push({s:0,  w:5,t:'Heltid utan extrainkomst'+hint('Jobba deltid?'),c:'bad',nav:'edit',ek:'work_during'});
+    fw.push({s:0,  w:5,t:'Heltid utan extrainkomst'+hint('Jobba deltid?'),c:'bad',cat:'ekonomi',nav:'edit',ek:'work_during'});
   }
 
   if (a.has_kids === 'yes') {
@@ -2384,13 +2376,67 @@ function calcScore() {
     fw.push({s:90, w:3,t:'Flexibel studieform ✓',c:'ok'});
   }
 
-  if      (lanV > 7000)             fw.push({s:20, w:5,t:'Hög CSN-skuld'+hint('Sänk lånet'),c:'warn',nav:'ekonomi'});
-  else if (lanV === 0 && balV >= 0) fw.push({s:100,w:5,t:'Lånar minimalt ✓',c:'ok'});
+  if      (lanV > 7000)             fw.push({s:20, w:5,t:'Hög CSN-skuld'+hint('Sänk lånet'),c:'warn',cat:'ekonomi',nav:'ekonomi'});
+  else if (lanV === 0 && balV >= 0) fw.push({s:100,w:5,t:'Lånar minimalt ✓',c:'ok',cat:'ekonomi'});
 
   const totalW   = fw.reduce((s,f) => s+f.w, 0);
   const rawScore = totalW > 0 ? fw.reduce((s,f) => s+f.s*f.w, 0) / totalW : 50;
   const score    = Math.round(Math.min(97, Math.max(8, rawScore)));
   return { score, factors: fw };
+}
+
+function _buildBehHeroHTML() {
+  const a = ans, e = edu;
+  if (!e || !a) return '';
+  const isVerified = a.beh_verified === true;
+  const rawVerifiedCourses = isVerified ? a.verified_courses : (GYM_COURSES[a.gym] || []);
+  const myCourses = (rawVerifiedCourses || []).filter(c => c !== '__verified__');
+  const hasExam = a.has_grades === 'yes';
+  const specificReqs = e.req.filter(r => !r.toLowerCase().includes('grundläggande behörighet'));
+  const missingReqs = specificReqs.filter(req => !_reqSatisfied(req, myCourses));
+  const komvuxHeltid = missingReqs.length <= 1 ? '1 termin' : missingReqs.length <= 3 ? '1–2 terminer' : '2–3 terminer';
+  const behOk = missingReqs.length === 0 && hasExam;
+  const svgCheck = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  const svgCross = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  if (!isVerified) {
+    return `<div class="status-hero" style="background:#FFF8EC;border-color:#D97706">
+ <div>
+   <div class="status-title" style="color:#92400E">Verifiera din behörighet</div>
+   <div class="status-body">Vi utgår från ditt gymnasieprogram — bekräfta vilka kurser du faktiskt läst.</div>
+   <button class="verify-btn" style="border-color:#D97706;color:#D97706" onclick="openVerifyModal()">
+     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+     Verifiera behörighet
+   </button>
+ </div>
+</div>`;
+  } else if (behOk) {
+    return `<div class="status-hero ok">
+ <div class="status-circle">${svgCheck}</div>
+ <div>
+   <div class="status-title">Behörig — du kan söka direkt</div>
+   <div class="status-body">Du uppfyller alla kurskrav för ${e.t}.</div>
+   <button class="verify-btn" onclick="openVerifyModal()">
+     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+     Ändra verifiering
+   </button>
+ </div>
+</div>`;
+  } else {
+    const bodyText = !hasExam
+      ? `Saknar gymnasieexamen${missingReqs.length > 0 ? ' + ' + missingReqs.join(', ') : ''} — komplettering behövs.`
+      : `Saknar: ${missingReqs.join(', ')} — ingår i din Komvux-plan (~${komvuxHeltid}).`;
+    return `<div class="status-hero warn">
+ <div class="status-circle">${svgCross}</div>
+ <div>
+   <div class="status-title">Komplettering krävs</div>
+   <div class="status-body">${bodyText}</div>
+   <button class="verify-btn" onclick="openVerifyModal()">
+     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+     Ändra verifiering
+   </button>
+ </div>
+</div>`;
+  }
 }
 
 function updateScore() {
@@ -2419,6 +2465,33 @@ function updateScore() {
         : '';
       return `<span class="score-factor ${f.c}" ${clickable}>${f.t}</span>`;
     }).join('');
+  }
+
+  // Sub-sections: Ekonomi + Behörighet
+  const subsEl = document.getElementById('score-subs');
+  if (subsEl) {
+    const calcSub = cat => {
+      const fs = factors.filter(f => f.cat === cat);
+      if (!fs.length) return null;
+      const tw = fs.reduce((s,f)=>s+f.w,0);
+      const sc = Math.round(Math.min(97,Math.max(8, fs.reduce((s,f)=>s+f.s*f.w,0)/tw)));
+      return {sc, fs};
+    };
+    const eko = calcSub('ekonomi');
+    const beh = calcSub('beh');
+    const subColor = s => s >= 75 ? '#059669' : s >= 50 ? '#D97706' : '#DC2626';
+    const renderSub = (label, data) => {
+      if (!data) return '';
+      const items = data.fs.map(f =>
+        `<div class="score-sub-item"><div class="score-sub-dot ${f.c}"></div><span>${f.t.replace(/<[^>]+>/g,'')}</span></div>`
+      ).join('');
+      return `<div class="score-sub">
+        <div class="score-sub-head">
+          <span class="score-sub-lbl">${label}</span>
+          <span class="score-sub-pct" style="color:${subColor(data.sc)}">${data.sc}%</span>
+        </div>${items}</div>`;
+    };
+    subsEl.innerHTML = renderSub('Ekonomi', eko) + renderSub('Behörighet', beh);
   }
 }
 
@@ -2734,7 +2807,7 @@ const EDIT_QUESTIONS = [
     {v:'umea',l:'Umeå'},{v:'orebro',l:'Örebro'},{v:'other',l:'Annan ort'}
   ]},
   { key:'education_type', label:'Vilken utbildningsform söker du?', tp:'opts',
-    cond:()=>{ const BOTH=[1,2,15,23]; return edu && BOTH.includes(edu.id); },
+    cond:()=>{ const e=E.find(x=>x.id===(editEduId||(edu&&edu.id))); return e&&(e.both||e.yh); },
     opts:[
     {v:'yh',l:'Yrkeshögskola (YH)'},{v:'uni',l:'Högskola / Universitet'},{v:'unsure',l:'Osäker'}
   ]},
@@ -3529,6 +3602,18 @@ function showVerifyResult() {
       </div>`;
     if (confirmBtn) { confirmBtn.textContent = 'Spara och uppdatera plan'; confirmBtn.style.background = 'var(--ac)'; }
   }
+
+  // Live-sync ans + refresh plan card beh hero without saving to Supabase
+  const _rc = (edu&&edu.req) ? edu.req.filter(r=>!r.toLowerCase().includes('grundläggande behörighet')) : [];
+  const _ca = [...verifyChecked];
+  const _ms = _rc.filter(r=>!_reqSatisfied(r,_ca));
+  ans.verified_courses = _ca.length ? _ca : (_ms.length===0 ? ['__verified__'] : []);
+  ans.verified_missing = _ms;
+  ans.beh_verified = _ca.length > 0 || _rc.length === 0;
+  planState.missingCount = _ms.length;
+  const _hw = document.getElementById('beh-hero-wrap');
+  if (_hw) _hw.innerHTML = _buildBehHeroHTML();
+  updateScore();
 }
 
 function selectKomvuxPace(v) {
@@ -3729,6 +3814,12 @@ async function loadPlanForUser(user) {
 
 function init() {
  document.getElementById('loadingState').style.display = 'none';
+
+ // DEV BYPASS: ?dev=1 i URL hoppar över auth direkt
+ if (new URLSearchParams(window.location.search).get('dev') === '1') {
+   devFillAndShowPlan();
+   return;
+ }
 
  // Auto-logga in om sparade uppgifter finns
  try {
