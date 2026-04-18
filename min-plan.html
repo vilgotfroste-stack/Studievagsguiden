@@ -18,32 +18,14 @@
 body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tx); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
 /* PLAN WRAP */
-.plan-wrap { max-width: 480px; margin: 0 auto; background: var(--bg); min-height: 100vh; position: relative; }
+.plan-wrap { max-width: 100%; margin: 0 auto; background: var(--bg); min-height: 100vh; position: relative; }
 
 @media (min-width: 768px) {
-  body {
-    background: #E4EDE8;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 32px 0 60px;
-    min-height: 100vh;
-  }
-  .plan-wrap {
-    max-width: 520px;
-    width: 100%;
-    margin: 0 auto;
-    border-radius: 20px;
-    box-shadow: 0 8px 40px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.06);
-    border: none;
-    min-height: unset;
-    overflow: hidden;
-  }
-  .plan-nav { padding: 16px 28px 14px; top: 0; border-radius: 0; }
-  .tabs { top: 61px; }
-  .tab-bar { padding: 0 28px; }
-  .plan-section { padding-left: 28px; padding-right: 28px; }
-  .panel { padding-left: 20px; padding-right: 20px; }
+  body { background: var(--bg); }
+  .plan-wrap { max-width: 860px; margin: 0 auto; background: var(--bg); box-shadow: none; border-radius: 0; }
+  .plan-nav { padding: 16px 32px 14px; top: 60px; }
+  .tabs { top: 113px; padding: 8px 20px; }
+  .panel { padding-left: 32px; padding-right: 32px; padding-bottom: 80px; }
 }
 
 /* NAV */
