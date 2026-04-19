@@ -351,6 +351,12 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
 @media(max-width:600px){
   .quick-links-grid{grid-template-columns:1fr!important}
 }
+@media(max-width:640px){
+  #compareCta{flex-direction:column!important;align-items:flex-start!important;padding:20px!important}
+  #compareCta a{width:100%;text-align:center;box-sizing:border-box}
+  .icta{flex-direction:column;align-items:flex-start;gap:16px}
+  .icta a{width:100%;text-align:center;box-sizing:border-box}
+}
 </style>
 </head>
 <body>
@@ -529,7 +535,7 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
       <div class="edu-result-label">Läs mer om utbildningarna du jämför</div>
       <div class="edu-result-grid" id="eduResultGrid"></div>
     </div>
-    <div style="background:#2A4F6E;border-radius:14px;padding:28px 32px;display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:20px;position:relative;overflow:hidden">
+    <div id="compareCta" style="background:#2A4F6E;border-radius:14px;padding:28px 32px;display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:20px;position:relative;overflow:hidden">
       <div style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0,rgba(255,255,255,.03) 1px,transparent 1px,transparent 14px);pointer-events:none"></div>
       <div style="position:relative">
         <div style="font-size:.62rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px">Nästa steg</div>
