@@ -2844,6 +2844,7 @@ async function fetchPlanByEmail() {
  if (edu && (edu.yh || edu.both)) loadYHSchools(edu, ans);
 
  } catch(e) {
+ console.error('fetchPlanByEmail error:', e);
  document.getElementById('authGate').style.display = 'flex';
  showAuthMsg('Något gick fel. Försök igen.', true);
  btn.textContent = 'Hämta min plan →';
