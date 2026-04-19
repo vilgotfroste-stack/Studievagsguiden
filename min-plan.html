@@ -816,7 +816,7 @@ const CSN_BID_HT=4120, CSN_BID_DT=2036;
 const CSN_LAN_HT=9472, CSN_LAN_DT=4760;
 const GYM=[{id:'natur',l:'Naturvetenskap',k:'Naturvetenskap'},{id:'teknik',l:'Teknik',k:'Teknik'},{id:'samhall',l:'Samhäll',k:'Samhäll'},{id:'ekonomi',l:'Ekonomi',k:'Ekonomi'},{id:'estet',l:'Estet',k:'Estet'},{id:'vard',l:'Vård och omsorg',k:'Vård'},{id:'bygg',l:'Bygg och anläggning',k:'Bygg'},{id:'el',l:'El och energi',k:'El och energi'},{id:'industri',l:'Industri',k:'Industri'},{id:'other',l:'Annat / Komvux',k:'other'}];
 let edu=null,sal=0,ws=0,ans={};
-const planState = { lifetimeGain:null, missingCount:0, startYr:0, studyYears:0 };
+const planState = { lifetimeGain:null, missingCount:0, startYr:0, studyYears:0, studentumUrl:'' };
 let gCsnTillaggEligible = false;
 
 // Course matching helpers — used in behörighet + verify
@@ -1372,6 +1372,7 @@ function buildFP(name) {
    return BASE + m.slug + '?' + UTM;
  }
  const studentumUrl = buildStudentumUrl();
+ planState.studentumUrl = studentumUrl;
  // Study start tag
  const nowSt = new Date();
  let startTagText = '';
@@ -2533,7 +2534,7 @@ function _updateStickyCTA(factors) {
   if (!bar || !edu || !ans) return;
   const miss = planState.missingCount;
   const behVerified = ans.beh_verified;
-  const studentumUrl = buildStudentumUrl ? buildStudentumUrl() : '#';
+  const studentumUrl = planState.studentumUrl || '#';
   let mainHTML = '', editLabel = 'Ändra svar';
 
   if (!behVerified) {
