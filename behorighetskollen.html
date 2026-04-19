@@ -10,14 +10,14 @@
 :root{--bg:#F4F8F5;--card:#fff;--tx:#0A0A0A;--mu:#3A3A36;--li:#7A7A74;--ac:#5BA882;--al:#EBF5F0;--ah:#2D6B4A;--bl:#5A8FB5;--bll:#E4F0FB;--bh:#2A4F6E;--re:#B04830;--rl:#FDECEA;--wa:#9A6A00;--wl:#FBF5EA;--bo:#C5D8EB;--r:12px}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background-color:#EAF7F1;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.07) 0px,rgba(100,160,130,0.07) 1px,transparent 1px,transparent 12px);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+body{font-family:'Inter',sans-serif;background-color:#fff;color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
 
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-bottom:1px solid #D0E3F5;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;letter-spacing:.01em;text-decoration:none;color:inherit}
 .logo .i-dot{position:relative;display:inline-block}
 .logo .i-dot::after{content:'';position:absolute;top:.25em;left:50%;transform:translateX(-50%);width:.2em;height:.2em;background:#6BA3D0;border-radius:50%}
-.nav-login{font-size:.83rem;font-weight:600;color:var(--ah);text-decoration:none;background:#fff;border:1.5px solid #C8E8D8;padding:7px 18px;border-radius:20px;transition:all .18s}
-.nav-login:hover{background:var(--al);border-color:var(--ac)}
+.nav-login{font-size:.83rem;font-weight:600;color:var(--bh);text-decoration:none;background:#fff;border:1.5px solid #B8D4EC;padding:7px 18px;border-radius:20px;transition:all .18s}
+.nav-login:hover{background:var(--bll);border-color:var(--bl)}
 
 /* IA Modal */
 .ia-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:20px}
@@ -59,10 +59,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 .back-btn:hover{border-color:var(--ac);color:var(--ac)}
 
 /* Hero */
-.dhero{background:var(--card);border:2px solid var(--bo);border-radius:16px;padding:26px 22px;margin-bottom:16px}
-.dhero-label{font-size:.65rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--ac);margin-bottom:8px}
-.dhero-name{font-family:'DM Serif Display',serif;font-size:1.8rem;line-height:1.2;margin-bottom:6px}
-.dhero-school{font-size:.92rem;font-weight:600;color:var(--mu);margin-bottom:14px}
+.dhero{background:var(--card);border:1.5px solid #D0E3F5;border-radius:16px;padding:26px 22px;margin-bottom:16px}
+.dhero-label{font-size:.65rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--bl);margin-bottom:8px}
+.dhero-top{display:flex;align-items:flex-start;gap:16px;margin-bottom:10px}
+.dhero-logo{width:52px;height:52px;border-radius:10px;border:1.5px solid #D0E3F5;object-fit:contain;background:#fff;flex-shrink:0;padding:4px}
+.dhero-logo-placeholder{width:52px;height:52px;border-radius:10px;border:1.5px solid #D0E3F5;background:#F0F6FB;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--bl);font-weight:800;font-size:1.1rem}
+.dhero-name{font-family:'Inter',sans-serif;font-size:1.7rem;font-weight:800;line-height:1.15;letter-spacing:-.04em;margin-bottom:4px}
+.dhero-school{font-size:.92rem;font-weight:500;color:var(--mu);margin-bottom:14px}
 .dhero-tags{display:flex;gap:8px;flex-wrap:wrap}
 .dhero-tags span{font-size:.76rem;font-weight:600;padding:4px 12px;border-radius:6px;background:var(--bg);color:var(--mu)}
 .mode-campus{background:#EBF5F0;color:#2D6B4A}
@@ -70,11 +73,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 .mode-hybrid{background:#EDE7F5;color:#5A3E8E}
 
 /* Section heading */
-.sec-h{font-family:'DM Serif Display',serif;font-size:1.15rem;margin:24px 0 10px;display:flex;align-items:center;gap:10px}
-.sec-n{width:26px;height:26px;border-radius:50%;background:var(--ac);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;font-family:'DM Sans',sans-serif;flex-shrink:0}
+.sec-h{font-family:'Inter',sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.02em;margin:24px 0 10px;display:flex;align-items:center;gap:10px}
+.sec-n{width:26px;height:26px;border-radius:50%;background:var(--bl);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;font-family:'Inter',sans-serif;flex-shrink:0}
 
 /* Block */
-.block{background:var(--card);border:2px solid var(--bo);border-radius:12px;padding:20px 18px;margin-bottom:14px}
+.block{background:var(--card);border:1.5px solid #D0E3F5;border-radius:12px;padding:20px 18px;margin-bottom:14px}
 
 /* Requirements raw text */
 .req-text{font-size:.84rem;color:var(--mu);line-height:1.75;white-space:pre-wrap;word-break:break-word}
@@ -158,7 +161,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 .pill-yellow{background:var(--wl);color:var(--wa)}
 
 /* Description */
-.desc-block{background:var(--card);border:2px solid var(--bo);border-radius:12px;padding:24px 22px;margin-bottom:14px}
+.desc-block{background:var(--card);border:1.5px solid #D0E3F5;border-radius:12px;padding:24px 22px;margin-bottom:14px}
 .desc-text{font-size:.9rem;color:var(--mu);line-height:1.85;word-break:break-word}
 .desc-text.clamped{max-height:148px;overflow:hidden;position:relative}
 .desc-text.clamped::after{content:'';position:absolute;bottom:0;left:0;right:0;height:48px;background:linear-gradient(transparent,var(--card))}
@@ -503,11 +506,20 @@ function renderPage(school) {
       <a href="${esc(school.website_url)}" target="_blank" rel="noopener">Skolans hemsida →</a>
     </div>` : '';
 
+  const logoHtml = school.logo_url
+    ? `<img src="${esc(school.logo_url)}" alt="${esc(school.school_name)}" class="dhero-logo">`
+    : `<div class="dhero-logo-placeholder">${esc((school.school_name||'?')[0].toUpperCase())}</div>`;
+
   return `
     <div class="dhero">
-      <div class="dhero-label">YH-utbildningar</div>
-      <div class="dhero-name">${esc(school.program_name)}</div>
-      <div class="dhero-school">${esc(school.school_name)}</div>
+      <div class="dhero-label">YH-utbildning</div>
+      <div class="dhero-top">
+        ${logoHtml}
+        <div>
+          <div class="dhero-name">${esc(school.program_name)}</div>
+          <div class="dhero-school">${esc(school.school_name)}</div>
+        </div>
+      </div>
       <div class="dhero-tags">
         ${modeTag}${paceTag}${cityTag}${durTag}
       </div>
