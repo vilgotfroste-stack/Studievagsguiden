@@ -109,6 +109,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .card-city{font-size:.7rem;color:var(--li);display:flex;align-items:center;gap:3px;margin-top:3px}
 .card-duration{font-size:.7rem;color:var(--li);margin-top:3px}
 .card-foot{font-size:.72rem;font-weight:700;color:var(--bl);margin-top:auto;padding-top:10px;border-top:1px solid #EEF4FB;letter-spacing:-.01em}
+.card-initial{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0;margin-bottom:8px}
 
 /* ── Cards: list mode ── */
 .edu-grid.list-mode{grid-template-columns:1fr;gap:6px}
@@ -633,8 +634,11 @@ function renderCards(schools, reset) {
     const modeColor = modeColors[s.study_mode] || '#7A7A74';
     const modeLabel = modeLabels[s.study_mode] || s.study_mode || '';
     const delay = reset ? (i % PAGE_SIZE) * 30 : 0;
+    const sc = schoolColor(s.school_name);
+    const initial = (s.school_name||'?')[0].toUpperCase();
     return `<a href="/behorighetskollen?id=${s.id}" class="edu-card" style="animation-delay:${delay}ms">
       <div class="card-body">
+        <div class="card-initial" style="background:${sc.bg};color:${sc.fg}">${initial}</div>
         <div class="card-name">${esc(s.program_name)}</div>
         <div class="card-school">${esc(s.school_name)}</div>
         ${s.city ? `<div class="card-city"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>${esc(s.city)}</div>` : ''}
@@ -669,6 +673,17 @@ function updateMeta() {
 function esc(s) {
   if (!s) return '';
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function schoolColor(name) {
+  const palette = [
+    {bg:'#DBEAFE',fg:'#1E40AF'},{bg:'#D1FAE5',fg:'#065F46'},
+    {bg:'#EDE9FE',fg:'#5B21B6'},{bg:'#FEF3C7',fg:'#92400E'},
+    {bg:'#FCE7F3',fg:'#9D174D'},{bg:'#CCFBF1',fg:'#0F766E'},
+  ];
+  let h = 0;
+  for (let i = 0; i < (name||'').length; i++) h = (h * 31 + name.charCodeAt(i)) & 0xffff;
+  return palette[h % palette.length];
 }
 
 function setMode(mode) {
