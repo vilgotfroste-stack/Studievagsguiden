@@ -1210,7 +1210,20 @@ function mapCity(txt){
  return'other';
 }
 
-// Main buildFP function 
+const GYM_COURSES = {
+ natur:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1c','Matematik 2c','Matematik 3c','Matematik 4','Fysik 1','Fysik 2','Kemi 1','Kemi 2','Biologi 1','Biologi 2','Samhällskunskap 1b','Naturkunskap 1b'],
+ teknik:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1c','Matematik 2c','Matematik 3c','Matematik 4','Fysik 1','Fysik 2','Kemi 1','Samhällskunskap 1b','Naturkunskap 1b'],
+ samhall:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1b','Samhällskunskap 1b','Samhällskunskap 2','Naturkunskap 1b'],
+ ekonomi:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1b','Matematik 2b','Samhällskunskap 1b','Naturkunskap 1b'],
+ estet:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1b','Samhällskunskap 1b','Naturkunskap 1b'],
+ vard:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Naturkunskap 1a1','Naturkunskap 1a2','Samhällskunskap 1a1','Biologi 1'],
+ bygg:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Samhällskunskap 1a1','Naturkunskap 1a1'],
+ el:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Fysik 1','Samhällskunskap 1a1','Naturkunskap 1a1'],
+ industri:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Samhällskunskap 1a1','Naturkunskap 1a1'],
+ other:[]
+};
+
+// Main buildFP function
 function buildFP(name) {
  const e = edu, a = ans;
  if (!e || !a) return;
@@ -1766,21 +1779,9 @@ function buildFP(name) {
  document.getElementById('panel-ekonomi').innerHTML = ek;
 
 
- // 
+ //
  // PANEL 3 — BEHÖRIGHET
  //
- const GYM_COURSES = {
- natur:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1c','Matematik 2c','Matematik 3c','Matematik 4','Fysik 1','Fysik 2','Kemi 1','Kemi 2','Biologi 1','Biologi 2','Samhällskunskap 1b','Naturkunskap 1b'],
- teknik:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1c','Matematik 2c','Matematik 3c','Matematik 4','Fysik 1','Fysik 2','Kemi 1','Samhällskunskap 1b','Naturkunskap 1b'],
- samhall:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1b','Samhällskunskap 1b','Samhällskunskap 2','Naturkunskap 1b'],
- ekonomi:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1b','Matematik 2b','Samhällskunskap 1b','Naturkunskap 1b'],
- estet:['Svenska 1','Svenska 2','Svenska 3','Engelska 5','Engelska 6','Matematik 1b','Samhällskunskap 1b','Naturkunskap 1b'],
- vard:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Naturkunskap 1a1','Naturkunskap 1a2','Samhällskunskap 1a1','Biologi 1'],
- bygg:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Samhällskunskap 1a1','Naturkunskap 1a1'],
- el:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Fysik 1','Samhällskunskap 1a1','Naturkunskap 1a1'],
- industri:['Svenska 1','Svenska 2','Engelska 5','Matematik 1a','Samhällskunskap 1a1','Naturkunskap 1a1'],
- other:[]
- };
  const isVerified = ans.beh_verified === true;
  const rawVerifiedCourses = isVerified ? a.verified_courses : (GYM_COURSES[a.gym] || []);
  const myCourses = (rawVerifiedCourses || []).filter(c => c !== '__verified__');
