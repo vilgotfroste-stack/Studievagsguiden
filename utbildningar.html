@@ -6,28 +6,28 @@
 <title>Hitta YH-utbildning — Sök bland 2 500+ program | Studievägsguiden</title>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="canonical" href="https://www.studievagsguiden.se/utbildningar">
-<meta name="description" content="Sök och filtrera bland 2 500+ yrkeshögskoleutbildningar efter stad, studieform och bransch. Kontrollera din behörighet direkt.">
+<meta name="description" content="Jämför och filtrera bland 2 500+ yrkeshögskoleutbildningar. Sök på stad, bransch, studieform och längd — hitta rätt YH-utbildning på 2 minuter.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#F4F8F5;--card:#fff;--tx:#0A0A0A;--mu:#3A3A36;--li:#7A7A74;--ac:#5BA882;--al:#EBF5F0;--ah:#2D6B4A;--bl:#5A8FB5;--bll:#E4F0FB;--bh:#2A4F6E;--re:#B04830;--rl:#FDECEA;--wa:#9A6A00;--wl:#FBF5EA;--pu:#8A70B5;--pl:#EDE7F5;--bo:#C5D8EB;--r:12px;--sh:0 2px 20px rgba(0,0,0,.06);--shl:0 8px 40px rgba(0,0,0,.1)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background-color:#EAF7F1;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.07) 0px,rgba(100,160,130,0.07) 1px,transparent 1px,transparent 12px);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',sans-serif;background-color:#fff;color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
 
 /* ── Nav ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-bottom:1px solid #D0E3F5;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;letter-spacing:.01em;text-decoration:none;color:inherit}
 .logo .i-dot{position:relative;display:inline-block}
 .logo .i-dot::after{content:'';position:absolute;top:.25em;left:50%;transform:translateX(-50%);width:.2em;height:.2em;background:#6BA3D0;border-radius:50%}
-.nav-login{font-size:.83rem;font-weight:600;color:var(--ah);text-decoration:none;background:#fff;border:1.5px solid #C8E8D8;padding:7px 18px;border-radius:20px;transition:all .18s}
-.nav-login:hover{background:var(--al);border-color:var(--ac)}
+.nav-login{font-size:.83rem;font-weight:600;color:var(--bh);text-decoration:none;background:#fff;border:1.5px solid #B8D4EC;padding:7px 18px;border-radius:20px;transition:all .18s}
+.nav-login:hover{background:var(--bll);border-color:var(--bl)}
 
 /* ── Page header ── */
 .page-header{padding:72px 28px 0;max-width:1280px;margin:0 auto}
-.page-header-inner{padding:24px 0 20px;border-bottom:1.5px solid var(--bo);display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
-.page-header-label{font-size:.66rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ac);margin-bottom:6px}
-.page-header h1{font-family:'Inter',sans-serif;font-size:clamp(1.55rem,3vw,2.1rem);font-weight:900;line-height:1.1;letter-spacing:-.05em;margin-bottom:5px}
-.page-header p{color:var(--mu);font-size:.88rem;max-width:400px}
+.page-header-inner{padding:24px 0 20px;border-bottom:1.5px solid #D0E3F5;display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.page-header-label{font-size:.66rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--bl);margin-bottom:6px;text-align:center}
+.page-header h1{font-family:'Inter',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:900;line-height:1.1;letter-spacing:-.05em;margin-bottom:5px;text-align:center}
+.page-header p{color:var(--mu);font-size:.88rem;max-width:400px;text-align:center;margin:0 auto}
 
 /* ── Two-column layout ── */
 .page-layout{max-width:1280px;margin:0 auto;padding:22px 28px 80px;display:flex;gap:22px;align-items:flex-start}
@@ -37,52 +37,64 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 .sidebar::-webkit-scrollbar{width:3px}
 .sidebar::-webkit-scrollbar-thumb{background:var(--bo);border-radius:3px}
 
-.sb-block{background:var(--card);border:1.5px solid var(--bo);border-radius:12px;padding:14px 16px}
+.sb-block{background:#fff;border:1.5px solid #D0E3F5;border-radius:12px;padding:14px 16px}
 
 /* Search */
 .sb-search{position:relative;display:flex;align-items:center}
 .sb-search svg{position:absolute;left:11px;color:var(--li);pointer-events:none;flex-shrink:0}
-.sb-search input{width:100%;padding:9px 34px 9px 34px;border:1.5px solid var(--bo);border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem;background:#fff;color:var(--tx);transition:border-color .18s;outline:none}
-.sb-search input:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(91,168,130,.1)}
+.sb-search input{width:100%;padding:9px 34px 9px 34px;border:1.5px solid #D0E3F5;border-radius:9px;font-family:'Inter',sans-serif;font-size:.85rem;background:#fff;color:var(--tx);transition:border-color .18s;outline:none}
+.sb-search input:focus{border-color:var(--bl);box-shadow:0 0 0 3px rgba(90,143,181,.1)}
 .sb-search input::placeholder{color:var(--li)}
 .search-clear{position:absolute;right:9px;background:none;border:none;font-size:1rem;color:var(--li);cursor:pointer;line-height:1;display:none;align-items:center;justify-content:center;border-radius:50%;width:20px;height:20px;transition:background .15s}
 .search-clear:hover{background:var(--bg);color:var(--tx)}
 
 /* Mode buttons */
-.sb-label{display:block;font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--li);margin-bottom:10px}
+.sb-label{display:block;font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--bl);margin-bottom:10px}
 .mode-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .qbtn{padding:7px 8px;border-radius:8px;border:1.5px solid var(--bo);background:var(--card);font-family:'Inter',sans-serif;font-size:.76rem;font-weight:600;color:var(--mu);cursor:pointer;transition:all .18s;white-space:nowrap;text-align:center}
-.qbtn:hover{border-color:var(--ac);color:var(--ac);background:var(--al)}
-.qbtn.active{border-color:var(--ac);background:var(--ac);color:#fff}
+.qbtn:hover{border-color:var(--bl);color:var(--bl);background:var(--bll)}
+.qbtn.active{border-color:var(--bl);background:var(--bl);color:#fff}
 
 /* Filter inputs */
 .filter-item{margin-bottom:11px}
 .filter-item:last-of-type{margin-bottom:0}
 .filter-item label{display:block;font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--li);margin-bottom:5px}
-.filter-item input[type=text],.filter-item select{width:100%;padding:8px 10px;border:1.5px solid var(--bo);border-radius:8px;font-family:'Inter',sans-serif;font-size:.83rem;background:#fff;color:var(--tx);transition:border-color .18s;outline:none}
-.filter-item input[type=text]:focus,.filter-item select:focus{border-color:var(--ac)}
+.filter-item input[type=text],.filter-item select{width:100%;padding:8px 10px;border:1.5px solid #D0E3F5;border-radius:8px;font-family:'Inter',sans-serif;font-size:.83rem;background:#fff;color:var(--tx);transition:border-color .18s;outline:none}
+.filter-item input[type=text]:focus,.filter-item select:focus{border-color:var(--bl)}
 .filter-item select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B6B63' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;cursor:pointer}
 
-.sb-checks{margin-top:12px;padding-top:11px;border-top:1px solid var(--bo);display:flex;flex-direction:column;gap:1px}
+.sb-checks{margin-top:12px;padding-top:11px;border-top:1px solid #D0E3F5;display:flex;flex-direction:column;gap:1px}
 .fcheck{display:flex;align-items:center;gap:8px;font-size:.79rem;font-weight:500;color:var(--mu);cursor:pointer;user-select:none;padding:5px 0}
-.fcheck input[type=checkbox]{width:14px;height:14px;accent-color:var(--ac);cursor:pointer;flex-shrink:0}
+.fcheck input[type=checkbox]{width:14px;height:14px;accent-color:var(--bl);cursor:pointer;flex-shrink:0}
 .sb-reset{width:100%;background:none;border:none;font-family:'Inter',sans-serif;font-size:.76rem;color:var(--li);cursor:pointer;text-decoration:underline;padding:10px 0 0;text-align:left}
 .sb-reset:hover{color:var(--re)}
 
-/* ── Results area ── */
+/* ── Popular searches ── */
+.popular-searches{margin-top:10px;display:flex;flex-direction:column;gap:5px}
+.pop-chip{background:#EEF4FB;border:1px solid #D0E3F5;border-radius:20px;padding:5px 12px;font-size:.72rem;font-weight:600;color:var(--bh);cursor:pointer;transition:all .15s;white-space:nowrap;text-align:left}
+.pop-chip:hover{background:var(--bl);color:#fff;border-color:var(--bl)}
+
+/* ── Filter badge ── */
+.sb-label-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.filter-badge{display:none;background:var(--bl);color:#fff;border-radius:10px;font-size:.6rem;font-weight:700;padding:2px 6px;line-height:1.4}
+.filter-badge.show{display:inline-block}
+
+/* ── Sort ── */
+.sort-select{border:1.5px solid #D0E3F5;border-radius:7px;padding:5px 26px 5px 8px;font-family:'Inter',sans-serif;font-size:.76rem;font-weight:500;color:var(--mu);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpath d='M1 1l3.5 3.5L8 1' stroke='%236B6B63' stroke-width='1.5' fill='none'/%3E%3C/svg%3E") no-repeat right 8px center;appearance:none;cursor:pointer;outline:none;transition:border-color .18s}
+.sort-select:focus{border-color:var(--bl)}
 .results-area{flex:1;min-width:0}
 .results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:12px}
 .results-count{font-size:.79rem;color:var(--mu);font-weight:500}
 .view-toggle{display:flex;gap:4px;flex-shrink:0}
-.vtbtn{background:var(--card);border:1.5px solid var(--bo);border-radius:7px;padding:6px 8px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;color:var(--li)}
-.vtbtn:hover{border-color:var(--ac);color:var(--ac)}
-.vtbtn.active{border-color:var(--ac);background:var(--ac);color:#fff}
+.vtbtn{background:#fff;border:1.5px solid #D0E3F5;border-radius:7px;padding:6px 8px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;color:var(--li)}
+.vtbtn:hover{border-color:var(--bl);color:var(--bl)}
+.vtbtn.active{border-color:var(--bl);background:var(--bl);color:#fff}
 
 /* ── Cards: grid mode ── */
 .edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
 
-.edu-card{background:var(--card);border:1.5px solid var(--bo);border-radius:12px;padding:16px 14px 12px;cursor:pointer;transition:border-color .18s,box-shadow .18s,transform .18s;display:flex;flex-direction:column;gap:0;position:relative;text-decoration:none;color:inherit;animation:fadeUp .3s ease forwards;opacity:0}
-.edu-card:hover{border-color:var(--ac);box-shadow:0 4px 18px rgba(91,168,130,.13);transform:translateY(-2px)}
+.edu-card{background:#fff;border:1.5px solid #D0E3F5;border-radius:12px;padding:16px 14px 12px;cursor:pointer;transition:border-color .18s,box-shadow .18s,transform .18s;display:flex;flex-direction:column;gap:0;position:relative;text-decoration:none;color:inherit;animation:fadeUp .3s ease forwards;opacity:0}
+.edu-card:hover{border-color:var(--bl);box-shadow:0 4px 18px rgba(90,143,181,.13);transform:translateY(-2px)}
 
 /* card-body and card-aside are transparent in grid mode */
 .edu-grid:not(.list-mode) .card-body{display:contents}
@@ -96,7 +108,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 .card-pace{font-size:.63rem;font-weight:700;padding:3px 8px;border-radius:8px;background:var(--wl);color:var(--wa)}
 .card-city{font-size:.7rem;color:var(--li);display:flex;align-items:center;gap:3px;margin-top:3px}
 .card-duration{font-size:.7rem;color:var(--li);margin-top:3px}
-.card-foot{font-size:.72rem;font-weight:700;color:var(--ac);margin-top:auto;padding-top:10px;border-top:1px solid #eef2ee;letter-spacing:-.01em}
+.card-foot{font-size:.72rem;font-weight:700;color:var(--bl);margin-top:auto;padding-top:10px;border-top:1px solid #EEF4FB;letter-spacing:-.01em}
 
 /* ── Cards: list mode ── */
 .edu-grid.list-mode{grid-template-columns:1fr;gap:6px}
@@ -110,22 +122,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 .edu-grid.list-mode .card-duration{margin-top:0}
 .edu-grid.list-mode .card-name{font-size:.86rem}
 .edu-grid.list-mode .card-school{font-size:.71rem}
-.list-cta{font-size:.72rem;font-weight:700;color:var(--ac);white-space:nowrap;padding-left:6px}
+.list-cta{font-size:.72rem;font-weight:700;color:var(--bl);white-space:nowrap;padding-left:6px}
 
 /* ── Skeletons, empty, error ── */
 .empty{grid-column:1/-1;text-align:center;padding:56px 20px}
 .empty .ei{font-size:2.2rem;margin-bottom:12px}
 .empty p{font-size:.87rem;color:var(--mu);line-height:1.7}
-.empty button{background:none;border:none;font-family:'Inter',sans-serif;font-weight:600;color:var(--ac);cursor:pointer;font-size:.87rem;margin-top:8px;text-decoration:underline}
+.empty button{background:none;border:none;font-family:'Inter',sans-serif;font-weight:600;color:var(--bl);cursor:pointer;font-size:.87rem;margin-top:8px;text-decoration:underline}
 .skeleton{opacity:1 !important;animation:none !important}
-.skel-line{background:linear-gradient(90deg,#e8f0ea 25%,#d4e8da 50%,#e8f0ea 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:6px}
+.skel-line{background:linear-gradient(90deg,#e4eef8 25%,#cfe0f2 50%,#e4eef8 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:6px}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .error-box{grid-column:1/-1;background:var(--rl);border:1.5px solid #f5c6be;border-radius:12px;padding:20px;text-align:center;color:var(--re);font-size:.88rem}
 
 .load-more-wrap{text-align:center;padding:20px 0 0;display:none}
-.load-more-btn{background:var(--card);border:1.5px solid var(--bo);border-radius:10px;padding:11px 28px;font-family:'Inter',sans-serif;font-size:.85rem;font-weight:600;color:var(--mu);cursor:pointer;transition:all .18s}
-.load-more-btn:hover:not(:disabled){border-color:var(--ac);color:var(--ac);background:var(--al)}
+.load-more-btn{background:#fff;border:1.5px solid #D0E3F5;border-radius:10px;padding:11px 28px;font-family:'Inter',sans-serif;font-size:.85rem;font-weight:600;color:var(--mu);cursor:pointer;transition:all .18s}
+.load-more-btn:hover:not(:disabled){border-color:var(--bl);color:var(--bl);background:var(--bll)}
 .load-more-btn:disabled{opacity:.5;cursor:not-allowed}
 
 /* ── Responsive ── */
@@ -199,10 +211,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 
 <div class="page-header">
   <div class="page-header-inner">
-    <div>
-      <div class="page-header-label">YH-utbildningar</div>
-      <h1>Hitta YH-utbildning</h1>
-      <p>Sök bland 2 500+ program och kontrollera om du är behörig — på 2 minuter.</p>
+    <div style="width:100%;text-align:center">
+      <div class="page-header-label">Yrkeshögskola</div>
+      <h1>Sök bland 2 500+ YH-utbildningar</h1>
+      <p>Filtrera på stad, bransch och studieform — hitta rätt på 2 minuter.</p>
     </div>
   </div>
 </div>
@@ -218,10 +230,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
         <input id="searchInput" type="text" placeholder="Sök utbildning eller skola..." autocomplete="off" oninput="onSearch()">
         <button class="search-clear" id="searchClear" onclick="clearSearch()" aria-label="Rensa sökning">×</button>
       </div>
+      <div style="font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--bl);margin-top:10px;margin-bottom:5px">Populära sökningar</div>
+      <div class="popular-searches">
+        <span class="pop-chip" onclick="setSearch('Systemutvecklare')">Systemutvecklare</span>
+        <span class="pop-chip" onclick="setSearch('Sjuksköterska')">Sjuksköterska</span>
+        <span class="pop-chip" onclick="setSearch('Redovisningsekonom')">Redovisningsekonom</span>
+        <span class="pop-chip" onclick="setSearch('UX')">UX-design</span>
+        <span class="pop-chip" onclick="setSearch('Projektledare')">Projektledare</span>
+      </div>
     </div>
 
     <div class="sb-block">
-      <span class="sb-label">Studieform</span>
+      <div class="sb-label-row">
+        <span class="sb-label" style="margin-bottom:0">Studieform</span>
+      </div>
       <div class="mode-btns">
         <button class="qbtn active" data-mode="" onclick="setMode('')">Alla</button>
         <button class="qbtn" data-mode="campus" onclick="setMode('campus')">Campus</button>
@@ -231,7 +253,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
     </div>
 
     <div class="sb-block">
-      <span class="sb-label">Filter</span>
+      <div class="sb-label-row">
+        <span class="sb-label" style="margin-bottom:0">Filter</span>
+        <span class="filter-badge" id="filterBadge"></span>
+      </div>
       <div class="filter-item">
         <label>Stad</label>
         <input type="text" id="cityInput" placeholder="t.ex. Stockholm" oninput="onFilterChange()">
@@ -242,6 +267,30 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
           <option value="">Alla</option>
           <option value="fulltime">Heltid</option>
           <option value="parttime">Deltid</option>
+        </select>
+      </div>
+      <div class="filter-item">
+        <label>Studietakt %</label>
+        <select id="pacePercentSelect" onchange="onFilterChange()">
+          <option value="">Alla</option>
+          <option value="50">50%</option>
+          <option value="75">75%</option>
+          <option value="100">100%</option>
+        </select>
+      </div>
+      <div class="filter-item">
+        <label>Utbildningslängd</label>
+        <select id="durationSelect" onchange="onFilterChange()">
+          <option value="">Alla</option>
+          <option value="1">1 år</option>
+          <option value="1.5">1,5 år</option>
+          <option value="2">2 år</option>
+          <option value="2.5">2,5 år</option>
+          <option value="3">3 år</option>
+          <option value="3.5">3,5 år</option>
+          <option value="4">4 år</option>
+          <option value="4.5">4,5 år</option>
+          <option value="5">5 år</option>
         </select>
       </div>
       <div class="filter-item">
@@ -275,13 +324,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
   <div class="results-area">
     <div class="results-header">
       <div id="resultsCount" class="results-count">Laddar utbildningar...</div>
-      <div class="view-toggle">
-        <button class="vtbtn active" id="vtGrid" onclick="setView('grid')" title="Rutnät">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        </button>
-        <button class="vtbtn" id="vtList" onclick="setView('list')" title="Lista">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
+      <div style="display:flex;align-items:center;gap:8px">
+        <select class="sort-select" id="sortSelect" onchange="onFilterChange()">
+          <option value="program_name.asc">A–Ö</option>
+          <option value="program_name.desc">Ö–A</option>
+          <option value="duration_years.asc">Kortast först</option>
+          <option value="duration_years.desc">Längst först</option>
+        </select>
+        <div class="view-toggle">
+          <button class="vtbtn active" id="vtGrid" onclick="setView('grid')" title="Rutnät">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          </button>
+          <button class="vtbtn" id="vtList" onclick="setView('list')" title="Lista">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -337,6 +394,7 @@ let activeMode = '';
 let searchTimer = null;
 let viewMode = 'grid';
 
+// ── View toggle ──
 function setView(mode) {
   viewMode = mode;
   const grid = document.getElementById('cardsGrid');
@@ -345,34 +403,107 @@ function setView(mode) {
   document.getElementById('vtList').classList.toggle('active', mode === 'list');
 }
 
+// ── Popular search chips ──
+function setSearch(term) {
+  const input = document.getElementById('searchInput');
+  input.value = term;
+  document.getElementById('searchClear').style.display = 'flex';
+  fetchSchools(true);
+  updateUrl();
+}
+
+// ── Filters ──
 function getFilters() {
   return {
-    query: document.getElementById('searchInput').value.trim(),
-    city: document.getElementById('cityInput').value.trim(),
-    pace: document.getElementById('paceSelect').value,
-    category: document.getElementById('categorySelect').value,
-    startDate: document.getElementById('startSelect').value,
+    query:       document.getElementById('searchInput').value.trim(),
+    city:        document.getElementById('cityInput').value.trim(),
+    pace:        document.getElementById('paceSelect').value,
+    pacePercent: document.getElementById('pacePercentSelect').value,
+    duration:    document.getElementById('durationSelect').value,
+    category:    document.getElementById('categorySelect').value,
+    startDate:   document.getElementById('startSelect').value,
     studiemedel: document.getElementById('cbStudiemedel').checked,
-    avgiftsfri: document.getElementById('cbAvgiftsfri').checked,
+    avgiftsfri:  document.getElementById('cbAvgiftsfri').checked,
+    sort:        document.getElementById('sortSelect').value,
   };
 }
 
+function countActiveFilters() {
+  const f = getFilters();
+  let n = 0;
+  if (f.query)       n++;
+  if (f.city)        n++;
+  if (f.pace)        n++;
+  if (f.pacePercent) n++;
+  if (f.duration)    n++;
+  if (f.category)    n++;
+  if (f.startDate)   n++;
+  if (f.studiemedel) n++;
+  if (f.avgiftsfri)  n++;
+  if (activeMode)    n++;
+  return n;
+}
+
+function updateFilterBadge() {
+  const n = countActiveFilters();
+  const badge = document.getElementById('filterBadge');
+  badge.textContent = n;
+  badge.classList.toggle('show', n > 0);
+}
+
+// ── URL state ──
+function updateUrl() {
+  const f = getFilters();
+  const p = new URLSearchParams();
+  if (f.query)       p.set('q', f.query);
+  if (f.city)        p.set('stad', f.city);
+  if (activeMode)    p.set('form', activeMode);
+  if (f.pace)        p.set('takt', f.pace);
+  if (f.pacePercent) p.set('procent', f.pacePercent);
+  if (f.duration)    p.set('langd', f.duration);
+  if (f.category)    p.set('bransch', f.category);
+  if (f.startDate)   p.set('start', f.startDate);
+  if (f.studiemedel) p.set('csn', '1');
+  if (f.avgiftsfri)  p.set('gratis', '1');
+  if (f.sort && f.sort !== 'program_name.asc') p.set('sortera', f.sort);
+  const qs = p.toString();
+  history.replaceState(null, '', qs ? '?' + qs : window.location.pathname);
+}
+
+function loadFromUrl() {
+  const p = new URLSearchParams(window.location.search);
+  if (p.get('q'))       { document.getElementById('searchInput').value = p.get('q'); document.getElementById('searchClear').style.display = 'flex'; }
+  if (p.get('stad'))    document.getElementById('cityInput').value = p.get('stad');
+  if (p.get('form'))    { activeMode = p.get('form'); document.querySelectorAll('.qbtn').forEach(b => b.classList.toggle('active', b.dataset.mode === activeMode)); }
+  if (p.get('takt'))    document.getElementById('paceSelect').value = p.get('takt');
+  if (p.get('procent')) document.getElementById('pacePercentSelect').value = p.get('procent');
+  if (p.get('langd'))   document.getElementById('durationSelect').value = p.get('langd');
+  if (p.get('bransch')) document.getElementById('categorySelect').value = p.get('bransch');
+  if (p.get('start'))   document.getElementById('startSelect').value = p.get('start');
+  if (p.get('csn'))     document.getElementById('cbStudiemedel').checked = true;
+  if (p.get('gratis'))  document.getElementById('cbAvgiftsfri').checked = true;
+  if (p.get('sortera')) document.getElementById('sortSelect').value = p.get('sortera');
+}
+
+// ── API ──
 function buildUrl(offset) {
   const f = getFilters();
   const params = new URLSearchParams();
   params.set('select', 'id,program_name,school_name,city,study_mode,study_pace,duration_text');
   params.set('active', 'eq.true');
-  params.set('order', 'program_name.asc');
+  params.set('order', f.sort || 'program_name.asc');
   params.set('limit', PAGE_SIZE);
   params.set('offset', offset);
 
-  if (activeMode)       params.set('study_mode', 'eq.' + activeMode);
-  if (f.pace)           params.set('study_pace', 'eq.' + f.pace);
-  if (f.city)           params.set('city', 'ilike.*' + f.city + '*');
-  if (f.category)       params.set('education_ids', 'cs.{' + f.category + '}');
+  if (activeMode)       params.set('study_mode',            'eq.' + activeMode);
+  if (f.pace)           params.set('study_pace',            'eq.' + f.pace);
+  if (f.pacePercent)    params.set('pace_of_study',         'eq.' + f.pacePercent);
+  if (f.duration)       params.set('duration_years',        'eq.' + f.duration);
+  if (f.city)           params.set('city',                  'ilike.*' + f.city + '*');
+  if (f.category)       params.set('education_ids',         'cs.{' + f.category + '}');
   if (f.studiemedel)    params.set('eligible_for_student_aid', 'eq.true');
-  if (f.avgiftsfri)     params.set('fee', 'eq.0');
-  if (f.startDate)      params.set('start_dates', 'cs.{"' + f.startDate + '"}');
+  if (f.avgiftsfri)     params.set('fee',                   'eq.0');
+  if (f.startDate)      params.set('start_dates',           'cs.{"' + f.startDate + '"}');
   if (f.query)          params.set('or', '(program_name.ilike.*' + f.query + '*,school_name.ilike.*' + f.query + '*,education_description.ilike.*' + f.query + '*)');
 
   return SUPABASE_URL + '/rest/v1/yh_schools?' + params.toString();
@@ -385,15 +516,13 @@ async function fetchSchools(reset) {
     document.getElementById('cardsGrid').innerHTML = renderSkeletons();
     document.getElementById('loadMoreWrap').style.display = 'none';
   }
+  updateFilterBadge();
+  updateUrl();
 
   let res, data;
   try {
     res = await fetch(buildUrl(offset), {
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Prefer': 'count=exact',
-      }
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Prefer': 'count=exact' }
     });
     data = await res.json();
   } catch (e) {
@@ -418,7 +547,7 @@ async function fetchSchools(reset) {
 function renderSkeletons() {
   const arr = [];
   for (let i = 0; i < 6; i++) {
-    arr.push('<div class="edu-card skeleton" style="opacity:1;animation:none"><div class="skel-line" style="width:75%;height:18px;margin-bottom:10px"></div><div class="skel-line" style="width:55%;height:13px;margin-bottom:8px"></div><div class="skel-line" style="width:45%;height:12px"></div></div>');
+    arr.push('<div class="edu-card skeleton"><div class="skel-line" style="width:75%;height:18px;margin-bottom:10px"></div><div class="skel-line" style="width:55%;height:13px;margin-bottom:8px"></div><div class="skel-line" style="width:45%;height:12px"></div></div>');
   }
   return arr.join('');
 }
@@ -427,7 +556,20 @@ function renderCards(schools, reset) {
   const grid = document.getElementById('cardsGrid');
 
   if (reset && schools.length === 0) {
-    grid.innerHTML = '<div class="empty"><div class="ei">🔍</div><p>Inga utbildningar matchade dina filter.<br>Prova att bredda sökningen eller återställ filtren.</p><button onclick="resetFilters()">Återställ filter</button></div>';
+    const f = getFilters();
+    const hasQuery = !!f.query;
+    const hasCity  = !!f.city;
+    let suggestion = '';
+    if (hasCity)  suggestion = `Prova att söka utan stad — det finns kanske distansutbildningar.`;
+    else if (hasQuery) suggestion = `Prova ett bredare sökord, t.ex. bara "${f.query.split(' ')[0]}".`;
+    else suggestion = `Prova att återställa filtren och börja om.`;
+
+    grid.innerHTML = `<div class="empty">
+      <div class="ei">🔍</div>
+      <p>Inga utbildningar matchade din sökning.</p>
+      <p style="margin-top:6px;font-size:.8rem;color:var(--li)">${suggestion}</p>
+      <button onclick="resetFilters()">Återställ filter</button>
+    </div>`;
     document.getElementById('loadMoreWrap').style.display = 'none';
     return;
   }
@@ -457,13 +599,8 @@ function renderCards(schools, reset) {
     </a>`;
   }).join('');
 
-  if (reset) {
-    grid.innerHTML = cards;
-    currentOffset = schools.length;
-  } else {
-    grid.insertAdjacentHTML('beforeend', cards);
-    currentOffset += schools.length;
-  }
+  if (reset) { grid.innerHTML = cards; currentOffset = schools.length; }
+  else        { grid.insertAdjacentHTML('beforeend', cards); currentOffset += schools.length; }
 
   document.getElementById('loadMoreWrap').style.display = currentOffset < totalCount ? 'block' : 'none';
 }
@@ -473,7 +610,7 @@ function updateMeta() {
   if (totalCount === 0) {
     el.textContent = 'Inga utbildningar hittades';
   } else {
-    el.textContent = `Visar ${Math.min(currentOffset, totalCount).toLocaleString('sv-SE')} av ${totalCount.toLocaleString('sv-SE')} utbildningar`;
+    el.textContent = `${totalCount.toLocaleString('sv-SE')} utbildningar`;
   }
 }
 
@@ -505,17 +642,15 @@ function clearSearch() {
   fetchSchools(true);
 }
 
-function toggleFilter() {
-  document.getElementById('filterBody').classList.toggle('open');
-  document.getElementById('filterToggle').classList.toggle('open');
-}
-
 function resetFilters() {
   document.getElementById('searchInput').value = '';
   document.getElementById('cityInput').value = '';
   document.getElementById('paceSelect').value = '';
+  document.getElementById('pacePercentSelect').value = '';
+  document.getElementById('durationSelect').value = '';
   document.getElementById('categorySelect').value = '';
   document.getElementById('startSelect').value = '';
+  document.getElementById('sortSelect').value = 'program_name.asc';
   document.getElementById('cbStudiemedel').checked = false;
   document.getElementById('cbAvgiftsfri').checked = false;
   document.getElementById('searchClear').style.display = 'none';
@@ -550,6 +685,7 @@ document.addEventListener('DOMContentLoaded', () => {
     opt.textContent = c.label;
     sel.appendChild(opt);
   });
+  loadFromUrl();
   fetchSchools(true);
 });
 </script>
