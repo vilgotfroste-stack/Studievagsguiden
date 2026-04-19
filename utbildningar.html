@@ -295,8 +295,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
       </div>
       <div class="filter-item">
         <label>Bransch</label>
-        <select id="categorySelect" onchange="onFilterChange()">
+        <select id="branchSelect" onchange="onBranchChange()">
           <option value="">Alla branscher</option>
+          <option value="tech">IT &amp; Tech</option>
+          <option value="ekonomi">Ekonomi &amp; Affär</option>
+          <option value="vard">Vård &amp; Omsorg</option>
+          <option value="design">Design &amp; Kreativt</option>
+          <option value="teknik">Teknik &amp; Bygg</option>
+        </select>
+      </div>
+      <div class="filter-item">
+        <label>Yrke</label>
+        <select id="categorySelect" onchange="onFilterChange()">
+          <option value="">Alla yrken</option>
         </select>
       </div>
       <div class="filter-item">
@@ -356,6 +367,14 @@ const SUPABASE_URL = 'https://qofvdpvxrvvjalgdiflg.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_Vfm1BArZN_RAWrwTOzVGXA_WWvIk77V';
 const PAGE_SIZE = 24;
 
+const BRANCHES = [
+  { id: 'tech',    label: 'IT & Tech',         ids: [1,2,3,4,5,7] },
+  { id: 'ekonomi', label: 'Ekonomi & Affär',   ids: [6,8,9,10,11,12,13,23,24,29] },
+  { id: 'vard',    label: 'Vård & Omsorg',     ids: [14,15,16,17] },
+  { id: 'design',  label: 'Design & Kreativt', ids: [18,19,20,21] },
+  { id: 'teknik',  label: 'Teknik & Bygg',     ids: [22,25,26,27,28] },
+];
+
 const EDU_CATEGORIES = [
   { id: 1,  label: 'Systemutvecklare / Webbutvecklare' },
   { id: 2,  label: 'Dataanalytiker / AI' },
@@ -403,6 +422,30 @@ function setView(mode) {
   document.getElementById('vtList').classList.toggle('active', mode === 'list');
 }
 
+// ── Branch/Yrke cascading ──
+function updateYrkeOptions(branchId) {
+  const sel = document.getElementById('categorySelect');
+  const current = sel.value;
+  sel.innerHTML = '<option value="">Alla yrken</option>';
+  const cats = branchId
+    ? EDU_CATEGORIES.filter(c => BRANCHES.find(b => b.id === branchId)?.ids.includes(c.id))
+    : EDU_CATEGORIES;
+  cats.forEach(c => {
+    const o = document.createElement('option');
+    o.value = c.id;
+    o.textContent = c.label;
+    if (String(c.id) === current) o.selected = true;
+    sel.appendChild(o);
+  });
+}
+
+function onBranchChange() {
+  const branch = document.getElementById('branchSelect').value;
+  updateYrkeOptions(branch);
+  document.getElementById('categorySelect').value = '';
+  fetchSchools(true);
+}
+
 // ── Popular search chips ──
 function setSearch(term) {
   const input = document.getElementById('searchInput');
@@ -420,6 +463,7 @@ function getFilters() {
     pace:        document.getElementById('paceSelect').value,
     pacePercent: document.getElementById('pacePercentSelect').value,
     duration:    document.getElementById('durationSelect').value,
+    branch:      document.getElementById('branchSelect').value,
     category:    document.getElementById('categorySelect').value,
     startDate:   document.getElementById('startSelect').value,
     studiemedel: document.getElementById('cbStudiemedel').checked,
@@ -436,6 +480,7 @@ function countActiveFilters() {
   if (f.pace)        n++;
   if (f.pacePercent) n++;
   if (f.duration)    n++;
+  if (f.branch)      n++;
   if (f.category)    n++;
   if (f.startDate)   n++;
   if (f.studiemedel) n++;
@@ -461,7 +506,8 @@ function updateUrl() {
   if (f.pace)        p.set('takt', f.pace);
   if (f.pacePercent) p.set('procent', f.pacePercent);
   if (f.duration)    p.set('langd', f.duration);
-  if (f.category)    p.set('bransch', f.category);
+  if (f.branch)      p.set('bransch', f.branch);
+  if (f.category)    p.set('yrke', f.category);
   if (f.startDate)   p.set('start', f.startDate);
   if (f.studiemedel) p.set('csn', '1');
   if (f.avgiftsfri)  p.set('gratis', '1');
@@ -478,7 +524,8 @@ function loadFromUrl() {
   if (p.get('takt'))    document.getElementById('paceSelect').value = p.get('takt');
   if (p.get('procent')) document.getElementById('pacePercentSelect').value = p.get('procent');
   if (p.get('langd'))   document.getElementById('durationSelect').value = p.get('langd');
-  if (p.get('bransch')) document.getElementById('categorySelect').value = p.get('bransch');
+  if (p.get('bransch')) { document.getElementById('branchSelect').value = p.get('bransch'); updateYrkeOptions(p.get('bransch')); }
+  if (p.get('yrke'))    document.getElementById('categorySelect').value = p.get('yrke');
   if (p.get('start'))   document.getElementById('startSelect').value = p.get('start');
   if (p.get('csn'))     document.getElementById('cbStudiemedel').checked = true;
   if (p.get('gratis'))  document.getElementById('cbAvgiftsfri').checked = true;
@@ -500,7 +547,12 @@ function buildUrl(offset) {
   if (f.pacePercent)    params.set('pace_of_study',         'eq.' + f.pacePercent);
   if (f.duration)       params.set('duration_years',        'eq.' + f.duration);
   if (f.city)           params.set('city',                  'ilike.*' + f.city + '*');
-  if (f.category)       params.set('education_ids',         'cs.{' + f.category + '}');
+  if (f.category) {
+    params.set('education_ids', 'cs.{' + f.category + '}');
+  } else if (f.branch) {
+    const ids = BRANCHES.find(b => b.id === f.branch)?.ids || [];
+    if (ids.length) params.set('education_ids', 'ov.{' + ids.join(',') + '}');
+  }
   if (f.studiemedel)    params.set('eligible_for_student_aid', 'eq.true');
   if (f.avgiftsfri)     params.set('fee',                   'eq.0');
   if (f.startDate)      params.set('start_dates',           'cs.{"' + f.startDate + '"}');
@@ -648,6 +700,8 @@ function resetFilters() {
   document.getElementById('paceSelect').value = '';
   document.getElementById('pacePercentSelect').value = '';
   document.getElementById('durationSelect').value = '';
+  document.getElementById('branchSelect').value = '';
+  updateYrkeOptions('');
   document.getElementById('categorySelect').value = '';
   document.getElementById('startSelect').value = '';
   document.getElementById('sortSelect').value = 'program_name.asc';
@@ -678,13 +732,7 @@ function toggleNavMenu() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const sel = document.getElementById('categorySelect');
-  EDU_CATEGORIES.forEach(c => {
-    const opt = document.createElement('option');
-    opt.value = c.id;
-    opt.textContent = c.label;
-    sel.appendChild(opt);
-  });
+  updateYrkeOptions('');
   loadFromUrl();
   fetchSchools(true);
 });
