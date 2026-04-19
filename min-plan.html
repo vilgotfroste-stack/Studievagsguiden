@@ -818,6 +818,8 @@ const GYM=[{id:'natur',l:'Naturvetenskap',k:'Naturvetenskap'},{id:'teknik',l:'Te
 let edu=null,sal=0,ws=0,ans={};
 const planState = { lifetimeGain:null, missingCount:0, startYr:0, studyYears:0, studentumUrl:'' };
 let gCsnTillaggEligible = false;
+const svgCheck = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+const svgCross = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
 
 // Course matching helpers — used in behörighet + verify
 function _expandReqAlts(req) {
@@ -2402,8 +2404,6 @@ function _buildBehHeroHTML() {
   const missingReqs = specificReqs.filter(req => !_reqSatisfied(req, myCourses));
   const komvuxHeltid = missingReqs.length <= 1 ? '1 termin' : missingReqs.length <= 3 ? '1–2 terminer' : '2–3 terminer';
   const behOk = missingReqs.length === 0 && hasExam;
-  const svgCheck = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
-  const svgCross = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
   if (!isVerified) {
     return `<div class="status-hero" style="background:#FFF8EC;border-color:#D97706">
  <div>
