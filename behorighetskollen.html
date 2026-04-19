@@ -63,7 +63,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .dhero-label{font-size:.65rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--bl);margin-bottom:8px}
 .dhero-top{display:flex;align-items:flex-start;gap:16px;margin-bottom:10px}
 .dhero-logo{width:52px;height:52px;border-radius:10px;border:1.5px solid #D0E3F5;object-fit:contain;background:#fff;flex-shrink:0;padding:4px}
-.dhero-logo-placeholder{width:52px;height:52px;border-radius:10px;border:1.5px solid #D0E3F5;background:#F0F6FB;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--bl);font-weight:800;font-size:1.1rem}
+.dhero-logo-placeholder{width:52px;height:52px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:1.15rem;border:none}
 .dhero-name{font-family:'Inter',sans-serif;font-size:1.7rem;font-weight:800;line-height:1.15;letter-spacing:-.04em;margin-bottom:4px}
 .dhero-school{font-size:.92rem;font-weight:500;color:var(--mu);margin-bottom:14px}
 .dhero-tags{display:flex;gap:8px;flex-wrap:wrap}
@@ -75,6 +75,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 /* Section heading */
 .sec-h{font-family:'Inter',sans-serif;font-size:1rem;font-weight:700;letter-spacing:-.02em;margin:24px 0 10px;display:flex;align-items:center;gap:10px}
 .sec-n{width:26px;height:26px;border-radius:50%;background:var(--bl);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;font-family:'Inter',sans-serif;flex-shrink:0}
+.req-help-btn{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--bl);background:none;color:var(--bl);font-size:.68rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;line-height:1}
+.req-help-btn:hover{background:var(--bl);color:#fff}
+.req-collapsible{display:none}
+.req-collapsible.open{display:block}
 
 /* Block */
 .block{background:var(--card);border:1.5px solid #D0E3F5;border-radius:12px;padding:20px 18px;margin-bottom:14px}
@@ -327,6 +331,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 const SUPABASE_URL = 'https://qofvdpvxrvvjalgdiflg.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_Vfm1BArZN_RAWrwTOzVGXA_WWvIk77V';
 
+function schoolColor(name) {
+  const palette = [
+    {bg:'#DBEAFE',fg:'#1E40AF'},{bg:'#D1FAE5',fg:'#065F46'},
+    {bg:'#EDE9FE',fg:'#5B21B6'},{bg:'#FEF3C7',fg:'#92400E'},
+    {bg:'#FCE7F3',fg:'#9D174D'},{bg:'#CCFBF1',fg:'#0F766E'},
+  ];
+  let h = 0;
+  for (let i = 0; i < (name||'').length; i++) h = (h * 31 + name.charCodeAt(i)) & 0xffff;
+  return palette[h % palette.length];
+}
+
+function toggleReq() {
+  const el = document.getElementById('reqCollapsible');
+  if (el) el.classList.toggle('open');
+}
+
 function formatDescription(raw) {
   if (!raw) return '';
   let t = raw;
@@ -506,9 +526,10 @@ function renderPage(school) {
       <a href="${esc(school.website_url)}" target="_blank" rel="noopener">Skolans hemsida →</a>
     </div>` : '';
 
+  const sc = schoolColor(school.school_name);
   const logoHtml = school.logo_url
     ? `<img src="${esc(school.logo_url)}" alt="${esc(school.school_name)}" class="dhero-logo">`
-    : `<div class="dhero-logo-placeholder">${esc((school.school_name||'?')[0].toUpperCase())}</div>`;
+    : `<div class="dhero-logo-placeholder" style="background:${sc.bg};color:${sc.fg}">${esc((school.school_name||'?')[0].toUpperCase())}</div>`;
 
   return `
     <div class="dhero">
@@ -535,8 +556,8 @@ function renderPage(school) {
 
     ${descHtml}
 
-    <div class="sec-h"><div class="sec-n">${school.education_description ? '2' : '1'}</div>Behörighetskrav</div>
-    ${reqText}
+    <div class="sec-h"><div class="sec-n">${school.education_description ? '2' : '1'}</div>Behörighetskrav<button class="req-help-btn" onclick="toggleReq()" title="Visa fullständig behörighetsbeskrivning">?</button></div>
+    <div class="req-collapsible" id="reqCollapsible">${reqText}</div>
 
     <div class="sec-h"><div class="sec-n">${school.education_description ? '3' : '2'}</div>Kontrollera din behörighet</div>
     <div class="block">
