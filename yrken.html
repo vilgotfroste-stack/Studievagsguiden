@@ -11,6 +11,7 @@
 <style>
 :root{--bg:#F4F8F5;--card:#fff;--tx:#0A0A0A;--mu:#3A3A36;--li:#7A7A74;--ac:#5BA882;--al:#EBF5F0;--ah:#2D6B4A;--bl:#5A8FB5;--bll:#E4F0FB;--bh:#2A4F6E;--re:#B04830;--rl:#FDECEA;--wa:#9A6A00;--wl:#FBF5EA;--pu:#8A70B5;--pl:#EDE7F5;--bo:#C5D8EB;--r:12px;--sh:0 2px 20px rgba(0,0,0,.06);--shl:0 8px 40px rgba(0,0,0,.1)}
 *{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow-x:hidden}
 html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;background-color:#EAF2ED;background-image:repeating-linear-gradient(135deg,rgba(91,168,130,0.055) 0px,rgba(91,168,130,0.055) 1px,transparent 1px,transparent 14px);color:var(--tx);line-height:1.65;-webkit-font-smoothing:antialiased}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(248,252,249,.95);backdrop-filter:blur(20px);border-bottom:1px solid #D4E6D8;padding:0 28px;height:62px;display:flex;align-items:center;justify-content:space-between}
@@ -192,12 +193,12 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
 .steps-wrap{background:#fff;border-top:1px solid var(--bo);border-bottom:1px solid var(--bo);padding:40px 24px}
 .steps-inner{max-width:560px;margin:0 auto}
 .steps{display:grid;gap:0}
-.step{display:flex;gap:18px;padding-bottom:28px;position:relative}
+.step{display:flex;flex-direction:column;align-items:center;padding-bottom:32px;position:relative;text-align:center}
 .step:last-child{padding-bottom:0}
-.step::before{content:'';position:absolute;left:15px;top:32px;bottom:0;width:2px;background:var(--bo)}
+.step::before{content:'';position:absolute;left:50%;transform:translateX(-50%);top:32px;bottom:0;width:2px;background:var(--bo)}
 .step:last-child::before{display:none}
-.step-num{width:32px;height:32px;border-radius:50%;background:var(--bl);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;flex-shrink:0;position:relative;z-index:1}
-.step-body{flex:1;padding-top:4px}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--bl);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;position:relative;z-index:1;margin-bottom:12px}
+.step-body{text-align:center}
 .step-body .step-title{font-weight:800;font-size:.95rem;margin-bottom:4px;color:var(--tx)}
 .step-body .step-desc{font-size:.86rem;color:var(--mu);line-height:1.65}
 .step-cta-inline{font-size:.78rem;font-weight:700;color:var(--ac);text-decoration:none;display:block;margin-top:8px}
