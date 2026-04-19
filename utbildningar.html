@@ -537,7 +537,7 @@ function loadFromUrl() {
 function buildUrl(offset) {
   const f = getFilters();
   const params = new URLSearchParams();
-  params.set('select', 'id,program_name,school_name,city,study_mode,study_pace,duration_text');
+  params.set('select', 'id,program_name,school_name,city,study_mode,study_pace,duration_text,website_url');
   params.set('active', 'eq.true');
   params.set('order', f.sort || 'program_name.asc');
   params.set('limit', PAGE_SIZE);
@@ -636,9 +636,14 @@ function renderCards(schools, reset) {
     const delay = reset ? (i % PAGE_SIZE) * 30 : 0;
     const sc = schoolColor(s.school_name);
     const initial = (s.school_name||'?')[0].toUpperCase();
+    const cbDomain = s.website_url ? (() => { try { return new URL(s.website_url).hostname.replace(/^www\./,''); } catch(e) { return null; } })() : null;
+    const logoEl = cbDomain
+      ? `<img src="https://logo.clearbit.com/${cbDomain}" class="card-initial" style="object-fit:contain;background:#fff;border:1px solid #E4EEF8;padding:3px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+        + `<div class="card-initial" style="background:${sc.bg};color:${sc.fg};display:none">${initial}</div>`
+      : `<div class="card-initial" style="background:${sc.bg};color:${sc.fg}">${initial}</div>`;
     return `<a href="/behorighetskollen?id=${s.id}" class="edu-card" style="animation-delay:${delay}ms">
       <div class="card-body">
-        <div class="card-initial" style="background:${sc.bg};color:${sc.fg}">${initial}</div>
+        ${logoEl}
         <div class="card-name">${esc(s.program_name)}</div>
         <div class="card-school">${esc(s.school_name)}</div>
         ${s.city ? `<div class="card-city"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>${esc(s.city)}</div>` : ''}

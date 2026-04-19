@@ -527,9 +527,13 @@ function renderPage(school) {
     </div>` : '';
 
   const sc = schoolColor(school.school_name);
-  const logoHtml = school.logo_url
-    ? `<img src="${esc(school.logo_url)}" alt="${esc(school.school_name)}" class="dhero-logo">`
-    : `<div class="dhero-logo-placeholder" style="background:${sc.bg};color:${sc.fg}">${esc((school.school_name||'?')[0].toUpperCase())}</div>`;
+  const initial = esc((school.school_name||'?')[0].toUpperCase());
+  const fallbackStyle = `background:${sc.bg};color:${sc.fg}`;
+  const clearbitDomain = school.website_url ? (() => { try { return new URL(school.website_url).hostname.replace(/^www\./, ''); } catch(e) { return null; } })() : null;
+  const logoHtml = clearbitDomain
+    ? `<img src="https://logo.clearbit.com/${clearbitDomain}" alt="${esc(school.school_name)}" class="dhero-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+      + `<div class="dhero-logo-placeholder" style="${fallbackStyle};display:none">${initial}</div>`
+    : `<div class="dhero-logo-placeholder" style="${fallbackStyle}">${initial}</div>`;
 
   return `
     <div class="dhero">
@@ -556,10 +560,8 @@ function renderPage(school) {
 
     ${descHtml}
 
-    <div class="sec-h"><div class="sec-n">${school.education_description ? '2' : '1'}</div>Behörighetskrav<button class="req-help-btn" onclick="toggleReq()" title="Visa fullständig behörighetsbeskrivning">?</button></div>
+    <div class="sec-h"><div class="sec-n">${school.education_description ? '2' : '1'}</div>Kontrollera din behörighet<button class="req-help-btn" onclick="toggleReq()" title="Visa fullständiga behörighetskrav">?</button></div>
     <div class="req-collapsible" id="reqCollapsible">${reqText}</div>
-
-    <div class="sec-h"><div class="sec-n">${school.education_description ? '3' : '2'}</div>Kontrollera din behörighet</div>
     <div class="block">
       <p style="font-size:.84rem;color:var(--mu);margin-bottom:16px;line-height:1.65">
         Bocka av de kurser du har klarat (betyg spelar ingen roll — godkänt räcker för YH-behörighet).
