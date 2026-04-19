@@ -1402,15 +1402,15 @@ function buildFP(name) {
  let showUni = false;
  let showUnsure = false;
 
- if (YH_ONLY_IDS.includes(e.id)) {
-   showYH = true;
- } else if (UNI_ONLY_IDS.includes(e.id)) {
+ if (UNI_ONLY_IDS.includes(e.id)) {
    showUni = true;
+ } else if (eduTypeVal === 'uni') {
+   // User explicitly chose university — always show Studentum link, never YH cards
+   showUni = true;
+ } else if (YH_ONLY_IDS.includes(e.id) || eduTypeVal === 'yh') {
+   showYH = true;
  } else {
-   // BOTH_IDS — depends on wizard answer
-   if (eduTypeVal === 'yh')  showYH = true;
-   else if (eduTypeVal === 'uni') showUni = true;
-   else showUnsure = true; // 'unsure' or missing
+   showUnsure = true; // 'unsure' or missing
  }
 
  // Legacy alias — keep isUniOnly for any downstream code that uses it
@@ -2843,7 +2843,7 @@ async function fetchPlanByEmail() {
  document.getElementById('loadingState').style.display = 'none';
  buildFP(userName);
  document.getElementById('planContainer').style.display = 'block';
- if (edu && (edu.yh || edu.both)) loadYHSchools(edu, ans);
+ if (edu && (edu.yh || edu.both) && ans.education_type !== 'uni') loadYHSchools(edu, ans);
 
  } catch(e) {
  console.error('fetchPlanByEmail error:', e);
@@ -3868,7 +3868,7 @@ async function loadPlanForUser(user) {
  document.getElementById('planContainer').style.display = 'block';
 
  // Ladda YH-skolmatchning om det är en YH-utbildning
- if (edu && (edu.yh || edu.both)) loadYHSchools(edu, ans);
+ if (edu && (edu.yh || edu.both) && ans.education_type !== 'uni') loadYHSchools(edu, ans);
  
  // Spara till plans-tabellen om inte redan sparat (och betalning hanteras separat)
  // TODO: koppla till Stripe webhook
