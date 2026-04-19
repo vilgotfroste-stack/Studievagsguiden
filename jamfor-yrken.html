@@ -62,11 +62,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(248,252,249,
 h1{font-family:'Inter',sans-serif;font-size:clamp(1.9rem,4.5vw,3rem);line-height:1.1;letter-spacing:-.5px;margin-bottom:12px;font-weight:800}
 h1 em{font-style:italic;color:var(--ac)}
 .hero-sub{font-size:.96rem;color:var(--mu);max-width:490px;margin:0 auto 28px;line-height:1.65}
-.hero-steps{display:flex;justify-content:center;gap:12px;max-width:720px;margin:0 auto}
-.hs{flex:1;background:#fff;border:2px solid var(--bo);border-radius:12px;padding:18px 16px;text-align:left;position:relative}
-.hs-num{width:26px;height:26px;border-radius:50%;background:var(--bll);border:2px solid var(--bl);color:var(--bh);font-size:.72rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
-.hs-title{font-size:.84rem;font-weight:800;color:var(--tx);margin-bottom:3px}
-.hs-desc{font-size:.71rem;color:var(--mu);line-height:1.5}
+.hero-steps{max-width:500px;margin:0 auto}
+.steps{display:grid;gap:0}
+.step{display:flex;gap:18px;padding-bottom:24px;position:relative}
+.step:last-child{padding-bottom:0}
+.step::before{content:'';position:absolute;left:15px;top:32px;bottom:0;width:2px;background:var(--bo)}
+.step:last-child::before{display:none}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--bl);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;flex-shrink:0;position:relative;z-index:1}
+.step-body{flex:1;padding-top:4px}
+.step-body .step-title{font-weight:800;font-size:.93rem;margin-bottom:3px;color:var(--tx)}
+.step-body .step-desc{font-size:.82rem;color:var(--mu);line-height:1.6}
 
 /* ANCHOR CARDS */
 .anchor-strip{display:flex;gap:10px;max-width:720px;margin:20px auto 0;justify-content:center}
@@ -339,8 +344,6 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
   .ctable th.th-col,.ctable td.td-val{min-width:120px;padding:10px 8px}
   .trust-inner{gap:10px}
   .t-sep{display:none}
-  .hero-steps{flex-direction:column}
-  .hs:not(:last-child){border-right:none;border-bottom:1px solid #B8D4EC}
   .explore-grid{grid-template-columns:1fr !important}
 }
 @media(max-width:480px){
@@ -417,23 +420,31 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
   <h1 style="font-size:clamp(2.4rem,5.5vw,3.8rem)">Jämför yrken sida vid sida</h1>
   <p class="hero-sub">Välj de utbildningar du är nyfiken på — se lön, studietid, efterfrågan och mer direkt bredvid varandra.</p>
   <div style="height:20px"></div>
-  <div class="hero-steps" style="gap:8px;max-width:660px">
-    <div class="hs" style="padding:13px 12px">
-      <div class="hs-num" style="width:22px;height:22px;font-size:.65rem;margin-bottom:7px">1</div>
-      <div class="hs-title" style="font-size:.78rem">Välj bransch</div>
-      <div class="hs-desc" style="font-size:.67rem">Klicka på ett snabbval eller sök direkt efter ett yrke</div>
-    </div>
-    <div class="hs" style="padding:13px 12px">
-      <div class="hs-num" style="width:22px;height:22px;font-size:.65rem;margin-bottom:7px">2</div>
-      <div class="hs-title" style="font-size:.78rem">Lägg till 2–4 yrken</div>
-      <div class="hs-desc" style="font-size:.67rem">Markera utbildningarna — tabellen byggs live</div>
-    </div>
-    <div class="hs" style="padding:13px 12px">
-      <div class="hs-num" style="width:22px;height:22px;font-size:.65rem;margin-bottom:7px">3</div>
-      <div class="hs-title" style="font-size:.78rem">Läs av tabellen</div>
-      <div class="hs-desc" style="display:flex;flex-direction:column;gap:4px;font-size:.67rem">
-        <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#E8F5EE;border:1.5px solid var(--ac);flex-shrink:0"></span> Bäst i jämförelsen</span>
-        <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#FBF5EA;border:1.5px solid #C49A2A;flex-shrink:0"></span> Lägst i jämförelsen</span>
+  <div class="hero-steps">
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Välj bransch</div>
+          <div class="step-desc">Klicka på ett snabbval eller sök direkt efter ett yrke</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Lägg till 2–4 yrken</div>
+          <div class="step-desc">Markera utbildningarna — tabellen byggs live</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Läs av tabellen</div>
+          <div class="step-desc" style="display:flex;flex-direction:column;gap:4px">
+            <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#E8F5EE;border:1.5px solid var(--ac);flex-shrink:0"></span> Bäst i jämförelsen</span>
+            <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#FBF5EA;border:1.5px solid #C49A2A;flex-shrink:0"></span> Lägst i jämförelsen</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1199,9 +1210,14 @@ function renderEduDetailContent() {
     <div style="background:var(--bg);border-radius:8px;padding:12px 14px">
       <div style="display:flex;justify-content:space-between;font-size:.76rem;font-weight:600;margin-bottom:6px"><span>Lönespridning</span><span style="color:var(--li)">${fmt(sd.p25)} – ${fmt(sd.p90)} kr</span></div>
       <div style="position:relative;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden">
-        <div style="position:absolute;left:${Math.round((sd.p25/sd.p90)*100)}%;right:${Math.round(100-(sd.p75/sd.p90)*100)}%;height:100%;background:var(--ac);border-radius:4px"></div>
+        <div style="position:absolute;left:0;right:${Math.round((sd.p90-sd.p75)/(sd.p90-sd.p25)*100)}%;height:100%;background:var(--ac);border-radius:4px"></div>
+        <div style="position:absolute;left:${Math.round((sd.med-sd.p25)/(sd.p90-sd.p25)*100)}%;width:2px;height:100%;background:rgba(0,0,0,.35);transform:translateX(-50%)"></div>
       </div>
-      <div style="display:flex;justify-content:space-between;font-size:.66rem;color:var(--li);margin-top:4px"><span>${fmt(sd.p25)}</span><span style="color:var(--tx);font-weight:600">${fmt(sd.med)} median</span><span>${fmt(sd.p90)}</span></div>
+      <div style="position:relative;margin-top:4px;height:16px;font-size:.66rem;color:var(--li)">
+        <span style="position:absolute;left:0">${fmt(sd.p25)}</span>
+        <span style="position:absolute;left:${Math.round((sd.med-sd.p25)/(sd.p90-sd.p25)*100)}%;transform:translateX(-50%);font-weight:600;color:var(--tx);white-space:nowrap">${fmt(sd.med)} median</span>
+        <span style="position:absolute;right:0">${fmt(sd.p90)}</span>
+      </div>
     </div>
     <div style="background:var(--al);border-radius:8px;padding:11px 13px;display:flex;gap:8px;align-items:flex-start;margin-top:12px">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2.5" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
