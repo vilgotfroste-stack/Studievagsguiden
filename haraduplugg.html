@@ -64,7 +64,7 @@
 <link rel="icon" type="image/png" href="/favicon.png">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5NFR33BFDF"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-5NFR33BFDF');</script>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#F4F8F5;--card:#fff;--tx:#0A0A0A;--mu:#3A3A36;--li:#7A7A74;
@@ -80,7 +80,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{overflow-x:hidden}
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background-color:#EAF7F1;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.07) 0px,rgba(100,160,130,0.07) 1px,transparent 1px,transparent 12px);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+body{font-family:'Inter',sans-serif;background-color:#EAF7F1;background-image:repeating-linear-gradient(135deg,rgba(100,160,130,0.07) 0px,rgba(100,160,130,0.07) 1px,transparent 1px,transparent 12px);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
 
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;text-decoration:none;color:inherit;letter-spacing:.01em}
@@ -95,7 +95,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 /* INTRO */
 #intro{flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 24px}
 .intro-badge{display:inline-flex;align-items:center;gap:8px;background:var(--al);color:var(--ac);padding:8px 18px;border-radius:20px;font-size:.82rem;font-weight:600;margin-bottom:32px;animation:fu .8s ease forwards}
-.intro-h{font-family:'DM Serif Display',serif;font-size:clamp(2.4rem,5vw,4.2rem);line-height:1.1;max-width:680px;letter-spacing:-1.5px;margin-bottom:20px;animation:fu .8s ease forwards .2s;opacity:0}
+.intro-h{font-family:'Inter',sans-serif;font-size:clamp(2rem,4vw,3.4rem);line-height:1.1;max-width:680px;letter-spacing:-1.5px;margin-bottom:20px;animation:fu .8s ease forwards .2s;opacity:0}
 .intro-sub{font-size:1.05rem;color:var(--mu);max-width:440px;margin-bottom:24px;line-height:1.7;animation:fu .8s ease forwards .35s;opacity:0}
 .intro-skip-note{background:var(--wl);border:1.5px solid #E0C97A;border-radius:12px;padding:14px 20px;max-width:440px;width:100%;font-size:.84rem;color:#7A5C00;line-height:1.65;margin-bottom:28px;animation:fu .8s ease forwards .45s;opacity:0;text-align:left}
 .intro-meta{font-size:.82rem;color:var(--li);margin-bottom:40px;animation:fu .8s ease forwards .5s;opacity:0}
@@ -115,7 +115,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 .q-fill{height:100%;background:var(--ac);border-radius:2px;transition:width .4s ease}
 
 .q-card{background:var(--card);border:2px solid var(--bo);border-radius:20px;padding:40px 36px;width:100%;max-width:680px;box-shadow:var(--shl);animation:fu .4s ease forwards}
-.q-text{font-family:'DM Serif Display',serif;font-size:clamp(1.25rem,2.8vw,1.6rem);line-height:1.3;letter-spacing:-.3px;margin-bottom:28px;color:var(--tx)}
+.q-text{font-family:'Inter',sans-serif;font-size:clamp(1.1rem,2.5vw,1.45rem);line-height:1.3;letter-spacing:-.3px;margin-bottom:28px;color:var(--tx)}
 
 .opts{display:grid;gap:10px}
 .opt{padding:16px 20px;border:2px solid var(--bo);border-radius:12px;cursor:pointer;transition:all .18s;font-size:.95rem;line-height:1.5;color:var(--mu);font-weight:500;text-align:left;background:var(--bg);display:flex;align-items:flex-start;gap:14px;width:100%}
@@ -127,7 +127,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,247,
 .opt.chosen .opt-dot::after{content:'';width:9px;height:9px;display:block;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 8'%3E%3Cpolyline points='1,4 3.5,6.5 9,1' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
 
 .yn-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.yn-btn{padding:28px 16px;border:2px solid var(--bo);border-radius:14px;cursor:pointer;font-family:'DM Serif Display',serif;font-size:1.6rem;background:var(--bg);color:var(--mu);transition:all .18s;text-align:center;line-height:1}
+.yn-btn{padding:28px 16px;border:2px solid var(--bo);border-radius:14px;cursor:pointer;font-family:'Inter',sans-serif;font-size:1.3rem;background:var(--bg);color:var(--mu);transition:all .18s;text-align:center;line-height:1}
 .yn-yes:hover,.yn-yes.chosen{border-color:var(--ac);background:var(--al);color:var(--ah)}
 .yn-no:hover,.yn-no.chosen{border-color:var(--re);background:var(--rl);color:var(--re)}
 
@@ -222,11 +222,19 @@ input[type=range].svq::-moz-range-thumb{width:24px;height:24px;border-radius:50%
 .nav-lnk{display:flex;align-items:center;gap:10px;padding:13px 20px;font-size:.93rem;font-weight:600;color:#0A0A0A;text-decoration:none;transition:background .15s;border-left:3px solid transparent}
 .nav-lnk:hover{background:#EBF5F0;color:#5BA882;border-left-color:#5BA882}
 .nav-lnk.cur{background:#EBF5F0;color:#5BA882;border-left-color:#5BA882}
-.nav-lnk svg{flex-shrink:0;opacity:.6;margin-top:2px}
 .nav-lnk-title{font-size:.9rem;font-weight:600;line-height:1.2;color:var(--tx,#0A0A0A)}
 .nav-lnk-sub{font-size:.72rem;font-weight:400;color:#7A7A74;margin-top:1px;line-height:1.2}
 .nav-lnk:hover .nav-lnk-title,.nav-lnk.cur .nav-lnk-title{color:#5BA882}
 .nav-lnk:hover .nav-lnk-sub,.nav-lnk.cur .nav-lnk-sub{color:#5BA882}
+.faq-list{display:grid;gap:10px}
+.faq-item{background:var(--card);border:2px solid var(--bo);border-radius:12px;overflow:hidden;transition:border-color .18s}
+.faq-item.open{border-color:var(--ac)}
+.faq-q{width:100%;background:none;border:none;padding:18px 20px;font-family:inherit;font-size:.92rem;font-weight:600;color:var(--tx);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;line-height:1.4}
+.faq-q .arr{flex-shrink:0;transition:transform .25s;color:var(--li)}
+.faq-item.open .faq-q .arr{transform:rotate(180deg);color:var(--ac)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1)}
+.faq-item.open .faq-a{max-height:300px}
+.faq-a-inner{padding:0 20px 18px;font-size:.88rem;color:var(--mu);line-height:1.75}
 .nav-panel-foot{padding:14px 20px;border-top:1px solid #C5D8EB;margin-top:8px}
 .nav-panel-foot a{font-size:.72rem;color:#9A9A94;text-decoration:none}
 .nav-panel-foot a:hover{color:#5BA882}
@@ -274,57 +282,45 @@ input[type=range].svq::-moz-range-thumb{width:24px;height:24px;border-radius:50%
   </div>
   <div style="padding:8px 0">
     <a href="/" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       <div><div class="nav-lnk-title">Startsidan</div><div class="nav-lnk-sub">Lönar det sig?</div></div>
     </a>
     <div class="nav-section-lbl">Planering</div>
     <a href="/skapa-min-plan" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       <div><div class="nav-lnk-title">Skapa min plan</div><div class="nav-lnk-sub">Personlig studieplan</div></div>
     </a>
     <div class="nav-section-lbl">Hitta rätt</div>
     <a href="/yrkestest" class="nav-lnk cur">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       <div><div class="nav-lnk-title">Yrkestest</div><div class="nav-lnk-sub">Vad passar dig?</div></div>
     </a>
     <a href="/studieform" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
       <div><div class="nav-lnk-title">Hur ska jag studera?</div><div class="nav-lnk-sub">Hitta din studieform</div></div>
     </a>
     <div class="nav-section-lbl">Utbildningar</div>
     <a href="/yrken" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
       <div><div class="nav-lnk-title">Yrken</div><div class="nav-lnk-sub">Bläddra bland alla</div></div>
     </a>
     <a href="/jamfor-yrken" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
       <div><div class="nav-lnk-title">Jämför yrken</div><div class="nav-lnk-sub">Sida vid sida</div></div>
     </a>
     <a href="/utbildningar" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
       <div><div class="nav-lnk-title">YH-utbildningar</div><div class="nav-lnk-sub">Sök bland 2 500+ program</div></div>
     </a>
     <a href="/behorighetskollen" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
       <div><div class="nav-lnk-title">Behörighetskollen</div><div class="nav-lnk-sub">Kontrollera behörighet</div></div>
     </a>
     <a href="/komvux" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       <div><div class="nav-lnk-title">Komvux</div><div class="nav-lnk-sub">Allt du behöver veta</div></div>
     </a>
     <div class="nav-section-lbl">Ekonomi</div>
     <a href="/csn-guide" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
       <div><div class="nav-lnk-title">CSN-guide</div><div class="nav-lnk-sub">Skuld, återbetalning &amp; mer</div></div>
     </a>
     <a href="/foreldre-som-studerar" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
       <div><div class="nav-lnk-title">Föräldrar som studerar</div><div class="nav-lnk-sub">Plugga med barn</div></div>
     </a>
     <div class="nav-sep"></div>
     <div class="nav-section-lbl">Konto</div>
     <a href="/min-plan" class="nav-lnk">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       <div><div class="nav-lnk-title">Min plan</div><div class="nav-lnk-sub">Din sparade plan</div></div>
     </a>
   </div>
@@ -333,20 +329,20 @@ input[type=range].svq::-moz-range-thumb{width:24px;height:24px;border-radius:50%
 
 <!-- Static SEO content — indexed by Google, hidden when quiz starts -->
 <section id="seoContent" style="max-width:680px;margin:100px auto 0;padding:0 24px 60px">
-  <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.15;letter-spacing:-.5px;margin-bottom:16px;color:var(--tx)">Vilket yrke passar mig?<br><span style="color:var(--ac)">Ta vårt gratis yrkestest</span></h1>
+  <h1 style="font-family:'Inter',sans-serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;line-height:1.2;letter-spacing:-.5px;margin-bottom:16px;color:var(--tx)">Vilket yrke passar mig?<br><span style="color:var(--ac)">Ta vårt gratis yrkestest</span></h1>
   <p style="font-size:1rem;color:var(--mu);line-height:1.75;margin-bottom:20px">Vet du inte vad du vill jobba med? Du är inte ensam — det är en av de vanligaste frågorna bland unga vuxna i Sverige. Det här yrkestestet är utformat för att ge dig ett svar som faktiskt stämmer, inte ett du kunde räkna ut i förväg.</p>
-  <p style="font-size:.92rem;color:var(--mu);line-height:1.75;margin-bottom:28px">Testet bygger på <strong>Hollands karriärmodell (RIASEC)</strong>, utvecklad av psykologen John L. Holland vid Johns Hopkins University — ett av de mest vetenskapligt validerade verktygen inom karriärpsykologi. Du svarar på 17 scenariobaserade frågor och får din personlighetsprofil med matchande utbildningar och yrken.</p>
+  <p style="font-size:.92rem;color:var(--mu);line-height:1.75;margin-bottom:28px">Testet bygger på <strong>Hollands karriärmodell (RIASEC)</strong> — ett av karriärpsykologins mest validerade verktyg. 17 scenariobaserade frågor. En personlighetsprofil med matchande utbildningar och yrken.</p>
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:32px">
     <div style="background:var(--card);border:1.5px solid var(--bo);border-radius:12px;padding:16px;text-align:center">
-      <div style="font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--ac);margin-bottom:4px">17</div>
+      <div style="font-family:'Inter',sans-serif;font-size:1.5rem;font-weight:800;color:var(--ac);margin-bottom:4px">17</div>
       <div style="font-size:.76rem;color:var(--li);font-weight:600;text-transform:uppercase;letter-spacing:.5px">frågor</div>
     </div>
     <div style="background:var(--card);border:1.5px solid var(--bo);border-radius:12px;padding:16px;text-align:center">
-      <div style="font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--ac);margin-bottom:4px">15</div>
+      <div style="font-family:'Inter',sans-serif;font-size:1.5rem;font-weight:800;color:var(--ac);margin-bottom:4px">15</div>
       <div style="font-size:.76rem;color:var(--li);font-weight:600;text-transform:uppercase;letter-spacing:.5px">unika profiler</div>
     </div>
     <div style="background:var(--card);border:1.5px solid var(--bo);border-radius:12px;padding:16px;text-align:center">
-      <div style="font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--ac);margin-bottom:4px">Gratis</div>
+      <div style="font-family:'Inter',sans-serif;font-size:1.5rem;font-weight:800;color:var(--ac);margin-bottom:4px">Gratis</div>
       <div style="font-size:.76rem;color:var(--li);font-weight:600;text-transform:uppercase;letter-spacing:.5px">ingen registrering</div>
     </div>
   </div>
@@ -355,52 +351,44 @@ input[type=range].svq::-moz-range-thumb{width:24px;height:24px;border-radius:50%
 
 <!-- FAQ — static, fully indexed -->
 <section id="faqSection" style="max-width:680px;margin:0 auto;padding:0 24px 80px">
-  <h2 style="font-family:'DM Serif Display',serif;font-size:1.6rem;margin-bottom:6px;color:var(--tx)">Vanliga frågor om yrkestest</h2>
+  <h2 style="font-family:'Inter',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:6px;color:var(--tx)">Vanliga frågor om yrkestest</h2>
   <p style="font-size:.88rem;color:var(--li);margin-bottom:24px">Om karriärtest, personlighetsprofiler och att hitta rätt yrke.</p>
-  <div id="faqItems"></div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q">Vilket yrke passar mig?<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">Det beror på hur du naturligt reagerar i olika situationer — vad som håller dig vaken på natten, hur du hanterar problem, vad du märker av i ett rum. Hollands karriärmodell kartlägger precis det och matchar det mot yrken med dokumenterad träffsäkerhet. Det snabbaste sättet att få ett svar är att ta testet ovan — 17 frågor, 5 minuter.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Vad skiljer det här yrkestestet från andra?<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">De flesta yrkestest ställer uppenbara frågor — "gillar du att leda andra?" eller "trivs du med struktur?" Det gör att du svarar på vem du vill vara, inte vem du är. Det här testet använder scenariofrågor där det inte finns uppenbara rätta svar, vilket ger en mer träffsäker bild.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Vad är Hollands karriärmodell?<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">Hollands RIASEC-modell är ett system från Johns Hopkins University som delar in personligheter i sex dimensioner: Practical, Investigative, Artistic, Social, Enterprising och Conventional. Det är ett av de mest använda och vetenskapligt validerade verktygen inom karriärpsykologi och utgör grunden i bland annat Arbetsförmedlingens yrkesguide.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Kan ett yrkestest faktiskt hjälpa mig hitta rätt?<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">Det kan ge dig en välgrundad startpunkt — inte hela svaret. Testet avslöjar mönster i hur du tänker och reagerar, och matchar dem mot yrken med liknande profil. Kombinera gärna resultatet med att räkna på ekonomin för det yrke du är intresserad av, vilket du kan göra direkt här på Studievägsguiden.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Behöver jag registrera mig?<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">Nej. Yrkestestet är helt gratis och kräver ingen registrering. Du får din fullständiga profil direkt efter att du svarat på frågorna.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Vad händer om jag inte vet vad jag vill bli?<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <div class="faq-a"><div class="faq-a-inner">Det är precis den situationen testet är gjort för. Du behöver inte ha en aning om vad du vill jobba med — svara bara på frågorna instinktivt. Resultatet ger dig en personlighetsprofil och konkreta utbildningsförslag att utgå från.</div></div>
+    </div>
+  </div>
 </section>
-
 <script>
-(function(){
-  const faqs=[
-    {q:"Vilket yrke passar mig?",a:"Det beror på hur du naturligt reagerar i olika situationer — vad som håller dig vaken på natten, hur du hanterar problem, vad du märker av i ett rum. Hollands karriärmodell kartlägger precis det och matchar det mot yrken med dokumenterad träffsäkerhet. Det snabbaste sättet att få ett svar är att ta testet ovan — 17 frågor, 5 minuter."},
-    {q:"Vad skiljer det här yrkestestet från andra?",a:"De flesta yrkestest ställer uppenbara frågor — 'gillar du att leda andra?' eller 'trivs du med struktur?' Det gör att du svarar på vem du vill vara, inte vem du är. Det här testet använder scenariofrågor där det inte finns uppenbara rätta svar, vilket ger en mer träffsäker bild."},
-    {q:"Vad är Hollands karriärmodell?",a:"Hollands RIASEC-modell är ett system från Johns Hopkins University som delar in personligheter i sex dimensioner: Practical, Investigative, Artistic, Social, Enterprising och Conventional. Det är ett av de mest använda och vetenskapligt validerade verktygen inom karriärpsykologi och utgör grunden i bland annat Arbetsförmedlingens yrkesguide."},
-    {q:"Kan ett yrkestest faktiskt hjälpa mig hitta rätt?",a:"Det kan ge dig en välgrundad startpunkt — inte hela svaret. Testet avslöjar mönster i hur du tänker och reagerar, och matchar dem mot yrken med liknande profil. Kombinera gärna resultatet med att räkna på ekonomin för det yrke du är intresserad av, vilket du kan göra direkt här på Studievägsguiden."},
-    {q:"Behöver jag registrera mig?",a:"Nej. Yrkestestet är helt gratis och kräver ingen registrering. Du får din fullständiga profil direkt efter att du svarat på frågorna."},
-    {q:"Vad händer om jag inte vet vad jag vill bli?",a:"Det är precis den situationen testet är gjort för. Du behöver inte ha en aning om vad du vill jobba med — svara bara på frågorna instinktivt. Resultatet ger dig en personlighetsprofil och konkreta utbildningsförslag att utgå från."}
-  ];
-  const container=document.getElementById('faqItems');
-  faqs.forEach((f,i)=>{
-    const wrap=document.createElement('div');
-    wrap.style.cssText='border-top:1px solid var(--bo)';
-    const btn=document.createElement('button');
-    btn.style.cssText='width:100%;background:none;border:none;padding:18px 0;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:inherit;font-size:.95rem;font-weight:600;color:var(--tx)';
-    btn.innerHTML=`<span>${f.q}</span><svg style="flex-shrink:0;transition:transform .25s" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>`;
-    const body=document.createElement('div');
-    body.style.cssText='max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1)';
-    body.innerHTML=`<p style="padding:0 0 18px;font-size:.9rem;color:var(--mu);line-height:1.75">${f.a}</p>`;
-    btn.addEventListener('click',()=>{
-      const open=body.style.maxHeight!=='0px'&&body.style.maxHeight!=='';
-      document.querySelectorAll('#faqItems > div[data-faq]').forEach(w=>{
-        const b=w.querySelector('div');if(b)b.style.maxHeight='0';
-        const sv=w.querySelector('svg');if(sv)sv.style.transform='';
-        w.style.borderLeft='none';
-        const bt=w.querySelector('button');if(bt)bt.style.color='var(--tx)';
-      });
-      if(!open){
-        body.style.maxHeight=body.scrollHeight+'px';
-        wrap.style.borderLeft='3px solid var(--ac)';
-        btn.style.color='var(--ac)';
-        btn.querySelector('svg').style.transform='rotate(180deg)';
-      }
-    });
-    wrap.setAttribute('data-faq',i);
-    wrap.appendChild(btn);
-    wrap.appendChild(body);
-    container.appendChild(wrap);
+document.querySelectorAll('.faq-q').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const item=btn.closest('.faq-item');
+    const wasOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+    if(!wasOpen) item.classList.add('open');
   });
-})();
+});
 </script>
 
 <div id="quizApp" style="display:none">
@@ -468,8 +456,7 @@ input[type=range].svq::-moz-range-thumb{width:24px;height:24px;border-radius:50%
     <div id="riasecBars"></div>
   </div>
   <div class="holland-note">
-    Baserat på Hollands karriärmodell (RIASEC), utvecklad av John L. Holland vid Johns Hopkins University —
-    ett av de mest validerade och använda systemen inom karriärpsykologi.
+    Baserat på Hollands RIASEC-modell — ett av karriärpsykologins mest validerade verktyg.
   </div>
   <div class="res-edus-heading">Utbildningar som matchar din profil</div>
   <div class="res-edus" id="resEdus"></div>
