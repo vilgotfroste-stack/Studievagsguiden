@@ -195,7 +195,6 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
 .steps{display:grid;gap:0}
 .step{display:flex;flex-direction:column;align-items:center;padding-bottom:32px;position:relative;text-align:center}
 .step:last-child{padding-bottom:0}
-.step::before{content:'';position:absolute;left:50%;transform:translateX(-50%);top:32px;bottom:0;width:2px;background:var(--bo)}
 .step:last-child::before{display:none}
 .step-num{width:32px;height:32px;border-radius:50%;background:var(--bl);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;position:relative;z-index:1;margin-bottom:12px}
 .step-body{text-align:center}
@@ -244,6 +243,7 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
 @media(max-width:420px){
   .edu-grid{grid-template-columns:1fr}
   .filter-grid{grid-template-columns:1fr}
+  .nav-login{display:none}
 }
 </style>
 <script type="application/ld+json">
