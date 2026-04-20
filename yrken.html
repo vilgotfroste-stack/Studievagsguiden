@@ -198,18 +198,11 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
 .hstep-item+.hstep-item{border-left:1px solid var(--bo)}
 .hstep-dot{width:32px;height:32px;border-radius:50%;background:var(--bl);color:#fff;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
 .hstep-item-title{font-weight:800;font-size:.88rem;color:var(--tx);margin-bottom:3px;line-height:1.3}
-.hstep-item-sub{font-size:.76rem;color:var(--mu);line-height:1.5}
-.hstep-item-when{font-size:.67rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--bl);margin-bottom:3px}
-.hstep-tabs{display:none;justify-content:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
-.hstep-tab{width:36px;height:36px;border-radius:50%;border:2px solid var(--bl);background:#fff;color:var(--bl);font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s,color .15s;padding:0}
-.hstep-tab.active{background:var(--bl);color:#fff}
+.hstep-item-sub{display:none}
 .hstep-panel{display:none;text-align:center}
-.hstep-panel.active{display:block;animation:hsf .2s ease}
-.hstep-panel-when{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--bl);margin-bottom:6px}
-.hstep-panel-title{font-weight:800;font-size:.95rem;color:var(--tx);margin-bottom:8px}
-.hstep-panel-sub{font-size:.86rem;color:var(--mu);line-height:1.65}
+.hstep-panel.active{display:none}
 @keyframes hsf{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-@media(max-width:540px){.hstep-row{display:none}.hstep-tabs{display:flex}}
+@media(max-width:540px){.hstep-row{display:none}.hstep-tabs{display:flex}.hstep-panel.active{display:block;animation:hsf .2s ease}}
 /* EXPLORE CARDS */
 .explore-section{background:var(--bg);border-top:1px solid var(--bo);border-bottom:1px solid var(--bo);padding:24px 24px}
 .explore-wrap{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -331,28 +324,6 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
     </div>
   </div>
 
-  <!-- STEG FÖR STEG -->
-  <div class="hstep-outer">
-    <div class="hstep-inner">
-      <div class="hstep-row" style="grid-template-columns:repeat(4,1fr)">
-        <div class="hstep-item"><div class="hstep-dot">1</div><div class="hstep-item-title">Sätt dina filter</div><div class="hstep-item-sub">Välj lön, stress eller flexibilitet.</div></div>
-        <div class="hstep-item"><div class="hstep-dot">2</div><div class="hstep-item-title">Välj ett yrke</div><div class="hstep-item-sub">Klicka på ett kort och se lön och krav.</div></div>
-        <div class="hstep-item"><div class="hstep-dot">3</div><div class="hstep-item-title">Fördjupa dig</div><div class="hstep-item-sub">Se en vanlig dag och karriärvägar.</div></div>
-        <div class="hstep-item"><div class="hstep-dot">4</div><div class="hstep-item-title">Skapa din plan</div><div class="hstep-item-sub">Skolmatchning, behörighet och CSN.</div></div>
-      </div>
-      <div class="hstep-tabs">
-        <button class="hstep-tab active" data-i="0">1</button>
-        <button class="hstep-tab" data-i="1">2</button>
-        <button class="hstep-tab" data-i="2">3</button>
-        <button class="hstep-tab" data-i="3">4</button>
-      </div>
-      <div class="hstep-panel active" data-i="0"><div class="hstep-panel-title">Sätt dina filter</div><div class="hstep-panel-sub">Välj lön, stress eller flexibilitet för att korta ner listan.</div></div>
-      <div class="hstep-panel" data-i="1"><div class="hstep-panel-title">Välj ett yrke</div><div class="hstep-panel-sub">Klicka på ett kort och se lön, behörighetskrav och lönetak.</div></div>
-      <div class="hstep-panel" data-i="2"><div class="hstep-panel-title">Fördjupa dig</div><div class="hstep-panel-sub">Se en vanlig dag, lönefördelning och karriärvägar.</div></div>
-      <div class="hstep-panel" data-i="3"><div class="hstep-panel-title">Skapa din plan</div><div class="hstep-panel-sub">Skolmatchning, behörighet och CSN på 3 min. <a href="#nastasteg" style="color:var(--bl);font-weight:700;text-decoration:none">Sätt igång →</a></div></div>
-    </div>
-  </div>
-
   <!-- EXPLORE CARDS -->
   <div class="explore-section">
     <div class="explore-wrap">
@@ -404,6 +375,28 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--pu)" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </div>
     </a>
+    </div>
+  </div>
+
+  <!-- STEG FÖR STEG -->
+  <div class="hstep-outer">
+    <div class="hstep-inner">
+      <div class="hstep-row" style="grid-template-columns:repeat(4,1fr)">
+        <div class="hstep-item"><div class="hstep-dot">1</div><div class="hstep-item-title">Sätt dina filter</div></div>
+        <div class="hstep-item"><div class="hstep-dot">2</div><div class="hstep-item-title">Välj ett yrke</div></div>
+        <div class="hstep-item"><div class="hstep-dot">3</div><div class="hstep-item-title">Fördjupa dig</div></div>
+        <div class="hstep-item"><div class="hstep-dot">4</div><div class="hstep-item-title">Skapa din plan</div></div>
+      </div>
+      <div class="hstep-tabs">
+        <button class="hstep-tab active" data-i="0">1</button>
+        <button class="hstep-tab" data-i="1">2</button>
+        <button class="hstep-tab" data-i="2">3</button>
+        <button class="hstep-tab" data-i="3">4</button>
+      </div>
+      <div class="hstep-panel active" data-i="0"><div class="hstep-panel-title">Sätt dina filter</div><div class="hstep-panel-sub">Välj lön, stress eller flexibilitet för att korta ner listan.</div></div>
+      <div class="hstep-panel" data-i="1"><div class="hstep-panel-title">Välj ett yrke</div><div class="hstep-panel-sub">Klicka på ett kort och se lön, behörighetskrav och lönetak.</div></div>
+      <div class="hstep-panel" data-i="2"><div class="hstep-panel-title">Fördjupa dig</div><div class="hstep-panel-sub">Se en vanlig dag, lönefördelning och karriärvägar.</div></div>
+      <div class="hstep-panel" data-i="3"><div class="hstep-panel-title">Skapa din plan</div><div class="hstep-panel-sub">Skolmatchning, behörighet och CSN på 3 min. <a href="#nastasteg" style="color:var(--bl);font-weight:700;text-decoration:none">Sätt igång →</a></div></div>
     </div>
   </div>
 
