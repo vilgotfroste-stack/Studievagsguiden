@@ -262,11 +262,13 @@ function skolverketToSchool(edu, eduIds) {
 
   // Kontaktinfo
   const contact = edu.contactInfo || {};
+  const websiteUrl = contact.web || contact.website || contact.url || contact.homepage
+    || edu.web || edu.website || edu.url || null;
 
   return {
     school_name:              schoolName,
     program_name:             programName,
-    website_url:              contact.web || null,
+    website_url:              websiteUrl,
     contact_email:            contact.email || null,
     contact_phone:            contact.telephone || null,
     city:                     city,
@@ -342,6 +344,20 @@ async function main() {
   if (allPrograms.length > 0) {
     console.log('🔍 Exempelpost (fält):', Object.keys(allPrograms[0]).join(', '));
     console.log('   Exempelpost (värden):', JSON.stringify(allPrograms[0]).slice(0, 300), '\n');
+
+    // Visa contactInfo-strukturen specifikt för att se URL-fält
+    const sample = allPrograms[0];
+    console.log('📋 contactInfo-struktur:', JSON.stringify(sample.contactInfo || sample.contact || sample.provider || '(saknas)'));
+    const withWeb = allPrograms.filter(e => {
+      const c = e.contactInfo || {};
+      return c.web || c.website || c.url || c.homepage || e.web || e.website || e.url;
+    });
+    console.log(`🌐 Program med URL-fält i contactInfo: ${withWeb.length} av ${allPrograms.length}`);
+    if (withWeb.length > 0) {
+      const ex = withWeb[0];
+      console.log('   Exempel:', JSON.stringify(ex.contactInfo || {}, null, 2));
+    }
+    console.log('');
   }
 
   // Matcha program mot EDU_MAP — alla importeras, matchade får education_ids
