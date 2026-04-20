@@ -65,16 +65,25 @@ h1{font-size:clamp(2.4rem,5vw,4rem);font-weight:800;line-height:1.1;letter-spaci
 .info-card-text{font-size:.84rem;color:var(--mu);line-height:1.65}
 
 /* Steps */
-.steps{display:grid;gap:0}
-.step{display:flex;flex-direction:column;align-items:center;padding-bottom:32px;position:relative;text-align:center}
-.step:last-child{padding-bottom:0}
-.step::before{content:'';position:absolute;left:50%;transform:translateX(-50%);top:32px;bottom:0;width:2px;background:var(--bo)}
-.step:last-child::before{display:none}
-.step-num{width:32px;height:32px;border-radius:50%;background:var(--bl);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;position:relative;z-index:1;margin-bottom:12px}
-.step-body{text-align:center}
-.step-body .step-title{font-weight:700;font-size:.95rem;margin-bottom:4px}
-.step-body .step-desc{font-size:.86rem;color:var(--mu);line-height:1.65}
-.step-body .step-when{font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--bl);margin-bottom:4px}
+/* ── Horizontal stepper ── */
+.hstep-outer{background:#fff;padding:0}
+.hstep-inner{max-width:680px;margin:0 auto}
+.hstep-row{display:grid}
+.hstep-item{display:flex;flex-direction:column;align-items:center;text-align:center;padding:4px 12px}
+.hstep-item+.hstep-item{border-left:1px solid var(--bo)}
+.hstep-dot{width:32px;height:32px;border-radius:50%;background:var(--bl);color:#fff;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+.hstep-item-title{font-weight:800;font-size:.82rem;color:var(--tx);margin-bottom:2px;line-height:1.3}
+.hstep-item-when{font-size:.63rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--bl);margin-bottom:2px}
+.hstep-tabs{display:none;justify-content:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.hstep-tab{width:36px;height:36px;border-radius:50%;border:2px solid var(--bl);background:#fff;color:var(--bl);font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s,color .15s;padding:0}
+.hstep-tab.active{background:var(--bl);color:#fff}
+.hstep-panel{display:none;text-align:center}
+.hstep-panel.active{display:block;animation:hsf .2s ease}
+.hstep-panel-when{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--bl);margin-bottom:6px}
+.hstep-panel-title{font-weight:800;font-size:.95rem;color:var(--tx);margin-bottom:8px}
+.hstep-panel-sub{font-size:.86rem;color:var(--mu);line-height:1.65}
+@keyframes hsf{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media(max-width:540px){.hstep-row{display:none}.hstep-tabs{display:flex}}
 
 /* Kurser tabell */
 .courses-grid{display:grid;gap:10px}
@@ -543,46 +552,27 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
   <h2 class="section-h">Så här går det till</h2>
   <p class="section-sub">Från att du inser att du saknar behörighet till att du är klar med kurserna och kan söka din utbildning.</p>
 
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <div class="step-when">Direkt</div>
-        <div class="step-title">Ta reda på exakt vad du saknar</div>
-        <div class="step-desc">Logga in på antagning.se med BankID och gå till "Mina meriter". Där ser du dina betyg och kan jämföra mot behörighetskraven för den utbildning du vill söka. Många tror att de saknar mer än de gör.</div>
+  <div class="hstep-outer">
+    <div class="hstep-inner">
+      <div class="hstep-row" style="grid-template-columns:repeat(5,1fr)">
+        <div class="hstep-item"><div class="hstep-dot">1</div><div class="hstep-item-when">Direkt</div><div class="hstep-item-title">Ta reda på vad du saknar</div></div>
+        <div class="hstep-item"><div class="hstep-dot">2</div><div class="hstep-item-when">1–2 veckor</div><div class="hstep-item-title">Hitta rätt Komvux</div></div>
+        <div class="hstep-item"><div class="hstep-dot">3</div><div class="hstep-item-when">Ansökan</div><div class="hstep-item-title">Ansök i rätt tid</div></div>
+        <div class="hstep-item"><div class="hstep-dot">4</div><div class="hstep-item-when">Under kursen</div><div class="hstep-item-title">Studera och klara</div></div>
+        <div class="hstep-item"><div class="hstep-dot">5</div><div class="hstep-item-when">Efteråt</div><div class="hstep-item-title">Sök din utbildning</div></div>
       </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <div class="step-when">1–2 veckor</div>
-        <div class="step-title">Hitta rätt Komvux i din kommun</div>
-        <div class="step-desc">Gå till studera.nu och sök på de kurser du behöver. Filtrera på distans och/eller kvällstid om du jobbar. Kolla även kommunens egna hemsida — ibland finns lokala alternativ som inte syns på studera.nu.</div>
+      <div class="hstep-tabs">
+        <button class="hstep-tab active" data-i="0">1</button>
+        <button class="hstep-tab" data-i="1">2</button>
+        <button class="hstep-tab" data-i="2">3</button>
+        <button class="hstep-tab" data-i="3">4</button>
+        <button class="hstep-tab" data-i="4">5</button>
       </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <div class="step-when">Ansökningsperiod</div>
-        <div class="step-title">Ansök i rätt tid</div>
-        <div class="step-desc">Ansökningsperioderna varierar per kommun. Vanligtvis: mars för höstterminsstart, oktober för vårtermin. Missa inte dessa — nästa tillfälle är ett halvår senare. Antagning sker i turordning så sök tidigt.</div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-body">
-        <div class="step-when">Under kursen</div>
-        <div class="step-title">Studera och klara kursen</div>
-        <div class="step-desc">En gymnasiekurs på Komvux tar vanligtvis en termin på heltid eller två terminer på halvfart. Kom ihåg att ansöka om CSN om du behöver ekonomiskt stöd under studietiden.</div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">5</div>
-      <div class="step-body">
-        <div class="step-when">Efter kurserna</div>
-        <div class="step-title">Sök din utbildning</div>
-        <div class="step-desc">Med godkända kurser i bagaget ansöker du via antagning.se till din önskade utbildning. Komvux-betyg räknas in i ditt meritvärde precis som gymnasiebetyg.</div>
-      </div>
+      <div class="hstep-panel active" data-i="0"><div class="hstep-panel-when">Direkt</div><div class="hstep-panel-title">Ta reda på exakt vad du saknar</div><div class="hstep-panel-sub">Logga in på antagning.se med BankID och gå till "Mina meriter". Där ser du dina betyg och kan jämföra mot behörighetskraven för den utbildning du vill söka. Många tror att de saknar mer än de gör.</div></div>
+      <div class="hstep-panel" data-i="1"><div class="hstep-panel-when">1–2 veckor</div><div class="hstep-panel-title">Hitta rätt Komvux i din kommun</div><div class="hstep-panel-sub">Gå till studera.nu och sök på de kurser du behöver. Filtrera på distans och/eller kvällstid om du jobbar. Kolla även kommunens egna hemsida — ibland finns lokala alternativ som inte syns på studera.nu.</div></div>
+      <div class="hstep-panel" data-i="2"><div class="hstep-panel-when">Ansökningsperiod</div><div class="hstep-panel-title">Ansök i rätt tid</div><div class="hstep-panel-sub">Ansökningsperioderna varierar per kommun. Vanligtvis: mars för höstterminsstart, oktober för vårtermin. Missa inte dessa — nästa tillfälle är ett halvår senare. Antagning sker i turordning så sök tidigt.</div></div>
+      <div class="hstep-panel" data-i="3"><div class="hstep-panel-when">Under kursen</div><div class="hstep-panel-title">Studera och klara kursen</div><div class="hstep-panel-sub">En gymnasiekurs på Komvux tar vanligtvis en termin på heltid eller två terminer på halvfart. Kom ihåg att ansöka om CSN om du behöver ekonomiskt stöd under studietiden.</div></div>
+      <div class="hstep-panel" data-i="4"><div class="hstep-panel-when">Efter kurserna</div><div class="hstep-panel-title">Sök din utbildning</div><div class="hstep-panel-sub">Med godkända kurser i bagaget ansöker du via antagning.se till din önskade utbildning. Komvux-betyg räknas in i ditt meritvärde precis som gymnasiebetyg.</div></div>
     </div>
   </div>
 
@@ -1280,6 +1270,7 @@ function toggleNavMenu(){
   overlay.style.display=open?'none':'block';
   document.body.style.overflow=open?'':'hidden';
 }
+(function(){var tabs=document.querySelectorAll('.hstep-tab');if(!tabs.length)return;var panels=document.querySelectorAll('.hstep-panel');tabs.forEach(function(t){t.addEventListener('click',function(){tabs.forEach(function(x){x.classList.remove('active')});panels.forEach(function(x){x.classList.remove('active')});t.classList.add('active');document.querySelector('.hstep-panel[data-i="'+t.dataset.i+'"]').classList.add('active');});});})();
 </script>
 </body>
 </html>

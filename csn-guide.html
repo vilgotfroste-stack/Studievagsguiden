@@ -275,16 +275,28 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
   .budget-bar span{font-size:.59rem}
   .ptbar a{font-size:.67rem;padding:7px 8px}
   .cta-sec{padding:40px 24px}
-  .steps-grid{grid-template-columns:1fr 1fr!important}
-  .steps-grid a:nth-child(5){border-right:none!important;border-top:1px solid var(--bo);grid-column:1/-1;flex-direction:row!important;gap:12px;align-items:center;padding-top:16px!important;padding-left:0!important}
-  .steps-grid a{border-right:none!important;border-bottom:1px solid var(--bo);padding:0 0 16px 0!important;margin-bottom:0}
-}
-@media(max-width:480px){
-  .steps-grid{grid-template-columns:1fr!important}
-  .steps-grid a:nth-child(5){flex-direction:column!important;grid-column:auto}
   .info-grid{grid-template-columns:1fr}
   .city-btn{font-size:.77rem;padding:6px 12px}
 }
+/* ── Horizontal stepper ── */
+.hstep-outer{background:#fff;border-bottom:1px solid var(--bo)}
+.hstep-inner{max-width:860px;margin:0 auto;padding:28px 28px}
+.hstep-row{display:grid}
+.hstep-item{display:flex;flex-direction:column;align-items:center;text-align:center;padding:4px 12px;text-decoration:none}
+.hstep-item+.hstep-item{border-left:1px solid var(--bo)}
+.hstep-dot{width:32px;height:32px;border-radius:50%;background:var(--bl);color:#fff;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+.hstep-item-title{font-weight:800;font-size:.82rem;color:var(--tx);margin-bottom:2px;line-height:1.3}
+.hstep-item-sub{font-size:.72rem;color:var(--mu);line-height:1.4}
+.hstep-tabs{display:none;justify-content:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.hstep-tab{width:36px;height:36px;border-radius:50%;border:2px solid var(--bl);background:#fff;color:var(--bl);font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s,color .15s;padding:0}
+.hstep-tab.active{background:var(--bl);color:#fff}
+.hstep-panel{display:none;text-align:center}
+.hstep-panel.active{display:block;animation:hsf .2s ease}
+.hstep-panel-title{font-weight:800;font-size:.95rem;color:var(--tx);margin-bottom:6px}
+.hstep-panel-sub{font-size:.86rem;color:var(--mu);line-height:1.65;margin-bottom:12px}
+.hstep-panel-link{font-size:.83rem;font-weight:700;color:var(--bl);text-decoration:none}
+@keyframes hsf{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media(max-width:540px){.hstep-row{display:none}.hstep-tabs{display:flex}}
 </style>
 </head>
 <body>
@@ -350,41 +362,28 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
 </section>
 
 <!-- Steps -->
-<div style="background:#fff;border-bottom:1px solid var(--bo)">
-  <div style="max-width:860px;margin:0 auto;padding:36px 28px">
+<div class="hstep-outer">
+  <div class="hstep-inner">
     <p style="font-size:.7rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--li);margin-bottom:20px">Så här använder du guiden</p>
-    <div class="steps-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
-      <a onclick="navScroll(event,'bidrag')" href="#bidrag" style="text-decoration:none;display:flex;flex-direction:column;gap:10px;padding:18px;border:1.5px solid var(--bll);border-radius:14px;background:#fff;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='var(--bl)'" onmouseout="this.style.borderColor='var(--bll)'">
-        <div style="width:30px;height:30px;border-radius:50%;background:var(--bll);border:2px solid var(--bl);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:var(--bl);flex-shrink:0">1</div>
-        <div style="font-size:.86rem;font-weight:700;color:var(--tx);line-height:1.3">Hur mycket CSN får du?</div>
-        <div style="font-size:.76rem;color:var(--mu);line-height:1.5;flex:1">Bidrag, lån och max per månad</div>
-        <div style="font-size:.75rem;font-weight:600;color:var(--bl);text-decoration:underline">Se här →</div>
-      </a>
-      <a onclick="navScroll(event,'leva')" href="#leva" style="text-decoration:none;display:flex;flex-direction:column;gap:10px;padding:18px;border:1.5px solid var(--bll);border-radius:14px;background:#fff;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='var(--bl)'" onmouseout="this.style.borderColor='var(--bll)'">
-        <div style="width:30px;height:30px;border-radius:50%;background:var(--bll);border:2px solid var(--bl);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:var(--bl);flex-shrink:0">2</div>
-        <div style="font-size:.86rem;font-weight:700;color:var(--tx);line-height:1.3">Räcker pengarna i din stad?</div>
-        <div style="font-size:.76rem;color:var(--mu);line-height:1.5;flex:1">Budget per stad + extrajobb</div>
-        <div style="font-size:.75rem;font-weight:600;color:var(--bl);text-decoration:underline">Se här →</div>
-      </a>
-      <a onclick="navScroll(event,'aterbet')" href="#aterbet" style="text-decoration:none;display:flex;flex-direction:column;gap:10px;padding:18px;border:1.5px solid var(--bll);border-radius:14px;background:#fff;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='var(--bl)'" onmouseout="this.style.borderColor='var(--bll)'">
-        <div style="width:30px;height:30px;border-radius:50%;background:var(--bll);border:2px solid var(--bl);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:var(--bl);flex-shrink:0">3</div>
-        <div style="font-size:.86rem;font-weight:700;color:var(--tx);line-height:1.3">Räkna på återbetalningen</div>
-        <div style="font-size:.76rem;color:var(--mu);line-height:1.5;flex:1">Månadsbetalning och ränta</div>
-        <div style="font-size:.75rem;font-weight:600;color:var(--bl);text-decoration:underline">Se här →</div>
-      </a>
-      <a onclick="navScroll(event,'vart')" href="#vart" style="text-decoration:none;display:flex;flex-direction:column;gap:10px;padding:18px;border:1.5px solid var(--bll);border-radius:14px;background:#fff;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='var(--bl)'" onmouseout="this.style.borderColor='var(--bll)'">
-        <div style="width:30px;height:30px;border-radius:50%;background:var(--bll);border:2px solid var(--bl);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:var(--bl);flex-shrink:0">4</div>
-        <div style="font-size:.86rem;font-weight:700;color:var(--tx);line-height:1.3">Är det värt det för dig?</div>
-        <div style="font-size:.76rem;color:var(--mu);line-height:1.5;flex:1">Break-even och livslön</div>
-        <div style="font-size:.75rem;font-weight:600;color:var(--bl);text-decoration:underline">Se här →</div>
-      </a>
-      <a href="/skapa-min-plan" style="text-decoration:none;display:flex;flex-direction:column;gap:10px;padding:18px;border:1.5px solid #b8cfe0;border-radius:14px;background:#f0f5fa;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='#2A4F6E'" onmouseout="this.style.borderColor='#b8cfe0'">
-        <div style="width:30px;height:30px;border-radius:50%;background:#2A4F6E;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:#fff;flex-shrink:0">5</div>
-        <div style="font-size:.86rem;font-weight:700;color:#2A4F6E;line-height:1.3">Skapa din personliga studieplan</div>
-        <div style="font-size:.76rem;color:var(--mu);line-height:1.5;flex:1">Gratis — tar 3 minuter</div>
-        <div style="font-size:.75rem;font-weight:600;color:#2A4F6E;text-decoration:underline">Kom igång →</div>
-      </a>
+    <div class="hstep-row" style="grid-template-columns:repeat(5,1fr)">
+      <a class="hstep-item" onclick="navScroll(event,'bidrag')" href="#bidrag"><div class="hstep-dot">1</div><div class="hstep-item-title">Hur mycket CSN?</div><div class="hstep-item-sub">Bidrag, lån och max</div></a>
+      <a class="hstep-item" onclick="navScroll(event,'leva')" href="#leva"><div class="hstep-dot">2</div><div class="hstep-item-title">Räcker pengarna?</div><div class="hstep-item-sub">Budget per stad</div></a>
+      <a class="hstep-item" onclick="navScroll(event,'aterbet')" href="#aterbet"><div class="hstep-dot">3</div><div class="hstep-item-title">Återbetalning</div><div class="hstep-item-sub">Månadsbetalning</div></a>
+      <a class="hstep-item" onclick="navScroll(event,'vart')" href="#vart"><div class="hstep-dot">4</div><div class="hstep-item-title">Värt det?</div><div class="hstep-item-sub">Break-even och livslön</div></a>
+      <a class="hstep-item" href="/skapa-min-plan"><div class="hstep-dot">5</div><div class="hstep-item-title">Skapa din plan</div><div class="hstep-item-sub">Gratis · 3 min</div></a>
     </div>
+    <div class="hstep-tabs">
+      <button class="hstep-tab active" data-i="0">1</button>
+      <button class="hstep-tab" data-i="1">2</button>
+      <button class="hstep-tab" data-i="2">3</button>
+      <button class="hstep-tab" data-i="3">4</button>
+      <button class="hstep-tab" data-i="4">5</button>
+    </div>
+    <div class="hstep-panel active" data-i="0"><div class="hstep-panel-title">Hur mycket CSN får du?</div><div class="hstep-panel-sub">Bidrag, lån och max per månad</div><a class="hstep-panel-link" onclick="navScroll(event,'bidrag')" href="#bidrag">Hoppa till avsnittet →</a></div>
+    <div class="hstep-panel" data-i="1"><div class="hstep-panel-title">Räcker pengarna i din stad?</div><div class="hstep-panel-sub">Budget per stad + extrajobb</div><a class="hstep-panel-link" onclick="navScroll(event,'leva')" href="#leva">Hoppa till avsnittet →</a></div>
+    <div class="hstep-panel" data-i="2"><div class="hstep-panel-title">Räkna på återbetalningen</div><div class="hstep-panel-sub">Månadsbetalning och ränta</div><a class="hstep-panel-link" onclick="navScroll(event,'aterbet')" href="#aterbet">Hoppa till avsnittet →</a></div>
+    <div class="hstep-panel" data-i="3"><div class="hstep-panel-title">Är det värt det för dig?</div><div class="hstep-panel-sub">Break-even och livslön</div><a class="hstep-panel-link" onclick="navScroll(event,'vart')" href="#vart">Hoppa till avsnittet →</a></div>
+    <div class="hstep-panel" data-i="4"><div class="hstep-panel-title">Skapa din personliga studieplan</div><div class="hstep-panel-sub">Gratis — tar 3 minuter</div><a class="hstep-panel-link" href="/skapa-min-plan">Kom igång →</a></div>
   </div>
 </div>
 
@@ -1198,6 +1197,7 @@ function toggleFqs(btn) {
 renderCity();
 calcRep();
 calcWorth();
+(function(){var tabs=document.querySelectorAll('.hstep-tab');if(!tabs.length)return;var panels=document.querySelectorAll('.hstep-panel');tabs.forEach(function(t){t.addEventListener('click',function(){tabs.forEach(function(x){x.classList.remove('active')});panels.forEach(function(x){x.classList.remove('active')});t.classList.add('active');document.querySelector('.hstep-panel[data-i="'+t.dataset.i+'"]').classList.add('active');});});})();
 </script>
 </body>
 </html>
