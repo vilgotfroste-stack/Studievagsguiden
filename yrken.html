@@ -190,18 +190,26 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
 .pct-l{font-size:.66rem;line-height:1.4}
 
 /* STEPS */
-.steps-wrap{background:#fff;border-top:1px solid var(--bo);border-bottom:1px solid var(--bo);padding:40px 24px}
-.steps-inner{max-width:560px;margin:0 auto}
-.steps{display:grid;gap:0}
-.step{display:flex;flex-direction:column;align-items:center;padding-bottom:32px;position:relative;text-align:center}
-.step:last-child{padding-bottom:0}
-.step:last-child::before{display:none}
-.step-num{width:32px;height:32px;border-radius:50%;background:var(--bl);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;position:relative;z-index:1;margin-bottom:12px}
-.step-body{text-align:center}
-.step-body .step-title{font-weight:800;font-size:.95rem;margin-bottom:4px;color:var(--tx)}
-.step-body .step-desc{font-size:.86rem;color:var(--mu);line-height:1.65}
-.step-cta-inline{font-size:.78rem;font-weight:700;color:var(--ac);text-decoration:none;display:block;margin-top:8px}
-.step-cta-inline:hover{text-decoration:underline}
+/* ── Horizontal stepper ── */
+.hstep-outer{background:#fff;border-top:1px solid var(--bo);border-bottom:1px solid var(--bo);padding:28px 24px}
+.hstep-inner{max-width:680px;margin:0 auto}
+.hstep-row{display:grid}
+.hstep-item{display:flex;flex-direction:column;align-items:center;text-align:center;padding:4px 16px}
+.hstep-item+.hstep-item{border-left:1px solid var(--bo)}
+.hstep-dot{width:32px;height:32px;border-radius:50%;background:var(--bl);color:#fff;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.hstep-item-title{font-weight:800;font-size:.88rem;color:var(--tx);margin-bottom:3px;line-height:1.3}
+.hstep-item-sub{font-size:.76rem;color:var(--mu);line-height:1.5}
+.hstep-item-when{font-size:.67rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--bl);margin-bottom:3px}
+.hstep-tabs{display:none;justify-content:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.hstep-tab{width:36px;height:36px;border-radius:50%;border:2px solid var(--bl);background:#fff;color:var(--bl);font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s,color .15s;padding:0}
+.hstep-tab.active{background:var(--bl);color:#fff}
+.hstep-panel{display:none;text-align:center}
+.hstep-panel.active{display:block;animation:hsf .2s ease}
+.hstep-panel-when{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--bl);margin-bottom:6px}
+.hstep-panel-title{font-weight:800;font-size:.95rem;color:var(--tx);margin-bottom:8px}
+.hstep-panel-sub{font-size:.86rem;color:var(--mu);line-height:1.65}
+@keyframes hsf{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media(max-width:540px){.hstep-row{display:none}.hstep-tabs{display:flex}}
 /* EXPLORE CARDS */
 .explore-section{background:var(--bg);border-top:1px solid var(--bo);border-bottom:1px solid var(--bo);padding:24px 24px}
 .explore-wrap{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -324,39 +332,24 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
   </div>
 
   <!-- STEG FÖR STEG -->
-  <div class="steps-wrap">
-    <div class="steps-inner">
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <div class="step-title">Sätt dina filter</div>
-            <div class="step-desc">Välj lön, stress eller flexibilitet för att korta ner listan.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <div class="step-title">Välj ett yrke</div>
-            <div class="step-desc">Klicka på ett kort och se lön, behörighetskrav och lönetak.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <div class="step-title">Fördjupa dig</div>
-            <div class="step-desc">Se en vanlig dag, lönefördelning och karriärvägar.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <div class="step-body">
-            <div class="step-title">Skapa din plan</div>
-            <div class="step-desc">Skolmatchning, behörighet och CSN på 3 min.</div>
-            <a href="#nastasteg" class="step-cta-inline">Sätt igång →</a>
-          </div>
-        </div>
+  <div class="hstep-outer">
+    <div class="hstep-inner">
+      <div class="hstep-row" style="grid-template-columns:repeat(4,1fr)">
+        <div class="hstep-item"><div class="hstep-dot">1</div><div class="hstep-item-title">Sätt dina filter</div><div class="hstep-item-sub">Välj lön, stress eller flexibilitet.</div></div>
+        <div class="hstep-item"><div class="hstep-dot">2</div><div class="hstep-item-title">Välj ett yrke</div><div class="hstep-item-sub">Klicka på ett kort och se lön och krav.</div></div>
+        <div class="hstep-item"><div class="hstep-dot">3</div><div class="hstep-item-title">Fördjupa dig</div><div class="hstep-item-sub">Se en vanlig dag och karriärvägar.</div></div>
+        <div class="hstep-item"><div class="hstep-dot">4</div><div class="hstep-item-title">Skapa din plan</div><div class="hstep-item-sub">Skolmatchning, behörighet och CSN.</div></div>
       </div>
+      <div class="hstep-tabs">
+        <button class="hstep-tab active" data-i="0">1</button>
+        <button class="hstep-tab" data-i="1">2</button>
+        <button class="hstep-tab" data-i="2">3</button>
+        <button class="hstep-tab" data-i="3">4</button>
+      </div>
+      <div class="hstep-panel active" data-i="0"><div class="hstep-panel-title">Sätt dina filter</div><div class="hstep-panel-sub">Välj lön, stress eller flexibilitet för att korta ner listan.</div></div>
+      <div class="hstep-panel" data-i="1"><div class="hstep-panel-title">Välj ett yrke</div><div class="hstep-panel-sub">Klicka på ett kort och se lön, behörighetskrav och lönetak.</div></div>
+      <div class="hstep-panel" data-i="2"><div class="hstep-panel-title">Fördjupa dig</div><div class="hstep-panel-sub">Se en vanlig dag, lönefördelning och karriärvägar.</div></div>
+      <div class="hstep-panel" data-i="3"><div class="hstep-panel-title">Skapa din plan</div><div class="hstep-panel-sub">Skolmatchning, behörighet och CSN på 3 min. <a href="#nastasteg" style="color:var(--bl);font-weight:700;text-decoration:none">Sätt igång →</a></div></div>
     </div>
   </div>
 
@@ -1228,6 +1221,7 @@ function toggleNavMenu(){
     }
   }, {passive:true});
 })();
+(function(){var tabs=document.querySelectorAll('.hstep-tab');if(!tabs.length)return;var panels=document.querySelectorAll('.hstep-panel');tabs.forEach(function(t){t.addEventListener('click',function(){tabs.forEach(function(x){x.classList.remove('active')});panels.forEach(function(x){x.classList.remove('active')});t.classList.add('active');document.querySelector('.hstep-panel[data-i="'+t.dataset.i+'"]').classList.add('active');});});})();
 </script>
 </body>
 </html>
