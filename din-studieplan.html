@@ -223,21 +223,35 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
 
 /* RESPONSIVE */
 @media(max-width:720px){
-  .feature-block{grid-template-columns:1fr;gap:28px}
+  .feature-block{grid-template-columns:1fr;gap:24px}
   .feature-block.reverse .feature-text{order:1}
   .feature-block.reverse .feature-visual{order:2}
+  .feature-block{margin-bottom:48px;padding-bottom:48px}
   .nasta-steg-inner{grid-template-columns:1fr;gap:40px}
   .plan-glass{display:none}
   .picker-grid{grid-template-columns:1fr 1fr}
-  .steps-row{flex-direction:column;gap:20px}
+  .steps-row{flex-direction:column;gap:16px;max-width:360px;margin-left:auto;margin-right:auto}
+  .step{flex-direction:row;text-align:left;padding:0}
   .step:not(:last-child)::after{display:none}
+  .step-num{margin:0;flex-shrink:0}
   .footer-grid{grid-template-columns:repeat(2,1fr);gap:24px 16px}
   .footer-grid .footer-col:last-child{grid-column:1/-1}
-  .hero-content{grid-template-columns:1fr;gap:32px;text-align:center}
-  .hero h1{text-align:center}
-  .hero-sub{text-align:center}
-  .hero-chips{justify-content:center}
+  .hero{padding:88px 20px 56px}
+  .hero-content{grid-template-columns:1fr;gap:0;text-align:center}
+  .hero h1{text-align:center;font-size:clamp(1.9rem,7vw,2.6rem)}
+  .hero-sub{text-align:center;font-size:.92rem;margin-bottom:28px}
+  .hero-chips{justify-content:center;gap:10px 16px}
+  .hero-chip{font-size:.78rem}
   .mobile-mockup{display:none}
+  .white-section{padding:48px 20px}
+  .bg-section{padding:48px 20px}
+  .feature-section{padding:0 20px 56px}
+  .feature-h{font-size:1.3rem}
+  .picker-section{padding:56px 20px}
+  .nasta-steg{padding:56px 20px}
+  .nasta-steg-h{font-size:clamp(1.6rem,5vw,2.2rem)}
+  .nasta-steg-btn{display:block;text-align:center;padding:16px 24px;font-size:1rem}
+  .nasta-steg-chips{gap:12px}
 }
 @media(max-width:480px){
   .picker-grid{grid-template-columns:1fr}
@@ -311,12 +325,6 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
       </div>
       <h1>En plan byggd för dig<br>i din specifika situation</h1>
       <p class="hero-sub">Det är inte informationen du saknar — det är en plan. Vi skapar en utifrån vad du svarar och matchar varje steg just för dig.</p>
-      <div class="hero-chips">
-        <span class="hero-chip">Ekonomisk påverkan — gratis</span>
-        <span class="hero-chip">Behörighet &amp; betyg — gratis</span>
-        <span class="hero-chip">Tidslinje steg för steg — gratis</span>
-        <span class="hero-chip">Exakt skolmatchning — gratis</span>
-      </div>
     </div>
     <div class="hero-right">
       <div class="mobile-mockup">
@@ -385,36 +393,13 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
   </div>
 </section>
 
-<!-- SÅ FUNKAR DET -->
-<div style="background:#fff;padding:56px 24px 0;border-bottom:1px solid var(--bo)">
-  <div class="inner">
-    <div style="text-align:center;margin-bottom:36px">
-      <div class="section-label">Tre steg</div>
-      <h2 class="section-h" style="margin-bottom:4px">Från nyfiken till klar</h2>
-      <p style="font-size:.9rem;color:var(--li)">Det tar under tre minuter.</p>
-    </div>
-    <div class="steps-row">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-title">Välj utbildning</div>
-        <div class="step-desc">Välj det yrke du är intresserad av. Allt baseras på din specifika utbildning.</div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-title">Besvara frågor</div>
-        <div class="step-desc">Din ålder, nuvarande inkomst, bostadssituation och start­tidpunkt.</div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-title">Få din plan</div>
-        <div class="step-desc">En komplett plan med ekonomi, behörighet, tidslinje och skolmatchning.</div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- FEATURE SECTIONS -->
 <div class="white-section feature-section" id="vad-ingar" style="padding-top:72px">
+  <div class="feature-inner" style="margin-bottom:56px;text-align:center">
+    <div class="section-label">Vad ingår</div>
+    <h2 class="section-h">Detta får du — helt gratis</h2>
+  </div>
   <div class="feature-inner">
 
     <!-- 1. CSN & EKONOMI -->
@@ -422,12 +407,11 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
       <div class="feature-text">
         <div class="feature-eyebrow" style="color:var(--ac)">Del 1 av 4</div>
         <h2 class="feature-h">CSN &amp; ekonomi — vad du faktiskt får i handen</h2>
-        <p class="feature-p">Den vanligaste frågan är: <em>Har jag råd?</em> Din plan räknar ut exakt vad du får ut av CSN varje månad, vad ditt lev&shy;nads&shy;kostnads&shy;gap är och hur länge du behöver låna — baserat på din nuvarande inkomst och din nya ingångslön.</p>
+        <p class="feature-p">Exakt vad du får i handen — och vad det kostar.</p>
         <ul class="feature-list green">
-          <li>Månadsbelopp: bidrag + lån anpassat till din studietakt</li>
-          <li>Levnadskostnadsgap — vad du saknar varje månad jämfört med idag</li>
-          <li>Total skuld vid examen och uppskattad återbetalningstid</li>
-          <li>Fribeloppsgräns — hur mycket du kan jobba parallellt utan att tappa bidrag</li>
+          <li>Bidrag + lån per månad, anpassat till din studietakt</li>
+          <li>Levnadskostnadsgap vs din nuvarande inkomst</li>
+          <li>Total skuld och uppskattad återbetalningstid</li>
         </ul>
       </div>
       <div class="feature-visual">
@@ -476,12 +460,11 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
       <div class="feature-text">
         <div class="feature-eyebrow" style="color:var(--bl)">Del 2 av 4</div>
         <h2 class="feature-h">Behörighet — vad du behöver och hur du tar dig dit</h2>
-        <p class="feature-p">Många tror att de inte är behöriga — och ger upp i onödan. Din plan visar exakt vilka kurser din utbildning kräver, vilka du redan har och om komvux kan lösa resten innan din önskade starttermin.</p>
+        <p class="feature-p">Ser du exakt vad som krävs — och vad du redan har.</p>
         <ul class="feature-list blue">
-          <li>Grundläggande och särskild behörighet per utbildning</li>
-          <li>Vilka betyg du troligen redan uppfyller</li>
-          <li>Vilka kurser som saknas — och om komvux hinner före start</li>
+          <li>Vilka kurser som saknas och om komvux hinner före start</li>
           <li>Alternativa vägar: folkhögskola, högskoleprov, 25:4-regeln</li>
+          <li>Inget gissande — bara svart på vitt</li>
         </ul>
       </div>
       <div class="feature-visual">
@@ -522,12 +505,11 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
       <div class="feature-text">
         <div class="feature-eyebrow" style="color:#E08A30">Del 3 av 4</div>
         <h2 class="feature-h">Tidslinje — steg för steg från idag till examen</h2>
-        <p class="feature-p">En utbildning är inte ett datum — det är ett förlopp. Din plan visar hela resan: ansökan, studiestart, eventuell komvux-period, examen och när du kan förvänta dig att nå din nya lön.</p>
+        <p class="feature-p">Hela resan — från ansökan till första lönen.</p>
         <ul class="feature-list orange">
-          <li>Datum för ansökan till hösttermin och vårtermin</li>
-          <li>Komvux-period om behörighet saknas</li>
-          <li>Beräknad examen baserat på studietakt</li>
-          <li>Månad du börjar tjäna din nya lön</li>
+          <li>Ansökningsdatum, studiestart och examen</li>
+          <li>Eventuell komvux-period inräknad</li>
+          <li>Månaden du börjar tjäna din nya lön</li>
         </ul>
       </div>
       <div class="feature-visual">
@@ -580,12 +562,11 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
       <div class="feature-text">
         <div class="feature-eyebrow" style="color:var(--re)">Del 4 av 4</div>
         <h2 class="feature-h">Skolmatchning — utifrån dina svar hittar vi rätt studieform</h2>
-        <p class="feature-p">Baserat på vad du svarar i wizarden — var du bor, om du kan studera heltid eller behöver deltid, och vilken livssituation du har — matchar vi dig automatiskt mot skolor och studieformer som passar just dig.</p>
+        <p class="feature-p">Rätt skola för just din situation — automatiskt.</p>
         <ul class="feature-list red">
-          <li>Skolor nära din hemort eller i din region</li>
-          <li>Campus, distans eller hybridlösningar baserat på dina svar</li>
+          <li>Skolor nära dig eller distans, baserat på dina svar</li>
           <li>Heltid eller deltid — anpassat till din livssituation</li>
-          <li>Direktlänkar till ansökan och skolans information</li>
+          <li>Direktlänkar till ansökan</li>
         </ul>
       </div>
       <div class="feature-visual">
@@ -647,6 +628,9 @@ footer{background:#fff;border-top:1px solid var(--bo);padding:56px 24px 0}
 
     <div class="picker-grid" id="pickerGrid">
       <!-- JS fills this -->
+    </div>
+    <div id="loadMoreWrap" style="text-align:center;margin-top:4px;display:none">
+      <button id="loadMoreBtn" onclick="loadMore()" style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);color:#fff;font-family:inherit;font-size:.88rem;font-weight:600;padding:11px 28px;border-radius:10px;cursor:pointer;transition:background .15s">Visa fler utbildningar</button>
     </div>
 
 
@@ -824,6 +808,7 @@ function renderCategoryFilters(){
     btn.innerHTML = cat.name + '<span class="category-btn-count">' + cat.count + '</span>';
     btn.addEventListener('click', function(){
       activeCategory = cat.id;
+      visibleCount = PAGE_SIZE;
       renderCategoryFilters();
       renderGrid(document.getElementById('pickerSearch').value);
     });
@@ -832,16 +817,24 @@ function renderCategoryFilters(){
 }
 
 // ── Render picker grid ───────────────────────────────────────────────────────
+const PAGE_SIZE = 6;
+let visibleCount = PAGE_SIZE;
+
 function renderGrid(filter){
   grid.innerHTML = '';
   const q = (filter || '').toLowerCase();
-  EDUCATIONS.forEach(function(edu){
+  const filtered = EDUCATIONS.filter(function(edu){
     const matchesCategory = activeCategory === 'alla' || edu.category === activeCategory;
     const matchesSearch = !q || edu.name.toLowerCase().includes(q);
-    const show = matchesCategory && matchesSearch;
-    
+    return matchesCategory && matchesSearch;
+  });
+
+  const showAll = q.length > 0; // always show all when searching
+  const limit = showAll ? filtered.length : visibleCount;
+
+  filtered.forEach(function(edu, i){
     const div = document.createElement('div');
-    div.className = 'picker-item' + (edu.slug === selectedSlug ? ' selected' : '') + (show ? '' : ' hidden');
+    div.className = 'picker-item' + (edu.slug === selectedSlug ? ' selected' : '') + (i >= limit ? ' hidden' : '');
     div.innerHTML = '<div class="picker-item-name">'+edu.name+'</div><div class="picker-item-meta">'+edu.meta+'</div>';
     div.addEventListener('click', function(){
       selectedSlug = edu.slug;
@@ -850,14 +843,20 @@ function renderGrid(filter){
       div.classList.add('selected');
       updateGlass();
       gtag('event','select_education',{education:edu.name});
-      
-      // Scroll to CTA banner
       setTimeout(function(){
         document.querySelector('.nasta-steg').scrollIntoView({behavior:'smooth'});
       }, 100);
     });
     grid.appendChild(div);
   });
+
+  const wrap = document.getElementById('loadMoreWrap');
+  wrap.style.display = (!showAll && filtered.length > visibleCount) ? 'block' : 'none';
+}
+
+function loadMore(){
+  visibleCount += PAGE_SIZE;
+  renderGrid(document.getElementById('pickerSearch').value);
 }
 
 // ── Update plan-glass card title ─────────────────────────────────────────────
@@ -895,6 +894,7 @@ updateGlass();
 
 // ── Search ───────────────────────────────────────────────────────────────────
 document.getElementById('pickerSearch').addEventListener('input', function(){
+  visibleCount = PAGE_SIZE;
   renderGrid(this.value);
 });
 
