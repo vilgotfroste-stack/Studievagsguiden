@@ -437,6 +437,14 @@ function renderPage(school) {
   const cityTag = school.city ? `<span>${esc(school.city)}</span>` : '';
   const durTag  = school.duration_text ? `<span>${esc(school.duration_text)}</span>` : '';
 
+  // Beräkna längd i år
+  let dyrs = school.duration_years;
+  if (!dyrs && school.school_type === 'YH' && school.credits && school.pace_of_study)
+    dyrs = Math.round(school.credits / (school.pace_of_study / 100) / 200 * 10) / 10;
+  if (!dyrs && school.school_type === 'HS' && school.hp_credits && school.pace_of_study)
+    dyrs = Math.round(school.hp_credits / (school.pace_of_study / 100) / 60 * 10) / 10;
+  const yearsTag = dyrs ? `<span>${dyrs % 1 === 0 ? dyrs : dyrs.toFixed(1)} år</span>` : '';
+
   // Extra info pills
   const pills = [];
   if (school.eligible_for_student_aid) pills.push(`<span class="pill pill-green">Berättigar till studiemedel (CSN)</span>`);
@@ -548,7 +556,7 @@ function renderPage(school) {
         </div>
       </div>
       <div class="dhero-tags">
-        ${modeTag}${paceTag}${cityTag}${durTag}
+        ${modeTag}${paceTag}${cityTag}${durTag}${yearsTag}
       </div>
       ${pillsHtml}
       ${contactHtml}
