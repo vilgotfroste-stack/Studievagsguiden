@@ -639,7 +639,7 @@ function renderCards(schools, reset) {
     const initial = (s.school_name||'?')[0].toUpperCase();
     const cbDomain = s.website_url ? (() => { try { return new URL(s.website_url).hostname.replace(/^www\./,''); } catch(e) { return null; } })() : null;
     const logoEl = cbDomain
-      ? `<img src="https://logo.clearbit.com/${cbDomain}" class="card-initial" style="object-fit:contain;background:#fff;border:1px solid #E4EEF8;padding:3px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+      ? `<img src="https://www.google.com/s2/favicons?domain=${cbDomain}&sz=64" class="card-initial" style="object-fit:contain;background:#fff;border:1px solid #E4EEF8;padding:4px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
         + `<div class="card-initial" style="background:${sc.bg};color:${sc.fg};display:none">${initial}</div>`
       : `<div class="card-initial" style="background:${sc.bg};color:${sc.fg}">${initial}</div>`;
     return `<a href="/behorighetskollen?id=${s.id}" class="edu-card" style="animation-delay:${delay}ms">
