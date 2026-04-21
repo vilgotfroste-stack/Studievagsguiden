@@ -275,8 +275,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
         <label>Studietakt %</label>
         <select id="pacePercentSelect" onchange="onFilterChange()">
           <option value="">Alla</option>
+          <option value="25">25%</option>
           <option value="50">50%</option>
-          <option value="75">75%</option>
           <option value="100">100%</option>
         </select>
       </div>
@@ -284,15 +284,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
         <label>Utbildningslängd</label>
         <select id="durationSelect" onchange="onFilterChange()">
           <option value="">Alla</option>
-          <option value="1">1 år</option>
-          <option value="1.5">1,5 år</option>
-          <option value="2">2 år</option>
-          <option value="2.5">2,5 år</option>
-          <option value="3">3 år</option>
-          <option value="3.5">3,5 år</option>
-          <option value="4">4 år</option>
-          <option value="4.5">4,5 år</option>
-          <option value="5">5 år</option>
+          <option value="200">1 år (200 p)</option>
+          <option value="300">1,5 år (300 p)</option>
+          <option value="400">2 år (400 p)</option>
+          <option value="500">2,5 år (500 p)</option>
+          <option value="600">3 år (600 p)</option>
+          <option value="800">4 år (800 p)</option>
         </select>
       </div>
       <div class="filter-item">
@@ -341,8 +338,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
         <select class="sort-select" id="sortSelect" onchange="onFilterChange()">
           <option value="program_name.asc">A–Ö</option>
           <option value="program_name.desc">Ö–A</option>
-          <option value="duration_years.asc">Kortast först</option>
-          <option value="duration_years.desc">Längst först</option>
+          <option value="credits.asc">Kortast först</option>
+          <option value="credits.desc">Längst först</option>
         </select>
         <div class="view-toggle">
           <button class="vtbtn active" id="vtGrid" onclick="setView('grid')" title="Rutnät">
@@ -547,7 +544,7 @@ function buildUrl(offset) {
   if (activeMode)       params.set('study_mode',            'eq.' + activeMode);
   if (f.pace)           params.set('study_pace',            'eq.' + f.pace);
   if (f.pacePercent)    params.set('pace_of_study',         'eq.' + f.pacePercent);
-  if (f.duration)       params.set('duration_years',        'eq.' + f.duration);
+  if (f.duration)       params.set('credits',               'eq.' + f.duration);
   if (f.city)           params.set('city',                  'ilike.*' + f.city + '*');
   if (f.category) {
     params.set('education_ids', 'cs.{' + f.category + '}');
