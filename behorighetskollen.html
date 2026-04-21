@@ -532,7 +532,7 @@ function renderPage(school) {
   const fallbackStyle = `background:${sc.bg};color:${sc.fg}`;
   const clearbitDomain = school.website_url ? (() => { try { return new URL(school.website_url).hostname.replace(/^www\./, ''); } catch(e) { return null; } })() : null;
   const logoHtml = clearbitDomain
-    ? `<img src="https://logo.clearbit.com/${clearbitDomain}" alt="${esc(school.school_name)}" class="dhero-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+    ? `<img src="https://www.google.com/s2/favicons?domain=${clearbitDomain}&sz=64" alt="${esc(school.school_name)}" class="dhero-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
       + `<div class="dhero-logo-placeholder" style="${fallbackStyle};display:none">${initial}</div>`
     : `<div class="dhero-logo-placeholder" style="${fallbackStyle}">${initial}</div>`;
 
