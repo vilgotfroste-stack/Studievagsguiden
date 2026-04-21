@@ -1,117 +1,154 @@
 /**
  * fetch-susa-test.js
  * ==================
- * Testar SUSA navet API — hämtar första sidan med HS + YH och loggar rådata.
- * Inget sparas till Supabase. Syfte: bekräfta att rätt utbildningar syns.
+ * Testar SUSA navet API — verifierar antal, fält och program-filter.
+ * Inget sparas till Supabase.
  *
  * Kör:
  *   node supabase/fetch-susa-test.js
- *
- * Byt SUSA_BASE_URL till den URL du hittade i Skolverkets API-docs.
  */
 
-// ⚠️ Fyll i rätt bas-URL från SUSA navet API-dokumentationen
-const SUSA_BASE_URL = 'https://SUSA_NAVET_URL_HÄR/educationEvents';
+const BASE = 'https://api.skolverket.se/susa-navet/emil3';
+const HEADERS = { 'Accept': 'application/json', 'User-Agent': 'Mozilla/5.0' };
 
-const PAGE_SIZE = 20; // liten för test
-
-async function fetchPage(schoolTypes, page = 0) {
-  const typeParams = schoolTypes.map(t => `schoolType=${t}`).join('&');
-  const url = `${SUSA_BASE_URL}?${typeParams}&page=${page}&size=${PAGE_SIZE}`;
-
-  console.log(`\n📡 Anropar: ${url}\n`);
-
-  const res = await fetch(url, {
-    headers: {
-      'Accept': 'application/json',
-      'User-Agent': 'Mozilla/5.0',
-    },
-    signal: AbortSignal.timeout(15_000),
-  });
-
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`HTTP ${res.status}: ${body.slice(0, 400)}`);
-  }
-
+async function get(path) {
+  const res = await fetch(`${BASE}${path}`, { headers: HEADERS, signal: AbortSignal.timeout(15_000) });
+  if (!res.ok) throw new Error(`HTTP ${res.status}: ${path}`);
   return res.json();
 }
 
+function sv(obj, arrayKey = 'strings') {
+  const arr = obj?.[arrayKey] || obj?.strings || obj?.urls || [];
+  return (arr.find(s => s.lang === 'swe') || arr[0])?.value || null;
+}
+
+function fixEncoding(str) {
+  if (!str) return null;
+  return str
+    .replace(/Ã¶/g, 'ö').replace(/Ã¥/g, 'å').replace(/Ã¤/g, 'ä')
+    .replace(/Ã–/g, 'Ö').replace(/Ã…/g, 'Å').replace(/Ã„/g, 'Ä')
+    .replace(/Ã©/g, 'é').replace(/Ã¸/g, 'ø');
+}
+
 async function main() {
-  console.log('🔍 SUSA navet — testköring (ingen Supabase-skrivning)\n');
+  console.log('🔍 SUSA navet — testköring\n');
 
-  let data;
-  try {
-    data = await fetchPage(['HS', 'YH'], 0);
-  } catch (e) {
-    console.error('❌ API-anrop misslyckades:', e.message);
-    process.exit(1);
+  // ── 1. Totalt antal educationInfos per schoolType ──────────────────────────
+  console.log('📊 Antal utbildningar (educationInfos):');
+  for (const type of ['HS', 'YH']) {
+    const d = await get(`/educationInfos?schoolType=${type}&page=0&size=1`);
+    console.log(`   ${type}: ${d.page?.totalElements ?? '?'} totalt`);
   }
 
-  // Visa paginerings-info
-  const pageInfo = data.page || {};
-  console.log('📊 Paginering:');
-  console.log(`   totalElements : ${pageInfo.totalElements ?? '?'}`);
-  console.log(`   totalPages    : ${pageInfo.totalPages ?? '?'}`);
-  console.log(`   pageSize      : ${pageInfo.size ?? PAGE_SIZE}`);
+  // ── 2. Hämta sample educationInfo (HS) ────────────────────────────────────
+  console.log('\n📋 Sample educationInfo (HS, page 500):');
+  const infosPage = await get(`/educationInfos?schoolType=HS&page=500&size=5`);
+  const infos = infosPage.educationInfos || [];
 
-  const events = data.educationEvents || [];
-  console.log(`\n✅ Antal utbildningar på sida 0: ${events.length}`);
+  const programs = infos.filter(i => i.content?.configuration?.code === 'program');
+  const courses  = infos.filter(i => i.content?.configuration?.code !== 'program');
+  console.log(`   Av 5 slumpade: ${programs.length} program, ${courses.length} kurser`);
 
-  if (events.length === 0) {
-    console.log('\n⚠ Inga event returnerades. Kontrollera URL och schoolType-paramrar.');
-    console.log('Råsvar:', JSON.stringify(data).slice(0, 800));
-    return;
+  if (programs.length === 0) {
+    console.log('   ⚠ Inga program på denna sida, provar page 0...');
+    const p0 = await get(`/educationInfos?schoolType=HS&page=0&size=20`);
+    programs.push(...(p0.educationInfos || []).filter(i => i.content?.configuration?.code === 'program'));
   }
 
-  // Visa tillgängliga toppfält
-  const firstContent = events[0]?.content || events[0] || {};
-  console.log('\n🔑 Fält i content:', Object.keys(firstContent).join(', '));
+  const sample = programs[0];
+  if (!sample) { console.log('❌ Hittade inget program alls'); return; }
 
-  // Visa de 5 första utbildningarna
-  console.log('\n--- 5 första utbildningarna ---\n');
-  for (const ev of events.slice(0, 5)) {
-    const c = ev.content || ev;
+  const c = sample.content;
+  console.log('\n── educationInfo (alla fält) ──');
+  console.log({
+    id:             sample.id,
+    status:         sample.status,
+    title_sv:       fixEncoding(sv(c.title)),
+    title_en:       fixEncoding(c.title?.strings?.find(s => s.lang === 'eng')?.value),
+    code:           c.code,
+    school_type:    c.type?.code,
+    configuration:  c.configuration?.code,
+    education_level: c.educationLevels?.map(e => e.code).join(', '),
+    credits:        c.credits?.credits,
+    credits_system: c.credits?.system?.code,
+    result_is_degree: c.resultIsDegree,
+    subjects:       c.subjects?.map(s => s.code).join(', '),
+    prior_knowledge: fixEncoding(sv(c.recommendedPriorKnowledge)),
+    description:    fixEncoding(sv(c.description))?.slice(0, 200),
+    expires:        c.expires,
+    last_edited:    c.lastEdited,
+  });
 
-    const title   = getLangValue(c.title)   || '(inget namn)';
-    const city    = c.locations?.[0]?.town  || '(ingen stad)';
-    const pace    = c.paceOfStudy?.percentage != null ? `${c.paceOfStudy.percentage}%` : '?';
-    const start   = c.execution?.start      || '?';
-    const end     = c.execution?.end        || '?';
-    const url     = getLangValue(c.url, 'urls', 'value') || '(ingen url)';
-    const schoolType = detectSchoolType(c);
+  // ── 3. Hämta motsvarande educationEvent ───────────────────────────────────
+  console.log('\n── educationEvent för samma utbildning ──');
+  const evPage = await get(`/educationEvents?schoolType=HS&page=0&size=100`);
+  const events = evPage.educationEvents || [];
+  const ev = events.find(e => e.content?.education === sample.id) || events[0];
 
-    console.log(`[${schoolType}] ${title}`);
-    console.log(`  Stad      : ${city}`);
-    console.log(`  Studietakt: ${pace}`);
-    console.log(`  Period    : ${start} → ${end}`);
-    console.log(`  URL       : ${url}`);
-    console.log(`  Provider  : ${c.providers?.join(', ') || '?'}`);
-    console.log(`  id        : ${ev.id}`);
-    console.log();
+  if (ev) {
+    const ec = ev.content;
+    const ext = ec.extensions?.find(e => e.type === 'UHEventExtension') || {};
+    console.log({
+      event_id:          ev.id,
+      provider_id:       ec.providers?.[0],
+      city:              fixEncoding(sv(ec.locations?.[0]?.studyLocation)),
+      start:             ec.execution?.start,
+      end:               ec.execution?.end,
+      pace_pct:          ec.paceOfStudy?.percentage,
+      time_of_study:     ec.timeOfStudy?.code,
+      language:          ec.languageOfInstructions?.join(', '),
+      is_distance:       !!ec.distance,
+      is_cancelled:      ec.isCancelled,
+      application_code:  ec.application?.code,
+      application_last:  ec.application?.last,
+      url_sv:            sv(ec.url, 'urls'),
+      tuition_fee:       ext.tuitionFee?.total ?? (ext.tuitionFee?.value === false ? 0 : null),
+      tuition_fee_first: ext.tuitionFee?.first,
+      admission_round:   ext.admissionDetails?.admissionRoundId,
+      eligibility_model: ext.admissionDetails?.eligibilityModelSB?.value,
+      selection_model:   ext.admissionDetails?.selectionModel,
+      only_part_of_prog: ext.applicationDetails?.onlyAsPartOfProgram,
+      visible_swedish:   ext.applicationDetails?.visibleToSwedishApplicants,
+      visible_intl:      ext.applicationDetails?.visibleToInternationalApplicants,
+      close_date:        ext.applicationDetails?.closeDate,
+      credits_dist:      ext.admissionDetails?.distributionOfCredits?.credits?.map(cr => `${cr.semester}${cr.year}:${cr.value}hp`).join(', '),
+      start_semester:    ext.startPeriod?.period ? `${ext.startPeriod.period.semester}${ext.startPeriod.period.year}` : null,
+      keywords:          ec.keywords?.flatMap(k => k.strings?.map(s => fixEncoding(s.value))).join(', '),
+    });
   }
 
-  // Råstruktur på första posten — för felsökning
-  console.log('--- Råstruktur (första posten, komprimerad) ---');
-  console.log(JSON.stringify(events[0], null, 2).slice(0, 2000));
+  // ── 4. Hämta provider (skolnamn) ──────────────────────────────────────────
+  const providerId = ev?.content?.providers?.[0];
+  if (providerId) {
+    console.log('\n── educationProvider ──');
+    const prov = await get(`/educationProviders/${providerId}`);
+    const pc = prov.content;
+    console.log({
+      provider_id:    prov.id,
+      name_sv:        fixEncoding(sv(pc.name)),
+      name_en:        pc.name?.strings?.find(s => s.lang === 'eng')?.value,
+      url:            sv(pc.url, 'urls'),
+      email:          pc.emailAddresses?.[0],
+      phone:          sv(pc.phones?.[0]?.number),
+      city:           fixEncoding(pc.contactAddress?.town),
+      postal_code:    pc.contactAddress?.postalCode,
+      org_number:     pc.organisationNumber,
+      responsible_body_type: pc.responsibleBody?.type?.code,
+    });
+  }
+
+  // ── 5. Uppskattning program-andel ─────────────────────────────────────────
+  console.log('\n📊 Uppskattning program vs kurs (HS, page 0, size=100):');
+  const bigPage = await get(`/educationInfos?schoolType=HS&page=0&size=100`);
+  const all = bigPage.educationInfos || [];
+  const progCount   = all.filter(i => i.content?.configuration?.code === 'program').length;
+  const kursCount   = all.filter(i => i.content?.configuration?.code !== 'program').length;
+  const total       = bigPage.page?.totalElements || '?';
+  const progShare   = (progCount / all.length * 100).toFixed(0);
+  console.log(`   I sample: ${progCount} program, ${kursCount} kurser (${progShare}% program)`);
+  console.log(`   Totalt HS: ${total} → uppskattade program: ~${Math.round(total * progCount / all.length)}`);
+
+  console.log('\n✅ Test klar — ingen data sparad');
 }
 
-// Hjälp: plocka ut sv-värde ur {strings:[{lang,value}]} eller {urls:[{lang,value}]}
-function getLangValue(obj, arrayKey = 'strings', valueKey = 'value', preferLang = 'sv') {
-  if (!obj) return null;
-  const arr = obj[arrayKey] || obj.strings || obj.urls || [];
-  const sv  = arr.find(s => s.lang === preferLang);
-  return (sv || arr[0])?.[valueKey] || null;
-}
-
-function detectSchoolType(content) {
-  // SUSA navet lägger HS-extensions i extensions[1], YH saknar det
-  const exts = content.extensions || [];
-  const hasHsExt = exts.some(e => e.admissionDetails || e.applicationDetails);
-  return hasHsExt ? 'HS' : 'YH';
-}
-
-main().catch(e => {
-  console.error('❌ Oväntat fel:', e.message);
-  process.exit(1);
-});
+main().catch(e => { console.error('❌', e.message); process.exit(1); });
