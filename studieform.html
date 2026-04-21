@@ -244,6 +244,10 @@ input[type=range].sfq::-moz-range-thumb{width:22px;height:22px;border-radius:50%
   .step-body .step-desc{font-size:.7rem}
   .step-num{width:22px;height:22px;font-size:.68rem;margin-bottom:8px}
   .step-item::before{top:11px}
+  .cta-left{text-align:center}
+  .cta-left p{max-width:100%!important}
+  .cta-btn{display:block!important;text-align:center}
+  .cta-checks{justify-content:center}
 }
 </style>
 </head>
@@ -1266,12 +1270,12 @@ document.addEventListener('DOMContentLoaded',function(){
 <!-- NASTA STEG BANNER -->
 <div style="background:#2A4F6E;padding:80px 24px">
   <div style="max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
-    <div>
+    <div class="cta-left">
       <div style="font-size:.68rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:12px">Nästa steg</div>
       <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.5px;margin-bottom:18px">Skapa din personliga studieplan</h2>
       <p style="font-size:.97rem;color:rgba(255,255,255,.75);line-height:1.8;margin-bottom:32px;max-width:420px">Du vet nu vilken studieform som passar. Nästa steg är att ta reda på om det faktiskt lönar sig — och få en konkret plan.</p>
-      <a href="/skapa-min-plan" style="display:inline-block;background:#fff;color:#2A4F6E;font-size:.97rem;font-weight:700;padding:15px 28px;border-radius:10px;text-decoration:none;transition:transform .15s,box-shadow .15s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(0,0,0,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">Skapa min studieplan →</a>
-      <div style="display:flex;gap:18px;margin-top:18px;flex-wrap:wrap">
+      <a href="/skapa-min-plan" class="cta-btn" style="display:inline-block;background:#fff;color:#2A4F6E;font-size:.97rem;font-weight:700;padding:15px 28px;border-radius:10px;text-decoration:none;transition:transform .15s,box-shadow .15s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(0,0,0,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">Skapa min studieplan →</a>
+      <div class="cta-checks" style="display:flex;gap:18px;margin-top:18px;flex-wrap:wrap">
         <span style="font-size:.82rem;color:rgba(255,255,255,.55);font-weight:500">✓ Gratis</span>
         <span style="font-size:.82rem;color:rgba(255,255,255,.55);font-weight:500">✓ Tar 3 minuter</span>
         <span style="font-size:.82rem;color:rgba(255,255,255,.55);font-weight:500">✓ Exakt skolmatchning</span>
