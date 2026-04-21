@@ -443,6 +443,7 @@ function renderPage(school) {
   if (school.fee > 0) pills.push(`<span class="pill pill-red">Avgift: ${school.fee.toLocaleString('sv-SE')} kr</span>`);
   else pills.push(`<span class="pill pill-grey">Avgiftsfri</span>`);
   if (school.credits) pills.push(`<span class="pill pill-blue">${school.credits} YH-poäng</span>`);
+  if (school.hp_credits) pills.push(`<span class="pill pill-blue">${school.hp_credits} hp</span>`);
   if (school.pace_of_study) pills.push(`<span class="pill pill-grey">Studietakt ${school.pace_of_study}%</span>`);
   if (school.start_dates && school.start_dates.length > 0) {
     school.start_dates.forEach(d => pills.push(`<span class="pill pill-yellow">Start: ${esc(d)}</span>`));
@@ -538,7 +539,7 @@ function renderPage(school) {
 
   return `
     <div class="dhero">
-      <div class="dhero-label">YH-utbildning</div>
+      <div class="dhero-label">${school.school_type === 'HS' ? 'Högskoleutbildning' : 'YH-utbildning'}</div>
       <div class="dhero-top">
         ${logoHtml}
         <div>
