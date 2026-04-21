@@ -208,12 +208,16 @@ input[type=range].sfq::-moz-range-thumb{width:22px;height:22px;border-radius:50%
 .tl-body .tl-when{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
 .tl-body .tl-text{font-size:.86rem;color:var(--mu);line-height:1.6}
 
-/* Förberedelseteg */
-.step-item{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--bo)}
-.step-item:last-child{border-bottom:none}
-.step-num{width:26px;height:26px;border-radius:50%;background:#5A8FB5;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:700;flex-shrink:0;margin-top:1px}
-.step-body .step-title{font-weight:700;font-size:.9rem;margin-bottom:3px}
-.step-body .step-desc{font-size:.84rem;color:var(--mu);line-height:1.6}
+/* Förberedelseteg – horisontell stepper */
+#resSteps{display:flex;align-items:flex-start;padding:12px 0 4px}
+.step-item{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;padding:0 8px}
+.step-item::before{content:'';position:absolute;top:13px;left:0;right:0;height:2px;background:var(--bo);z-index:0}
+.step-item:first-child::before{left:50%}
+.step-item:last-child::before{right:50%}
+.step-num{width:26px;height:26px;border-radius:50%;background:#5A8FB5;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:700;flex-shrink:0;position:relative;z-index:1;margin-bottom:10px}
+.step-body{display:flex;flex-direction:column;align-items:center}
+.step-body .step-title{font-weight:700;font-size:.85rem;margin-bottom:4px}
+.step-body .step-desc{font-size:.8rem;color:var(--mu);line-height:1.5}
 
 @keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 .anim{opacity:0;animation:fu .5s ease forwards}
