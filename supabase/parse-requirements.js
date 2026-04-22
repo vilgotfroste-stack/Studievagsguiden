@@ -4,6 +4,9 @@
  * Läser yh_schools-rader med requirements != null och parsar texten
  * med regex till strukturerad JSON som sparas i requirements_parsed.
  *
+ * Hanterar både gammalt YH-format ("Kurser: • Engelska 6: 100p")
+ * och SUSA navet-format ("Grundläggande behörighet samt Matematik 3b, Engelska 6").
+ *
  * Kör lokalt (Node 18+):
  *   Windows PowerShell:
  *     $env:SUPABASE_SERVICE_KEY="din_nyckel"; node supabase/parse-requirements.js
@@ -34,8 +37,40 @@ const GYMNASIUM_PROGRAMS = [
   'Handels- och administrationsprogrammet', 'Naturbruksprogrammet', 'Hotell- och turismprogrammet',
 ];
 
+// Kända kurser med deras nivåer, ordnade från mest specifikt (3c) till minst (3)
+// så att rätt nivå plockas upp vid matchning.
+const KNOWN_COURSES = [
+  { name: 'Matematik',              levels: ['5','4','3c','3b','3','2c','2b','2a','2','1c','1b','1a','1','D','C','B','A'] },
+  { name: 'Engelska',               levels: ['7','6','5','B','A'] },
+  { name: 'Svenska som andraspråk', levels: ['3','2','1'] },
+  { name: 'Svenska',                levels: ['3','2','1','B','A'] },
+  { name: 'Fysik',                  levels: ['2','1c','1b','1a2','1a1','1','B','A'] },
+  { name: 'Kemi',                   levels: ['2','1','B','A'] },
+  { name: 'Biologi',                levels: ['2','1','B','A'] },
+  { name: 'Samhällskunskap',        levels: ['2','1b','1a2','1a1','1','A'] },
+  { name: 'Naturkunskap',           levels: ['2','1b','1a2','1a1','1'] },
+  { name: 'Historia',               levels: ['2','1b','1a2','1a1','1'] },
+  { name: 'Geografi',               levels: ['1'] },
+  { name: 'Teknik',                 levels: ['2','1'] },
+  { name: 'Psykologi',              levels: ['1'] },
+  { name: 'Religionskunskap',       levels: ['2','1'] },
+];
+
+// Bygg regex-lista en gång
+const COURSE_REGEXES = [];
+for (const c of KNOWN_COURSES) {
+  for (const lvl of c.levels) {
+    // Matcha kursnamn + nivå (t.ex. "Matematik 3b" eller "Matematik3b")
+    const escapedName = c.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const escapedLvl  = lvl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Nivå måste sluta med ordgräns (inte följas av annan bokstav/siffra)
+    const re = new RegExp(escapedName + '\\s*' + escapedLvl + '(?![a-zA-Z0-9])', 'i');
+    COURSE_REGEXES.push({ name: c.name, level: lvl, re });
+  }
+}
+
 // ---------------------------------------------------------------
-// Regex-parser
+// Regex-parser — hanterar SUSA- och gammalt YH-format
 // ---------------------------------------------------------------
 function parseRequirements(text) {
   if (!text || text.trim().length === 0) return null;
@@ -48,49 +83,81 @@ function parseRequirements(text) {
     other_requirements:             null,
   };
 
-  if (/gymnasieexamen/i.test(text)) {
+  // ── Gymnasieexamen / grundläggande behörighet ──
+  if (
+    /gymnasieexamen/i.test(text) ||
+    /grundl[äa]ggande\s+beh[öo]righet/i.test(text) ||
+    /gymnasieutbildning/i.test(text)
+  ) {
     result.has_gymnasieexamen_requirement = true;
   }
 
-  if (/reell\s+kompetens|förutsättningar att tillgodogöra/i.test(text)) {
+  // ── Reell kompetens ──
+  if (/reell\s+kompetens|f[öo]ruts[äa]ttningar att tillgodogöra/i.test(text)) {
     result.reell_kompetens_accepted = true;
   }
 
+  // ── Rekommenderade gymnasieprogram (gammalt format) ──
   for (const prog of GYMNASIUM_PROGRAMS) {
-    if (text.includes(prog)) {
-      result.recommended_programs.push(prog);
-    }
+    if (text.includes(prog)) result.recommended_programs.push(prog);
   }
 
-  // Extrahera allt efter "Kurser:", "Förkunskapskurser:" eller "Förutom detta ställs"
-  const kursSection = text.match(/(?:förkunskapskurser:|kurser:|förutom detta ställs följande krav:?)([\s\S]*)/i)?.[1] || '';
+  // ── Kursextraktion ──
+  // Håll koll på vilka kursnamn som redan matchats för att undvika dubbletter.
+  // Vid "eller"-alternativ: ta med båda (frontend visar "eller").
+  const matchedNames = new Set();
+
+  // Format 1 (gammalt): "• Engelska 6: 100 poäng" / "Engelska 6, 100p"
+  const kursSection = text.match(
+    /(?:f[öo]rkunskapskurser:|kurser:|f[öo]rutom detta st[äa]lls f[öo]ljande krav:?)([\s\S]*)/i
+  )?.[1] || '';
 
   if (kursSection) {
-    // Format 1: "• Engelska 6: 100 poäng" (bullet + kolon)
-    // Format 2: "Engelska 6, 100p" (komma + p)
-    // Format 3: "Engelska 6 alt Svenska som andraspråk 2, 100p"
-    const coursePattern = /[•\-]?\s*([A-ZÅÄÖ][a-zåäö]+(?:\s+[a-zåäö]+)*)\s+(\d+[a-zA-Z]?)[\s:,]+(\d+)\s*(?:poäng|p\b)(?:\s+alt\s+([A-ZÅÄÖ][^,\n•]+?)[\s:,]+\d+\s*(?:poäng|p\b))?/g;
-    let match;
-    while ((match = coursePattern.exec(kursSection)) !== null) {
-      const course = {
-        name:   match[1].trim(),
-        level:  match[2].trim(),
-        points: parseInt(match[3]),
-      };
-      if (match[4]) course.alternative = match[4].trim();
-      const isProgram = GYMNASIUM_PROGRAMS.some(p => p.startsWith(course.name));
-      if (!isProgram && course.points > 0) result.required_courses.push(course);
+    const oldPattern = /[•\-]?\s*([A-ZÅÄÖ][a-zåäö]+(?:\s+[a-zåäö]+)*)\s+(\d+[a-zA-Z]?)[\s:,]+(\d+)\s*(?:poäng|p\b)(?:\s+alt\s+([A-ZÅÄÖ][^,\n•]+?)[\s:,]+\d+\s*(?:poäng|p\b))?/g;
+    let m;
+    while ((m = oldPattern.exec(kursSection)) !== null) {
+      const name = m[1].trim();
+      const level = m[2].trim();
+      if (GYMNASIUM_PROGRAMS.some(p => p.startsWith(name))) continue;
+      const points = parseInt(m[3]);
+      if (points <= 0) continue;
+      const course = { name, level, points };
+      if (m[4]) course.alternative = m[4].trim();
+      result.required_courses.push(course);
+      matchedNames.add(name);
     }
   }
 
+  // Format 2 (SUSA): fritext med kurser listade direkt
+  // Körs alltid — hittar kurser som gammalt format missade.
+  for (const { name, level, re } of COURSE_REGEXES) {
+    if (!re.test(text)) continue;
+    if (matchedNames.has(name)) continue; // redan hittat denna kurs
+    matchedNames.add(name);
+
+    // Kolla om det finns ett "eller"-alternativ (t.ex. "3b eller 3c")
+    const orRe = new RegExp(
+      name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') +
+      '\\s*' + level.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') +
+      '\\s+(?:eller|alt\\.?|or)\\s+(?:' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*)?([\\w]+)',
+      'i'
+    );
+    const orMatch = text.match(orRe);
+    const course = { name, level };
+    if (orMatch) course.alternative = name + ' ' + orMatch[1];
+    result.required_courses.push(course);
+  }
+
+  // ── Övriga krav ──
   const otherPatterns = [
-    /körkort[^.]*/i,
-    /arbetslivserfarenhet[^.]*/i,
-    /erfarenhet av[^.]*/i,
-    /hälsokontroll[^.]*/i,
+    /k[öo]rkort[^.\n]*/i,
+    /arbetslivserfarenhet[^.\n]*/i,
+    /erfarenhet av[^.\n]*/i,
+    /h[äa]lsokontroll[^.\n]*/i,
+    /svenska\s+som\s+modersmål[^.\n]*/i,
   ];
   const otherMatches = otherPatterns.map(p => text.match(p)?.[0]).filter(Boolean);
-  if (otherMatches.length > 0) result.other_requirements = otherMatches.join(' ').trim();
+  if (otherMatches.length > 0) result.other_requirements = otherMatches.join(' · ').trim();
 
   return result;
 }
