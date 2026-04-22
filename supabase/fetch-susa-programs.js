@@ -221,7 +221,7 @@ function buildRow(event, info, provider, schoolType) {
     education_ids:            [],
 
     // Status
-    active:                   event.status === 'ACTIVE' && !ec.isCancelled,
+    active:                   !ec.isCancelled,
     eligible_for_student_aid: schoolType === 'YH' ? true : null,
 
     // Innehåll
