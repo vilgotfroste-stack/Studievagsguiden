@@ -271,7 +271,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
       </div>
       <div class="filter-item">
         <label>Stad</label>
-        <input type="text" id="cityInput" placeholder="t.ex. Stockholm" oninput="onFilterChange()">
+        <input type="text" id="cityInput" list="cityList" placeholder="t.ex. Stockholm" oninput="onFilterChange()" autocomplete="off">
+        <datalist id="cityList">
+          <option value="Stockholm"><option value="Göteborg"><option value="Malmö">
+          <option value="Uppsala"><option value="Linköping"><option value="Örebro">
+          <option value="Umeå"><option value="Västerås"><option value="Helsingborg">
+          <option value="Norrköping"><option value="Jönköping"><option value="Lund">
+          <option value="Sundsvall"><option value="Gävle"><option value="Borås">
+          <option value="Eskilstuna"><option value="Halmstad"><option value="Växjö">
+          <option value="Karlstad"><option value="Luleå"><option value="Distans">
+        </datalist>
       </div>
       <div class="filter-item">
         <label>Studietakt</label>
@@ -292,6 +301,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
           <option value="2-3">2–3 år</option>
           <option value="3-5">3–5 år</option>
           <option value="5+">5+ år</option>
+        </select>
+      </div>
+      <div class="filter-item">
+        <label>Undervisningsspråk</label>
+        <select id="languageSelect" onchange="onFilterChange()">
+          <option value="">Alla språk</option>
+          <option value="sv">Svenska</option>
+          <option value="en">Engelska</option>
+        </select>
+      </div>
+      <div class="filter-item">
+        <label>Utbildningsnivå</label>
+        <select id="levelSelect" onchange="onFilterChange()">
+          <option value="">Alla nivåer</option>
+          <option value="grundniva">Grundnivå (Kandidat)</option>
+          <option value="avancerad">Avancerad nivå (Master)</option>
+          <option value="yrkesexamen">Yrkesexamen</option>
         </select>
       </div>
       <div class="filter-item">
@@ -474,6 +500,8 @@ function getFilters() {
     city:        document.getElementById('cityInput').value.trim(),
     pacePercent: document.getElementById('pacePercentSelect').value,
     duration:    document.getElementById('durationSelect').value,
+    language:    document.getElementById('languageSelect').value,
+    level:       document.getElementById('levelSelect').value,
     branch:      document.getElementById('branchSelect').value,
     category:    document.getElementById('categorySelect').value,
     startDate:   document.getElementById('startSelect').value,
@@ -490,6 +518,8 @@ function countActiveFilters() {
   if (f.city)        n++;
   if (f.pacePercent) n++;
   if (f.duration)    n++;
+  if (f.language)    n++;
+  if (f.level)       n++;
   if (f.branch)      n++;
   if (f.category)    n++;
   if (f.startDate)   n++;
@@ -517,6 +547,8 @@ function updateUrl() {
   if (activeType)    p.set('typ', activeType);
   if (f.pacePercent) p.set('procent', f.pacePercent);
   if (f.duration)    p.set('langd', f.duration);
+  if (f.language)    p.set('sprak', f.language);
+  if (f.level)       p.set('niva', f.level);
   if (f.branch)      p.set('bransch', f.branch);
   if (f.category)    p.set('yrke', f.category);
   if (f.startDate)   p.set('start', f.startDate);
@@ -535,6 +567,8 @@ function loadFromUrl() {
   if (p.get('typ'))     { activeType = p.get('typ'); document.querySelectorAll('.tbtn').forEach(b => b.classList.toggle('active', b.dataset.type === activeType)); }
   if (p.get('procent')) document.getElementById('pacePercentSelect').value = p.get('procent');
   if (p.get('langd'))   document.getElementById('durationSelect').value = p.get('langd');
+  if (p.get('sprak'))   document.getElementById('languageSelect').value = p.get('sprak');
+  if (p.get('niva'))    document.getElementById('levelSelect').value = p.get('niva');
   if (p.get('bransch')) { document.getElementById('branchSelect').value = p.get('bransch'); updateYrkeOptions(p.get('bransch')); }
   if (p.get('yrke'))    document.getElementById('categorySelect').value = p.get('yrke');
   if (p.get('start'))   document.getElementById('startSelect').value = p.get('start');
@@ -559,6 +593,22 @@ function buildUrl(offset) {
   if (f.studiemedel)    params.set('eligible_for_student_aid', 'eq.true');
   if (f.avgiftsfri)     params.set('fee', 'eq.0');
   if (f.startDate)      params.set('start_dates', 'cs.{"' + f.startDate + '"}');
+
+  // Undervisningsspråk — SUSA skickar ISO 639-1 ('sv'/'en')
+  if (f.language === 'sv') {
+    params.append('or', '(instruction_languages.cs.{sv},instruction_languages.cs.{swe},instruction_languages.cs.{SWE})');
+  } else if (f.language === 'en') {
+    params.append('or', '(instruction_languages.cs.{en},instruction_languages.cs.{eng},instruction_languages.cs.{ENG})');
+  }
+
+  // Utbildningsnivå (education_level från SUSA)
+  if (f.level === 'grundniva') {
+    params.append('or', '(education_level.ilike.G*,education_level.ilike.*bachelor*,education_level.ilike.*kandidat*,education_level.ilike.*grundniv*)');
+  } else if (f.level === 'avancerad') {
+    params.append('or', '(education_level.ilike.A*,education_level.ilike.*master*,education_level.ilike.*magister*,education_level.ilike.*avancerad*)');
+  } else if (f.level === 'yrkesexamen') {
+    params.append('or', '(education_level.ilike.*yrkes*,education_level.ilike.*professional*,education_level.ilike.*civilingenj*,education_level.ilike.*läkar*,education_level.ilike.*juris*)');
+  }
 
   // Bransch/Yrke: keyword-matchning mot program_name (fungerar utan education_ids)
   const kwds = keywordsForFilter(f.branch, f.category);
@@ -745,6 +795,8 @@ function resetFilters() {
   document.getElementById('cityInput').value = '';
   document.getElementById('pacePercentSelect').value = '';
   document.getElementById('durationSelect').value = '';
+  document.getElementById('languageSelect').value = '';
+  document.getElementById('levelSelect').value = '';
   document.getElementById('branchSelect').value = '';
   updateYrkeOptions('');
   document.getElementById('categorySelect').value = '';
