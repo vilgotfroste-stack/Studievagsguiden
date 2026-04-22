@@ -365,44 +365,44 @@ const SUPABASE_URL = 'https://qofvdpvxrvvjalgdiflg.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_Vfm1BArZN_RAWrwTOzVGXA_WWvIk77V';
 const PAGE_SIZE = 24;
 
-const BRANCHES = [
-  { id: 'tech',    label: 'IT & Tech',         ids: [1,2,3,4,5,7] },
-  { id: 'ekonomi', label: 'Ekonomi & Affär',   ids: [6,8,9,10,11,12,13,23,24,29] },
-  { id: 'vard',    label: 'Vård & Omsorg',     ids: [14,15,16,17] },
-  { id: 'design',  label: 'Design & Kreativt', ids: [18,19,20,21] },
-  { id: 'teknik',  label: 'Teknik & Bygg',     ids: [22,25,26,27,28] },
+const EDU_CATEGORIES = [
+  { id: 1,  branch: 'tech',    label: 'Systemutvecklare / Webbutvecklare', keywords: ['systemutvecklare','webbutvecklare','mjukvaruutvecklare','programmerare','fullstack','backend','frontend','applikationsutvecklare','java','python'] },
+  { id: 2,  branch: 'tech',    label: 'Dataanalytiker / AI',               keywords: ['dataanalytiker','dataanalys','data analytics','business intelligence','bi-utvecklare','dataingenjör','machine learning','ai-ingenjör','data science','datavetenskap','artificiell intelligens'] },
+  { id: 3,  branch: 'tech',    label: 'IT-säkerhetsspecialist',            keywords: ['it-säkerhet','cybersecurity','informationssäkerhet','säkerhetsanalytiker','nätverkssäkerhet','penetrationstest','cyber security'] },
+  { id: 4,  branch: 'tech',    label: 'UX/UI-designer',                    keywords: ['ux','ux-designer','ui-designer','användarupplevelse','interaktionsdesign','tjänstedesign','webdesign'] },
+  { id: 5,  branch: 'tech',    label: 'Spelutvecklare',                    keywords: ['spelutvecklare','game developer','speldesign','spelindustrin','game design'] },
+  { id: 7,  branch: 'tech',    label: 'DevOps / Molntjänster',             keywords: ['devops','cloud','molntjänster','driftekniker','kubernetes','aws','azure','systemadministratör','nätverkstekniker'] },
+  { id: 6,  branch: 'ekonomi', label: 'Digital marknadsförare',            keywords: ['digital marknadsföring','marknadsförare','content marketing','sociala medier','seo','e-handel','growth hacker'] },
+  { id: 8,  branch: 'ekonomi', label: 'Jurist / Paralegal',                keywords: ['jurist','paralegal','rättsvetenskap','juridik'] },
+  { id: 9,  branch: 'ekonomi', label: 'Redovisningsekonom',                keywords: ['redovisningsekonom','redovisning','bokföring','löneadministratör','lönespecialist','ekonomiassistent','ekonomi'] },
+  { id: 10, branch: 'ekonomi', label: 'Controller / Finansanalytiker',     keywords: ['controller','ekonomistyrning','business controller','finansanalytiker','financial controller'] },
+  { id: 11, branch: 'ekonomi', label: 'Kommunikatör / PR',                 keywords: ['kommunikatör','informatör','copywriter','innehållsstrateg','public relations'] },
+  { id: 12, branch: 'ekonomi', label: 'HR-specialist',                     keywords: ['hr-specialist','hr-ansvarig','personalarbete','human resources','personalvetare','personalutvecklare','personalvetenskap','lön och personal'] },
+  { id: 13, branch: 'ekonomi', label: 'Projektledare',                     keywords: ['projektledare','projektledning','agil','scrum','projektkoordinator','förändringsledning'] },
+  { id: 14, branch: 'vard',    label: 'Sjuksköterska / Vård',              keywords: ['sjuksköterska','undersköterska','vård och omsorg','sjukvård','hälso- och sjukvård','specialistsjuksköterska'] },
+  { id: 15, branch: 'vard',    label: 'Tandhygienist / Tandvård',          keywords: ['tandhygienist','dental','tandvård','tandsköterska'] },
+  { id: 16, branch: 'vard',    label: 'Lärare / Förskollärare',            keywords: ['lärare','förskollärare','pedagog','utbildningsledare','fritidspedagog'] },
+  { id: 17, branch: 'vard',    label: 'Socionom / Socialt arbete',         keywords: ['socionom','socialt arbete','socialsekreterare','behandlingspedagog','socialpedagog'] },
+  { id: 18, branch: 'design',  label: 'Grafisk designer',                  keywords: ['grafisk design','grafisk designer','visuell kommunikation','art director'] },
+  { id: 19, branch: 'design',  label: 'Fotograf / Film',                   keywords: ['fotograf','filmproduktion','rörlig bild','media och kommunikation','film och tv'] },
+  { id: 20, branch: 'design',  label: 'Kock / Restaurang',                 keywords: ['kock','restaurang','livsmedelsteknolog','konditor','gastronomi'] },
+  { id: 21, branch: 'design',  label: 'Event / Turism',                    keywords: ['eventkoordinator','event','mötesbranschen','konferens','turism'] },
+  { id: 22, branch: 'teknik',  label: 'Miljösamordnare / Hållbarhet',      keywords: ['miljösamordnare','hållbarhet','klimat','cirkulär ekonomi'] },
+  { id: 23, branch: 'ekonomi', label: 'Butikschef / Detaljhandel',         keywords: ['butikschef','detaljhandel','retail','handelsadministration'] },
+  { id: 24, branch: 'ekonomi', label: 'Inköpare / Upphandlare',            keywords: ['inköpare','upphandlare','upphandling','kategorichef'] },
+  { id: 25, branch: 'teknik',  label: 'Fastighet / Mäklare',               keywords: ['fastighetsförvaltare','fastighet','fastighetsteknik','fastighetsmäklare','fastighetsadministration'] },
+  { id: 26, branch: 'teknik',  label: 'VVS-ingenjör / Energi',             keywords: ['vvs','ventilation','rörläggare','energiingenjör','vvs-tekniker','installationsteknik'] },
+  { id: 27, branch: 'teknik',  label: 'Automationsingenjör',               keywords: ['automation','automationsingenjör','plc','robotik','automationstekniker','industriautomation','mekatronik'] },
+  { id: 28, branch: 'teknik',  label: 'Elektriker / Elkraft',              keywords: ['elektriker','elkraft','elteknik','elinstallation','elmontör'] },
+  { id: 29, branch: 'ekonomi', label: 'Logistiker / Supply chain',         keywords: ['logistiker','logistik','supply chain','transportledning','inköp och logistik'] },
 ];
 
-const EDU_CATEGORIES = [
-  { id: 1,  label: 'Systemutvecklare / Webbutvecklare' },
-  { id: 2,  label: 'Dataanalytiker / AI' },
-  { id: 3,  label: 'IT-säkerhetsspecialist' },
-  { id: 4,  label: 'UX/UI-designer' },
-  { id: 5,  label: 'Spelutvecklare' },
-  { id: 7,  label: 'DevOps / Molntjänster' },
-  { id: 6,  label: 'Digital marknadsförare' },
-  { id: 8,  label: 'Jurist / Paralegal' },
-  { id: 9,  label: 'Redovisningsekonom' },
-  { id: 10, label: 'Controller / Finansanalytiker' },
-  { id: 11, label: 'Kommunikatör / PR' },
-  { id: 12, label: 'HR-specialist' },
-  { id: 13, label: 'Projektledare' },
-  { id: 14, label: 'Sjuksköterska / Vård' },
-  { id: 15, label: 'Tandhygienist / Tandvård' },
-  { id: 16, label: 'Lärare / Förskollärare' },
-  { id: 17, label: 'Socionom / Socialt arbete' },
-  { id: 18, label: 'Grafisk designer' },
-  { id: 19, label: 'Fotograf / Film' },
-  { id: 20, label: 'Kock / Restaurang' },
-  { id: 21, label: 'Event / Turism' },
-  { id: 22, label: 'Miljösamordnare / Hållbarhet' },
-  { id: 23, label: 'Butikschef / Detaljhandel' },
-  { id: 24, label: 'Inköpare / Upphandlare' },
-  { id: 25, label: 'Fastighet / Mäklare' },
-  { id: 26, label: 'VVS-ingenjör / Energi' },
-  { id: 27, label: 'Automationsingenjör' },
-  { id: 28, label: 'Elektriker / Elkraft' },
-  { id: 29, label: 'Logistiker / Supply chain' },
+const BRANCHES = [
+  { id: 'tech',    label: 'IT & Tech' },
+  { id: 'ekonomi', label: 'Ekonomi & Affär' },
+  { id: 'vard',    label: 'Vård & Omsorg' },
+  { id: 'design',  label: 'Design & Kreativt' },
+  { id: 'teknik',  label: 'Teknik & Bygg' },
 ];
 
 let currentOffset = 0;
@@ -427,7 +427,7 @@ function updateYrkeOptions(branchId) {
   const current = sel.value;
   sel.innerHTML = '<option value="">Alla yrken</option>';
   const cats = branchId
-    ? EDU_CATEGORIES.filter(c => BRANCHES.find(b => b.id === branchId)?.ids.includes(c.id))
+    ? EDU_CATEGORIES.filter(c => c.branch === branchId)
     : EDU_CATEGORIES;
   cats.forEach(c => {
     const o = document.createElement('option');
@@ -436,6 +436,19 @@ function updateYrkeOptions(branchId) {
     if (String(c.id) === current) o.selected = true;
     sel.appendChild(o);
   });
+}
+
+function keywordsForFilter(branch, categoryId) {
+  if (categoryId) {
+    const cat = EDU_CATEGORIES.find(c => String(c.id) === String(categoryId));
+    return cat?.keywords || [];
+  }
+  if (branch) {
+    return EDU_CATEGORIES
+      .filter(c => c.branch === branch)
+      .flatMap(c => c.keywords);
+  }
+  return [];
 }
 
 function onBranchChange() {
@@ -539,20 +552,24 @@ function buildUrl(offset) {
   params.set('limit', PAGE_SIZE);
   params.set('offset', offset);
 
-  if (activeMode)       params.set('study_mode',            'eq.' + activeMode);
-  if (activeType)       params.set('school_type',           'eq.' + activeType);
-  if (f.pacePercent)    params.set('pace_of_study',         'eq.' + f.pacePercent);
-  if (f.city)           params.set('city',                  'ilike.*' + f.city + '*');
-  if (f.category) {
-    params.set('education_ids', 'cs.{' + f.category + '}');
-  } else if (f.branch) {
-    const ids = BRANCHES.find(b => b.id === f.branch)?.ids || [];
-    if (ids.length) params.set('education_ids', 'ov.{' + ids.join(',') + '}');
-  }
+  if (activeMode)       params.set('study_mode',  'eq.' + activeMode);
+  if (activeType)       params.set('school_type', 'eq.' + activeType);
+  if (f.pacePercent)    params.set('pace_of_study', 'eq.' + f.pacePercent);
+  if (f.city)           params.set('city', 'ilike.*' + f.city + '*');
   if (f.studiemedel)    params.set('eligible_for_student_aid', 'eq.true');
-  if (f.avgiftsfri)     params.set('fee',                   'eq.0');
-  if (f.startDate)      params.set('start_dates',           'cs.{"' + f.startDate + '"}');
-  if (f.query)          params.set('or', '(program_name.ilike.*' + f.query + '*,school_name.ilike.*' + f.query + '*,education_description.ilike.*' + f.query + '*)');
+  if (f.avgiftsfri)     params.set('fee', 'eq.0');
+  if (f.startDate)      params.set('start_dates', 'cs.{"' + f.startDate + '"}');
+
+  // Bransch/Yrke: keyword-matchning mot program_name (fungerar utan education_ids)
+  const kwds = keywordsForFilter(f.branch, f.category);
+  if (kwds.length) {
+    params.append('or', '(' + kwds.map(k => 'program_name.ilike.*' + k.replace(/\*/g,'') + '*').join(',') + ')');
+  }
+
+  // Fritextsökning — läggs till som separat or (ANDas med ovanstående)
+  if (f.query) {
+    params.append('or', '(program_name.ilike.*' + f.query + '*,school_name.ilike.*' + f.query + '*,education_description.ilike.*' + f.query + '*)');
+  }
 
   let url = SUPABASE_URL + '/rest/v1/yh_schools?' + params.toString();
   if (f.duration) {
