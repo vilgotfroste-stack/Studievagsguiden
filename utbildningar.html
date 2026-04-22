@@ -535,7 +535,6 @@ function buildUrl(offset) {
   const f = getFilters();
   const params = new URLSearchParams();
   params.set('select', 'id,program_name,school_name,city,study_mode,study_pace,duration_text,website_url,school_type');
-  params.set('active', 'eq.true');
   params.set('order', f.sort || 'program_name.asc');
   params.set('limit', PAGE_SIZE);
   params.set('offset', offset);
