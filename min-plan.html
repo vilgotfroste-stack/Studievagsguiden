@@ -3157,6 +3157,15 @@ async function confirmEdits() {
   // Re-render plan
   const firstName = (ans.user_name || '').split(' ')[0] || 'du';
   buildFP(firstName);
+  // Reload school matching after any edit (buildFP re-renders the container but doesn't populate it)
+  if (edu) {
+    const _et = Array.isArray(ans.education_type) ? ans.education_type[0] : (ans.education_type || '');
+    if (_et === 'uni' || (!edu.yh && !edu.both && _et !== 'yh')) {
+      loadYHSchools(edu, ans, 'HS');
+    } else if (edu.yh || edu.both || _et === 'yh') {
+      loadYHSchools(edu, ans, 'YH');
+    }
+  }
 }
 
 
