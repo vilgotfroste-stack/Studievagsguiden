@@ -2249,8 +2249,8 @@ function buildFP(name) {
    </div>`;
  }
 
- // Utbildnings-CTA: YH = egna skolkort, UNI = Studentum
- if (showYH) {
+ // Utbildnings-CTA: YH + UNI = egna skolkort, övrigt = Studentum
+ if (showYH || showUni) {
    // Placeholder — fylls i av loadYHSchools() efter buildFP()
    pl += `<div class="section-label" style="margin-top:20px"><span>Matchande utbildningar</span></div>
  <div id="yh-schools-container">
@@ -2844,7 +2844,14 @@ async function fetchPlanByEmail() {
  document.getElementById('loadingState').style.display = 'none';
  buildFP(userName);
  document.getElementById('planContainer').style.display = 'block';
- if (edu && (edu.yh || edu.both) && ans.education_type !== 'uni') loadYHSchools(edu, ans);
+ if (edu) {
+   const _et = Array.isArray(ans.education_type) ? ans.education_type[0] : (ans.education_type || '');
+   if (_et === 'uni' || (!edu.yh && !edu.both && _et !== 'yh')) {
+     loadYHSchools(edu, ans, 'HS');
+   } else if (edu.yh || edu.both || _et === 'yh') {
+     loadYHSchools(edu, ans, 'YH');
+   }
+ }
 
  } catch(e) {
  console.error('fetchPlanByEmail error:', e);
@@ -3868,8 +3875,15 @@ async function loadPlanForUser(user) {
  document.getElementById('loadingState').style.display = 'none';
  document.getElementById('planContainer').style.display = 'block';
 
- // Ladda YH-skolmatchning om det är en YH-utbildning
- if (edu && (edu.yh || edu.both) && ans.education_type !== 'uni') loadYHSchools(edu, ans);
+ // Ladda skolmatchning — YH för yh-utbildningar, HS för högskola/uni
+ if (edu) {
+   const _et = Array.isArray(ans.education_type) ? ans.education_type[0] : (ans.education_type || '');
+   if (_et === 'uni' || (!edu.yh && !edu.both && _et !== 'yh')) {
+     loadYHSchools(edu, ans, 'HS');
+   } else if (edu.yh || edu.both || _et === 'yh') {
+     loadYHSchools(edu, ans, 'YH');
+   }
+ }
  
  // Spara till plans-tabellen om inte redan sparat (och betalning hanteras separat)
  // TODO: koppla till Stripe webhook
@@ -4203,12 +4217,15 @@ function renderTags(school, a) {
 }
 
 // Rendera alla skolkort
-function renderSchoolCards(schools, a, container) {
+function renderSchoolCards(schools, a, container, schoolType = 'YH') {
   if (!schools || schools.length === 0) {
+    const fallbackLink = schoolType === 'HS'
+      ? `<a href="https://www.antagning.se/" target="_blank" rel="noopener" style="color:var(--ac);font-weight:700">Sök på antagning.se →</a>`
+      : `<a href="https://www.myh.se/yrkeshogskolan/hitta-yh-utbildning/" target="_blank" rel="noopener" style="color:var(--ac);font-weight:700">Sök på MYH:s hemsida →</a>`;
     container.innerHTML = `<div class="yh-no-schools">
       Inga matchande utbildningar hittades just nu. Fler utbildningar läggs till löpande.
       <br><br>
-      <a href="https://www.myh.se/yrkeshogskolan/hitta-yh-utbildning/" target="_blank" rel="noopener" style="color:var(--ac);font-weight:700">Sök på MYH:s hemsida →</a>
+      ${fallbackLink}
     </div>`;
     return;
   }
@@ -4238,14 +4255,15 @@ function renderSchoolCards(schools, a, container) {
     </div>
   `).join('');
 
+  const label = schoolType === 'HS' ? 'Matchande högskolor' : 'Matchade YH-utbildningar';
   container.innerHTML = `<div class="yh-match-section">
-    <div class="yh-match-label">Matchade YH-utbildningar</div>
+    <div class="yh-match-label">${label}</div>
     ${html}
   </div>`;
 }
 
 // Hämta skolor från Supabase och rendera
-async function loadYHSchools(edu, a) {
+async function loadYHSchools(edu, a, schoolType = 'YH') {
   const container = document.getElementById('yh-schools-container');
   if (!container || !sb) return;
 
@@ -4254,6 +4272,7 @@ async function loadYHSchools(edu, a) {
       .from('yh_schools')
       .select('*')
       .contains('education_ids', [edu.id])
+      .eq('school_type', schoolType)
       .eq('active', true);
 
     if (error) throw error;
@@ -4263,7 +4282,7 @@ async function loadYHSchools(edu, a) {
       .sort((a, b) => b._matchPct - a._matchPct)
       .slice(0, 3);
 
-    renderSchoolCards(schools, a, container);
+    renderSchoolCards(schools, a, container, schoolType);
   } catch (err) {
     console.warn('YH schools fetch error:', err.message);
     container.innerHTML = `<div class="yh-no-schools">
