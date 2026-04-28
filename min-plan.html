@@ -409,6 +409,16 @@ input[type="range"].red::-webkit-slider-thumb { border-color: var(--re); }
 .yh-btn-lead { flex: 1; min-width: 120px; padding: 10px 12px; background: var(--al); color: var(--ah); border: 1.5px solid var(--ac); border-radius: 8px; font-family: inherit; font-size: .82rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .2s; }
 .yh-btn-lead:hover { background: var(--ac); color: #fff; }
 .yh-no-schools { padding: 18px; text-align: center; color: var(--mu); font-size: .88rem; background: var(--bg); border-radius: 10px; border: 1.5px dashed var(--bo); }
+.yh-mismatch { padding: 16px 18px; background: var(--bg); border-radius: 10px; border: 1.5px solid var(--wa); display: flex; flex-direction: column; gap: 10px; }
+.yh-mismatch-msg { font-size: .88rem; color: var(--ah); font-weight: 600; }
+.yh-mismatch-sub { font-size: .82rem; color: var(--mu); margin-top: -4px; }
+.match-tips { background: var(--bg); border-radius: 10px; border: 1.5px solid var(--bo); padding: 12px 14px; margin-bottom: 12px; }
+.match-tips-title { font-size: .75rem; font-weight: 700; color: var(--mu); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+.match-tip-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 6px 0; border-top: 1px solid var(--bo); }
+.match-tip-row:first-of-type { border-top: none; }
+.match-tip-text { font-size: .82rem; color: var(--ah); }
+.match-tip-btn { flex-shrink: 0; font-family: inherit; font-size: .78rem; font-weight: 700; color: var(--ac); background: var(--al); border: 1.5px solid var(--ac); border-radius: 6px; padding: 4px 10px; cursor: pointer; white-space: nowrap; transition: all .15s; }
+.match-tip-btn:hover { background: var(--ac); color: #fff; }
 
 /* INTRESSEANMÄLAN MODAL */
 .ia-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); backdrop-filter: blur(4px); z-index: 500; align-items: center; justify-content: center; padding: 20px; }
@@ -4108,6 +4118,80 @@ function svgModalClose(val) {
 // YH SCHOOL MATCHING — hämtar från Supabase och renderar kort
 // ============================================================
 
+// Returnerar mismatch-info om edu inte finns i vald skoltyp
+function getSchoolTypeMismatch(edu, schoolType) {
+  if (!edu) return null;
+  if (schoolType === 'HS' && edu.yh === true && !edu.both) {
+    return {
+      msg: `${edu.t} ges på YH — inga högskolekurser hittades`,
+      sub: 'Byt utbildningsform för att se matchande YH-skolor.',
+      btnLabel: 'Byt till YH',
+      editKey: 'education_type'
+    };
+  }
+  if (schoolType === 'YH' && !edu.yh && !edu.both) {
+    return {
+      msg: `${edu.t} ges på högskola — inga YH-utbildningar hittades`,
+      sub: 'Byt utbildningsform för att se matchande högskolor.',
+      btnLabel: 'Byt till Högskola',
+      editKey: 'education_type'
+    };
+  }
+  return null;
+}
+
+// Returnerar konkreta tips för varför matchprocenten är låg
+function getMatchTips(schools, a) {
+  if (!schools || schools.length === 0) return [];
+  const tips = [];
+  const userCity = normalizeCity(a.current_location || '');
+
+  // Plats — inga lokala skolor och användaren vill inte flytta
+  const campusSchools = schools.filter(s => s.study_mode !== 'distance');
+  if (campusSchools.length > 0 && a.willing_to_move === 'no') {
+    const hasLocal = campusSchools.some(s => normalizeCity(s.city || '') === userCity);
+    if (!hasLocal) {
+      tips.push({
+        msg: `Inga skolor nära ${a.current_location || 'din ort'} — skolor finns på andra orter`,
+        btnLabel: 'Ändra rörlighet',
+        editKey: 'willing_to_move'
+      });
+    }
+  }
+
+  // Studietakt — alla skolor erbjuder fel takt
+  const pace = a.study_pace;
+  if (pace && pace !== 'any' && pace !== 'flexible') {
+    const allWrong = schools.every(s => s.study_pace !== pace && s.study_pace !== 'flexible');
+    if (allWrong) {
+      const wantedLbl = pace === 'parttime' ? 'deltid' : 'heltid';
+      const offeredLbl = schools[0].study_pace === 'parttime' ? 'deltid' : 'heltid';
+      tips.push({
+        msg: `Skolor erbjuder ${offeredLbl} — du vill ha ${wantedLbl}`,
+        btnLabel: 'Ändra studietakt',
+        editKey: 'study_pace'
+      });
+    }
+  }
+
+  // Studieform (campus/distans) — alla skolor matchar fel form
+  const mode = a.study_mode;
+  if (mode && mode !== 'any') {
+    const allWrong = schools.every(s => s.study_mode !== mode && s.study_mode !== 'hybrid');
+    if (allWrong) {
+      const wantedLbl = mode === 'campus' ? 'campusutbildning' : 'distansutbildning';
+      const offeredLbl = schools[0].study_mode === 'distance' ? 'distans' : 'campus';
+      tips.push({
+        msg: `Du vill ha ${wantedLbl} — skolor erbjuder ${offeredLbl}`,
+        btnLabel: 'Ändra studieform',
+        editKey: 'study_mode'
+      });
+    }
+  }
+
+  return tips;
+}
+
 // Normalisera stad för jämförelse
 function normalizeCity(c) {
   if (!c) return '';
@@ -4217,7 +4301,18 @@ function renderTags(school, a) {
 }
 
 // Rendera alla skolkort
-function renderSchoolCards(schools, a, container, schoolType = 'YH') {
+function renderSchoolCards(schools, a, container, schoolType = 'YH', mismatch = null) {
+  // Tillstånd 3: typkonflikt (t.ex. YH-program men uni valt)
+  if (mismatch) {
+    container.innerHTML = `<div class="yh-mismatch">
+      <div class="yh-mismatch-msg">${mismatch.msg}</div>
+      <div class="yh-mismatch-sub">${mismatch.sub}</div>
+      <button class="match-tip-btn" onclick="goTo('edit','${mismatch.editKey}')">${mismatch.btnLabel} →</button>
+    </div>`;
+    return;
+  }
+
+  // Tillstånd 4: inga skolor alls (dataproblem, ingen typkonflikt)
   if (!schools || schools.length === 0) {
     const fallbackLink = schoolType === 'HS'
       ? `<a href="https://www.antagning.se/" target="_blank" rel="noopener" style="color:var(--ac);font-weight:700">Sök på antagning.se →</a>`
@@ -4230,7 +4325,7 @@ function renderSchoolCards(schools, a, container, schoolType = 'YH') {
     return;
   }
 
-  const html = schools.map(s => `
+  const cards = schools.map(s => `
     <div class="yh-school-card">
       <div class="yh-card-top">
         <div class="yh-card-info">
@@ -4255,10 +4350,26 @@ function renderSchoolCards(schools, a, container, schoolType = 'YH') {
     </div>
   `).join('');
 
+  // Tillstånd 2: skolor finns men matchningen är svag (< 65%)
+  const bestPct = schools[0]._matchPct;
+  const tips = bestPct < 65 ? getMatchTips(schools, a) : [];
+  const tipsHtml = tips.length > 0 ? `
+    <div class="match-tips">
+      <div class="match-tips-title">Tips för bättre matchning</div>
+      ${tips.map(t => `
+        <div class="match-tip-row">
+          <span class="match-tip-text">${t.msg}</span>
+          <button class="match-tip-btn" onclick="goTo('edit','${t.editKey}')">${t.btnLabel} →</button>
+        </div>
+      `).join('')}
+    </div>
+  ` : '';
+
   const label = schoolType === 'HS' ? 'Matchande högskolor' : 'Matchade YH-utbildningar';
   container.innerHTML = `<div class="yh-match-section">
     <div class="yh-match-label">${label}</div>
-    ${html}
+    ${tipsHtml}
+    ${cards}
   </div>`;
 }
 
@@ -4282,7 +4393,8 @@ async function loadYHSchools(edu, a, schoolType = 'YH') {
       .sort((a, b) => b._matchPct - a._matchPct)
       .slice(0, 3);
 
-    renderSchoolCards(schools, a, container, schoolType);
+    const mismatch = schools.length === 0 ? getSchoolTypeMismatch(edu, schoolType) : null;
+    renderSchoolCards(schools, a, container, schoolType, mismatch);
   } catch (err) {
     console.warn('YH schools fetch error:', err.message);
     container.innerHTML = `<div class="yh-no-schools">
